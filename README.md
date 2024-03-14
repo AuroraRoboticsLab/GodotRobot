@@ -41,7 +41,7 @@ Finally, you can try out the example project by running
 
 ## Godot Robot Nodes
 
-GodotRobot2D is a Sprite2D that pulls its location from 
+GodotRobot2D is a Sprite2D that pulls its location from C++ and automatically moves around under C++ control. 
 
 
 ## Debug Clues
