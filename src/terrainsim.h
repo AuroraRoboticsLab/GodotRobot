@@ -37,6 +37,13 @@ public:
 	TerrainSim();
 	~TerrainSim();
 
+	
+	/// Fill our mesh centered on this location
+	void fill_heights(float cx, float cz, float cliffR);
+	
+	/// Animate our mesh with smoothly wobbling cosines
+	void animate_heights(double dt);
+	
 	void _process(double delta) override;
 	
     /// Publish updated height data to collision and image buffers
@@ -89,6 +96,8 @@ private:
     /// Allows rendering
     Ref<Image> image;    
     Ref<ImageTexture> image_texture;
+    
+    double time;
     
 protected:
 	static void _bind_methods();

@@ -54,6 +54,10 @@ void TerrainSim::_bind_methods() {
     ClassDB::bind_method(D_METHOD("create_collider"), &TerrainSim::create_collider);
     ClassDB::bind_method(D_METHOD("add_static_collider"), &TerrainSim::add_static_collider);
     
+    // Methods to do physics or animation
+    ClassDB::bind_method(D_METHOD("fill_heights"), &TerrainSim::fill_heights);
+    ClassDB::bind_method(D_METHOD("animate_heights"), &TerrainSim::animate_heights);
+    
     
     /*
     // These setters are probably a bad idea:
@@ -95,30 +99,60 @@ TerrainSim::TerrainSim()
     :sz{MESH_SPACING},
      height_shape{memnew(HeightMapShape3D)},
      image{memnew(Image)},
-     image_texture{memnew(ImageTexture)}
+     image_texture{memnew(ImageTexture)},
+     time(0.0f)
 {
     height_array.resize(W*H);
     height_floats=height_array.ptrw();
-
+    
     for (int z=0;z<H;z++)
         for (int x=0;x<W;x++)
-        {
-            float h = ((x+z/2)%4)*0.025; // slightly fuzzy floor
-
-            float r = sqrt(x*x+z*z);
-            if (r<30) h=1.5; // rounded cliff 
-            
-            if (x==2 && z == 2) h=3.0; // spike, for vertex calibration
-            
-            height_floats[z*W + x] = h;
-        }
+            height_floats[z*W + x] = 0.0f;
 
     height_shape->set_map_width(W);
     height_shape->set_map_depth(H);
 	
 	publish_first();
 	
+	fill_heights(0,0,30);
     printf("TerrainSim constructor finished (this=%p)\n",this);
+}
+
+/// Fill our mesh centered on this location
+void TerrainSim::fill_heights(float cx, float cz,float cliffR)
+{
+    for (int z=0;z<H;z++)
+        for (int x=0;x<W;x++)
+        {
+            float h = ((x+z/2)%4)*0.025; // slightly fuzzy floor
+
+            float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
+            if (r<cliffR) h=1.5; // rounded cliff 
+            
+            if (x==2 && z == 2) h=3.0; // spike, for vertex calibration
+            
+            height_floats[z*W + x] = h;
+        }
+    publish();
+}
+
+/// Animate our mesh with smoothly wobbling cosines
+void TerrainSim::animate_heights(double dt)
+{
+    time += dt;
+    
+    for (int z=0;z<H;z++)
+        for (int x=0;x<W;x++)
+        {
+            float h = height_floats[z*W + x]; 
+            
+            if (h<0.5f) {
+                h = 0.1f*(cos(time + x*0.5f)+cos(time + z*0.5f));
+            
+                height_floats[z*W + x] = h;
+            }
+        }
+    publish();
 }
 
 TerrainSim::~TerrainSim() {
@@ -201,6 +235,7 @@ void TerrainSim::add_static_collider(void)
 
 
 void TerrainSim::_process(double delta) {
+    animate_heights(delta);
 }
 
 
