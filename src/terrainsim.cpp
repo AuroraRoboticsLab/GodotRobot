@@ -45,17 +45,20 @@ void TerrainSim::_bind_methods() {
 }
 
 void TerrainSim::publish(void) {
-    height_shape->set_map_data(*height_array);
+    height_shape->set_map_data(height_array);
     bool mipmaps=false;
-    image->set_data(W,H,mipmaps,Image::FORMAT_RF,height_array->to_byte_array());
+    image->set_data(W,H,mipmaps,Image::FORMAT_RF,height_array.to_byte_array());
 }
 
-TerrainSim::TerrainSim() {
+TerrainSim::TerrainSim() 
+    :sz{0.1f},
+     height_shape{memnew(HeightMapShape3D)},
+     image{memnew(Image)}
+{
     sz = 0.1f;
 
-    height_array = memnew(PackedFloat32Array);
-    height_array->resize(W*H);
-    height_floats=height_array->ptrw();
+    height_array.resize(W*H);
+    height_floats=height_array.ptrw();
 
     for (int z=0;z<H;z++)
         for (int x=0;x<W;x++)
@@ -68,21 +71,20 @@ TerrainSim::TerrainSim() {
             height_floats[z*W + x] = h;
         }
 
-    height_shape = memnew(HeightMapShape3D);
     height_shape->set_map_width(W);
     height_shape->set_map_depth(H);
 
-    image = memnew(Image);
-    
 	publish();
     printf("TerrainSim constructor finished (this=%p)\n",this);
 }
 
 TerrainSim::~TerrainSim() {
     printf("TerrainSim destructor (this=%p)\n",this);
+    /*
     memdelete(height_array);
     memdelete(height_shape);
     memdelete(image);
+    */
 }
 
 void TerrainSim::_process(double delta) {

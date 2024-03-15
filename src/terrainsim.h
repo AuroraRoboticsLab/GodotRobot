@@ -35,24 +35,24 @@ public:
     void publish(void);
     
 	/// Allows collision detection (add this to a collider)
-    HeightMapShape3D *get_height_shape(void) { return height_shape; }
+    Ref<HeightMapShape3D> get_height_shape(void) { return height_shape; }
     
     /// Get float grayscale image of high map (allows rendering)
-    Image *get_image(void) { return image; }
+    Ref<Image> get_image(void) { return image; }
     
 
 private:
-    /// Raw height data, in meters
-    PackedFloat32Array *height_array;
+    /// Raw height data, in meters (can't be refcounted, hence no Ref<> here)
+    PackedFloat32Array height_array;
     
     /// Points to our raw height data in the array, raster pattern WxH in size
     float *height_floats;
     
     /// Allows collision detection
-    HeightMapShape3D *height_shape;
+    Ref<HeightMapShape3D> height_shape;
     
     /// Allows rendering
-    Image *image;
+    Ref<Image> image;
     
 protected:
 	static void _bind_methods();
