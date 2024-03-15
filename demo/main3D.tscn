@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://bun8tfid8p1fn"]
+
+[ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="1_nb4ih"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_848ex"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="TerrainScript" type="Node3D" parent="." node_paths=PackedStringArray("terrain", "sprite")]
+script = ExtResource("1_nb4ih")
+terrain = NodePath("TerrainSim")
+sprite = NodePath("Sprite3D")
+
+[node name="TerrainSim" type="TerrainSim" parent="TerrainScript"]
+
+[node name="Sprite3D" type="Sprite3D" parent="TerrainScript"]
+centered = false
+pixel_size = 0.1
+axis = 1
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.980443, 0.196802, 0, -0.196802, 0.980443, 0, 1.8, 5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.5)
+mesh = SubResource("BoxMesh_848ex")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866235, 0.112317, -0.486849, 0.482911, 0.0618, 0.873486, 0.128195, -0.991749, -0.00070602, 0, 0.79122, -2.22502)

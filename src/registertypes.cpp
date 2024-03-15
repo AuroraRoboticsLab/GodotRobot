@@ -6,6 +6,7 @@ Taken directly from GDExtension tutorial:
 
 */
 #include "godotrobot.h"
+#include "terrainsim.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -20,6 +21,7 @@ void initialize_godotrobot_module(ModuleInitializationLevel p_level) {
 	}
 
 	ClassDB::register_class<GodotRobot2D>();
+	ClassDB::register_class<TerrainSim>();
 }
 
 void uninitialize_godotrobot_module(ModuleInitializationLevel p_level) {
