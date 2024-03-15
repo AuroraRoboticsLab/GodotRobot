@@ -53,6 +53,7 @@ private:
     
     /// Allows rendering
     Ref<Image> image;
+    //Ref<ImageTexture> image;
     
 protected:
 	static void _bind_methods();

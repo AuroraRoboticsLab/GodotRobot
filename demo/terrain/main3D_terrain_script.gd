@@ -1,14 +1,19 @@
+@tool
 extends Node3D
 
-@export var terrain : TerrainSim
-@export var sprite : Sprite3D
+@export var terrain : TerrainSim # Source of height data
+@export var sprite : Sprite3D # Quick and dirty 2D only display of raw texture
+@export var shade : ShaderMaterial # material for subdivided plane render
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("TERRAIN SCRIPT IS ALIVE")
 	var image = terrain.get_image()
-	print("Terrain image: ",image.get_width(),"x",image.get_height())
-	sprite.texture = ImageTexture.create_from_image(image)
+	print("Terrain image in script: ",image.get_width(),"x",image.get_height()," pixels")
+	var tex = ImageTexture.create_from_image(image)
+	sprite.texture = tex
+	
+	shade.set_shader_parameter("heights", tex)
+	
 	pass # Replace with function body.
 
 

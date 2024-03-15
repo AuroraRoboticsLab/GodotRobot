@@ -6,6 +6,6 @@
 
 [node name="GodotRobot2D" type="GodotRobot2D" parent="."]
 amplitude = 40.0
-position = Vector2(72.079, 43.4937)
+position = Vector2(58.8666, 54.4043)
 texture = ExtResource("1_4r1nd")
 centered = false
