@@ -173,9 +173,6 @@ void TerrainSim::add_mesh(Ref<ShaderMaterial> shader)
         return; // still NULL, no good.
     }
     
-    // oddly, you can't seem to Ref<Node>, so use bare pointer.
-    MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
-    
     // FIXME: figure out how to share my_mesh with other terrain copies
     Ref<PlaneMesh> my_mesh{ memnew(PlaneMesh) };
     
@@ -191,7 +188,12 @@ void TerrainSim::add_mesh(Ref<ShaderMaterial> shader)
     my_mesh->set_center_offset(0.5f*Vector3(
         size.x,0.0f,size.y
     ));
+    
+    // oddly, you can't seem to Ref<Node>, so use bare pointer.
+    MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
+    
     mesh_instance->set_mesh(my_mesh);
+    mesh_instance->set_extra_cull_margin(5.0f); // avoid vanishing when plane is not visible
     
     // Copy the shader material, so we can use our texture
     Ref<ShaderMaterial> sm{shader->duplicate(true)};

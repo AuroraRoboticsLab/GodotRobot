@@ -26,7 +26,7 @@ public:
     ///   W is along X, H is along Z, elevation is along Y
     ///   Smaller ->  more granular updates
     ///   Larger -> fewer boundaries and object update overhead
-    enum {W=64, H=64};
+    enum {W=256, H=256};
 
 /// Float size of mesh cells, horizontal distance
 #define MESH_SPACING 0.1f
@@ -97,6 +97,7 @@ private:
     Ref<Image> image;    
     Ref<ImageTexture> image_texture;
     
+    /// Simulated time
     double time;
     
 protected:

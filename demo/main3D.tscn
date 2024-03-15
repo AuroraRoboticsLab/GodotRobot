@@ -2,6 +2,7 @@
 
 [ext_resource type="Material" uid="uid://gf66fh5vii5d" path="res://terrain/terrain_shader_material.tres" id="1_mwwkp"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="3_58k4c"]
+[ext_resource type="Script" path="res://util/fps_counter.gd" id="3_qie7w"]
 
 [sub_resource type="GDScript" id="GDScript_wq2bh"]
 script/source = "@tool   #<- allows you to see terrain in editor, though has weird side effects
@@ -14,20 +15,7 @@ func _ready():
 	var terrain = $TerrainSim # Source of height data
 	terrain.add_mesh(shader)
 	terrain.add_static_collider();
-"
-
-[sub_resource type="GDScript" id="GDScript_jhyxd"]
-script/source = "@tool   #<- allows you to see terrain in editor, though has weird side effects
-extends Node3D
-
-@export var shader : ShaderMaterial # renders the terrain
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	var terrain = $TerrainSim # Source of height data
-	terrain.add_mesh(shader)
-	terrain.add_static_collider();
-	terrain.fill_heights(64,0,25);
+	terrain.fill_heights(100,100,40);
 "
 
 [sub_resource type="BoxMesh" id="BoxMesh_848ex"]
@@ -39,26 +27,21 @@ func _ready():
 [node name="Node3D" type="Node3D"]
 
 [node name="TerrainScript" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.50407, 0, -11.2105)
 script = SubResource("GDScript_wq2bh")
 shader = ExtResource("1_mwwkp")
 
 [node name="TerrainSim" type="TerrainSim" parent="TerrainScript"]
 
-[node name="TerrainScript2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4, 0, 0)
-script = SubResource("GDScript_jhyxd")
-
-[node name="TerrainSim" type="TerrainSim" parent="TerrainScript2"]
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.980443, 0.196802, 0, -0.196802, 0.980443, 0, 1.8, 8.39846)
+transform = Transform3D(1, 0, 0, 0, 0.980443, 0.196802, 0, -0.196802, 0.980443, 0, 1.8, 8)
 
 [node name="Origin Reference Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.5)
 mesh = SubResource("BoxMesh_848ex")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415258, 0.611129, 0.119584, -0.981699, 0.148212, 0, 0.79122, -2.22502)
+transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415257, 0.611129, 0.119584, -0.981699, 0.148212, 0, 3.917, 0)
 shadow_enabled = true
 
 [node name="DemoBody3D" type="RigidBody3D" parent="."]
@@ -83,3 +66,6 @@ mesh = SubResource("BoxMesh_f5f6s")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
+
+[node name="FPS Counter" type="Node3D" parent="."]
+script = ExtResource("3_qie7w")
