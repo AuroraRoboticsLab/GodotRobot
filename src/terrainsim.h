@@ -13,6 +13,7 @@
 #include <godot_cpp/classes/shader_material.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 #include <godot_cpp/classes/collision_shape3d.hpp>
+#include <godot_cpp/classes/plane_mesh.hpp>
 
 namespace godot {
 
@@ -86,8 +87,7 @@ private:
     Ref<HeightMapShape3D> height_shape;
     
     /// Allows rendering
-    Ref<Image> image;
-    
+    Ref<Image> image;    
     Ref<ImageTexture> image_texture;
     
 protected:

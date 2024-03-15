@@ -34,7 +34,6 @@ Routes to get PackedFlat32Array onscreen:
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
-#include <godot_cpp/classes/plane_mesh.hpp>
 #include <godot_cpp/classes/static_body3d.hpp>
 
 
@@ -116,49 +115,16 @@ TerrainSim::TerrainSim()
 
     height_shape->set_map_width(W);
     height_shape->set_map_depth(H);
-    
+	
 	publish_first();
-	
-	
 	
     printf("TerrainSim constructor finished (this=%p)\n",this);
 }
 
 TerrainSim::~TerrainSim() {
     printf("TerrainSim destructor (this=%p)\n",this);
-    /*
-    memdelete(height_array);
-    memdelete(height_shape);
-    memdelete(image);
-    */
 }
 
-
-/// Create a static TerrainSim mesh, for all instances to use.
-///   (they're all the same size)
-static Ref<Mesh> make_terrain_sim_mesh()
-{
-    // A PlaneMesh isn't very efficient, but is easy to write.
-    static Ref<PlaneMesh> mesh{memnew(PlaneMesh)};
-    static bool init=false;
-    if (!init) {
-        mesh->set_subdivide_width(2*TerrainSim::W-1);
-        mesh->set_subdivide_depth(2*TerrainSim::H-1);
-        Vector2 size = Vector2(
-            TerrainSim::W*MESH_SPACING,
-            TerrainSim::H*MESH_SPACING
-        );
-        mesh->set_size(Vector2(
-            size.x,size.y
-        ));
-        mesh->set_center_offset(0.5f*Vector3(
-            size.x,0.0f,size.y
-        ));
-        
-        init=true;
-    }
-    return mesh;
-}
 
 /// Create a mesh as a child of us, so you can see our terrain.
 ///  Renders using this shader as the basis,
@@ -175,8 +141,25 @@ void TerrainSim::add_mesh(Ref<ShaderMaterial> shader)
     
     // oddly, you can't seem to Ref<Node>, so use bare pointer.
     MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
-    mesh_instance->set_mesh(make_terrain_sim_mesh());
     
+    // FIXME: figure out how to share my_mesh with other terrain copies
+    Ref<PlaneMesh> my_mesh{ memnew(PlaneMesh) };
+    
+    my_mesh->set_subdivide_width(2*TerrainSim::W-1);
+    my_mesh->set_subdivide_depth(2*TerrainSim::H-1);
+    Vector2 size = Vector2(
+        TerrainSim::W*MESH_SPACING,
+        TerrainSim::H*MESH_SPACING
+    );
+    my_mesh->set_size(Vector2(
+        size.x,size.y
+    ));
+    my_mesh->set_center_offset(0.5f*Vector3(
+        size.x,0.0f,size.y
+    ));
+    mesh_instance->set_mesh(my_mesh);
+    
+    // Copy the shader material, so we can use our texture
     Ref<ShaderMaterial> sm{shader->duplicate(true)};
     sm->set_shader_parameter("heights", image_texture);
     mesh_instance->set_surface_override_material(0,sm);
