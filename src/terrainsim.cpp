@@ -86,7 +86,7 @@ TerrainSim::TerrainSim()
             float r = sqrt(x*x+z*z);
             if (r<30) h=1.5; // rounded cliff 
             
-            if (x==6 && z == 5) h=3.0; // spike, for vertex calibration
+            if (x==2 && z == 2) h=3.0; // spike, for vertex calibration
             
             height_floats[z*W + x] = h;
         }
