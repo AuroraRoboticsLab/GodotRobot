@@ -9,7 +9,8 @@ extends Node3D
 func _ready():
 	var image = terrain.get_image()
 	print("Terrain image in script: ",image.get_width(),"x",image.get_height()," pixels")
-	var tex = ImageTexture.create_from_image(image)
+	var tex = terrain.get_image_texture()
+	# var tex = ImageTexture.create_from_image(image)
 	sprite.texture = tex
 	
 	shade.set_shader_parameter("heights", tex)

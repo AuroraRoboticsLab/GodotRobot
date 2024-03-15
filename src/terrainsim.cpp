@@ -40,20 +40,38 @@ void TerrainSim::_bind_methods() {
     printf("TerrainSim binding methods\n");
     ClassDB::bind_method(D_METHOD("get_height_shape"), &TerrainSim::get_height_shape);
     ClassDB::bind_method(D_METHOD("get_image"), &TerrainSim::get_image);
-    // ClassDB::add_property("TerrainSim", PropertyInfo(Variant::OBJECT, "image", PROPERTY_HINT_NONE, "Image",PROPERTY_USAGE_DEFAULT), "", "get_image");
+    ClassDB::bind_method(D_METHOD("get_image_texture"), &TerrainSim::get_image_texture);
+    
+    // ClassDB::add_property("TerrainSim", PropertyInfo(Variant::OBJECT, "image", PROPERTY_HINT_NONE, "Image",PROPERTY_USAGE_DEFAULT), "", "get_image"); //<- crashes
 
 }
 
-void TerrainSim::publish(void) {
+// Update just the height_shape and image from our array
+void TerrainSim::publish_image(void)
+{
     height_shape->set_map_data(height_array);
     bool mipmaps=false;
     image->set_data(W,H,mipmaps,Image::FORMAT_RF,height_array.to_byte_array());
 }
 
+// Private: setup during constructor
+void TerrainSim::publish_first() {
+    publish_image();
+    
+    image_texture->set_image(*image);
+}
+
+void TerrainSim::publish(void) {
+    publish_image();
+    
+    image_texture->update(*image);
+}
+
 TerrainSim::TerrainSim() 
     :sz{0.1f},
      height_shape{memnew(HeightMapShape3D)},
-     image{memnew(Image)}
+     image{memnew(Image)},
+     image_texture{memnew(ImageTexture)}
 {
     sz = 0.1f;
 
@@ -66,15 +84,16 @@ TerrainSim::TerrainSim()
             float r = sqrt(x*x+z*z);
             float h = ((x+z/2)%4)*0.25;
 
-            if (r<10) h=0.5;            
+            if (r<3) h=0.5;            
+            if (x==6 && z == 5) h=3.0; // spike, for calibration
             
             height_floats[z*W + x] = h;
         }
 
     height_shape->set_map_width(W);
     height_shape->set_map_depth(H);
-
-	publish();
+    
+	publish_first();
     printf("TerrainSim constructor finished (this=%p)\n",this);
 }
 

@@ -1,10 +1,13 @@
 /*
 GLSL Godot 4 Shader for drawing a height map.
 
+To land a vertex in the center of each NxN height map pixel, you need
+either a custom mesh, or a PlaneMesh with 2*N-1 x 2*N-1 subdivide slots.
+
 */
 shader_type spatial;
 
-uniform sampler2D heights;
+uniform sampler2D heights : repeat_disable;
 
 void vertex() {
 	// Loft the geometry to match the texture image
@@ -13,7 +16,11 @@ void vertex() {
 }
 
 void fragment() {
+	vec3 glow = vec3(0.0,1.0,0.0);
 	ALBEDO = texture(heights,UV).rrr;
+	
+	vec2 gridlines = fract(UV*8.0);
+	if (min(gridlines.x,gridlines.y)<0.05) EMISSION = glow;
 	//ALBEDO = vec3(UV.x,UV.y,0.0f); // debug check uv
 }
 
