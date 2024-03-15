@@ -2,8 +2,7 @@
 extends Node3D
 
 @export var terrain : TerrainSim # Source of height data
-@export var sprite : Sprite3D # Quick and dirty 2D only display of raw texture
-@export var shade : ShaderMaterial # material for subdivided plane render
+@export var shader : ShaderMaterial # renders the terrain
 @export var collider : CollisionShape3D # defines terrain collisions
 
 # Called when the node enters the scene tree for the first time.
@@ -11,13 +10,8 @@ func _ready():
 	if (collider):
 		collider.shape = terrain.get_height_shape()
 	
-	var image = terrain.get_image()
-	print("Terrain image in script: ",image.get_width(),"x",image.get_height()," pixels")
 	var tex = terrain.get_image_texture()
-	# var tex = ImageTexture.create_from_image(image)
-	sprite.texture = tex
-	
-	shade.set_shader_parameter("heights", tex)
+	shader.set_shader_parameter("heights", tex)
 	
 	pass # Replace with function body.
 
