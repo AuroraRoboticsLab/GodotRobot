@@ -35,10 +35,10 @@ void fragment() {
 	
 	// ALBEDO = texture(heights,UV).rrr; // draw raw heights as brightness
 	
-	if (false) { // make glowing grid lines
-		vec3 glow = vec3(0.0,1.0,0.0);
-		vec2 gridlines = fract(UV*8.0);
-		if (min(gridlines.x,gridlines.y)<0.05) ALBEDO = EMISSION = glow;
+	if (true) { // make glowing grid lines
+		vec3 glow = vec3(0.0,0.6,0.0);
+		vec2 gridlines = fract(UV*25.4);
+		if (min(gridlines.x,gridlines.y)<0.01) ALBEDO = EMISSION = glow;
 	}
 	//ALBEDO = vec3(UV.x,UV.y,0.0f); // debug check uv
 }
