@@ -104,6 +104,8 @@ TerrainSim::TerrainSim()
 {
     height_array.resize(W*H);
     height_floats=height_array.ptrw();
+    height_next_array.resize(W*H);
+    height_next=height_next_array.ptrw();
     
     for (int z=0;z<H;z++)
         for (int x=0;x<W;x++)
@@ -118,42 +120,6 @@ TerrainSim::TerrainSim()
     printf("TerrainSim constructor finished (this=%p)\n",this);
 }
 
-/// Fill our mesh centered on this location
-void TerrainSim::fill_heights(float cx, float cz,float cliffR)
-{
-    for (int z=0;z<H;z++)
-        for (int x=0;x<W;x++)
-        {
-            float h = ((x+z/2)%4)*0.025; // slightly fuzzy floor
-
-            float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
-            if (r<cliffR) h=1.5; // rounded cliff 
-            
-            if (x==2 && z == 2) h=3.0; // spike, for vertex calibration
-            
-            height_floats[z*W + x] = h;
-        }
-    publish();
-}
-
-/// Animate our mesh with smoothly wobbling cosines
-void TerrainSim::animate_heights(double dt)
-{
-    time += dt;
-    
-    for (int z=0;z<H;z++)
-        for (int x=0;x<W;x++)
-        {
-            float h = height_floats[z*W + x]; 
-            
-            if (h<0.5f) {
-                h = 0.1f*(cos(time + x*0.5f)+cos(time + z*0.5f));
-            
-                height_floats[z*W + x] = h;
-            }
-        }
-    publish();
-}
 
 TerrainSim::~TerrainSim() {
     printf("TerrainSim destructor (this=%p)\n",this);
@@ -236,8 +202,105 @@ void TerrainSim::add_static_collider(void)
 }
 
 
-void TerrainSim::_process(double delta) {
-    animate_heights(delta);
+/// Fill our mesh centered on this location
+void TerrainSim::fill_heights(float cx, float cz,float cliffR)
+{
+    for (int z=0;z<H;z++)
+        for (int x=0;x<W;x++)
+        {
+            int i = z*W + x;
+            float h = ((x+z/2)%4)*0.025; // slightly fuzzy floor
+
+            float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
+            if (r<cliffR) h=1.5; // rounded cliff 
+            
+            if (x==2 && z == 2) h=3.0; // spike, for vertex calibration
+            
+            height_floats[i] = h;
+            height_next[i] = h;
+        }
+    publish();
+}
+
+/// Animate low areas of our mesh with smoothly wobbling cosines
+///  (useful as a physics test)
+void TerrainSim::animate_heights(double dt)
+{
+    time += dt;
+    
+    for (int z=0;z<H;z++)
+        for (int x=0;x<W;x++)
+        {
+            int i = z*W + x;
+            float h = height_floats[i]; 
+            
+            if (h<0.5f) {
+                h = 0.1f*(cos(time + x*0.5f)+cos(time + z*0.5f));
+            
+                height_floats[i] = h;
+            }
+        }
+    publish();
+}
+
+/// Apply physics of sand transport
+void TerrainSim::animate_physics(double dt)
+{
+    time += dt;
+    
+    float inv_2dh = 1.0/(2.0*sz); // horizontal pixel spacing
+    
+    float big = 1000.0; // limit height
+    
+    // Slope stability threshold
+    float angle_of_repose = 50.0f; // degrees up from horizontal (high for jagged moon dust)
+    float stability_Y = cos(angle_of_repose * M_PI/180.0f);
+    
+    for (int z=1;z<H-1;z++)
+        for (int x=1;x<W-1;x++)
+        {
+            int i = z*W + x;
+            float C = height_floats[i]; 
+            float h = C;
+            
+            // Load neighbor heights
+            float           T = height_floats[i-W];
+            float L = height_floats[i-1], R=height_floats[i+1];
+            float           B = height_floats[i+W];
+            float neighborhood = 0.25*(T+B+L+R);
+            
+            // Estimate slope
+            float dx = (R-L)*inv_2dh;
+            float dz = (T-B)*inv_2dh;
+            Vector3 N = Vector3(dx,1.0f,dz).normalized();
+            
+            if (N.y < stability_Y)
+            {
+                // Slope is unstable--move with neighbors
+                //    FIXME: transport inertia
+                //    FIXME: will this conserve mass?
+                h += 1.0*(neighborhood-C);
+            }
+            else {
+                // very weak erosion everywhere
+                h += 0.01*(neighborhood-C);
+            }
+            
+            if (h!=h) { h=0.0; } // fix NaNs
+            
+            height_next[i] = h;
+        }
+    
+    // Swap the buffers (pointer swap, more efficient than copy)
+    std::swap(height_next,height_floats);
+    std::swap(height_next_array,height_array);
+    
+    publish();
+}
+
+
+void TerrainSim::_physics_process(double delta) {
+    animate_physics(delta);
 }
 
 

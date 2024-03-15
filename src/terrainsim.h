@@ -44,10 +44,15 @@ public:
 	/// Animate our mesh with smoothly wobbling cosines
 	void animate_heights(double dt);
 	
-	void _process(double delta) override;
+	/// Apply physics of sand transport
+	void animate_physics(double dt);
 	
     /// Publish updated height data to collision and image buffers
     void publish(void);
+	
+	void _physics_process(double delta) override;
+    
+    
     
 	/// Allows collision detection (add this to a collider)
     Ref<HeightMapShape3D> get_height_shape(void) { return height_shape; }
@@ -59,12 +64,6 @@ public:
     Ref<ImageTexture> get_image_texture(void) { return image_texture; }
     
     
-    /*
-    // Setters are a bad idea
-    void set_height_shape(Ref<HeightMapShape3D> r) { height_shape=r; }
-    void set_image(Ref<Image> r) { image=r; }
-    void set_image_texture(Ref<ImageTexture> r) { image_texture=r; }
-    */
     
     /// Create a child mesh instance so you can see our terrain.
     ///  Renders using this shader as the basis,
@@ -85,6 +84,10 @@ private:
     
     /// Points to our raw height data in the array, raster pattern WxH in size
     float *height_floats;
+    
+    /// Next height data, in meters (jacobi iteration style)
+    PackedFloat32Array height_next_array;
+    float *height_next;
     
     /// Publish first time height data to Refs below.
     void publish_first(void);
