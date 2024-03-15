@@ -1,8 +1,7 @@
 /*
 
+  Simulate a terrain using a table of height values.
   
-  PackedFloat32Array
-    float *ptrw(); will return a pointer to the actual data.
   
   Compute shaders are another option, though they don't work in WebGL for now ("RenderingDevice is only available in Forward Plus and Forward Mobile, not Compatibility"). 
   https://github.com/godotengine/godot-demo-projects/tree/master/misc/compute_shader_heightmap
@@ -23,26 +22,52 @@ Routes to get PackedFlat32Array onscreen:
     
     I think bare floats is: Image::FORMAT_RF
         Can get PackedByteArray via to_byte_array()
+    PackedFloat32Array
+        float *ptrw(); will return a pointer to the actual data.
     
     static Ref<Image> create_from_data(int32_t width, int32_t height, bool use_mipmaps, Image::Format format, const PackedByteArray &data);
 
 */
-#include <stdio.h> // for printf
+#include <stdio.h> // for printf, which spews to the console
 #include "terrainsim.h"
 
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/plane_mesh.hpp>
+#include <godot_cpp/classes/static_body3d.hpp>
 
 
 using namespace godot;
-
+/*
+ See: https://docs.godotengine.org/en/stable/contributing/development/core_and_modules/object_class.html#properties-set-get
+*/
 void TerrainSim::_bind_methods() {	
     printf("TerrainSim binding methods\n");
+    
+    // The get methods are so script can access our terrain data
     ClassDB::bind_method(D_METHOD("get_height_shape"), &TerrainSim::get_height_shape);
     ClassDB::bind_method(D_METHOD("get_image"), &TerrainSim::get_image);
     ClassDB::bind_method(D_METHOD("get_image_texture"), &TerrainSim::get_image_texture);
     
-    // ClassDB::add_property("TerrainSim", PropertyInfo(Variant::OBJECT, "image", PROPERTY_HINT_NONE, "Image",PROPERTY_USAGE_DEFAULT), "", "get_image"); //<- crashes
+    // Methods to set up and configure the object
+    ClassDB::bind_method(D_METHOD("add_mesh"), &TerrainSim::add_mesh);
+    ClassDB::bind_method(D_METHOD("create_collider"), &TerrainSim::create_collider);
+    ClassDB::bind_method(D_METHOD("add_static_collider"), &TerrainSim::add_static_collider);
+    
+    
+    /*
+    // These setters are probably a bad idea:
+    ClassDB::bind_method(D_METHOD("set_height_shape"), &TerrainSim::set_height_shape);
+    ClassDB::bind_method(D_METHOD("set_image"), &TerrainSim::set_image);
+    ClassDB::bind_method(D_METHOD("set_image_texture"), &TerrainSim::set_image_texture);
+    
+    // Just giving accessing to our fields like this results in editor warnings like:
+    //   WARNING: Instantiated Image used as default value for TerrainSim's "image" property.
+    ClassDB::add_property("TerrainSim", PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_NONE, "",PROPERTY_USAGE_DEFAULT, "HeightMapShape3D"), "", "get_height_shape");  
+    ClassDB::add_property("TerrainSim", PropertyInfo(Variant::OBJECT, "image", PROPERTY_HINT_NONE, "",PROPERTY_USAGE_DEFAULT, "Image"), "", "get_image"); 
+    ClassDB::add_property("TerrainSim", PropertyInfo(Variant::OBJECT, "texture", PROPERTY_HINT_NONE, "",PROPERTY_USAGE_DEFAULT, "ImageTexture"), "", "get_image_texture"); 
+    */
 
 }
 
@@ -68,13 +93,11 @@ void TerrainSim::publish(void) {
 }
 
 TerrainSim::TerrainSim() 
-    :sz{0.1f},
+    :sz{MESH_SPACING},
      height_shape{memnew(HeightMapShape3D)},
      image{memnew(Image)},
      image_texture{memnew(ImageTexture)}
 {
-    sz = 0.1f;
-
     height_array.resize(W*H);
     height_floats=height_array.ptrw();
 
@@ -95,6 +118,9 @@ TerrainSim::TerrainSim()
     height_shape->set_map_depth(H);
     
 	publish_first();
+	
+	
+	
     printf("TerrainSim constructor finished (this=%p)\n",this);
 }
 
@@ -106,6 +132,90 @@ TerrainSim::~TerrainSim() {
     memdelete(image);
     */
 }
+
+
+/// Create a static TerrainSim mesh, for all instances to use.
+///   (they're all the same size)
+static Ref<Mesh> make_terrain_sim_mesh()
+{
+    // A PlaneMesh isn't very efficient, but is easy to write.
+    static Ref<PlaneMesh> mesh{memnew(PlaneMesh)};
+    static bool init=false;
+    if (!init) {
+        mesh->set_subdivide_width(2*TerrainSim::W-1);
+        mesh->set_subdivide_depth(2*TerrainSim::H-1);
+        Vector2 size = Vector2(
+            TerrainSim::W*MESH_SPACING,
+            TerrainSim::H*MESH_SPACING
+        );
+        mesh->set_size(Vector2(
+            size.x,size.y
+        ));
+        mesh->set_center_offset(0.5f*Vector3(
+            size.x,0.0f,size.y
+        ));
+        
+        init=true;
+    }
+    return mesh;
+}
+
+/// Create a mesh as a child of us, so you can see our terrain.
+///  Renders using this shader as the basis,
+///  replaces the shader's "heights" uniform.
+void TerrainSim::add_mesh(Ref<ShaderMaterial> shader)
+{
+    if (shader==NULL) { //<- we'd crash without a shader
+        shader = ResourceLoader::get_singleton()->load("res://terrain/terrain_shader_material.tres");
+    }
+    if (shader==NULL) {
+        printf("TerrainSim can't find shader material, skipping mesh.\n");
+        return; // still NULL, no good.
+    }
+    
+    // oddly, you can't seem to Ref<Node>, so use bare pointer.
+    MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
+    mesh_instance->set_mesh(make_terrain_sim_mesh());
+    
+    Ref<ShaderMaterial> sm{shader->duplicate(true)};
+    sm->set_shader_parameter("heights", image_texture);
+    mesh_instance->set_surface_override_material(0,sm);
+    
+    add_child(mesh_instance);
+}
+
+/// Create a new CollisionShape3D for our collisions.
+///   Includes a scale factor to match our shader and mesh.
+CollisionShape3D *TerrainSim::create_collider(void) const
+{
+    CollisionShape3D *c{memnew(CollisionShape3D)};
+    
+    c->set_shape(height_shape);
+    
+    c->set_position(Vector3(
+        TerrainSim::W*MESH_SPACING*0.5f,
+        0.0f,
+        TerrainSim::H*MESH_SPACING*0.5f
+    ));
+    c->set_scale(Vector3(
+        MESH_SPACING,
+        1.0f,
+        MESH_SPACING
+    ));
+    
+    return c;
+}
+
+/// Create a child StaticBody3D so stuff bounces off this terrain.
+void TerrainSim::add_static_collider(void)
+{
+    StaticBody3D *sc{memnew(StaticBody3D)};
+    
+    sc->add_child(create_collider());
+    
+    add_child(sc);
+}
+
 
 void TerrainSim::_process(double delta) {
 }

@@ -10,6 +10,9 @@
 #include <godot_cpp/classes/image.hpp>
 #include <godot_cpp/classes/image_texture.hpp>
 #include <godot_cpp/classes/height_map_shape3d.hpp>
+#include <godot_cpp/classes/shader_material.hpp>
+#include <godot_cpp/classes/mesh_instance3d.hpp>
+#include <godot_cpp/classes/collision_shape3d.hpp>
 
 namespace godot {
 
@@ -23,6 +26,9 @@ public:
     ///   Smaller ->  more granular updates
     ///   Larger -> fewer boundaries and object update overhead
     enum {W=64, H=64};
+
+/// Float size of mesh cells, horizontal distance
+#define MESH_SPACING 0.1f
     
     /// Size in meters of pixel, horizontal distance (along X or Z axes).
     float sz;
@@ -43,6 +49,26 @@ public:
     
     /// Get image texture (for shader lookup of heights)
     Ref<ImageTexture> get_image_texture(void) { return image_texture; }
+    
+    
+    /*
+    // Setters are a bad idea
+    void set_height_shape(Ref<HeightMapShape3D> r) { height_shape=r; }
+    void set_image(Ref<Image> r) { image=r; }
+    void set_image_texture(Ref<ImageTexture> r) { image_texture=r; }
+    */
+    
+    /// Create a child mesh instance so you can see our terrain.
+    ///  Renders using this shader as the basis,
+    ///  replaces the shader's "heights" uniform.
+    void add_mesh(Ref<ShaderMaterial> shader);
+    
+    /// Create a new CollisionShape3D for our collisions.
+    ///   Includes a scale factor to match our shader and mesh.
+    CollisionShape3D *create_collider(void) const;
+    
+    /// Create a child StaticBody3D so stuff bounces off this terrain.
+    void add_static_collider(void);
     
 
 private:
