@@ -16,11 +16,11 @@ void vertex() {
 }
 
 void fragment() {
-	vec3 glow = vec3(0.0,1.0,0.0);
 	ALBEDO = texture(heights,UV).rrr;
 	
+	vec3 glow = vec3(0.0,1.0,0.0);
 	vec2 gridlines = fract(UV*8.0);
-	if (min(gridlines.x,gridlines.y)<0.05) EMISSION = glow;
+	if (min(gridlines.x,gridlines.y)<0.05) ALBEDO = EMISSION = glow;
 	//ALBEDO = vec3(UV.x,UV.y,0.0f); // debug check uv
 }
 

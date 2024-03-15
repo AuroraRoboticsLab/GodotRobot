@@ -81,11 +81,12 @@ TerrainSim::TerrainSim()
     for (int z=0;z<H;z++)
         for (int x=0;x<W;x++)
         {
-            float r = sqrt(x*x+z*z);
-            float h = ((x+z/2)%4)*0.25;
+            float h = ((x+z/2)%4)*0.025; // slightly fuzzy floor
 
-            if (r<3) h=0.5;            
-            if (x==6 && z == 5) h=3.0; // spike, for calibration
+            float r = sqrt(x*x+z*z);
+            if (r<30) h=1.5; // rounded cliff 
+            
+            if (x==6 && z == 5) h=3.0; // spike, for vertex calibration
             
             height_floats[z*W + x] = h;
         }

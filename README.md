@@ -38,6 +38,12 @@ Finally, you can try out the example project by running
 
     Godot-v4.2.1-stable.exe demo/project.godot
 
+The standard edit loop is:
+ - Save in Godot Engine.
+ - Edit the .cpp file in your favorite editor.
+ - Switch to GodotRobot/ terminal and `scons` build.
+ - Switch to Godot Engine and Project -> Reload Current Project.
+
 
 ## Godot Robot Nodes
 
