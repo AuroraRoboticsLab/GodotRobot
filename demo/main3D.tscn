@@ -43,10 +43,16 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="DemoRobot3D" parent="." instance=ExtResource("2_7vjad")]
-transform = Transform3D(0.990565, 0.136323, -0.0140707, -0.137047, 0.98533, -0.101702, 0, 0.102671, 0.994715, 0, 4.36922, 3.07988)
+transform = Transform3D(0.990565, 0.136323, -0.0140707, -0.108887, 0.845211, 0.523224, 0.08322, -0.516755, 0.852079, 0, 3.20659, 3.07988)
 
 [node name="DemoRobot3D2" parent="." instance=ExtResource("2_7vjad")]
 transform = Transform3D(-0.643832, 0.17748, -0.744299, 0.119401, 0.984115, 0.131381, 0.755794, -0.00428247, -0.654796, 2.56328, 3.20248, 2.08108)
+
+[node name="DemoRobot3D" parent="DemoRobot3D2" instance=ExtResource("2_7vjad")]
+transform = Transform3D(0.990565, 0.136323, -0.0140709, -0.108887, 0.845211, 0.523223, 0.08322, -0.516755, 0.852079, -0.939803, 3.99948, 4.08189)
+
+[node name="DemoRobot3D2" parent="DemoRobot3D2" instance=ExtResource("2_7vjad")]
+transform = Transform3D(-0.643832, 0.17748, -0.744299, 0.119401, 0.984115, 0.131381, 0.755794, -0.00428244, -0.654796, 1.62348, 3.99537, 3.08309)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
