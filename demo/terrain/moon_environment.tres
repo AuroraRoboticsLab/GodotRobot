@@ -1,6 +1,15 @@
-[gd_resource type="Environment" format=3 uid="uid://cw6e84ra2jvqc"]
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://cw6e84ra2jvqc"]
+
+[ext_resource type="Texture2D" uid="uid://bw8shy2qqqvla" path="res://environment/skybox_moon_main_mk2.exr" id="1_slfth"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pnyv7"]
+panorama = ExtResource("1_slfth")
+
+[sub_resource type="Sky" id="Sky_kjllf"]
+sky_material = SubResource("PanoramaSkyMaterial_pnyv7")
 
 [resource]
-background_mode = 1
-ambient_light_source = 1
+background_mode = 2
+background_energy_multiplier = 16.0
+sky = SubResource("Sky_kjllf")
 reflected_light_source = 2

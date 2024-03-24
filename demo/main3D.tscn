@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bun8tfid8p1fn"]
 
-[ext_resource type="Material" uid="uid://gf66fh5vii5d" path="res://terrain/terrain_shader_material.tres" id="1_mwwkp"]
+[ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="PackedScene" uid="uid://v6k4sjvue810" path="res://robot/excahauler_static.tscn" id="2_7vjad"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="3_58k4c"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="3_qie7w"]
@@ -10,6 +10,7 @@ script/source = "@tool   #<- allows you to see terrain in editor, though has wei
 extends Node3D
 
 @export var shader : ShaderMaterial # renders the terrain
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,16 +23,13 @@ func _ready():
 [sub_resource type="BoxMesh" id="BoxMesh_848ex"]
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_l30dg")
 
 [node name="TerrainScript" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.50407, 0, -10.2105)
 script = SubResource("GDScript_wq2bh")
-shader = ExtResource("1_mwwkp")
 
 [node name="TerrainSim" type="TerrainSim" parent="TerrainScript"]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.980443, 0.196802, 0, -0.196802, 0.980443, 0, 1.8, 8)
 
 [node name="Origin Reference Cube" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.5)
@@ -43,16 +41,18 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="DemoRobot3D" parent="." instance=ExtResource("2_7vjad")]
-transform = Transform3D(0.990565, 0.136323, -0.0140707, -0.108887, 0.845211, 0.523224, 0.08322, -0.516755, 0.852079, 0, 3.20659, 3.07988)
+transform = Transform3D(0.106162, -0.0311134, -0.993862, 0.0258619, 0.99926, -0.0285194, 0.994013, -0.0226755, 0.106887, 0.425126, 1.47748, -0.15613)
 
-[node name="DemoRobot3D2" parent="." instance=ExtResource("2_7vjad")]
-transform = Transform3D(-0.643832, 0.17748, -0.744299, 0.119401, 0.984115, 0.131381, 0.755794, -0.00428247, -0.654796, 2.56328, 3.20248, 2.08108)
+[node name="RobotOnboardView" type="Camera3D" parent="DemoRobot3D"]
+transform = Transform3D(0.999964, -0.00837551, 0.00118607, 0.00715698, 0.912421, 0.409186, -0.00450847, -0.409164, 0.91245, 0.00451207, 1.17323, -0.082373)
+fov = 120.0
 
-[node name="DemoRobot3D" parent="DemoRobot3D2" instance=ExtResource("2_7vjad")]
-transform = Transform3D(0.990565, 0.136323, -0.0140709, -0.108887, 0.845211, 0.523223, 0.08322, -0.516755, 0.852079, -0.939803, 3.99948, 4.08189)
+[node name="CameraPivot" type="Node3D" parent="DemoRobot3D"]
+transform = Transform3D(1, -7.45058e-09, -1.19209e-07, -2.98023e-08, 1, -2.63099e-08, 0, -7.91624e-09, 1, 0.015866, 0.464159, -0.0490997)
 
-[node name="DemoRobot3D2" parent="DemoRobot3D2" instance=ExtResource("2_7vjad")]
-transform = Transform3D(-0.643832, 0.17748, -0.744299, 0.119401, 0.984115, 0.131381, 0.755794, -0.00428244, -0.654796, 1.62348, 3.99537, 3.08309)
+[node name="RobotExternalView" type="Camera3D" parent="DemoRobot3D/CameraPivot"]
+transform = Transform3D(0.999999, -3.38248e-09, 6.63851e-09, 0, 0.891004, 0.45399, -7.45057e-09, -0.453989, 0.891006, 0, 1.1, 1.1)
+fov = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
