@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var camera_external = $DemoRobot3D/CameraPivot/RobotExternalView
+@onready var camera_external = $DemoRobot3D/RobotExternalView
 const camera_external_id = 0
 @onready var camera_onboard = $DemoRobot3D/RobotOnboardView
 const camera_onboard_id = 1

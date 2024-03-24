@@ -41,11 +41,15 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="DemoRobot3D" parent="." instance=ExtResource("2_7vjad")]
-transform = Transform3D(0.990565, 0.136323, -0.0140707, -0.108887, 0.845211, 0.523224, 0.08322, -0.516755, 0.852079, 0, 3.20659, 2.99215)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61823, 0)
 
 [node name="RobotOnboardView" type="Camera3D" parent="DemoRobot3D"]
 transform = Transform3D(0.999964, -0.00837551, 0.00118607, 0.00715698, 0.912421, 0.409186, -0.00450847, -0.409164, 0.91245, 0.00451207, 1.17323, -0.082373)
 fov = 120.0
+
+[node name="RobotExternalView" type="Camera3D" parent="DemoRobot3D"]
+transform = Transform3D(1, 2.23517e-08, -1.49012e-08, -1.51487e-08, 0.927294, 0.374331, 2.21847e-08, -0.374331, 0.927295, 0, 1.2, 1.2)
+fov = 92.1592
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
