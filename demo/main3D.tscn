@@ -41,18 +41,11 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="DemoRobot3D" parent="." instance=ExtResource("2_7vjad")]
-transform = Transform3D(0.106162, -0.0311134, -0.993862, 0.0258619, 0.99926, -0.0285194, 0.994013, -0.0226755, 0.106887, 0.425126, 1.47748, -0.15613)
+transform = Transform3D(0.990565, 0.136323, -0.0140707, -0.108887, 0.845211, 0.523224, 0.08322, -0.516755, 0.852079, 0, 3.20659, 2.99215)
 
 [node name="RobotOnboardView" type="Camera3D" parent="DemoRobot3D"]
 transform = Transform3D(0.999964, -0.00837551, 0.00118607, 0.00715698, 0.912421, 0.409186, -0.00450847, -0.409164, 0.91245, 0.00451207, 1.17323, -0.082373)
 fov = 120.0
-
-[node name="CameraPivot" type="Node3D" parent="DemoRobot3D"]
-transform = Transform3D(1, -7.45058e-09, -1.19209e-07, -2.98023e-08, 1, -2.63099e-08, 0, -7.91624e-09, 1, 0.015866, 0.464159, -0.0490997)
-
-[node name="RobotExternalView" type="Camera3D" parent="DemoRobot3D/CameraPivot"]
-transform = Transform3D(0.999999, -3.38248e-09, 6.63851e-09, 0, 0.891004, 0.45399, -7.45057e-09, -0.453989, 0.891006, 0, 1.1, 1.1)
-fov = 100.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")

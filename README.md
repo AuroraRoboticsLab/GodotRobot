@@ -5,7 +5,7 @@ Simple early proof of concept C++ robot simulation using Godot 4.2's GDExtension
 
 To build this, start by downloading the [Godot 4.2 engine](https://godotengine.org/download/) for your machine.
 
-You also need Blender, at least version 3.0.  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
+You also need [Blender 3](https://download.blender.org/release/Blender3.0/), at least version 3.0 (Blender 4+ does not seem to work).  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
 
 
 You'll also need build tools:
