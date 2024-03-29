@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://c73kovjg5pcd3"]
+
+[ext_resource type="Script" path="res://ui.gd" id="1_1j2nn"]
+[ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_1j2nn")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="FPSLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Framerate: "
+
+[node name="FPS" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "60"
+
+[node name="BallCountLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Ball count: "
+
+[node name="BallCount" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="FPS Counter" type="Node3D" parent="."]
+script = ExtResource("1_mxmhq")

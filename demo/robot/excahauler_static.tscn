@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://v6k4sjvue810"]
+[gd_scene load_steps=8 format=3 uid="uid://v6k4sjvue810"]
 
 [ext_resource type="Script" path="res://robot/excahauler_static.gd" id="1_exou3"]
 [ext_resource type="PackedScene" uid="uid://cnx6htsy88fqs" path="res://robot/excahauler.blend" id="1_xp40i"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qgrlw"]
+bounce = 1.0
+absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h2xun"]
 size = Vector3(1.24261, 0.322357, 1.21137)
@@ -12,12 +16,14 @@ size = Vector3(0.670089, 0.368332, 0.386826)
 [sub_resource type="BoxShape3D" id="BoxShape3D_nwear"]
 size = Vector3(0.512069, 0.567841, 0.780815)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_acnjb"]
-top_radius = 0.15
-bottom_radius = 0.15
-height = 0.2
+[sub_resource type="SphereMesh" id="SphereMesh_ktrtb"]
+radius = 0.15
+height = 0.3
+radial_segments = 16
+rings = 8
 
 [node name="DemoRobot3D" type="VehicleBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_qgrlw")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 0.3, -0.1)
 script = ExtResource("1_exou3")
@@ -38,7 +44,6 @@ shape = SubResource("BoxShape3D_nwear")
 
 [node name="VehicleWheel3D1" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, 0.453534)
-visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
@@ -51,11 +56,10 @@ damping_relaxation = 0.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D1"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.00355363, -0.00492448, -0.00151539)
-mesh = SubResource("CylinderMesh_acnjb")
+mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, -0.00331038)
-visible = false
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -67,11 +71,10 @@ damping_relaxation = 0.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D2"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.00355363, -0.00492448, -0.00151539)
-mesh = SubResource("CylinderMesh_acnjb")
+mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, -0.455662)
-visible = false
 brake = 0.2
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -83,11 +86,10 @@ damping_relaxation = 0.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D3"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.00355363, -0.00492448, -0.00151539)
-mesh = SubResource("CylinderMesh_acnjb")
+mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, -0.455662)
-visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
@@ -100,11 +102,10 @@ damping_relaxation = 0.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D4"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.00355363, -0.00492448, -0.00151539)
-mesh = SubResource("CylinderMesh_acnjb")
+mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D5" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, -0.00060299)
-visible = false
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
 suspension_travel = 0.03
@@ -115,11 +116,10 @@ damping_relaxation = 0.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D5"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.00355363, -0.00492448, -0.00151539)
-mesh = SubResource("CylinderMesh_acnjb")
+mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D6" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, 0.452979)
-visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
@@ -132,4 +132,7 @@ damping_relaxation = 0.95
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheel3D6"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.00355363, -0.00492448, -0.00151539)
-mesh = SubResource("CylinderMesh_acnjb")
+mesh = SubResource("SphereMesh_ktrtb")
+
+[node name="CenterOfMass" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203127, -0.185059)

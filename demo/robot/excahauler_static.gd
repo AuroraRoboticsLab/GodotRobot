@@ -10,16 +10,16 @@ var right_front_wheel  : VehicleWheel3D
 var right_middle_wheel : VehicleWheel3D
 var right_back_wheel   : VehicleWheel3D
 
-
-
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	# Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	left_front_wheel   = $VehicleWheel3D4
 	left_middle_wheel  = $VehicleWheel3D5
 	left_back_wheel    = $VehicleWheel3D6
 	right_front_wheel  = $VehicleWheel3D3
 	right_middle_wheel = $VehicleWheel3D2
 	right_back_wheel   = $VehicleWheel3D1
+	
+	center_of_mass = $CenterOfMass.position
 
 
 func _physics_process(delta):
@@ -42,8 +42,10 @@ func _physics_process(delta):
 	var steer_force = Input.get_axis("right", "left") * STEERING_FORCE * delta * steering_force_multiplier
 	
 	left_front_wheel.engine_force  = drive_force + steer_force
+	left_middle_wheel.engine_force = drive_force + steer_force
 	left_back_wheel.engine_force = drive_force + steer_force
 	right_front_wheel.engine_force = drive_force - steer_force
+	right_middle_wheel.engine_force = drive_force - steer_force
 	right_back_wheel.engine_force = drive_force - steer_force
 	
 	if Input.is_action_pressed("jump"):
