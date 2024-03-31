@@ -57,6 +57,7 @@ void TerrainSim::_bind_methods() {
     // Methods to do physics or animation
     ClassDB::bind_method(D_METHOD("fill_heights"), &TerrainSim::fill_heights);
     ClassDB::bind_method(D_METHOD("animate_heights"), &TerrainSim::animate_heights);
+    ClassDB::bind_method(D_METHOD("try_merge"), &TerrainSim::try_merge);
     
     
     /*
@@ -282,8 +283,8 @@ void TerrainSim::animate_physics(double dt)
                 h += 1.0*(neighborhood-C);
             }
             else {
-                // very weak erosion everywhere
-                h += 0.01*(neighborhood-C);
+                // very weak erosion everywhere (prevents weird cliffs)
+                h += 0.001*(neighborhood-C);
             }
             
             if (h!=h) { h=0.0; } // fix NaNs
@@ -301,6 +302,65 @@ void TerrainSim::animate_physics(double dt)
 
 void TerrainSim::_physics_process(double delta) {
     animate_physics(delta);
+}
+
+
+/// Consider merging this dirtball with our terrain.
+///   If so, do it and return true.  If not, return false.
+bool TerrainSim::try_merge(Node3D *dirtball) {
+    if (dirtball == NULL) return false;
+    
+    Vector3 o = get_global_position(); // our global position
+    Vector3 d = dirtball->get_global_position(); // dirtball's position
+    float fx = (d.x-o.x)*(1.0/MESH_SPACING);
+    float fz = (d.z-o.z)*(1.0/MESH_SPACING);
+    int ix = (int)floor(fx); // round down to int
+    int iz = (int)floor(fz); 
+    if (ix<=0 || ix>=W-1 || iz<=0 || iz>=H-1) return false; // out of bounds
+    
+    // Load the terrain height under the dirtball
+    float &h = height_floats[iz*W+ix];
+    float dY = d.y - (o.y + h); // height of dirtball center over terrain surface
+    if (dY<-MESH_SPACING) {
+        // already underground!?
+        return false;
+    }
+    if (dY>2.0f*MESH_SPACING) {
+        // too high over surface
+        return false;
+    }
+
+// Add the dirtball to the terrain
+    const float dirtball_sz = 0.1; // meters across a dirtball (for volume estimate)
+    const float dirtball_dh = powf(dirtball_sz,3.0)/(MESH_SPACING * MESH_SPACING);
+    
+    // Nearest: raise terrain height at the closest one pixel (lumpy)
+    // h += dirtball_dh; // raise terrain height at that one pixel
+    /*
+    // Bilinear interpolation: makes a smoother initial deposit on terrain, but doesn't seem to scale
+    float fracx = fx - ix, fracz = fz - iz; // between 0.0 (on the int) and 1.0 (almost to next)
+    height_floats[(iz+0)*W + (ix+0)] += (1.0-fracx)*(1.0-fracz)*dirtball_dh;
+    height_floats[(iz+1)*W + (ix+0)] += (1.0-fracx)*     fracz *dirtball_dh;
+    height_floats[(iz+0)*W + (ix+1)] +=      fracx *(1.0-fracz)*dirtball_dh;
+    height_floats[(iz+1)*W + (ix+1)] +=      fracx *     fracz *dirtball_dh;
+    */
+    
+    // Lowest: Find lowest neighboring terrain pixel to merge dirt onto
+    int low_i=iz*W+ix;
+    float low_ht = h-0.01; //<- slight preference for nearest pixel
+    for (int dx=-1;dx<=+1;dx++) for (int dz=-1;dz<=+1;dz++) {
+        int i=(iz+dz)*W+(ix+dx);
+        float h = height_floats[i];
+        if (h<low_ht) {
+            low_ht=h;
+            low_i=i;
+        }
+    }
+    height_floats[low_i] += dirtball_dh; // dump dirt into low spot
+    
+    printf("Merged dirtball at terrain pixel (%d,%d)\n", ix,iz);
+    
+    return true;
 }
 
 

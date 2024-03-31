@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://yj2povyyj7mr"]
+[gd_scene load_steps=4 format=3 uid="uid://yj2povyyj7mr"]
 
-[ext_resource type="Script" path="res://terrain/dirtball.gd" id="1_tkx6f"]
 [ext_resource type="PackedScene" uid="uid://dcdqjyqiy1tpg" path="res://terrain/rocks/rock_lump_1.tscn" id="2_y5onx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_663k3"]
 rough = true
-bounce = 1.0
+bounce = 0.9
 absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c3r5l"]
@@ -16,18 +15,10 @@ mass = 0.35
 physics_material_override = SubResource("PhysicsMaterial_663k3")
 linear_damp_mode = 1
 linear_damp = 0.1
-angular_damp = 0.01
-script = ExtResource("1_tkx6f")
+angular_damp = 0.1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_c3r5l")
 
-[node name="DespawnTimer" type="Timer" parent="."]
-wait_time = 30.0
-one_shot = true
-autostart = true
-
 [node name="RockLump1" parent="." instance=ExtResource("2_y5onx")]
 transform = Transform3D(0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, 0, 0, 0)
-
-[connection signal="timeout" from="DespawnTimer" to="." method="_on_despawn_timer_timeout"]

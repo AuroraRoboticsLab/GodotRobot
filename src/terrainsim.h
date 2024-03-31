@@ -77,6 +77,10 @@ public:
     /// Create a child StaticBody3D so stuff bounces off this terrain.
     void add_static_collider(void);
     
+    /// Consider merging this dirtball with our terrain.
+    ///   If so, do it and return true.  If not, return false.
+    bool try_merge(Node3D *dirtball);
+    
 
 private:
     /// Raw height data, in meters (can't be refcounted, hence no Ref<> here)
