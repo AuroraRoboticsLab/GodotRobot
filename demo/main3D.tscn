@@ -89,4 +89,7 @@ script = ExtResource("3_qie7w")
 [node name="DirtballSpawn" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
 
+[node name="DirtballDespawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
+
 [node name="UI" parent="." instance=ExtResource("5_pud20")]

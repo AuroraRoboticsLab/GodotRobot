@@ -6,8 +6,8 @@ extends Node3D
 
 # Called in physics_process when a dirtball has stopped and needs to merge with the terrain
 func dirtball_merge(dirtball):
-	if terrain.try_merge(dirtball):
-		dirtball.queue_free()
+	return terrain.try_merge(dirtball)
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

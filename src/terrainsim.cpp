@@ -255,7 +255,7 @@ void TerrainSim::animate_physics(double dt)
     
     // Slope stability threshold
     float angle_of_repose = 50.0f; // degrees up from horizontal (high for jagged moon dust)
-    float stability_Y = cos(angle_of_repose * M_PI/180.0f);
+    float stability_Y = cos(angle_of_repose * M_PI/180.0f); // for dot product
     
     for (int z=1;z<H-1;z++)
         for (int x=1;x<W-1;x++)
@@ -305,7 +305,7 @@ void TerrainSim::_physics_process(double delta) {
 }
 
 
-/// Consider merging this dirtball with our terrain.
+/// Consider merging this dirtball down into our terrain.
 ///   If so, do it and return true.  If not, return false.
 bool TerrainSim::try_merge(Node3D *dirtball) {
     if (dirtball == NULL) return false;
@@ -331,7 +331,7 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
     }
 
 // Add the dirtball to the terrain
-    const float dirtball_sz = 0.08; // meters across a dirtball (for volume estimate)
+    const float dirtball_sz = 0.07; // meters across a dirtball (for volume estimate)
     const float dirtball_dh = powf(dirtball_sz,3.0)/(MESH_SPACING * MESH_SPACING);
     
     // Nearest: raise terrain height at the closest one pixel (lumpy)
