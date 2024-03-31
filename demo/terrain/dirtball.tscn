@@ -8,7 +8,7 @@ bounce = 0.9
 absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c3r5l"]
-size = Vector3(0.1, 0.1, 0.1)
+size = Vector3(0.07, 0.07, 0.07)
 
 [node name="Ball" type="RigidBody3D"]
 mass = 0.35
@@ -21,4 +21,4 @@ angular_damp = 0.1
 shape = SubResource("BoxShape3D_c3r5l")
 
 [node name="RockLump1" parent="." instance=ExtResource("2_y5onx")]
-transform = Transform3D(0.13, 0, 0, 0, 0.13, 0, 0, 0, 0.13, 0, 0, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)

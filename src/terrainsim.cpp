@@ -331,7 +331,7 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
     }
 
 // Add the dirtball to the terrain
-    const float dirtball_sz = 0.1; // meters across a dirtball (for volume estimate)
+    const float dirtball_sz = 0.08; // meters across a dirtball (for volume estimate)
     const float dirtball_dh = powf(dirtball_sz,3.0)/(MESH_SPACING * MESH_SPACING);
     
     // Nearest: raise terrain height at the closest one pixel (lumpy)
