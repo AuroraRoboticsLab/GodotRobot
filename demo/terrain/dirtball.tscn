@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://yj2povyyj7mr"]
 
-[ext_resource type="Script" path="res://dirtball.gd" id="1_tkx6f"]
+[ext_resource type="Script" path="res://terrain/dirtball.gd" id="1_tkx6f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_663k3"]
 rough = true

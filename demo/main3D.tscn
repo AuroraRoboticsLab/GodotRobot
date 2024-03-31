@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://v6k4sjvue810" path="res://robot/excahauler_static.tscn" id="2_7vjad"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="3_58k4c"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="3_qie7w"]
-[ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://ui.tscn" id="5_pud20"]
+[ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="5_pud20"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7jtgm"]
 size = Vector3(20, 1, 20)
@@ -100,7 +100,7 @@ environment = ExtResource("3_58k4c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, 0.0168765, -0.0148048)
 script = ExtResource("3_qie7w")
 
-[node name="BallSpawn" type="Marker3D" parent="."]
+[node name="DirtballSpawn" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]

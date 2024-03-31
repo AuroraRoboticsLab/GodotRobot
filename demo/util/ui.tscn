@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c73kovjg5pcd3"]
 
-[ext_resource type="Script" path="res://ui.gd" id="1_1j2nn"]
+[ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
 
 [node name="UI" type="CanvasLayer"]

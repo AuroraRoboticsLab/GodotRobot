@@ -9,7 +9,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	$GridContainer/BallCount.text = str(ball_count)
 	$GridContainer/FPS.text = str(fps)
 
