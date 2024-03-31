@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://hue0iv8fnnex"]
+
+[ext_resource type="Texture2D" uid="uid://dhyrfdicoe5qq" path="res://terrain/rocks/rock_lump_normal_atlas.jpg" id="1_7fa05"]
+
+[resource]
+albedo_color = Color(0.286275, 0.270588, 0.266667, 1)
+metallic = 0.02
+metallic_specular = 0.02
+roughness = 0.98
+normal_enabled = true
+normal_texture = ExtResource("1_7fa05")
+rim = 0.05
