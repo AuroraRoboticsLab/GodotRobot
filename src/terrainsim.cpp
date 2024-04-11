@@ -356,7 +356,7 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
             low_i=i;
         }
     }
-    height_floats[low_i] += dirtball_dh; // dump dirt into low spot
+    height_floats[low_i] += 2*dirtball_dh; // dump dirt into low spot
     
     printf("Merged dirtball at terrain pixel (%d,%d)\n", ix,iz);
     

@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=11 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="PackedScene" uid="uid://v6k4sjvue810" path="res://robot/excahauler_static.tscn" id="2_7vjad"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="3_58k4c"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="3_qie7w"]
+[ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://charge_station.tscn" id="4_0colx"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="5_pud20"]
+[ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7jtgm"]
 size = Vector3(20, 1, 20)
@@ -68,7 +70,7 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="DemoRobot3D" parent="." instance=ExtResource("2_7vjad")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61823, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61823, 1.37693)
 
 [node name="RobotOnboardView" type="Camera3D" parent="DemoRobot3D"]
 transform = Transform3D(0.999964, -0.00837551, 0.00118607, 0.00715698, 0.912421, 0.409186, -0.00450847, -0.409164, 0.91245, 0.00451207, 1.17323, -0.082373)
@@ -79,6 +81,9 @@ transform = Transform3D(0.745418, -0.249528, 0.618133, -1.51487e-08, 0.927295, 0
 current = true
 fov = 92.1592
 
+[node name="ChargeStation" parent="." instance=ExtResource("4_0colx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
 
@@ -86,10 +91,13 @@ environment = ExtResource("3_58k4c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, 0.0168765, -0.0148048)
 script = ExtResource("3_qie7w")
 
-[node name="DirtballSpawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
+[node name="DirtSpawner" parent="." instance=ExtResource("6_u4twd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 3.57345, 0)
 
 [node name="DirtballDespawn" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]
+
+[connection signal="body_left_charger" from="ChargeStation" to="." method="_on_charge_station_body_left_charger"]
+[connection signal="body_on_charger" from="ChargeStation" to="." method="_on_charge_station_body_on_charger"]

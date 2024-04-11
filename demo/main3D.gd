@@ -4,16 +4,14 @@ extends Node3D
 const camera_external_id = 0
 @onready var camera_onboard = $DemoRobot3D/RobotOnboardView
 const camera_onboard_id = 1
-@onready var spawn = $DirtballSpawn
+@onready var spawn = $DirtSpawner
 @onready var despawn = $DirtballDespawn
 @onready var terrain = $TerrainScript
 
-var ball: PackedScene = preload("res://terrain/dirtball.tscn")
-
 var curr_camera: int = 0
-const max_balls = 500 # global cap on total number of dirtballs (for performance)
-
+var time = 0
 func _physics_process(delta):
+	time += delta
 	# Despawn oldest dirtballs (that have fallen through terrain)
 	for dirtball in despawn.get_children():
 		if dirtball.linear_velocity.y<-1.0: # has fallen for a while
@@ -32,23 +30,12 @@ func _physics_process(delta):
 		if dirtball.linear_velocity.y<-10.0: 
 			dirtball.queue_free()
 	
-	# Spray new dirtballs
-	if spawn.get_child_count() <= max_balls:
-		var new_ball = ball.instantiate()
-		spawn.add_child(new_ball) # appears at spawn origin
-
 	$UI.ball_count = spawn.get_child_count()
 	$UI.fps = $"FPS Counter".fps
+	$UI.spawn_rate = spawn.spawn_rate
+	$UI.charging = $DemoRobot3D.charge_component.charging
+	$UI.charge_level = $DemoRobot3D.charge_component.charge_level
 	
-	# Add ficticious forces to pull balls toward robot
-	if false:
-		for dirtball in spawn.get_children():
-			var to_robot_vec = $DemoRobot3D.global_position - dirtball.global_position
-			dirtball.linear_velocity +=  to_robot_vec.normalized() * delta * 2
-			
-			if dirtball.linear_velocity.length() > 10:
-				dirtball.linear_velocity = dirtball.linear_velocity.normalized() * 10
-				
 
 func _process(_delta):
 	# Camera switching
@@ -61,3 +48,12 @@ func _process(_delta):
 			camera_onboard.current = true
 			curr_camera = camera_onboard_id
 
+
+func _on_charge_station_body_on_charger(body):
+	if body.has_method("can_charge"):
+		body.charge_component.start_charge()
+		
+
+func _on_charge_station_body_left_charger(body):
+	if body.has_method("can_charge"):
+		body.charge_component.stop_charge()

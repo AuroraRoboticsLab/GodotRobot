@@ -10,6 +10,10 @@ var right_front_wheel  : VehicleWheel3D
 var right_middle_wheel : VehicleWheel3D
 var right_back_wheel   : VehicleWheel3D
 
+func can_charge():
+	pass
+@onready var charge_component = $ChargeComponent
+
 func _ready():
 	# Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	left_front_wheel   = $VehicleWheel3D4
@@ -41,6 +45,10 @@ func _physics_process(delta):
 	var drive_force = Input.get_axis("forward", "backward") * ENGINE_FORCE * delta * engine_force_multiplier
 	var steer_force = Input.get_axis("right", "left") * STEERING_FORCE * delta * steering_force_multiplier
 	
+	if charge_component.is_dead:
+		steer_force = 0
+		drive_force = 0
+	
 	left_front_wheel.engine_force  = drive_force + steer_force
 	left_middle_wheel.engine_force = drive_force + steer_force
 	left_back_wheel.engine_force = drive_force + steer_force
@@ -48,5 +56,13 @@ func _physics_process(delta):
 	right_middle_wheel.engine_force = drive_force - steer_force
 	right_back_wheel.engine_force = drive_force - steer_force
 	
+	if abs(drive_force) > 0 or abs(steer_force) > 0:
+		charge_component.moving = true
+	else:
+		charge_component.moving = false
+	
 	if Input.is_action_pressed("jump"):
 		linear_velocity += Vector3(0, 5, 0) * delta
+		
+	
+

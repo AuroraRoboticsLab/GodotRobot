@@ -6,26 +6,64 @@
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1j2nn")
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="VSplitContainer" type="VSplitContainer" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="GridContainer2" type="GridContainer" parent="VSplitContainer"]
+layout_mode = 2
+
+[node name="BallCountLabel2" type="Label" parent="VSplitContainer/GridContainer2"]
+layout_mode = 2
+text = "Press X to toggle dirt spawning."
+
+[node name="BallCountLabel3" type="Label" parent="VSplitContainer/GridContainer2"]
+layout_mode = 2
+text = "Press F5 to change cameras."
+
+[node name="BallCountLabel4" type="Label" parent="VSplitContainer/GridContainer2"]
+layout_mode = 2
+text = "Use WASD to move around."
+
+[node name="BallCountLabel5" type="Label" parent="VSplitContainer/GridContainer2"]
+layout_mode = 2
+text = "Press SPACE to float away."
+
+[node name="GridContainer" type="GridContainer" parent="VSplitContainer"]
+layout_mode = 2
 columns = 2
 
-[node name="FPSLabel" type="Label" parent="GridContainer"]
+[node name="FPSLabel" type="Label" parent="VSplitContainer/GridContainer"]
 layout_mode = 2
 text = "Framerate: "
 
-[node name="FPS" type="Label" parent="GridContainer"]
+[node name="FPS" type="Label" parent="VSplitContainer/GridContainer"]
 layout_mode = 2
 text = "60"
 
-[node name="BallCountLabel" type="Label" parent="GridContainer"]
+[node name="BallCountLabel" type="Label" parent="VSplitContainer/GridContainer"]
 layout_mode = 2
 text = "Ball count: "
 
-[node name="BallCount" type="Label" parent="GridContainer"]
+[node name="BallCount" type="Label" parent="VSplitContainer/GridContainer"]
 layout_mode = 2
 text = "0"
+
+[node name="SpawnRateLabel" type="Label" parent="VSplitContainer/GridContainer"]
+layout_mode = 2
+text = "Spawn rate:"
+
+[node name="SpawnRate" type="Label" parent="VSplitContainer/GridContainer"]
+layout_mode = 2
+text = "3"
+
+[node name="Charging" type="Label" parent="VSplitContainer/GridContainer"]
+layout_mode = 2
+text = "Not Charging:"
+
+[node name="ChargePercent" type="Label" parent="VSplitContainer/GridContainer"]
+layout_mode = 2
+text = "100%"
 
 [node name="FPS Counter" type="Node3D" parent="."]
 script = ExtResource("1_mxmhq")
