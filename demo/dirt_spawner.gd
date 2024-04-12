@@ -1,9 +1,9 @@
 extends Marker3D
 
-@export var spawn_rate = 3
+@export var spawn_rate = 1
 @export var spawn = self
 @export var max_balls = 1500
-@export var is_spawning = true
+@export var is_spawning = false
 
 @onready var spawn_start_pos = spawn.global_position
 var ball: PackedScene = preload("res://terrain/dirtball.tscn")
@@ -13,7 +13,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not is_spawning:
 		return
 

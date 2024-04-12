@@ -48,12 +48,3 @@ func _process(_delta):
 			camera_onboard.current = true
 			curr_camera = camera_onboard_id
 
-
-func _on_charge_station_body_on_charger(body):
-	if body.is_in_group("chargeable"):
-		body.charge_component.start_charge()
-		
-
-func _on_charge_station_body_left_charger(body):
-	if body.is_in_group("chargeable"):
-		body.charge_component.stop_charge()

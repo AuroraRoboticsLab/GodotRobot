@@ -98,6 +98,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 3.57345, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]
-
-[connection signal="body_left_charger" from="ChargeStation" to="." method="_on_charge_station_body_left_charger"]
-[connection signal="body_on_charger" from="ChargeStation" to="." method="_on_charge_station_body_on_charger"]

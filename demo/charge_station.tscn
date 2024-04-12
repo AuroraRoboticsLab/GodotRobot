@@ -5,7 +5,7 @@
 [sub_resource type="PlaneMesh" id="PlaneMesh_yjmoy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_drsbg"]
-size = Vector3(0.263348, 1.01221, 0.343414)
+size = Vector3(2.02726, 1.01221, 2.02653)
 
 [node name="ChargeStation" type="MeshInstance3D"]
 mesh = SubResource("PlaneMesh_yjmoy")
@@ -14,7 +14,7 @@ script = ExtResource("1_r6tyg")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138874, 0.476049, 0.0148773)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0177531, 0.476049, -0.0447731)
 shape = SubResource("BoxShape3D_drsbg")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

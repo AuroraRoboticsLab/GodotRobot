@@ -27,6 +27,7 @@ rings = 8
 physics_material_override = SubResource("PhysicsMaterial_qgrlw")
 center_of_mass_mode = 1
 center_of_mass = Vector3(0, 0.3, -0.1)
+brake = 0.2
 script = ExtResource("1_exou3")
 
 [node name="CollisionBody" type="CollisionShape3D" parent="."]
@@ -61,6 +62,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, -0.00331038)
+brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -107,6 +109,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D5" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, -0.00060299)
+brake = 0.2
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
 suspension_travel = 0.03
@@ -139,3 +142,4 @@ mesh = SubResource("SphereMesh_ktrtb")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203127, -0.185059)
 
 [node name="ChargeComponent" parent="." instance=ExtResource("3_wjspi")]
+charge_level = 100.0
