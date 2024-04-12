@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://robot/excahauler_static.gd" id="1_exou3"]
 [ext_resource type="PackedScene" uid="uid://cnx6htsy88fqs" path="res://robot/excahauler.blend" id="1_xp40i"]
-[ext_resource type="PackedScene" uid="uid://cuokdlf8blfj1" path="res://charge_status.tscn" id="3_lgabq"]
+[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="3_wjspi"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qgrlw"]
 bounce = 1.0
@@ -138,4 +138,4 @@ mesh = SubResource("SphereMesh_ktrtb")
 [node name="CenterOfMass" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203127, -0.185059)
 
-[node name="ChargeComponent" parent="." instance=ExtResource("3_lgabq")]
+[node name="ChargeComponent" parent="." instance=ExtResource("3_wjspi")]

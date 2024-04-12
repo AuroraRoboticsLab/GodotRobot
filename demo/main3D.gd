@@ -50,10 +50,10 @@ func _process(_delta):
 
 
 func _on_charge_station_body_on_charger(body):
-	if body.has_method("can_charge"):
+	if body.is_in_group("chargeable"):
 		body.charge_component.start_charge()
 		
 
 func _on_charge_station_body_left_charger(body):
-	if body.has_method("can_charge"):
+	if body.is_in_group("chargeable"):
 		body.charge_component.stop_charge()
