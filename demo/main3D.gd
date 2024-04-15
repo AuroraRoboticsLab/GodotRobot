@@ -1,12 +1,14 @@
 extends Node3D
 
-@onready var camera_external = $DemoRobot3D/RobotExternalView
+@onready var camera_external = $Astra3D/RobotOnboardView
 const camera_external_id = 0
-@onready var camera_onboard = $DemoRobot3D/RobotOnboardView
+@onready var camera_onboard = $Astra3D/RobotExternalView
 const camera_onboard_id = 1
 @onready var spawn = $DirtSpawner
 @onready var despawn = $DirtballDespawn
 @onready var terrain = $TerrainScript
+
+@onready var robot = $Astra3D
 
 var curr_camera: int = 0
 var time = 0
@@ -33,13 +35,11 @@ func _physics_process(delta):
 	$UI.ball_count = spawn.get_child_count()
 	$UI.fps = $"FPS Counter".fps
 	$UI.spawn_rate = spawn.spawn_rate
-	$UI.charging = $DemoRobot3D.charge_component.charging
-	$UI.charge_level = $DemoRobot3D.charge_component.charge_level
+	$UI.charging = robot.charge_component.charging
+	$UI.charge_level = robot.charge_component.charge_level
 	
 
-func _process(_delta):
-	# Camera switching
-	
+func _process(_delta):	# Camera switching
 	if Input.is_action_just_pressed("switch_view"):
 		if curr_camera == camera_onboard_id:
 			camera_external.current = true

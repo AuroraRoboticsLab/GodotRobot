@@ -1,0 +1,291 @@
+[gd_scene load_steps=16 format=3 uid="uid://dx0u7xdpcdtrp"]
+
+[ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
+[ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
+[ext_resource type="ArrayMesh" uid="uid://bju5wm2s6gcq1" path="res://astra/BestWheelYet.obj" id="3_noc6x"]
+[ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="4_7l6cl"]
+[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
+[ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="5_rfrni"]
+[ext_resource type="ArrayMesh" uid="uid://srcfe5wuq87v" path="res://astra/tool_attachments/BetterBucket.obj" id="6_608bb"]
+[ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="6_j0ghj"]
+[ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="9_ex75h"]
+[ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="9_lc3da"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]
+size = Vector3(0.913705, 0.0486816, 0.272271)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g2gd1"]
+size = Vector3(0.768341, 0.0458984, 0.209961)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k753l"]
+size = Vector3(0.81134, 0.270643, 0.0641555)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oarqt"]
+size = Vector3(0.024931, 0.391102, 0.585922)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dby1"]
+size = Vector3(0.160156, 0.0521545, 0.628235)
+
+[node name="Astra3D" type="VehicleBody3D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_8yddr")
+
+[node name="Chassie+hubs" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_1d7t0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000572219, 0.0237961, 0.466461)
+shape = SubResource("BoxShape3D_6ngjf")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000572219, 0.0237961, -0.472768)
+shape = SubResource("BoxShape3D_6ngjf")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.358376, 0.0287629, -0.0115872)
+shape = SubResource("BoxShape3D_g2gd1")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.353027, 0.0287629, -0.0115872)
+shape = SubResource("BoxShape3D_g2gd1")
+
+[node name="FrontLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, -0.495)
+brake = 0.4
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="BestWheelYet" type="MeshInstance3D" parent="FrontLeft"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_noc6x")
+skeleton = NodePath("../..")
+
+[node name="FrontRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)
+brake = 0.4
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="BestWheelYet" type="MeshInstance3D" parent="FrontRight"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_noc6x")
+skeleton = NodePath("../..")
+
+[node name="BackLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
+brake = 0.4
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="BestWheelYet" type="MeshInstance3D" parent="BackLeft"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_noc6x")
+skeleton = NodePath("../..")
+
+[node name="BackRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
+brake = 0.4
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="BestWheelYet" type="MeshInstance3D" parent="BackRight"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_noc6x")
+skeleton = NodePath("../..")
+
+[node name="ArmNode3D" type="Node3D" parent="."]
+
+[node name="FrameToArmJoint" type="HingeJoint3D" parent="ArmNode3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.089, -0.203)
+node_a = NodePath("../..")
+node_b = NodePath("../Arm3D")
+angular_limit/enable = true
+angular_limit/upper = 0.0
+motor/enable = true
+motor/target_velocity = 0.0
+motor/max_impulse = 156.15
+
+[node name="Arm3D" type="RigidBody3D" parent="ArmNode3D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="Arm1" type="MeshInstance3D" parent="ArmNode3D/Arm3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("4_7l6cl")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArmNode3D/Arm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00280762, 0.0897203, -0.409581)
+shape = SubResource("BoxShape3D_k753l")
+
+[node name="ArmToBollardJoint" type="HingeJoint3D" parent="ArmNode3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.107, -0.82)
+node_a = NodePath("../Arm3D")
+node_b = NodePath("../Bollard3D")
+angular_limit/enable = true
+angular_limit/lower = -0.785398
+motor/enable = true
+motor/target_velocity = 0.0
+motor/max_impulse = 156.15
+
+[node name="Bollard3D" type="RigidBody3D" parent="ArmNode3D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="Bollard" type="MeshInstance3D" parent="ArmNode3D/Bollard3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("5_rfrni")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArmNode3D/Bollard3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.862018)
+shape = SubResource("BoxShape3D_k753l")
+
+[node name="BollardToCouplerJoint" type="HingeJoint3D" parent="ArmNode3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049, -0.896)
+node_a = NodePath("../Bollard3D")
+node_b = NodePath("../ToolCoupler3D")
+angular_limit/enable = true
+angular_limit/upper = 0.174533
+angular_limit/lower = -0.174533
+motor/enable = true
+motor/target_velocity = 0.0
+motor/max_impulse = 156.15
+
+[node name="ToolCoupler3D" type="RigidBody3D" parent="ArmNode3D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="BetterBucket" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("6_608bb")
+skeleton = NodePath("../../..")
+
+[node name="ToolCoupler" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("6_j0ghj")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
+shape = SubResource("BoxShape3D_k753l")
+
+[node name="HopperNode3D" type="Node3D" parent="."]
+
+[node name="HopperBodyConnect" type="HingeJoint3D" parent="HopperNode3D"]
+node_a = NodePath("../..")
+node_b = NodePath("../Hopper")
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = 0.0
+
+[node name="Hopper" type="RigidBody3D" parent="HopperNode3D"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="HopperBody" type="MeshInstance3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("9_lc3da")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.278782, 0.254395, -0.0144958)
+shape = SubResource("BoxShape3D_oarqt")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00279391, 0.260992, 0.292046)
+shape = SubResource("BoxShape3D_oarqt")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00279391, 0.260992, -0.318656)
+shape = SubResource("BoxShape3D_oarqt")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.277257, 0.254395, -0.0144958)
+shape = SubResource("BoxShape3D_oarqt")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(0.873772, -0.486335, 0, 0.486335, 0.873772, 0, 0, 0, 1, -0.204711, 0.222253, -0.0144958)
+shape = SubResource("BoxShape3D_oarqt")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
+transform = Transform3D(-0.873772, 0.486335, -8.74228e-08, 0.486335, 0.873772, 0, 7.63876e-08, -4.25168e-08, -1, 0.21139, 0.21869, -0.0125351)
+shape = SubResource("BoxShape3D_oarqt")
+
+[node name="HopperDoor1" type="RigidBody3D" parent="HopperNode3D"]
+collision_layer = 8
+collision_mask = 2
+mass = 0.01
+
+[node name="HopperDoorMesh" type="MeshInstance3D" parent="HopperNode3D/HopperDoor1"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("9_ex75h")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HopperNode3D/HopperDoor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0849609, 0.0486908, -0.0148621)
+shape = SubResource("BoxShape3D_3dby1")
+
+[node name="HopperDoor2" type="RigidBody3D" parent="HopperNode3D"]
+collision_layer = 8
+collision_mask = 2
+mass = 0.01
+
+[node name="HopperDoor2" type="MeshInstance3D" parent="HopperNode3D/HopperDoor2"]
+transform = Transform3D(-0.01, -8.74228e-10, 3.82137e-17, 0, 4.37114e-10, 0.01, 8.74228e-10, -0.01, 4.37114e-10, 0, 0, 0)
+mesh = ExtResource("9_ex75h")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HopperNode3D/HopperDoor2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0895522, 0.0486908, -0.0148621)
+shape = SubResource("BoxShape3D_3dby1")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="HopperNode3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127, 0.064, 0)
+node_a = NodePath("../Hopper")
+node_b = NodePath("../HopperDoor1")
+angular_limit/enable = true
+angular_limit/upper = 0.0
+motor/enable = true
+motor/target_velocity = 0.0
+motor/max_impulse = 100.0
+
+[node name="HingeJoint3D2" type="HingeJoint3D" parent="HopperNode3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127, 0.064, 0)
+node_a = NodePath("../Hopper")
+node_b = NodePath("../HopperDoor2")
+angular_limit/enable = true
+angular_limit/lower = 0.0
+motor/enable = true
+motor/target_velocity = 0.0
+motor/max_impulse = 100.0
+
+[node name="CenterOfMass" type="Marker3D" parent="."]
+
+[node name="ChargeComponent" parent="." instance=ExtResource("4_yfgg5")]

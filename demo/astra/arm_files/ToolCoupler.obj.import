@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://lhfy2rerdh52"
+path="res://.godot/imported/ToolCoupler.obj-45d4ad5f7e12bac2953b095b6a50888a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/ToolCoupler.obj-45d4ad5f7e12bac2953b095b6a50888a.mesh"]
+
+source_file="res://astra/arm_files/ToolCoupler.obj"
+dest_files=["res://.godot/imported/ToolCoupler.obj-45d4ad5f7e12bac2953b095b6a50888a.mesh", "res://.godot/imported/ToolCoupler.obj-45d4ad5f7e12bac2953b095b6a50888a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
