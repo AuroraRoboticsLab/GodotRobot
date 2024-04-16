@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=10 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
@@ -9,50 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="5_pud20"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7jtgm"]
-size = Vector3(20, 1, 20)
-
 [sub_resource type="BoxMesh" id="BoxMesh_848ex"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_l30dg")
-
-[node name="Walls" type="Node3D" parent="."]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 9.37851, 4.11209)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1374, 0)
-shape = SubResource("BoxShape3D_7jtgm")
-
-[node name="StaticBody3D2" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 9.37851, -13.6735)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1374, 0)
-shape = SubResource("BoxShape3D_7jtgm")
-
-[node name="StaticBody3D3" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, -3.67365, 9.37851, -0.0542679)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1374, 0)
-shape = SubResource("BoxShape3D_7jtgm")
-
-[node name="StaticBody3D4" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 13.7083, 9.37851, -0.0542679)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1374, 0)
-shape = SubResource("BoxShape3D_7jtgm")
-
-[node name="StaticBody3D5" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.897291, 12.4585, -0.0542679)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/StaticBody3D5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1374, 0)
-shape = SubResource("BoxShape3D_7jtgm")
 
 [node name="TerrainScript" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.50407, 0, -10.2105)
@@ -70,7 +30,7 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="Astra3D" parent="." instance=ExtResource("4_7mmlg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07739, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.81706, 0)
 
 [node name="RobotOnboardView" type="Camera3D" parent="Astra3D"]
 transform = Transform3D(0.999964, -0.00837551, 0.00118607, 0.00715698, 0.912421, 0.409186, -0.00450847, -0.409164, 0.91245, 0.00451207, 1.17323, -0.082373)
@@ -82,7 +42,7 @@ current = true
 fov = 92.1592
 
 [node name="ChargeStation" parent="." instance=ExtResource("4_0colx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501859, 1.85441, -2)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")

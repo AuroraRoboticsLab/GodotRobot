@@ -1,21 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmx2l7kepquv7"]
+[gd_scene load_steps=6 format=3 uid="uid://dmx2l7kepquv7"]
 
 [ext_resource type="Script" path="res://charge_station.gd" id="1_r6tyg"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_nyiml"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_yjmoy"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nenem"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_drsbg"]
-size = Vector3(2.02726, 1.01221, 2.02653)
+[sub_resource type="CylinderMesh" id="CylinderMesh_8u7h4"]
+material = SubResource("StandardMaterial3D_nenem")
+height = 1.0
 
-[node name="ChargeStation" type="MeshInstance3D"]
-mesh = SubResource("PlaneMesh_yjmoy")
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bmiad"]
+height = 1.0
+
+[node name="ChargeStation" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_mask = 7
 script = ExtResource("1_r6tyg")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="ChargeStationMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_8u7h4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0177531, 0.476049, -0.0447731)
-shape = SubResource("BoxShape3D_drsbg")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_bmiad")
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[node name="ConnectorComponent1" parent="." instance=ExtResource("2_nyiml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.0984429, 0)
+
+[node name="ConnectorComponent2" parent="." instance=ExtResource("2_nyiml")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.0984429, 0.5)
+
+[node name="ConnectorComponent3" parent="." instance=ExtResource("2_nyiml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.0984429, 0)
+
+[node name="ConnectorComponent4" parent="." instance=ExtResource("2_nyiml")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.0984429, -0.5)
+
+[connection signal="just_connected" from="ConnectorComponent1" to="." method="_on_connector_component_1_just_connected"]
+[connection signal="just_disconnected" from="ConnectorComponent1" to="." method="_on_connector_component_1_just_disconnected"]
+[connection signal="just_connected" from="ConnectorComponent2" to="." method="_on_connector_component_2_just_connected"]
+[connection signal="just_disconnected" from="ConnectorComponent2" to="." method="_on_connector_component_2_just_disconnected"]
+[connection signal="just_connected" from="ConnectorComponent3" to="." method="_on_connector_component_3_just_connected"]
+[connection signal="just_disconnected" from="ConnectorComponent3" to="." method="_on_connector_component_3_just_disconnected"]
+[connection signal="just_connected" from="ConnectorComponent4" to="." method="_on_connector_component_4_just_connected"]
+[connection signal="just_disconnected" from="ConnectorComponent4" to="." method="_on_connector_component_4_just_disconnected"]

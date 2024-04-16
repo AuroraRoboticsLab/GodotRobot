@@ -37,6 +37,7 @@ func _physics_process(delta):
 	$UI.spawn_rate = spawn.spawn_rate
 	$UI.charging = robot.charge_component.charging
 	$UI.charge_level = robot.charge_component.charge_level
+	$UI.stalling = robot.stuck_stalling
 	
 
 func _process(_delta):	# Camera switching

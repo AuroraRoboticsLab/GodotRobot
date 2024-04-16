@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=17 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
-[ext_resource type="ArrayMesh" uid="uid://bju5wm2s6gcq1" path="res://astra/BestWheelYet.obj" id="3_noc6x"]
+[ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://astra/Wheel with substance.obj" id="3_bur5r"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="4_7l6cl"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="5_rfrni"]
@@ -10,6 +10,7 @@
 [ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="6_j0ghj"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="9_ex75h"]
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="9_lc3da"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]
 size = Vector3(0.913705, 0.0486816, 0.272271)
@@ -63,9 +64,9 @@ suspension_max_force = 100.0
 damping_compression = 0.9
 damping_relaxation = 0.95
 
-[node name="BestWheelYet" type="MeshInstance3D" parent="FrontLeft"]
+[node name="WheelWithSubstance" type="MeshInstance3D" parent="FrontLeft"]
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
-mesh = ExtResource("3_noc6x")
+mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="."]
@@ -80,9 +81,9 @@ suspension_max_force = 100.0
 damping_compression = 0.9
 damping_relaxation = 0.95
 
-[node name="BestWheelYet" type="MeshInstance3D" parent="FrontRight"]
+[node name="WheelWithSubstance" type="MeshInstance3D" parent="FrontRight"]
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
-mesh = ExtResource("3_noc6x")
+mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 
 [node name="BackLeft" type="VehicleWheel3D" parent="."]
@@ -97,9 +98,9 @@ suspension_max_force = 100.0
 damping_compression = 0.9
 damping_relaxation = 0.95
 
-[node name="BestWheelYet" type="MeshInstance3D" parent="BackLeft"]
-transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
-mesh = ExtResource("3_noc6x")
+[node name="WheelWithSubstance" type="MeshInstance3D" parent="BackLeft"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 
 [node name="BackRight" type="VehicleWheel3D" parent="."]
@@ -114,9 +115,9 @@ suspension_max_force = 100.0
 damping_compression = 0.9
 damping_relaxation = 0.95
 
-[node name="BestWheelYet" type="MeshInstance3D" parent="BackRight"]
-transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
-mesh = ExtResource("3_noc6x")
+[node name="WheelWithSubstance" type="MeshInstance3D" parent="BackRight"]
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 
 [node name="ArmNode3D" type="Node3D" parent="."]
@@ -128,7 +129,7 @@ node_b = NodePath("../Arm3D")
 angular_limit/enable = true
 angular_limit/upper = 0.0
 motor/enable = true
-motor/target_velocity = 0.0
+motor/target_velocity = -0.523599
 motor/max_impulse = 156.15
 
 [node name="Arm3D" type="RigidBody3D" parent="ArmNode3D"]
@@ -204,10 +205,12 @@ node_b = NodePath("../Hopper")
 angular_limit/enable = true
 angular_limit/upper = 0.0
 angular_limit/lower = 0.0
+motor/enable = true
+motor/target_velocity = -0.872665
+motor/max_impulse = 205.8
 
 [node name="Hopper" type="RigidBody3D" parent="HopperNode3D"]
 collision_layer = 4
-collision_mask = 3
 
 [node name="HopperBody" type="MeshInstance3D" parent="HopperNode3D/Hopper"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -240,7 +243,7 @@ shape = SubResource("BoxShape3D_oarqt")
 
 [node name="HopperDoor1" type="RigidBody3D" parent="HopperNode3D"]
 collision_layer = 8
-collision_mask = 2
+collision_mask = 0
 mass = 0.01
 
 [node name="HopperDoorMesh" type="MeshInstance3D" parent="HopperNode3D/HopperDoor1"]
@@ -254,7 +257,7 @@ shape = SubResource("BoxShape3D_3dby1")
 
 [node name="HopperDoor2" type="RigidBody3D" parent="HopperNode3D"]
 collision_layer = 8
-collision_mask = 2
+collision_mask = 0
 mass = 0.01
 
 [node name="HopperDoor2" type="MeshInstance3D" parent="HopperNode3D/HopperDoor2"]
@@ -273,7 +276,7 @@ node_b = NodePath("../HopperDoor1")
 angular_limit/enable = true
 angular_limit/upper = 0.0
 motor/enable = true
-motor/target_velocity = 0.0
+motor/target_velocity = 0.174533
 motor/max_impulse = 100.0
 
 [node name="HingeJoint3D2" type="HingeJoint3D" parent="HopperNode3D"]
@@ -289,3 +292,9 @@ motor/max_impulse = 100.0
 [node name="CenterOfMass" type="Marker3D" parent="."]
 
 [node name="ChargeComponent" parent="." instance=ExtResource("4_yfgg5")]
+
+[node name="ConnectorComponent" parent="." instance=ExtResource("11_hg1mk")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
+
+[connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
+[connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

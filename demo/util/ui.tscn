@@ -65,5 +65,9 @@ text = "Not Charging:"
 layout_mode = 2
 text = "100%"
 
+[node name="AreStalling" type="Label" parent="VSplitContainer/GridContainer"]
+layout_mode = 2
+text = "Stalling Out!!!"
+
 [node name="FPS Counter" type="Node3D" parent="."]
 script = ExtResource("1_mxmhq")
