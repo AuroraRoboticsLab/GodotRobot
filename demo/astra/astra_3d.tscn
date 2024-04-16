@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=20 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
@@ -21,6 +21,15 @@ size = Vector3(0.768341, 0.0458984, 0.209961)
 [sub_resource type="BoxShape3D" id="BoxShape3D_k753l"]
 size = Vector3(0.81134, 0.270643, 0.0641555)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_n4fmh"]
+size = Vector3(0.798813, 0.285736, 0.0234375)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ublb6"]
+size = Vector3(0.0057373, 0.312622, 0.352844)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_onr38"]
+size = Vector3(0.799, 0.347102, 0.023)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_oarqt"]
 size = Vector3(0.024931, 0.391102, 0.585922)
 
@@ -29,7 +38,6 @@ size = Vector3(0.160156, 0.0521545, 0.628235)
 
 [node name="Astra3D" type="VehicleBody3D"]
 collision_layer = 4
-collision_mask = 3
 script = ExtResource("1_8yddr")
 
 [node name="Chassie+hubs" type="MeshInstance3D" parent="."]
@@ -128,13 +136,14 @@ node_a = NodePath("../..")
 node_b = NodePath("../Arm3D")
 angular_limit/enable = true
 angular_limit/upper = 0.0
+angular_limit/bias = 0.5
+angular_limit/relaxation = 0.5
 motor/enable = true
-motor/target_velocity = -0.523599
-motor/max_impulse = 156.15
+motor/target_velocity = 0.0
+motor/max_impulse = 200.0
 
 [node name="Arm3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
-collision_mask = 3
 
 [node name="Arm1" type="MeshInstance3D" parent="ArmNode3D/Arm3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -151,13 +160,13 @@ node_a = NodePath("../Arm3D")
 node_b = NodePath("../Bollard3D")
 angular_limit/enable = true
 angular_limit/lower = -0.785398
+angular_limit/bias = 0.5
 motor/enable = true
 motor/target_velocity = 0.0
-motor/max_impulse = 156.15
+motor/max_impulse = 200.0
 
 [node name="Bollard3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
-collision_mask = 3
 
 [node name="Bollard" type="MeshInstance3D" parent="ArmNode3D/Bollard3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -175,25 +184,42 @@ node_b = NodePath("../ToolCoupler3D")
 angular_limit/enable = true
 angular_limit/upper = 0.174533
 angular_limit/lower = -0.174533
+angular_limit/bias = 0.5
+angular_limit/relaxation = 0.5
 motor/enable = true
 motor/target_velocity = 0.0
-motor/max_impulse = 156.15
+motor/max_impulse = 200.0
 
 [node name="ToolCoupler3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
-collision_mask = 3
 
 [node name="BetterBucket" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("6_608bb")
 skeleton = NodePath("../../..")
 
+[node name="BuckerCollider" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.10553e-05, -0.153934, -1.07697)
+shape = SubResource("BoxShape3D_n4fmh")
+
+[node name="BuckerCollider3" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.396564, 0.00719482, -1.06244)
+shape = SubResource("BoxShape3D_ublb6")
+
+[node name="BuckerCollider4" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.403722, 0.00719482, -1.06244)
+shape = SubResource("BoxShape3D_ublb6")
+
+[node name="BuckerCollider2" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, -0.999913, 0.0131593, 0, -0.0131593, -0.999913, 2.10553e-05, 0.0033425, -0.924704)
+shape = SubResource("BoxShape3D_onr38")
+
 [node name="ToolCoupler" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("6_j0ghj")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
+[node name="ToolCollider" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_k753l")
 
@@ -206,7 +232,7 @@ angular_limit/enable = true
 angular_limit/upper = 0.0
 angular_limit/lower = 0.0
 motor/enable = true
-motor/target_velocity = -0.872665
+motor/target_velocity = 0.0
 motor/max_impulse = 205.8
 
 [node name="Hopper" type="RigidBody3D" parent="HopperNode3D"]
@@ -275,8 +301,10 @@ node_a = NodePath("../Hopper")
 node_b = NodePath("../HopperDoor1")
 angular_limit/enable = true
 angular_limit/upper = 0.0
+angular_limit/bias = 0.5
+angular_limit/relaxation = 0.5
 motor/enable = true
-motor/target_velocity = 0.174533
+motor/target_velocity = 0.0
 motor/max_impulse = 100.0
 
 [node name="HingeJoint3D2" type="HingeJoint3D" parent="HopperNode3D"]
@@ -285,6 +313,8 @@ node_a = NodePath("../Hopper")
 node_b = NodePath("../HopperDoor2")
 angular_limit/enable = true
 angular_limit/lower = 0.0
+angular_limit/bias = 0.5
+angular_limit/relaxation = 0.5
 motor/enable = true
 motor/target_velocity = 0.0
 motor/max_impulse = 100.0
