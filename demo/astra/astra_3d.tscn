@@ -144,6 +144,7 @@ motor/max_impulse = 200.0
 
 [node name="Arm3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
+constant_force = Vector3(0, 1.62, 0)
 
 [node name="Arm1" type="MeshInstance3D" parent="ArmNode3D/Arm3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -167,6 +168,7 @@ motor/max_impulse = 200.0
 
 [node name="Bollard3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
+constant_force = Vector3(0, 1.62, 0)
 
 [node name="Bollard" type="MeshInstance3D" parent="ArmNode3D/Bollard3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -192,6 +194,7 @@ motor/max_impulse = 200.0
 
 [node name="ToolCoupler3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
+constant_force = Vector3(0, 1.62, 0)
 
 [node name="BetterBucket" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
