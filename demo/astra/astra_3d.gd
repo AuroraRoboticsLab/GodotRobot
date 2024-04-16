@@ -67,7 +67,7 @@ func _physics_process(delta):
 	
 	# If we're applying force, we're spending energy!
 	var power_spent = 0
-	if movement_speed < 0.03 and total_drive_force > 0.01:
+	if movement_speed < 0.03 and total_drive_force > 0.1:
 		# We are stalling our motor!
 		if not stalling:
 			stalling = true
@@ -86,12 +86,12 @@ func _physics_process(delta):
 		power_spent = (total_drive_force * movement_speed) + 0.2
 	
 	# Elliott's Idea
-	#var power_to_velo = total_force / (movement_speed+5)
+	#var power_to_velo = total_drive_force / (movement_speed+5)
 	#print("Ratio: ", power_to_velo)
 	#print("Time: ", time)
 	#power_spent = 0.01*(power_to_velo)**2 + 0.01*power_to_velo + 0.2
 	#print("Power spent: ", power_spent)
-	const MOTOR_MULT = 0.7
+	const MOTOR_MULT = 0.8
 	var arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT
 	var bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT
 	var tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
@@ -103,6 +103,8 @@ func _physics_process(delta):
 	move_motor(hopper_1, hopper_force) if abs(hopper_force) > 0 else stop_motor(hopper_1)
 	move_motor(hopper_2, -hopper_force) if abs(hopper_force) > 0 else stop_motor(hopper_2)
 	
+	power_spent += (abs(arm_force) + abs(bollard_force) + abs(tilt_force) + abs(hopper_force))
+	
 	charge_component.change_charge(-power_spent * delta)
 	
 	# Fly away when pressing space
@@ -110,7 +112,6 @@ func _physics_process(delta):
 		linear_velocity += Vector3(0, 5, 0) * delta
 
 func move_motor(motor, force):
-	print(force)
 	motor.set("motor/target_velocity", force)
 	
 func stop_motor(motor):
@@ -118,13 +119,20 @@ func stop_motor(motor):
 	motor.set("motor/target_velocity", 0)
 	pass
 
-# Connector sees another connector nearby
+
+# Connector logic. Very simple, because the connector component
+# handles most of it!
+
+# Connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):
-	# For now, automatically connect.
+	# For now, automatically connect to any connector.
+	# Can do a check: Is the body for data? For power?
+	# A new tool/attachment? Behavior can differ depending.
 	area.do_connect(rear_connector)
 	rear_connector.do_connect()
 
-# Connected connector exits range
+# Connected connector exits range, so what things happen
+# when we disconnect?
 func _on_connector_component_must_disconnect(area):
 	# Disconnect right now.
 	area.do_disconnect(rear_connector)

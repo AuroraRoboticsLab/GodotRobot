@@ -22,12 +22,18 @@ func _physics_process(delta):
 	for body in bodies_charging:
 		body.charge_component.change_charge(charge_per_body * delta)
 
+
+# Connector logic. Very simple, because the connector component
+# handles most of it!
+
+# Given a connector, start charging the attached body if possible.
 func init_connect(area):
 	var body = area.parent
 	if body.is_in_group("chargeable"):
 		body.charge_component.charging = true
 		bodies_charging.append(body)
 
+# Do connect logic for all connectors.
 func _on_connector_component_1_just_connected(area):
 	init_connect(area)
 func _on_connector_component_2_just_connected(area):
@@ -37,11 +43,15 @@ func _on_connector_component_3_just_connected(area):
 func _on_connector_component_4_just_connected(area):
 	init_connect(area)
 
+# Given a connector, stop charging it if possible,
+# and remove it from connected body list.
 func init_disconnect(area):
 	var body = area.parent
-	body.charge_component.charging = false
-	bodies_charging.erase(body)
+	if body.is_in_group("chargeable"):
+		body.charge_component.charging = false
+		bodies_charging.erase(body)
 
+# Do disconnect logic for all connectors.
 func _on_connector_component_1_just_disconnected(area):
 	init_disconnect(area)
 func _on_connector_component_2_just_disconnected(area):
