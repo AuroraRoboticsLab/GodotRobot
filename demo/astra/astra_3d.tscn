@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=18 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
@@ -6,8 +6,9 @@
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="4_7l6cl"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="5_rfrni"]
-[ext_resource type="ArrayMesh" uid="uid://srcfe5wuq87v" path="res://astra/tool_attachments/BetterBucket.obj" id="6_608bb"]
+[ext_resource type="Script" path="res://astra/ToolCoupler3D.gd" id="6_0x5dv"]
 [ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="6_j0ghj"]
+[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="9_5t3dc"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="9_ex75h"]
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="9_lc3da"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
@@ -20,18 +21,6 @@ size = Vector3(0.768341, 0.0458984, 0.209961)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k753l"]
 size = Vector3(0.81134, 0.270643, 0.0641555)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_n4fmh"]
-size = Vector3(0.798813, 0.285736, 0.0234375)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ublb6"]
-size = Vector3(0.0057373, 0.312622, 0.352844)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_onr38"]
-size = Vector3(0.799, 0.425016, 0.023)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2rsxu"]
-size = Vector3(0.0108643, 0.173706, 0.169434)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oarqt"]
 size = Vector3(0.024931, 0.391102, 0.585922)
@@ -137,12 +126,13 @@ skeleton = NodePath("../..")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.089, -0.203)
 node_a = NodePath("../..")
 node_b = NodePath("../Arm3D")
+params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 0.0
 angular_limit/bias = 0.5
 motor/enable = true
 motor/target_velocity = 0.0
-motor/max_impulse = 1000.0
+motor/max_impulse = 300.0
 
 [node name="Arm3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
@@ -161,6 +151,7 @@ shape = SubResource("BoxShape3D_k753l")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.107, -0.82)
 node_a = NodePath("../Arm3D")
 node_b = NodePath("../Bollard3D")
+params/bias = 0.99
 angular_limit/enable = true
 angular_limit/lower = -0.785398
 angular_limit/bias = 0.5
@@ -185,6 +176,7 @@ shape = SubResource("BoxShape3D_k753l")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049, -0.896)
 node_a = NodePath("../Bollard3D")
 node_b = NodePath("../ToolCoupler3D")
+params/bias = 0.99
 angular_limit/enable = true
 angular_limit/upper = 0.174533
 angular_limit/lower = -0.174533
@@ -192,40 +184,15 @@ angular_limit/bias = 0.5
 angular_limit/relaxation = 0.5
 motor/enable = true
 motor/target_velocity = 0.0
-motor/max_impulse = 200.0
+motor/max_impulse = 300.0
 
 [node name="ToolCoupler3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
 constant_force = Vector3(0, 1.62, 0)
+script = ExtResource("6_0x5dv")
 
-[node name="BetterBucket" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
-mesh = ExtResource("6_608bb")
-skeleton = NodePath("../../..")
-
-[node name="BuckerCollider" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.10553e-05, -0.153934, -1.07697)
-shape = SubResource("BoxShape3D_n4fmh")
-
-[node name="BuckerCollider3" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.396564, 0.00719482, -1.06244)
-shape = SubResource("BoxShape3D_ublb6")
-
-[node name="BuckerCollider4" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.403722, 0.00719482, -1.06244)
-shape = SubResource("BoxShape3D_ublb6")
-
-[node name="BuckerCollider2" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(1, 0, 0, 0, -0.999913, 0.0131593, 0, -0.0131593, -0.999913, 2.10553e-05, 0.042296, -0.924191)
-shape = SubResource("BoxShape3D_onr38")
-
-[node name="BuckerCollider5" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(0.444072, -3.9165e-08, 0.895991, -0.895991, -1.9411e-08, 0.444072, -1.7435e-15, -1, -4.37114e-08, -0.328061, 0.216309, -0.979249)
-shape = SubResource("BoxShape3D_2rsxu")
-
-[node name="BuckerCollider6" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(-0.463497, -6.39502e-08, -0.886098, -0.886098, -4.00957e-08, 0.463497, -6.51695e-08, 1, -3.8082e-08, 0.328543, 0.217415, -0.979249)
-shape = SubResource("BoxShape3D_2rsxu")
+[node name="ConnectorComponent" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("11_hg1mk")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.925832)
 
 [node name="ToolCoupler" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -235,6 +202,17 @@ skeleton = NodePath("../../..")
 [node name="ToolCollider" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_k753l")
+
+[node name="BucketAttachment" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("9_5t3dc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
+inertia = Vector3(0.01, 0.01, 0.01)
+constant_force = Vector3(0, 1.62, 0)
+start_invisible = true
+
+[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
+node_a = NodePath("..")
+node_b = NodePath("../BucketAttachment")
 
 [node name="HopperNode3D" type="Node3D" parent="."]
 
@@ -339,5 +317,7 @@ motor/max_impulse = 100.0
 [node name="ConnectorComponent" parent="." instance=ExtResource("11_hg1mk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
 
+[connection signal="can_connect" from="ArmNode3D/ToolCoupler3D/ConnectorComponent" to="ArmNode3D/ToolCoupler3D" method="_on_connector_component_can_connect"]
+[connection signal="must_disconnect" from="ArmNode3D/ToolCoupler3D/ConnectorComponent" to="ArmNode3D/ToolCoupler3D" method="_on_connector_component_must_disconnect"]
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

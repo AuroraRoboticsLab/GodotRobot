@@ -20,6 +20,8 @@ const DRIVE_FORCE_MULT = 1200
 @onready var stalling: bool = false
 @onready var start_stall: float = 0
 
+@onready var tool_coupler = $ArmNode3D/ToolCoupler3D
+
 func _ready():
 	# Identify which components we have
 	add_to_group("chargeable")
@@ -38,7 +40,7 @@ func _physics_process(delta):
 	
 	# Forces are determined as an inverse square of movement speed to
 	# put a cap on acceleration (and avoid insanely high speeds).
-	const max_move_force = 300.0 # Starting (and max) move force
+	const max_move_force = 20.0 # Starting (and max) move force
 	const move_amp = 15.0 # How quickly does move force fall off with speed?
 	var movement_speed = linear_velocity.length()
 	engine_force_multiplier = 1.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
@@ -67,35 +69,31 @@ func _physics_process(delta):
 	
 	# If we're applying force, we're spending energy!
 	var power_spent = 0
-	if movement_speed < 0.03 and total_drive_force > 0.1:
-		# We are stalling our motor!
+	const stall_torque = 0.161 * 500
+	var total_torque = 0.161 * total_drive_force
+	power_spent = 100 * (total_torque / stall_torque) * 4 # four wheels
+	# Stalling logic
+	if total_torque > stall_torque:
 		if not stalling:
-			stalling = true
 			start_stall = time
-			power_spent = 0.4
-		else:
-			var time_stalling = time - start_stall
-			if time_stalling > 4.0:
-				stuck_stalling = true
-			power_spent = 0.2*time_stalling**2 + 1*time_stalling + 1
-			if power_spent >= 32.0:
-				power_spent = 32.0
-	elif movement_speed >= 0.01:
-		stuck_stalling = false
+			stalling = true
+		if time - start_stall > 1.0:
+			stuck_stalling = true
+	else:
 		stalling = false
-		power_spent = (total_drive_force * movement_speed) + 0.2
+		stuck_stalling = false
 	
-	# Elliott's Idea
-	#var power_to_velo = total_drive_force / (movement_speed+5)
-	#print("Ratio: ", power_to_velo)
-	#print("Time: ", time)
-	#power_spent = 0.01*(power_to_velo)**2 + 0.01*power_to_velo + 0.2
-	#print("Power spent: ", power_spent)
 	const MOTOR_MULT = 0.8
 	var arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT
 	var bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT
 	var tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
 	var hopper_force = Input.get_axis("hopper_open", "hopper_close") * MOTOR_MULT
+	
+	if charge_component.is_dead:
+		arm_force = 0
+		bollard_force = 0
+		tilt_force = 0
+		hopper_force = 0
 	
 	move_motor(arm, arm_force) if abs(arm_force) > 0 else stop_motor(arm)
 	move_motor(bollard, bollard_force) if abs(bollard_force) > 0 else stop_motor(bollard)
@@ -105,11 +103,19 @@ func _physics_process(delta):
 	
 	power_spent += (abs(arm_force) + abs(bollard_force) + abs(tilt_force) + abs(hopper_force))
 	
+	#print(power_spent)
 	charge_component.change_charge(-power_spent * delta)
 	
+	if Input.is_action_just_pressed("generic_action"): 
+		if tool_coupler.can_attach and not tool_coupler.tool_connector.connected:
+			tool_coupler.attach()
+		elif tool_coupler.tool_connector.nearby_connector:
+			tool_coupler.detach()
+			
+	
 	# Fly away when pressing space
-	if Input.is_action_pressed("jump"):
-		linear_velocity += Vector3(0, 5, 0) * delta
+	if Input.is_action_just_pressed("jump"):
+		global_position += Vector3(0, 1, 0)
 
 func move_motor(motor, force):
 	motor.set("motor/target_velocity", force)
@@ -117,7 +123,6 @@ func move_motor(motor, force):
 func stop_motor(motor):
 	# Somehow stop the joints from moving due to gravity
 	motor.set("motor/target_velocity", 0)
-	pass
 
 
 # Connector logic. Very simple, because the connector component

@@ -71,3 +71,18 @@ text = "Stalling Out!!!"
 
 [node name="FPS Counter" type="Node3D" parent="."]
 script = ExtResource("1_mxmhq")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.781
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 3.0
+offset_bottom = 3.91199
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PressToAttach" type="Label" parent="CenterContainer"]
+layout_mode = 2
+text = "Press E to attach"

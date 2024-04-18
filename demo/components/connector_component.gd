@@ -10,15 +10,16 @@ signal can_connect(area)
 signal must_disconnect(area)
 
 # We just connected to a connector! What happens now?
-signal just_connected(body)
+signal just_connected(area)
 
-# We just disconnected from a body. What happens now?
-signal just_disconnected(body)
+# We just disconnected from a connector. What happens now?
+signal just_disconnected(area)
 
 # The connector we are close to.
 @onready var nearby_connector: Area3D = null
 # Are we connected, or not?
 @onready var connected: bool = false
+@export var enabled: bool = true
 
 # Body connected to this connector.
 @onready var parent = get_parent()
@@ -48,10 +49,11 @@ func do_connect(connect_to=nearby_connector):
 	just_connected.emit(connect_to)
 	
 # We have been told to disconnect
-func do_disconnect(area):
+func do_disconnect(area=nearby_connector):
 	if not connected:
 		print("Already disconnected!")
 		return false
+	nearby_connector = null
 	connected = false
 	just_disconnected.emit(area)
 
@@ -59,9 +61,14 @@ func do_disconnect(area):
 func _on_area_entered(area):
 	if connected: # We are occupied, so we don't care.
 		return
+		
+	if not enabled:
+		return
 	
 	# We aren't already near a connector, and the area is a connector.
 	if not nearby_connector and area.is_in_group("connector"):
+		if not area.enabled:
+			return
 		# We are now near a connector.
 		nearby_connector = area 
 		# Let everyone know we can connect to it!
@@ -69,12 +76,12 @@ func _on_area_entered(area):
 
 # Area left the connector's area.
 func _on_area_exited(area):
-	if not connected: # If we're not connected, we don't care!
-		return
+	#if not connected: # If we're not connected, we don't care!
+	#	return
 	
 	# Was the area the connected area?
 	if area == nearby_connector:
 		# We aren't near that connector anymore.
-		nearby_connector = null
+		#nearby_connector = null
 		# Let everyone know we must disconnect!
 		must_disconnect.emit(area)

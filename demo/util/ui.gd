@@ -6,6 +6,7 @@ extends CanvasLayer
 @export var charging: bool = false
 @export var charge_level: float = 100.0
 @export var stalling: bool = false
+@export var can_attach: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,3 +24,4 @@ func _process(_delta):
 	$VSplitContainer/GridContainer/Charging.text = "Charging:" if charging else "Not charging:"
 	$VSplitContainer/GridContainer/ChargePercent.text = str(round_to_dec(charge_level, 2)) + "%"
 	$VSplitContainer/GridContainer/AreStalling.visible = stalling
+	$CenterContainer/PressToAttach.visible = can_attach

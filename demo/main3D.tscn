@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=11 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="3_58k4c"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="3_qie7w"]
 [ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://charge_station.tscn" id="4_0colx"]
+[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="4_5fymx"]
 [ext_resource type="PackedScene" uid="uid://dx0u7xdpcdtrp" path="res://astra/astra_3d.tscn" id="4_7mmlg"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="5_pud20"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
@@ -41,8 +42,11 @@ transform = Transform3D(0.745418, -0.249528, 0.618133, -1.51487e-08, 0.927295, 0
 current = true
 fov = 92.1592
 
+[node name="BucketAttachment" parent="." instance=ExtResource("4_5fymx")]
+transform = Transform3D(-0.992459, 0, 0.12258, 0, 1, 0, -0.12258, 0, -0.992459, -0.0153055, 1.83186, 1.80138)
+
 [node name="ChargeStation" parent="." instance=ExtResource("4_0colx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501859, 1.85441, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501859, 1.98152, -2)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")

@@ -1,12 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmx2l7kepquv7"]
+[gd_scene load_steps=9 format=3 uid="uid://dmx2l7kepquv7"]
 
 [ext_resource type="Script" path="res://charge_station.gd" id="1_r6tyg"]
+[ext_resource type="Shader" path="res://charge_station.gdshader" id="2_dny1r"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_nyiml"]
+[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="3_qbbvx"]
+[ext_resource type="PackedScene" uid="uid://brqo4uvi4vhmh" path="res://static_solar_panel_3d.tscn" id="5_tohop"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nenem"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hag8g"]
+render_priority = 0
+shader = ExtResource("2_dny1r")
+shader_parameter/charge_percentage = 1.0
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8u7h4"]
-material = SubResource("StandardMaterial3D_nenem")
+material = SubResource("ShaderMaterial_hag8g")
 height = 1.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_bmiad"]
@@ -24,16 +30,23 @@ mesh = SubResource("CylinderMesh_8u7h4")
 shape = SubResource("CylinderShape3D_bmiad")
 
 [node name="ConnectorComponent1" parent="." instance=ExtResource("2_nyiml")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.0984429, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.170849, 0)
 
 [node name="ConnectorComponent2" parent="." instance=ExtResource("2_nyiml")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.0984429, 0.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.170849, 0.5)
 
 [node name="ConnectorComponent3" parent="." instance=ExtResource("2_nyiml")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.0984429, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.170849, 0)
 
 [node name="ConnectorComponent4" parent="." instance=ExtResource("2_nyiml")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.0984429, -0.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.170849, -0.5)
+
+[node name="ChargeComponent" parent="." instance=ExtResource("3_qbbvx")]
+amp_hours = 500.0
+remaining_amp_hours = 400.0
+
+[node name="StaticSolarPanel3D" parent="." instance=ExtResource("5_tohop")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.498496, 0)
 
 [connection signal="just_connected" from="ConnectorComponent1" to="." method="_on_connector_component_1_just_connected"]
 [connection signal="just_disconnected" from="ConnectorComponent1" to="." method="_on_connector_component_1_just_disconnected"]
