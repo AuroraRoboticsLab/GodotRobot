@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dujivb230gk1k"
+path="res://.godot/imported/madsen_cinderblock_collision.obj-8d74bfadb95e87a201f05c503d356051.mesh"
+
+[deps]
+
+files=["res://.godot/imported/madsen_cinderblock_collision.obj-8d74bfadb95e87a201f05c503d356051.mesh"]
+
+source_file="res://objects/madsen_cinderblock_collision.obj"
+dest_files=["res://.godot/imported/madsen_cinderblock_collision.obj-8d74bfadb95e87a201f05c503d356051.mesh", "res://.godot/imported/madsen_cinderblock_collision.obj-8d74bfadb95e87a201f05c503d356051.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

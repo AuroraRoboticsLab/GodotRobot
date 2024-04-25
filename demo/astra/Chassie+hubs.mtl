@@ -10,7 +10,7 @@ newmtl Plastic_-_Glossy_(Black)
 Kd 0.098039 0.098039 0.098039
 
 newmtl Steel_-_Satin
-Kd 0.627451 0.627451 0.627451
+Kd 0.327451 0.327451 0.327451
 
 newmtl Acetal_Resin_(White)
 Kd 0.972549 0.968627 0.929412

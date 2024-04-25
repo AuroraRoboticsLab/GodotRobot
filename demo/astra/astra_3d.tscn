@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=20 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
 [ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://astra/Wheel with substance.obj" id="3_bur5r"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="4_7l6cl"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="4_r6kd8"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="5_rfrni"]
 [ext_resource type="Script" path="res://astra/ToolCoupler3D.gd" id="6_0x5dv"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="9_5t3dc"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="9_ex75h"]
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="9_lc3da"]
+[ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="10_j42ch"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]
@@ -65,9 +67,10 @@ damping_compression = 0.9
 damping_relaxation = 0.95
 
 [node name="WheelWithSubstance" type="MeshInstance3D" parent="FrontLeft"]
-transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
+transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_r6kd8")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)
@@ -85,6 +88,7 @@ damping_relaxation = 0.95
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_r6kd8")
 
 [node name="BackLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
@@ -102,6 +106,7 @@ damping_relaxation = 0.95
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_r6kd8")
 
 [node name="BackRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
@@ -119,6 +124,7 @@ damping_relaxation = 0.95
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_r6kd8")
 
 [node name="ArmNode3D" type="Node3D" parent="."]
 
@@ -209,22 +215,27 @@ inertia = Vector3(0.01, 0.01, 0.01)
 constant_force = Vector3(0, 1.62, 0)
 start_invisible = true
 
+[node name="ForkAttachment" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("10_j42ch")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
+inertia = Vector3(0.01, 0.01, 0.01)
+constant_force = Vector3(0, 1.62, 0)
+start_invisible = true
+
 [node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
 node_a = NodePath("..")
 node_b = NodePath("../BucketAttachment")
 
+[node name="Generic6DOFJoint3D2" type="Generic6DOFJoint3D" parent="ArmNode3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
+node_a = NodePath("..")
+node_b = NodePath("../ForkAttachment")
+
 [node name="HopperNode3D" type="Node3D" parent="."]
 
-[node name="HopperBodyConnect" type="HingeJoint3D" parent="HopperNode3D"]
+[node name="HopperBodyConnect" type="Generic6DOFJoint3D" parent="HopperNode3D"]
 node_a = NodePath("../..")
 node_b = NodePath("../Hopper")
-angular_limit/enable = true
-angular_limit/upper = 0.0
-angular_limit/lower = 0.0
-motor/enable = true
-motor/target_velocity = 0.0
-motor/max_impulse = 205.8
 
 [node name="Hopper" type="RigidBody3D" parent="HopperNode3D"]
 collision_layer = 4
@@ -233,6 +244,7 @@ collision_layer = 4
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("9_lc3da")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("4_r6kd8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HopperNode3D/Hopper"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.278782, 0.254395, -0.0144958)

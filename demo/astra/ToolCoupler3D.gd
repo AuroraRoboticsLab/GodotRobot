@@ -4,13 +4,14 @@ extends RigidBody3D
 @onready var tool_connector = $ConnectorComponent
 @onready var current_attachment = null
 @onready var bucket = $BucketAttachment
+@onready var forks = $ForkAttachment
 @onready var referenced_attachment = null
 @onready var can_attach: bool = false
 
 func attach():
 	if current_attachment:
-		referenced_attachment.make_invisible()
-		current_attachment.make_visible()
+		referenced_attachment.ghost_component.make_invisible()
+		current_attachment.ghost_component.make_visible()
 		tool_connector.do_connect(current_attachment.connector)
 		current_attachment.connector.do_connect(tool_connector)
 		can_attach = false # because we're currently connected!
@@ -19,8 +20,8 @@ func attach():
 		
 func detach():
 	if current_attachment:
-		current_attachment.make_invisible()
-		referenced_attachment.make_visible()
+		current_attachment.ghost_component.make_invisible()
+		referenced_attachment.ghost_component.make_visible()
 		referenced_attachment.global_position = tool_connector.global_position
 		referenced_attachment.global_rotation = global_rotation
 		
@@ -40,7 +41,8 @@ func _on_connector_component_can_connect(area):
 			current_attachment = bucket
 			can_attach = true
 		elif body.attachment_type == "forks":
-			pass # current_attachment = forks
+			current_attachment = forks
+			can_attach = true
 		else:
 			print("WARN: Unrecognized attachment!")
 	if body.is_in_group("chargeable"):

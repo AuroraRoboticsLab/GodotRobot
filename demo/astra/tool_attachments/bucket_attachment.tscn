@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://bouvraymofos3"]
+[gd_scene load_steps=11 format=3 uid="uid://bouvraymofos3"]
 
 [ext_resource type="ArrayMesh" uid="uid://srcfe5wuq87v" path="res://astra/tool_attachments/BetterBucket.obj" id="1_8hmwl"]
 [ext_resource type="Script" path="res://astra/tool_attachments/bucket_attachment.gd" id="1_tbghr"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_8b603"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="3_mxbys"]
+[ext_resource type="PackedScene" uid="uid://cnrdjyuscgyy8" path="res://components/ghost_component.tscn" id="4_mjlhx"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3v1of"]
+friction = 0.22
+rough = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6tyxi"]
 size = Vector3(0.798813, 0.285736, 0.0234375)
@@ -18,14 +24,16 @@ size = Vector3(0.0108643, 0.173706, 0.169434)
 
 [node name="BucketAttachment" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
-collision_layer = 8
+collision_layer = 12
 collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_3v1of")
 script = ExtResource("1_tbghr")
 
 [node name="BetterBucket" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, -0.05, 0.9)
 mesh = ExtResource("1_8hmwl")
 skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("3_mxbys")
 
 [node name="BuckerCollider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.10553e-05, -0.202644, -0.176133)
@@ -53,3 +61,5 @@ shape = SubResource("BoxShape3D_wfa72")
 
 [node name="ConnectorComponent" parent="." instance=ExtResource("2_8b603")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="GhostComponent" parent="." instance=ExtResource("4_mjlhx")]

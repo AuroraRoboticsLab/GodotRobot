@@ -40,9 +40,11 @@ func _physics_process(delta):
 	
 	# Forces are determined as an inverse square of movement speed to
 	# put a cap on acceleration (and avoid insanely high speeds).
+	
 	const max_move_force = 20.0 # Starting (and max) move force
 	const move_amp = 15.0 # How quickly does move force fall off with speed?
 	var movement_speed = linear_velocity.length()
+	
 	engine_force_multiplier = 1.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	const max_turn_force = 15.0 # Starting (and max) turn force
@@ -58,7 +60,7 @@ func _physics_process(delta):
 	if charge_component.is_dead:
 		steer_force = 0
 		drive_force = 0
-	
+		
 	left_front_wheel.engine_force  = drive_force + steer_force
 	left_back_wheel.engine_force = drive_force + steer_force
 	right_front_wheel.engine_force = drive_force - steer_force
@@ -78,6 +80,7 @@ func _physics_process(delta):
 			start_stall = time
 			stalling = true
 		if time - start_stall > 1.0:
+			
 			stuck_stalling = true
 	else:
 		stalling = false
@@ -115,6 +118,7 @@ func _physics_process(delta):
 	
 	# Fly away when pressing space
 	if Input.is_action_just_pressed("jump"):
+		linear_velocity = Vector3.ZERO
 		global_position += Vector3(0, 1, 0)
 
 func move_motor(motor, force):
