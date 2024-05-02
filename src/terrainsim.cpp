@@ -284,7 +284,7 @@ void TerrainSim::animate_physics(double dt)
             }
             else {
                 // very weak erosion everywhere (prevents weird cliffs)
-                h += 0.001*(neighborhood-C);
+                //h += 0.001*(neighborhood-C);
             }
             
             if (h!=h) { h=0.0; } // fix NaNs
