@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=14 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="5_pud20"]
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="5_r12xm"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
+[ext_resource type="PackedScene" uid="uid://cfna2d2x5v5v4" path="res://astronaut/suit.tscn" id="12_djw8v"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_848ex"]
 
@@ -51,10 +52,35 @@ transform = Transform3D(-0.992459, 0, 0.12258, 0, 1, 0, -0.12258, 0, -0.992459, 
 transform = Transform3D(-0.992459, 0, 0.12258, 0, 1, 0, -0.12258, 0, -0.992459, 1.05052, 1.83186, 1.80138)
 
 [node name="MadsenCinderblock" parent="." instance=ExtResource("5_c58wm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.39387, 2.05684, -1.2363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2194, 1.79557, -2.51291)
+
+[node name="MadsenCinderblock2" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.402055, 1.79557, -2.51291)
+
+[node name="MadsenCinderblock3" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.416093, 1.79557, -2.51291)
+
+[node name="MadsenCinderblock4" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.829577, 2.21091, -2.51291)
+
+[node name="MadsenCinderblock6" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.03719, 1.79557, -2.51291)
+
+[node name="MadsenCinderblock7" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.64737, 2.21091, -2.51291)
+
+[node name="MadsenCinderblock8" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.86921, 1.79557, -2.51291)
+
+[node name="MadsenCinderblock9" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.47939, 2.21091, -2.51291)
+
+[node name="MadsenCinderblock5" parent="." instance=ExtResource("5_c58wm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0114289, 2.21091, -2.51291)
 
 [node name="ChargeStation" parent="." instance=ExtResource("4_0colx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501859, 1.98152, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.99146, 0.511469, -2)
+visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
@@ -70,3 +96,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 3.57345, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]
+
+[node name="suit_maxgrueter" parent="." instance=ExtResource("12_djw8v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07298, 1.5, 0.29974)

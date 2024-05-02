@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfna2d2x5v5v4"]
+
+[ext_resource type="PackedScene" uid="uid://cnlgfqnpu8v18" path="res://astronaut/suit_maxgrueter.glb" id="1_gkcnt"]
+[ext_resource type="Script" path="res://astronaut/start_IK.gd" id="2_jer7l"]
+
+[node name="suit_maxgrueter" instance=ExtResource("1_gkcnt")]
+
+[node name="Skeleton3D" parent="metarig" index="0"]
+bones/0/position = Vector3(0, 1.1023, -0.0552)
+bones/0/rotation = Quaternion(0.156165, 0.00162963, 0.00465533, 0.987719)
+bones/5/rotation = Quaternion(-0.0377955, 0.122023, 0.547956, 0.826696)
+bones/6/rotation = Quaternion(0.0312606, 0.121316, 0.476455, 0.870227)
+bones/7/rotation = Quaternion(0.358315, -0.325699, 0.281667, 0.828368)
+bones/8/rotation = Quaternion(-0.116439, 0.969706, 0.0774927, 0.200267)
+bones/9/rotation = Quaternion(0.949218, 0.0600316, -0.0160003, 0.308424)
+bones/10/rotation = Quaternion(0.360754, -0.00179997, 0.125241, 0.924212)
+bones/11/rotation = Quaternion(-0.717681, -0.0237226, -0.122183, 0.685159)
+bones/13/rotation = Quaternion(0.948471, -0.0682015, 0.0171773, 0.30896)
+bones/14/rotation = Quaternion(0.36278, 0.00173239, -0.121953, 0.923859)
+bones/15/rotation = Quaternion(-0.720924, 0.0245165, 0.123672, 0.681449)
+bones/16/enabled = false
+bones/16/rotation = Quaternion(-0.073525, -0.971525, 0.016475, 0.224475)
+bones/17/rotation = Quaternion(-0.0340806, -0.124861, -0.553118, 0.822988)
+bones/18/rotation = Quaternion(0.0356838, -0.119381, -0.516725, 0.847036)
+bones/19/rotation = Quaternion(0.34862, 0.332162, -0.209086, 0.851126)
+bones/20/rotation = Quaternion(0.147228, 0.96507, 0.0859618, -0.198935)
+
+[node name="PLSS" parent="metarig/Skeleton3D" index="0"]
+transform = Transform3D(0.999951, -0.00975821, 0.0014443, 0.00970529, 0.999409, 0.0329761, -0.00176523, -0.0329604, 0.999455, -0.00512725, 1.60945, -0.229679)
+
+[node name="Visor" parent="metarig/Skeleton3D" index="1"]
+transform = Transform3D(0.999951, -0.00975821, 0.0014443, 0.00970529, 0.999409, 0.0329761, -0.00176523, -0.0329604, 0.999455, 0.00102667, 1.7425, 0.154078)
+
+[node name="FootIK_SkeletonIK3D_R" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="3"]
+process_priority = 1
+root_bone = &"thigh.R"
+tip_bone = &"foot.R"
+interpolation = 0.903
+use_magnet = true
+magnet = Vector3(-0.3, 0.6, 1)
+target_node = NodePath("../../FootIK_R")
+script = ExtResource("2_jer7l")
+
+[node name="FootIK_SkeletonIK3D_L" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="4"]
+process_priority = 1
+root_bone = &"thigh.L"
+tip_bone = &"foot.L"
+interpolation = 0.903
+use_magnet = true
+magnet = Vector3(0.3, 0.6, 1)
+target_node = NodePath("../../FootIK_L")
+script = ExtResource("2_jer7l")
+
+[node name="FootIK_R" type="Marker3D" parent="metarig" index="1"]
+transform = Transform3D(0.999807, 0.0195433, 0.00205615, 0.00696351, -0.2545, -0.967048, -0.018376, 0.966875, -0.254587, -0.206053, 0.178355, 0.00393704)
+
+[node name="FootIK_L" type="Marker3D" parent="metarig" index="2"]
+transform = Transform3D(0.999807, 0.0195433, 0.00205615, 0.00483553, -0.143255, -0.989674, -0.019047, 0.989492, -0.143322, 0.2, 0.127036, -0.04)
