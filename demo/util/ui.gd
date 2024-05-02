@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var ball_count = 0
 @export var fps = 60
-@export var spawn_rate = 3
+@onready var spawn_rate: int = 3
 @export var charging: bool = false
 @export var charge_level: float = 100.0
 @export var stalling: bool = false
@@ -18,10 +18,17 @@ func round_to_dec(num, digit):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	$VSplitContainer/GridContainer/BallCount.text = str(ball_count)
-	$VSplitContainer/GridContainer/FPS.text = str(fps)
-	$VSplitContainer/GridContainer/SpawnRate.text = str(spawn_rate)
-	$VSplitContainer/GridContainer/Charging.text = "Charging:" if charging else "Not charging:"
-	$VSplitContainer/GridContainer/ChargePercent.text = str(round_to_dec(charge_level, 2)) + "%"
-	$VSplitContainer/GridContainer/AreStalling.visible = stalling
 	$CenterContainer/PressToAttach.visible = can_attach
+	
+	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
+	$PanelContainer/VBoxContainer/GridContainer/BallCount.text = str(ball_count)
+	$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
+	$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
+	$PanelContainer/VBoxContainer/StallingLabel.visible = stalling
+
+
+func _on_tick_button_value_changed(value):
+	spawn_rate = value
+	
+func _on_settings_button_pressed():
+	$SettingsMenu.visible = !$SettingsMenu.visible

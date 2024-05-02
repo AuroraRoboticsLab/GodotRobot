@@ -34,7 +34,7 @@ func _physics_process(delta):
 	
 	$UI.ball_count = spawn.get_child_count()
 	$UI.fps = $"FPS Counter".fps
-	$UI.spawn_rate = spawn.spawn_rate
+	spawn.spawn_rate = $UI.spawn_rate
 	$UI.charging = robot.charge_component.charging
 	$UI.charge_level = robot.charge_component.charge_level
 	$UI.stalling = robot.stuck_stalling

@@ -35,7 +35,7 @@ func _physics_process(_delta):
 func _process(delta):
 	if Input.is_action_just_pressed("action1"):
 		is_spawning = !is_spawning
-	if Input.is_action_just_pressed("down_arrow") and spawn_rate > 0:
-		spawn_rate -= 1
-	if Input.is_action_just_pressed("up_arrow"):
-		spawn_rate += 1
+	#if Input.is_action_just_pressed("down_arrow") and spawn_rate > 0:
+	#	spawn_rate -= 1
+	#if Input.is_action_just_pressed("up_arrow"):
+	#	spawn_rate += 1
