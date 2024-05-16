@@ -38,7 +38,7 @@ func _physics_process(delta):
 	$UI.charging = robot.charge_component.charging
 	$UI.charge_level = robot.charge_component.charge_level
 	$UI.stalling = robot.stuck_stalling
-	$UI.can_attach = robot.tool_coupler.can_attach
+	$UI.can_attach = robot.tool_coupler_component.can_attach
 	
 
 func _process(_delta):	# Camera switching

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c26cseexjqmt4"]
+
+[ext_resource type="Script" path="res://ToolCouplerComponent.gd" id="1_dt6h0"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_drkmn"]
+
+[node name="ToolCouplerComponent" type="Node3D"]
+script = ExtResource("1_dt6h0")
+
+[node name="ConnectorComponent" parent="." instance=ExtResource("2_drkmn")]
+
+[connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
+[connection signal="just_connected" from="ConnectorComponent" to="." method="_on_connector_component_just_connected"]
+[connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

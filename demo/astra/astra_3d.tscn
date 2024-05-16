@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=18 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
@@ -7,12 +7,10 @@
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="4_r6kd8"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="5_rfrni"]
-[ext_resource type="Script" path="res://astra/ToolCoupler3D.gd" id="6_0x5dv"]
 [ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="6_j0ghj"]
-[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="9_5t3dc"]
+[ext_resource type="PackedScene" uid="uid://c26cseexjqmt4" path="res://components/tool_coupler_component.tscn" id="8_p7x6j"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="9_ex75h"]
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="9_lc3da"]
-[ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="10_j42ch"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]
@@ -195,12 +193,11 @@ motor/max_impulse = 300.0
 [node name="ToolCoupler3D" type="RigidBody3D" parent="ArmNode3D"]
 collision_layer = 4
 constant_force = Vector3(0, 1.62, 0)
-script = ExtResource("6_0x5dv")
 
-[node name="ConnectorComponent" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("11_hg1mk")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.925832)
+[node name="ToolCouplerComponent" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("8_p7x6j")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.91)
 
-[node name="ToolCoupler" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
+[node name="ToolCouplerMesh" type="MeshInstance3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("6_j0ghj")
 skeleton = NodePath("../../..")
@@ -208,29 +205,6 @@ skeleton = NodePath("../../..")
 [node name="ToolCollider" type="CollisionShape3D" parent="ArmNode3D/ToolCoupler3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_k753l")
-
-[node name="BucketAttachment" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("9_5t3dc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
-collision_mask = 7
-inertia = Vector3(0.01, 0.01, 0.01)
-constant_force = Vector3(0, 1.62, 0)
-start_invisible = true
-
-[node name="ForkAttachment" parent="ArmNode3D/ToolCoupler3D" instance=ExtResource("10_j42ch")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
-inertia = Vector3(0.01, 0.01, 0.01)
-constant_force = Vector3(0, 1.62, 0)
-start_invisible = true
-
-[node name="Generic6DOFJoint3D" type="Generic6DOFJoint3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
-node_a = NodePath("..")
-node_b = NodePath("../BucketAttachment")
-
-[node name="Generic6DOFJoint3D2" type="Generic6DOFJoint3D" parent="ArmNode3D/ToolCoupler3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.926)
-node_a = NodePath("..")
-node_b = NodePath("../ForkAttachment")
 
 [node name="HopperNode3D" type="Node3D" parent="."]
 
@@ -330,7 +304,5 @@ motor/max_impulse = 100.0
 [node name="ConnectorComponent" parent="." instance=ExtResource("11_hg1mk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
 
-[connection signal="can_connect" from="ArmNode3D/ToolCoupler3D/ConnectorComponent" to="ArmNode3D/ToolCoupler3D" method="_on_connector_component_can_connect"]
-[connection signal="must_disconnect" from="ArmNode3D/ToolCoupler3D/ConnectorComponent" to="ArmNode3D/ToolCoupler3D" method="_on_connector_component_must_disconnect"]
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

@@ -20,7 +20,7 @@ const DRIVE_FORCE_MULT = 1200
 @onready var stalling: bool = false
 @onready var start_stall: float = 0
 
-@onready var tool_coupler = $ArmNode3D/ToolCoupler3D
+@onready var tool_coupler_component = $ArmNode3D/ToolCoupler3D/ToolCouplerComponent
 
 func _ready():
 	# Identify which components we have
@@ -109,12 +109,9 @@ func _physics_process(delta):
 	#print(power_spent)
 	charge_component.change_charge(-power_spent * delta)
 	
+	# Tool attachment/detachment
 	if Input.is_action_just_pressed("generic_action"): 
-		if tool_coupler.can_attach and not tool_coupler.tool_connector.connected:
-			tool_coupler.attach()
-		elif tool_coupler.tool_connector.nearby_connector:
-			tool_coupler.detach()
-			
+		tool_coupler_component.try_toggle_attach()
 	
 	# Fly away when pressing space
 	if Input.is_action_just_pressed("jump"):
@@ -132,7 +129,7 @@ func stop_motor(motor):
 # Connector logic. Very simple, because the connector component
 # handles most of it!
 
-# Connector sees another connector nearby. What happens?
+# Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):
 	# For now, automatically connect to any connector.
 	# Can do a check: Is the body for data? For power?
