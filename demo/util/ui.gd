@@ -7,6 +7,8 @@ extends CanvasLayer
 @export var charge_level: float = 100.0
 @export var stalling: bool = false
 @export var can_attach: bool = false
+@export var v_cam_sens: float = 0.1
+@export var h_cam_sens: float = 0.1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +18,6 @@ func _ready():
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	$CenterContainer/PressToAttach.visible = can_attach
 	
@@ -26,9 +27,16 @@ func _process(_delta):
 	$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
 	$PanelContainer/VBoxContainer/StallingLabel.visible = stalling
 
-
 func _on_tick_button_value_changed(value):
 	spawn_rate = value
 	
 func _on_settings_button_pressed():
 	$SettingsMenu.visible = !$SettingsMenu.visible
+
+func _on_vert_sens_slider_value_changed(value):
+	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensValLabel.text = str(value)
+	v_cam_sens = value
+
+func _on_horiz_sens_slider_value_changed(value):
+	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensValLabel.text = str(value)
+	h_cam_sens = value

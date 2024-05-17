@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bs7ecxqoqypo7"]
+[gd_scene load_steps=7 format=3 uid="uid://bs7ecxqoqypo7"]
 
 [ext_resource type="Script" path="res://astra/tool_attachments/fork/forks.gd" id="1_0reat"]
 [ext_resource type="ArrayMesh" uid="uid://buijme2swldor" path="res://astra/tool_attachments/fork/Forks v7.obj" id="1_t7yws"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_g4wtu"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="3_tg68u"]
-[ext_resource type="PackedScene" uid="uid://cnrdjyuscgyy8" path="res://components/ghost_component.tscn" id="4_gj0v7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ubtq5"]
 size = Vector3(0.0714722, 0.0192261, 0.396362)
@@ -29,8 +28,6 @@ surface_material_override/0 = ExtResource("3_tg68u")
 
 [node name="ConnectorComponent" parent="." instance=ExtResource("2_g4wtu")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-
-[node name="GhostComponent" parent="." instance=ExtResource("4_gj0v7")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20183, -0.154073, -0.201437)

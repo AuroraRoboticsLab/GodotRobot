@@ -1,6 +1,7 @@
 extends Node3D
 # ToolCouplerComponent
 # Wrapper around connector component strictly for tool coupling logic.
+# Expects to be the child of a RigidBody3D
 
 @onready var tool_connector = $ConnectorComponent
 @onready var current_attachment = null
