@@ -22,6 +22,8 @@ const DRIVE_FORCE_MULT = 1200
 
 @onready var tool_coupler_component = $ArmNode3D/ToolCoupler3D/ToolCouplerComponent
 
+@onready var tp_height: float = 1.0
+
 func _ready():
 	# Identify which components we have
 	add_to_group("chargeable")
@@ -116,7 +118,7 @@ func _physics_process(delta):
 	# Fly away when pressing space
 	if Input.is_action_just_pressed("jump"):
 		linear_velocity = Vector3.ZERO
-		global_position += Vector3(0, 1, 0)
+		global_position += Vector3(0, tp_height, 0)
 
 func move_motor(motor, force):
 	motor.set("motor/target_velocity", force)

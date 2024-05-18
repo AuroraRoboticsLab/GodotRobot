@@ -37,5 +37,5 @@ func _physics_process(delta):
 	$UI.can_attach = robot.tool_coupler_component.can_attach
 	$Astra3D/MovableCamera3D.h_sens = $UI.h_cam_sens
 	$Astra3D/MovableCamera3D.v_sens = $UI.v_cam_sens
-
+	$Astra3D.tp_height = $UI.tp_height
 

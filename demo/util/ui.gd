@@ -9,6 +9,7 @@ extends CanvasLayer
 @export var can_attach: bool = false
 @export var v_cam_sens: float = 0.1
 @export var h_cam_sens: float = 0.1
+@export var tp_height: float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,3 +41,6 @@ func _on_vert_sens_slider_value_changed(value):
 func _on_horiz_sens_slider_value_changed(value):
 	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensValLabel.text = str(value)
 	h_cam_sens = value
+	
+func _on_tp_height_tick_button_value_changed(value):
+	tp_height = value

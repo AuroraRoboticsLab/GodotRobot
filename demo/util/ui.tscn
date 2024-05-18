@@ -79,6 +79,7 @@ offset_top = 20.0
 offset_right = -20.0
 offset_bottom = 80.0
 grow_horizontal = 0
+focus_mode = 0
 icon = ExtResource("3_bbais")
 expand_icon = true
 
@@ -132,7 +133,6 @@ text = "Spawn Rate:"
 [node name="TickButton" parent="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox" instance=ExtResource("4_0yspv")]
 layout_mode = 2
 size_flags_vertical = 4
-value = 1
 
 [node name="VertCamSensLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
@@ -198,6 +198,20 @@ value = 0.1
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="TPUpLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Space Teleport Height (meters): "
+
+[node name="TPHeightTickButton" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3" instance=ExtResource("4_0yspv")]
+layout_mode = 2
+size_flags_vertical = 4
+value = 1.0
+step_size = 0.5
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -251,6 +265,16 @@ layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "WASD"
 
+[node name="Label7" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Teleport Up"
+
+[node name="Label8" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Spacebar"
+
 [node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 
@@ -258,3 +282,4 @@ layout_mode = 2
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
