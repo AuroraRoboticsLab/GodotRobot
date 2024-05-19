@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var ball_count = 0
 @export var fps = 60
-@onready var spawn_rate: int = 3
+@export var spawn_rate: int = 1
 @export var charging: bool = false
 @export var charge_level: float = 100.0
 @export var stalling: bool = false

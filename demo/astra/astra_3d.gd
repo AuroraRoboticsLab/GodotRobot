@@ -7,11 +7,8 @@ const DRIVE_FORCE_MULT = 1200
 @onready var right_front_wheel  = $FrontRight
 @onready var right_back_wheel   = $BackRight
 
-@onready var arm =       $ArmNode3D/FrameToArmJoint
-@onready var bollard =   $ArmNode3D/ArmToBollardJoint
-@onready var tilt =      $ArmNode3D/BollardToCouplerJoint
-@onready var hopper_1 =  $HopperNode3D/HingeJoint3D
-@onready var hopper_2 =  $HopperNode3D/HingeJoint3D2
+@onready var arm    = $AstraArm3D
+@onready var hopper = $AstraHopper3D
 
 @onready var charge_component = $ChargeComponent
 @onready var rear_connector =   $ConnectorComponent
@@ -19,8 +16,6 @@ const DRIVE_FORCE_MULT = 1200
 @onready var stuck_stalling: bool = false
 @onready var stalling: bool = false
 @onready var start_stall: float = 0
-
-@onready var tool_coupler_component = $ArmNode3D/ToolCoupler3D/ToolCouplerComponent
 
 @onready var tp_height: float = 1.0
 
@@ -42,7 +37,6 @@ func _physics_process(delta):
 	
 	# Forces are determined as an inverse square of movement speed to
 	# put a cap on acceleration (and avoid insanely high speeds).
-	
 	const max_move_force = 20.0 # Starting (and max) move force
 	const move_amp = 15.0 # How quickly does move force fall off with speed?
 	var movement_speed = linear_velocity.length()
@@ -82,50 +76,23 @@ func _physics_process(delta):
 			start_stall = time
 			stalling = true
 		if time - start_stall > 1.0:
-			
 			stuck_stalling = true
 	else:
 		stalling = false
 		stuck_stalling = false
 	
-	const MOTOR_MULT = 0.8
-	var arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT
-	var bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT
-	var tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
-	var hopper_force = Input.get_axis("hopper_open", "hopper_close") * MOTOR_MULT
 	
-	if charge_component.is_dead:
-		arm_force = 0
-		bollard_force = 0
-		tilt_force = 0
-		hopper_force = 0
+	arm.is_dead = charge_component.is_dead
+	hopper.is_dead = charge_component.is_dead
 	
-	move_motor(arm, arm_force) if abs(arm_force) > 0 else stop_motor(arm)
-	move_motor(bollard, bollard_force) if abs(bollard_force) > 0 else stop_motor(bollard)
-	move_motor(tilt, tilt_force) if abs(tilt_force) > 0 else stop_motor(tilt)
-	move_motor(hopper_1, hopper_force) if abs(hopper_force) > 0 else stop_motor(hopper_1)
-	move_motor(hopper_2, -hopper_force) if abs(hopper_force) > 0 else stop_motor(hopper_2)
+	#power_spent += (abs(arm_force) + abs(bollard_force) + abs(tilt_force) + abs(hopper_force))
 	
-	power_spent += (abs(arm_force) + abs(bollard_force) + abs(tilt_force) + abs(hopper_force))
-	
-	#print(power_spent)
 	charge_component.change_charge(-power_spent * delta)
-	
-	# Tool attachment/detachment
-	if Input.is_action_just_pressed("generic_action"): 
-		tool_coupler_component.try_toggle_attach()
 	
 	# Fly away when pressing space
 	if Input.is_action_just_pressed("jump"):
 		linear_velocity = Vector3.ZERO
 		global_position += Vector3(0, tp_height, 0)
-
-func move_motor(motor, force):
-	motor.set("motor/target_velocity", force)
-	
-func stop_motor(motor):
-	# Somehow stop the joints from moving due to gravity
-	motor.set("motor/target_velocity", 0)
 
 
 # Connector logic. Very simple, because the connector component

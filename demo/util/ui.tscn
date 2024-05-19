@@ -112,9 +112,14 @@ theme = ExtResource("3_qlyme")
 [node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu"]
 layout_mode = 2
 
+[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 29.0
 
 [node name="TitleLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
@@ -133,6 +138,7 @@ text = "Spawn Rate:"
 [node name="TickButton" parent="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox" instance=ExtResource("4_0yspv")]
 layout_mode = 2
 size_flags_vertical = 4
+value = 1.0
 
 [node name="VertCamSensLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
@@ -247,6 +253,7 @@ step_size = 0.5
 [node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 29.0
 
 [node name="Label" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
@@ -329,6 +336,10 @@ text = "Mouse Wheel"
 
 [node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
+
+[node name="Control2" type="Control" parent="SettingsMenu/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
