@@ -198,6 +198,38 @@ value = 0.1
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="CamZoomSensLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Camera Zoom Sensitivity:"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="ZoomSensValLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_type_variation = &"MediumLabel"
+text = "2.5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ZoomSensSlider" type="HSlider" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+min_value = 1.0
+max_value = 10.0
+step = 0.5
+value = 2.5
+
+[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
@@ -275,6 +307,26 @@ layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Spacebar"
 
+[node name="Label9" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Move Camera"
+
+[node name="Label10" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Hold Left Click"
+
+[node name="Label11" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Zoom Camera"
+
+[node name="Label12" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Mouse Wheel"
+
 [node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 
@@ -282,4 +334,5 @@ layout_mode = 2
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
