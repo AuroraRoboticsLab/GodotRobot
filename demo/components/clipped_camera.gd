@@ -11,7 +11,6 @@ extends Node3D
 	get:
 		return -$RayCast3D.target_position.y
 	set(value):
-		print("setting!")
 		$RayCast3D.target_position.y = -value
 		$RayCast3D.position.z = -value
 

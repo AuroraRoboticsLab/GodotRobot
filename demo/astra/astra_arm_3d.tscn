@@ -37,9 +37,9 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00280762, 0.0897203, -0.409581)
 shape = SubResource("BoxShape3D_6ej40")
 
-[node name="ArmToBollardJoint" type="HingeJoint3D" parent="."]
+[node name="ArmToBollardJoint" type="HingeJoint3D" parent="Arm3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.107, -0.82)
-node_a = NodePath("../Arm3D")
+node_a = NodePath("..")
 node_b = NodePath("../Bollard3D")
 params/bias = 0.99
 angular_limit/enable = true
@@ -49,20 +49,20 @@ motor/enable = true
 motor/target_velocity = 0.0
 motor/max_impulse = 200.0
 
-[node name="Bollard3D" type="RigidBody3D" parent="."]
+[node name="Bollard3D" type="RigidBody3D" parent="Arm3D"]
 collision_layer = 4
 constant_force = Vector3(0, 1.62, 0)
 
-[node name="Bollard" type="MeshInstance3D" parent="Bollard3D"]
+[node name="Bollard" type="MeshInstance3D" parent="Arm3D/Bollard3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("2_p4gbc")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Bollard3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arm3D/Bollard3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.862018)
 shape = SubResource("BoxShape3D_6ej40")
 
-[node name="BollardToCouplerJoint" type="HingeJoint3D" parent="."]
+[node name="BollardToCouplerJoint" type="HingeJoint3D" parent="Arm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049, -0.896)
 node_a = NodePath("../Bollard3D")
 node_b = NodePath("../ToolCoupler3D")
@@ -76,18 +76,18 @@ motor/enable = true
 motor/target_velocity = 0.0
 motor/max_impulse = 300.0
 
-[node name="ToolCoupler3D" type="RigidBody3D" parent="."]
+[node name="ToolCoupler3D" type="RigidBody3D" parent="Arm3D"]
 collision_layer = 4
 constant_force = Vector3(0, 1.62, 0)
 
-[node name="ToolCouplerComponent" parent="ToolCoupler3D" instance=ExtResource("3_8fupj")]
+[node name="ToolCouplerComponent" parent="Arm3D/ToolCoupler3D" instance=ExtResource("3_8fupj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.91)
 
-[node name="ToolCouplerMesh" type="MeshInstance3D" parent="ToolCoupler3D"]
+[node name="ToolCouplerMesh" type="MeshInstance3D" parent="Arm3D/ToolCoupler3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("4_ylj6w")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="ToolCollider" type="CollisionShape3D" parent="ToolCoupler3D"]
+[node name="ToolCollider" type="CollisionShape3D" parent="Arm3D/ToolCoupler3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_6ej40")
