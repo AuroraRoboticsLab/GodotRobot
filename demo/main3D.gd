@@ -4,12 +4,24 @@ extends Node3D
 @onready var despawn = $DirtballDespawn
 @onready var terrain = $TerrainScript
 
-@onready var robot = $Astra3D
+@export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
+var robot
 
-var time = 0
-func _physics_process(delta):
-	time += delta
-	
+func _ready():
+	var index = 0
+	for pid in GameManager.players:
+		var curr_player = robot_scene.instantiate()
+		curr_player.name = str(pid)
+		add_child(curr_player)
+		if pid == multiplayer.get_unique_id():
+			robot = curr_player
+		
+		for spawnpoint in $PlayerSpawnpoints.get_children():
+			if spawnpoint.name == str(index%GameManager.num_spawns):
+				curr_player.global_position = spawnpoint.global_position
+		index += 1
+
+func _physics_process(_delta):
 	# Despawn oldest dirtballs (that have fallen through terrain)
 	for dirtball in despawn.get_children():
 		if dirtball.linear_velocity.y<-1.0: # has fallen for a while
@@ -35,9 +47,9 @@ func _physics_process(delta):
 	$UI.charge_level = robot.charge_component.charge_level
 	$UI.stalling = robot.stuck_stalling
 	$UI.can_attach = robot.arm.tool_coupler_component.can_attach
-	$Astra3D/MovableCamera3D.h_sens = $UI.h_cam_sens
-	$Astra3D/MovableCamera3D.v_sens = $UI.v_cam_sens
-	$Astra3D/MovableCamera3D.zoom_sens = $UI.cam_zoom_sens
-	$Astra3D.tp_height = $UI.tp_height
+	robot.cam_scene.h_sens = $UI.h_cam_sens
+	robot.cam_scene.v_sens = $UI.v_cam_sens
+	robot.cam_scene.zoom_sens = $UI.cam_zoom_sens
+	robot.tp_height = $UI.tp_height
 	
 

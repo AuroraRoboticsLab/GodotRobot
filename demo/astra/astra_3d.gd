@@ -18,6 +18,13 @@ const DRIVE_FORCE_MULT = 1200
 @onready var start_stall: float = 0
 
 @onready var tp_height: float = 1.0
+@export var is_npc: bool = false
+
+@onready var cam_scene = null
+
+var sync_pos = Vector3.ZERO
+var sync_rot = Vector3.ZERO
+var sync_arm_rot = Vector3.ZERO
 
 func _ready():
 	# Identify which components we have
@@ -25,11 +32,25 @@ func _ready():
 	add_to_group("connectable")
 	
 	center_of_mass = $CenterOfMass.position
+	
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	
+	if not is_npc and $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		cam_scene = load("res://components/movable_camera_3d.tscn").instantiate()
+		add_child(cam_scene)
 
 var time = 0
 func _physics_process(delta):
-	# TODO: Map inputs from numpad to motors of joints.
+	if not $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		global_position = global_position.lerp(sync_pos, 0.5)
+		global_rotation = global_rotation.lerp(sync_rot, 0.5)
+		arm.arm.global_rotation = arm.arm.global_rotation.lerp(sync_arm_rot, 0.5)
+		return
+	
 	time += delta
+	sync_pos = global_position
+	sync_rot = global_rotation
+	sync_arm_rot = arm.arm.global_rotation
 	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float

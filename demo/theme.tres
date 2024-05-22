@@ -2,6 +2,8 @@
 
 [resource]
 DisplayGridContainer/base_type = &"GridContainer"
+MediumButton/base_type = &"Button"
+MediumButton/font_sizes/font_size = 64
 MediumLabel/base_type = &"Label"
 MediumLabel/font_sizes/font_size = 32
 MediumTextEdit/base_type = &"TextEdit"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=12 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
@@ -14,6 +14,29 @@ size = Vector3(0.913705, 0.0486816, 0.272271)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g2gd1"]
 size = Vector3(0.768341, 0.0458984, 0.209961)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_b5vtu"]
+properties/0/path = NodePath(".:sync_pos")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:sync_rot")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AstraArm3D/Arm3D/Bollard3D:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("AstraArm3D/Arm3D/Bollard3D:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AstraArm3D/Arm3D/ToolCoupler3D:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("AstraArm3D/Arm3D/ToolCoupler3D:position")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:sync_arm_rot")
+properties/6/spawn = true
+properties/6/replication_mode = 1
 
 [node name="Astra3D" type="VehicleBody3D"]
 collision_layer = 4
@@ -122,6 +145,10 @@ surface_material_override/0 = ExtResource("4_r6kd8")
 
 [node name="ConnectorComponent" parent="." instance=ExtResource("11_hg1mk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
+replication_config = SubResource("SceneReplicationConfig_b5vtu")
 
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

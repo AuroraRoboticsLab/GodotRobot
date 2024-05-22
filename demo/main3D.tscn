@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=11 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
@@ -6,8 +6,6 @@
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="3_qie7w"]
 [ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://charge_station.tscn" id="4_0colx"]
 [ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="4_5fymx"]
-[ext_resource type="PackedScene" uid="uid://dx0u7xdpcdtrp" path="res://astra/astra_3d.tscn" id="4_7mmlg"]
-[ext_resource type="PackedScene" uid="uid://cdadlayx3kmpi" path="res://components/movable_camera_3d.tscn" id="4_q5ihd"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="5_pud20"]
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="5_r12xm"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
@@ -32,11 +30,6 @@ transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415257, 0.6
 light_energy = 3.439
 shadow_enabled = true
 
-[node name="Astra3D" parent="." instance=ExtResource("4_7mmlg")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.4121e-05, 1.81706, 0.00117272)
-
-[node name="MovableCamera3D" parent="Astra3D" instance=ExtResource("4_q5ihd")]
-
 [node name="ChargeStation" parent="." instance=ExtResource("4_0colx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.99146, 0.511469, -2)
 
@@ -60,3 +53,17 @@ transform = Transform3D(-0.996196, 0, -0.0871383, 0, 1, 0, 0.0871383, 0, -0.9961
 
 [node name="ForkAttachment" parent="." instance=ExtResource("5_r12xm")]
 transform = Transform3D(-0.614189, 0, -0.789159, 0, 1, 0, 0.789159, 0, -0.614189, 1.77219, 1.74902, 1.21038)
+
+[node name="PlayerSpawnpoints" type="Node3D" parent="."]
+
+[node name="0" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.338355, 1.97629, 0)
+
+[node name="1" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.64497, 1.9968, 0)
+
+[node name="2" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3471, 2.01702, 0)
+
+[node name="3" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.58208, 2.0361, -2.03699)
