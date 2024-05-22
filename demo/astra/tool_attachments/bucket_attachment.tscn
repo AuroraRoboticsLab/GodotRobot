@@ -24,7 +24,7 @@ size = Vector3(0.0108643, 0.173706, 0.169434)
 [node name="BucketAttachment" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 collision_layer = 20
-collision_mask = 5
+collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_3v1of")
 script = ExtResource("1_tbghr")
 

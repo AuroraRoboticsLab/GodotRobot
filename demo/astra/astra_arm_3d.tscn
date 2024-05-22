@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cydno5704j3dk"]
+[gd_scene load_steps=8 format=3 uid="uid://cydno5704j3dk"]
 
 [ext_resource type="Script" path="res://astra/astra_arm_3d.gd" id="1_2mulu"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="1_dvup2"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="2_p4gbc"]
 [ext_resource type="PackedScene" uid="uid://c26cseexjqmt4" path="res://components/tool_coupler_component.tscn" id="3_8fupj"]
+[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="3_bb355"]
 [ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="4_ylj6w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ej40"]
@@ -22,11 +23,10 @@ angular_limit/upper = 0.0
 angular_limit/bias = 0.5
 motor/enable = true
 motor/target_velocity = 0.0
-motor/max_impulse = 300.0
+motor/max_impulse = 1000.0
 
 [node name="Arm3D" type="RigidBody3D" parent="."]
 collision_layer = 4
-constant_force = Vector3(0, 1.62, 0)
 
 [node name="Arm1" type="MeshInstance3D" parent="Arm3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -37,21 +37,16 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00280762, 0.0897203, -0.409581)
 shape = SubResource("BoxShape3D_6ej40")
 
-[node name="ArmToBollardJoint" type="HingeJoint3D" parent="Arm3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.107, -0.82)
+[node name="ArmToBollardJoint" parent="Arm3D" instance=ExtResource("3_bb355")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.107, -0.82)
 node_a = NodePath("..")
 node_b = NodePath("../Bollard3D")
-params/bias = 0.99
-angular_limit/enable = true
-angular_limit/lower = -0.785398
-angular_limit/bias = 0.5
-motor/enable = true
-motor/target_velocity = 0.0
-motor/max_impulse = 200.0
+linear_motor_x/enabled = true
+x_max_upper_angle = 90.0
+x_max_lower_angle = -45.0
 
 [node name="Bollard3D" type="RigidBody3D" parent="Arm3D"]
 collision_layer = 4
-constant_force = Vector3(0, 1.62, 0)
 
 [node name="Bollard" type="MeshInstance3D" parent="Arm3D/Bollard3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -78,7 +73,6 @@ motor/max_impulse = 300.0
 
 [node name="ToolCoupler3D" type="RigidBody3D" parent="Arm3D"]
 collision_layer = 4
-constant_force = Vector3(0, 1.62, 0)
 
 [node name="ToolCouplerComponent" parent="Arm3D/ToolCoupler3D" instance=ExtResource("3_8fupj")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.91)

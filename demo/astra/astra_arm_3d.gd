@@ -23,12 +23,6 @@ func _ready():
 	bollard_target_angle = bollard.get_rotation()[0]
 
 func _physics_process(delta):
-	#const ANGLE_MULT = 0.8
-	
-	#arm_target_angle += Input.get_axis("arm_up", "arm_down") * ANGLE_MULT * delta
-	#bollard_target_angle += Input.get_axis("bollard_curl", "bollard_dump") * ANGLE_MULT * delta
-	#tilt_target_angle += Input.get_axis("tilt_left", "tilt_right") * ANGLE_MULT * delta
-	
 	var arm_angle = arm.get_rotation()[0]
 	var bollard_angle = bollard.get_rotation()[0]
 	
@@ -41,8 +35,8 @@ func _physics_process(delta):
 		if not has_set_arm_angle:
 			arm_target_angle = arm_angle
 			has_set_arm_angle = true
-		elif abs(arm_angle_diff) > deg_to_rad(1):
-			arm_force = -arm_angle_diff * 50 * delta
+		elif abs(arm_angle_diff) > deg_to_rad(0.1):
+			arm_force = -arm_angle_diff * 250 * delta
 	else:
 		has_set_arm_angle = false
 		arm_force = arm_move_vec * MOTOR_MULT
@@ -50,16 +44,16 @@ func _physics_process(delta):
 	# Bollard PID
 	var bollard_move_vec = Input.get_axis("bollard_curl", "bollard_dump")
 	var bollard_force = 0
-	var bollard_angle_diff = bollard_target_angle - bollard_angle
-	if bollard_move_vec == 0:
-		if not has_set_bollard_angle:
-			bollard_target_angle = bollard_angle
-			has_set_bollard_angle = true
-		elif abs(bollard_angle_diff) > deg_to_rad(1):
-			bollard_force = -bollard_angle_diff * 50 * delta
-	else:
-		has_set_bollard_angle = false
-		bollard_force = bollard_move_vec * MOTOR_MULT
+	#var bollard_angle_diff = bollard_target_angle - bollard_angle
+	#if bollard_move_vec == 0:
+	#	if not has_set_bollard_angle:
+	#		bollard_target_angle = bollard_angle
+	#		has_set_bollard_angle = true
+	#	elif abs(bollard_angle_diff) > deg_to_rad(1):
+	#		bollard_force = -bollard_angle_diff * 100 * delta
+	#else:
+	#has_set_bollard_angle = false
+	bollard_force = bollard_move_vec * MOTOR_MULT * 2
 		
 	# Probably don't need PID for tilt
 	var tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
@@ -69,11 +63,11 @@ func _physics_process(delta):
 		bollard_force = 0
 		tilt_force = 0
 	
-	print("Target arm angle:", rad_to_deg(arm_target_angle))
-	print("Arm angle:", rad_to_deg(arm_angle))
-	print("Arm force:", rad_to_deg(arm_force))
+	#print("Target bollard angle:", rad_to_deg(bollard_target_angle))
+	#print("Bollard angle:", rad_to_deg(bollard_angle))
+	#print("Bollard force:", rad_to_deg(bollard_force))
 	move_motor(arm_joint, arm_force) if abs(arm_force) > 0 else stop_motor(arm_joint)
-	move_motor(bollard_joint, bollard_force) if abs(bollard_force) > 0 else stop_motor(bollard_joint)
+	bollard_joint.move_motor(bollard_force, bollard_angle) if abs(bollard_force) > 0 else bollard_joint.stop_motor(bollard_angle)
 	move_motor(tilt_joint, tilt_force) if abs(tilt_force) > 0 else stop_motor(tilt_joint)
 	
 	# Tool attachment/detachment
