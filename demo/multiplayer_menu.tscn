@@ -48,6 +48,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 theme_type_variation = &"MediumTextEdit"
+text = "unnamed robot"
 placeholder_text = "Enter name here"
 
 [node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer2"]

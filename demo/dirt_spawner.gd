@@ -12,6 +12,9 @@ var ball: PackedScene = preload("res://terrain/dirtball.tscn")
 func _ready():
 	pass # Replace with function body.
 
+@rpc("any_peer","call_local")
+func toggle_spawning():
+	is_spawning = !is_spawning
 
 func _physics_process(_delta):
 	if not is_spawning:
@@ -34,7 +37,7 @@ func _physics_process(_delta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("action1"):
-		is_spawning = !is_spawning
+		toggle_spawning()
 	#if Input.is_action_just_pressed("down_arrow") and spawn_rate > 0:
 	#	spawn_rate -= 1
 	#if Input.is_action_just_pressed("up_arrow"):
