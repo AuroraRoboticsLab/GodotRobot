@@ -22,21 +22,6 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:sync_rot")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("AstraArm3D/Arm3D/Bollard3D:position")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("AstraArm3D/Arm3D/Bollard3D:rotation")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("AstraArm3D/Arm3D/ToolCoupler3D:rotation")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("AstraArm3D/Arm3D/ToolCoupler3D:position")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath(".:sync_arm_rot")
-properties/6/spawn = true
-properties/6/replication_mode = 1
 
 [node name="Astra3D" type="VehicleBody3D"]
 collision_layer = 4
@@ -149,6 +134,14 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_b5vtu")
+
+[node name="Nametag" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.582233, 0)
+billboard = 1
+double_sided = false
+text = "unnamed robot"
+autowrap_mode = 2
+width = 400.0
 
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

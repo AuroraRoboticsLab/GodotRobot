@@ -20,12 +20,18 @@ func try_toggle_attach():
 	else:
 		print("Cannot attach or detach!")
 
+func _relocate_tool(node, to_node):
+	#print("Relocating tool!")
+	if to_node and node:
+		node.get_parent().remove_child(node)
+		to_node.add_child(node)
+
 # Attach to nearby attachment
 # Invariants:
 #   A tool attachment is nearby
 #   We are not already connected
 func _attach():
-	print("attaching")
+	#print("attaching")
 	# Connect connector components
 	current_attachment.connector.do_connect(tool_connector)
 	tool_connector.do_connect(current_attachment.connector)
@@ -39,8 +45,9 @@ func _detach():
 	curr_joint = null
 	
 	var curr_attach_trans = current_attachment.global_transform
-	current_attachment.get_parent().remove_child(current_attachment)
-	get_tree().root.get_children()[0].add_child(current_attachment)
+	_relocate_tool(current_attachment, get_tree().root.get_children()[0])
+	#current_attachment.get_parent().remove_child(current_attachment)
+	#get_tree().root.get_children()[0].add_child(current_attachment)
 	current_attachment.global_transform = curr_attach_trans
 	
 	current_attachment.connector.do_disconnect(tool_connector)
@@ -53,7 +60,7 @@ func _detach():
 # Invariants:
 #   area is a connector
 func _on_connector_component_can_connect(area):
-	print("can connect!")
+	#print("can connect!")
 	var body = area.parent
 	if body.is_in_group("attachment"): # Body is an attachment
 		current_attachment = body
@@ -65,10 +72,12 @@ func _on_connector_component_just_connected(area):
 	curr_joint.global_transform = global_transform
 	var grandparent = get_parent().get_parent()
 	grandparent.add_child(curr_joint)
+	
+	_relocate_tool(current_attachment, grandparent)
 	# Remove the current attachment from its current location
-	current_attachment.get_parent().remove_child(current_attachment)
+	#current_attachment.get_parent().remove_child(current_attachment)
 	# Make its new location under our parent
-	grandparent.add_child(current_attachment)
+	#grandparent.add_child(current_attachment)
 	
 	current_attachment.global_transform = get_parent().global_transform
 	current_attachment.global_position = tool_connector.global_position

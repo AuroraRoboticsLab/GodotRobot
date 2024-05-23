@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cydno5704j3dk"]
+[gd_scene load_steps=9 format=3 uid="uid://cydno5704j3dk"]
 
 [ext_resource type="Script" path="res://astra/astra_arm_3d.gd" id="1_2mulu"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="1_dvup2"]
@@ -9,6 +9,17 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ej40"]
 size = Vector3(0.81134, 0.270643, 0.0641555)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_adocg"]
+properties/0/path = NodePath("Arm3D/ToolCoupler3D:transform")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Arm3D/Bollard3D:transform")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Arm3D:transform")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="AstraArm3D" type="Node3D"]
 script = ExtResource("1_2mulu")
@@ -85,3 +96,6 @@ skeleton = NodePath("../../../..")
 [node name="ToolCollider" type="CollisionShape3D" parent="Arm3D/ToolCoupler3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_6ej40")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_adocg")

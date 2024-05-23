@@ -24,7 +24,12 @@ const DRIVE_FORCE_MULT = 1200
 
 var sync_pos = Vector3.ZERO
 var sync_rot = Vector3.ZERO
-var sync_arm_rot = Vector3.ZERO
+
+var nametag_text: String = "unnamed robot":
+	get:
+		return $Nametag.text
+	set(value):
+		$Nametag.text = value
 
 func _ready():
 	# Identify which components we have
@@ -35,22 +40,21 @@ func _ready():
 	
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	
-	if not is_npc and $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	if not is_npc and $MultiplayerSynchronizer.is_multiplayer_authority():
 		cam_scene = load("res://components/movable_camera_3d.tscn").instantiate()
 		add_child(cam_scene)
+		$Nametag.visible = false
 
 var time = 0
 func _physics_process(delta):
-	if not $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	if not $MultiplayerSynchronizer.is_multiplayer_authority():
 		global_position = global_position.lerp(sync_pos, 0.5)
 		global_rotation = global_rotation.lerp(sync_rot, 0.5)
-		arm.arm.global_rotation = arm.arm.global_rotation.lerp(sync_arm_rot, 0.5)
 		return
 	
 	time += delta
 	sync_pos = global_position
 	sync_rot = global_rotation
-	sync_arm_rot = arm.arm.global_rotation
 	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float
@@ -121,15 +125,15 @@ func _physics_process(delta):
 
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):
-	# For now, automatically connect to any connector.
-	# Can do a check: Is the body for data? For power?
-	# A new tool/attachment? Behavior can differ depending.
-	area.do_connect(rear_connector)
-	rear_connector.do_connect()
+	# For now, automatically connect to any chargeable connector.
+	if area.is_in_group("connector") and area.is_in_group("chargeable"):
+		area.do_connect(rear_connector)
+		rear_connector.do_connect()
 
 # Connected connector exits range, so what things happen
 # when we disconnect?
 func _on_connector_component_must_disconnect(area):
 	# Disconnect right now.
-	area.do_disconnect(rear_connector)
-	rear_connector.do_disconnect(area)
+	if rear_connector.connected:
+		area.do_disconnect(rear_connector)
+		rear_connector.do_disconnect(area)

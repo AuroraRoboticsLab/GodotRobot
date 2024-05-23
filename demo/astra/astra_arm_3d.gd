@@ -21,9 +21,11 @@ var has_set_bollard_angle: bool = false
 func _ready():
 	arm_target_angle = arm.get_rotation()[0]
 	bollard_target_angle = bollard.get_rotation()[0]
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(get_parent().name).to_int())
 
 func _physics_process(delta):
-	if not $"../MultiplayerSynchronizer".get_multiplayer_authority() == multiplayer.get_unique_id():
+	if not $"MultiplayerSynchronizer".is_multiplayer_authority():
+	#if not is_multiplayer_authority():
 		return
 	
 	var arm_angle = arm.get_rotation()[0]

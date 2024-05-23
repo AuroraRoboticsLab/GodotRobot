@@ -5,7 +5,7 @@ extends Node3D
 @onready var terrain = $TerrainScript
 
 @export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
-var robot
+var robot = null
 
 func _ready():
 	var index = 0
@@ -13,8 +13,11 @@ func _ready():
 		var curr_player = robot_scene.instantiate()
 		curr_player.name = str(pid)
 		add_child(curr_player)
+		print("pid: ", pid, "; unique_id: ", multiplayer.get_unique_id())
 		if pid == multiplayer.get_unique_id():
 			robot = curr_player
+		
+		curr_player.nametag_text = GameManager.players[pid]["username"]
 		
 		for spawnpoint in $PlayerSpawnpoints.get_children():
 			if spawnpoint.name == str(index%GameManager.num_spawns):
