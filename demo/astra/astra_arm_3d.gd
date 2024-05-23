@@ -25,7 +25,6 @@ func _ready():
 
 func _physics_process(delta):
 	if not $"MultiplayerSynchronizer".is_multiplayer_authority():
-	#if not is_multiplayer_authority():
 		return
 	
 	var arm_angle = arm.get_rotation()[0]
