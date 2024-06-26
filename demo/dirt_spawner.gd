@@ -1,8 +1,9 @@
+# Keeps a set of dirtballs as children
 extends Marker3D
 
 @export var spawn_rate = 1
 @export var spawn = self
-@export var max_balls = 1500
+@export var max_balls = 1500   # <- limited by physis framerate
 @export var is_spawning = false
 
 @onready var spawn_start_pos = spawn.global_position
@@ -16,26 +17,29 @@ func _ready():
 func toggle_spawning():
 	is_spawning = !is_spawning
 
+# Create a new dirtball at this global position
+func spawn_dirtball(pos):
+		if spawn.get_child_count() <= max_balls: # ignore requests over cap
+			var new_ball = ball.instantiate()
+			new_ball.top_level = true # dirt position independent of spawner position
+			spawn.add_child(new_ball) 
+			new_ball.global_position = pos # override its global position
+
 func _physics_process(_delta):
 	if not is_spawning:
 		return
 
 	for i in range(spawn_rate):
 		# Spray new dirtballs
-		if spawn.get_child_count() <= max_balls:
-			var new_ball = ball.instantiate()
-			new_ball.top_level = true # dirt position independent of spawner position
-			spawn.add_child(new_ball) # appears at spawn origin
-
 		var radius = 0.3 * randf()
 		var spawn_x = spawn_start_pos.x + radius*cos(randf())
 		var spawn_y = spawn_start_pos.y
 		var spawn_z = spawn_start_pos.z + radius*sin(randf())
-		spawn.position = Vector3(spawn_x, spawn_y, spawn_z)
+		spawn_dirtball(Vector3(spawn_x, spawn_y, spawn_z))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("action1"):
 		toggle_spawning()
 	#if Input.is_action_just_pressed("down_arrow") and spawn_rate > 0:

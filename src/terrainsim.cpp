@@ -35,6 +35,18 @@ Routes to get PackedFlat32Array onscreen:
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/static_body3d.hpp>
+#include <godot_cpp/classes/static_body3d.hpp>
+
+#include <godot_cpp/variant/signal.hpp>
+
+
+
+
+// Parameters for our dirtball (discrete block of dust)
+const float dirtball_sz = 0.1; // meters across a dirtball (for volume estimate)
+const float dirtball_dh = powf(dirtball_sz,3.0)/(MESH_SPACING * MESH_SPACING); // volume conservation
+
+
 
 
 using namespace godot;
@@ -59,6 +71,9 @@ void TerrainSim::_bind_methods() {
     ClassDB::bind_method(D_METHOD("animate_heights"), &TerrainSim::animate_heights);
     ClassDB::bind_method(D_METHOD("try_merge"), &TerrainSim::try_merge);
     
+    // We call this signal when we want to spawn a new dirtball
+    ADD_SIGNAL(MethodInfo("spawn_dirtball", PropertyInfo(Variant::VECTOR3, "spawn_pos")));
+
     
     /*
     // These setters are probably a bad idea:
@@ -210,12 +225,12 @@ void TerrainSim::fill_heights(float cx, float cz,float cliffR)
         for (int x=0;x<W;x++)
         {
             int i = z*W + x;
-            float h = ((x+z/2)%4)*0.025; // slightly fuzzy floor
+            float h = 1.0 + ((x+z/2)%4)*0.0025; // slightly uneven floor
 
-            float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
-            if (r<cliffR) h=1.5; // rounded cliff 
+            //float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
+            //if (r<cliffR) h=1.5; // rounded cliff 
             
-            if (x==2 && z == 2) h=3.0; // spike, for vertex calibration
+            if (x==2 && z == 2) h=1.5; // spike, for dirtball calibration
             
             height_floats[i] = h;
             height_next[i] = h;
@@ -274,13 +289,27 @@ void TerrainSim::animate_physics(double dt)
             float dx = (R-L)*inv_2dh;
             float dz = (T-B)*inv_2dh;
             Vector3 N = Vector3(dx,1.0f,dz).normalized();
+            bool slope_failure = (N.y < stability_Y) && (C>neighborhood); // unstable slope and we're above average
+            bool tower_failure = (C>neighborhood+1.5*dirtball_dh); // we're a 'tower' isolated by ourself
             
-            if (N.y < stability_Y)
+            if (slope_failure || tower_failure)
             {
-                // Slope is unstable--move with neighbors
+                // 'blur' terrain, move with neighbors
                 //    FIXME: transport inertia
                 //    FIXME: will this conserve mass?
-                h += 1.0*(neighborhood-C);
+                // h += 1.0*(neighborhood-C);
+                
+                // convert slope to dirtball(s)
+        	// Our slope is too high, and we're above our neighbors:
+	        // Convert this terrain to a dirtball
+	        Vector3 spawn_pos = Vector3(0.0,4.0,0.0); // <- testing only
+	        
+	        float r = 0.5 + 1.0*((rand()%32)*(1.0/31.0)); // stochastic material removal
+	        h -= r*dirtball_dh; // material removed from terrain and converted to dirtball
+	        
+	        printf("spawn dirtball at (%.2f,%.2f,%.2f)\n",spawn_pos.x,spawn_pos.y,spawn_pos.z);
+	        
+	        emit_signal("spawn_dirtball", spawn_pos);
             }
             else {
                 // very weak erosion everywhere (prevents weird cliffs)
@@ -331,8 +360,6 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
     }
 
 // Add the dirtball to the terrain
-    const float dirtball_sz = 0.07; // meters across a dirtball (for volume estimate)
-    const float dirtball_dh = powf(dirtball_sz,3.0)/(MESH_SPACING * MESH_SPACING);
     
     // Nearest: raise terrain height at the closest one pixel (lumpy)
     // h += dirtball_dh; // raise terrain height at that one pixel
@@ -356,7 +383,7 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
             low_i=i;
         }
     }
-    height_floats[low_i] += 2*dirtball_dh; // dump dirt into low spot
+    height_floats[low_i] += dirtball_dh; // dump dirt into low spot
     
     printf("Merged dirtball at terrain pixel (%d,%d)\n", ix,iz);
     
