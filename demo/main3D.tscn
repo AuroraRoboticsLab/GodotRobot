@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=10 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
@@ -10,54 +10,49 @@
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="5_r12xm"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_848ex"]
-
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_l30dg")
 
 [node name="TerrainScript" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.50407, 0, -10.2105)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6405, 0, -13.346)
 script = ExtResource("2_ojqbc")
 
 [node name="TerrainSim" type="TerrainSim" parent="TerrainScript"]
 
-[node name="Origin Reference Cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.5)
-mesh = SubResource("BoxMesh_848ex")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415257, 0.611129, 0.119584, -0.981699, 0.148212, 0, 3.917, 0)
+transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415257, 0.611129, 0.119584, -0.981699, 0.148212, 0, 2.40859, 0)
 light_energy = 3.439
 shadow_enabled = true
 
 [node name="ChargeStation" parent="." instance=ExtResource("4_0colx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.99146, 0.511469, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.99146, 0.43997, -2)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("3_58k4c")
 
 [node name="FPS Counter" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, 0.0168765, -0.0148048)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, -1.49154, -0.0148048)
 script = ExtResource("3_qie7w")
 
 [node name="DirtSpawner" parent="." instance=ExtResource("6_u4twd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 3.57345, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 2.06504, 0)
 
 [node name="DirtballDespawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11533, 4.08943, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 2.06504, 0)
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]
 
 [node name="BucketAttachment" parent="." instance=ExtResource("4_5fymx")]
-transform = Transform3D(-0.996196, 0, -0.0871383, 0, 1, 0, 0.0871383, 0, -0.996196, 0.433362, 1.82527, 1.93606)
+transform = Transform3D(-0.996196, 0, -0.0871383, 0, 1, 0, 0.0871383, 0, -0.996196, 0.433362, 0.316855, 1.93606)
 
 [node name="ForkAttachment" parent="." instance=ExtResource("5_r12xm")]
-transform = Transform3D(-0.614189, 0, -0.789159, 0, 1, 0, 0.789159, 0, -0.614189, 1.77219, 1.74902, 1.21038)
+transform = Transform3D(-0.614189, 0, -0.789159, 0, 1, 0, 0.789159, 0, -0.614189, 1.77219, 0.240605, 1.21038)
 
 [node name="PlayerSpawnpoints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.50841, 0)
 
 [node name="0" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.338355, 1.97629, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.338355, 1.97629, 0)
 
 [node name="1" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.64497, 1.9968, 0)
@@ -70,3 +65,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.58208, 2.0361, -2.03699)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")
+
+[connection signal="spawn_dirtball" from="TerrainScript/TerrainSim" to="DirtSpawner" method="_on_terrain_sim_spawn_dirtball"]

@@ -225,12 +225,13 @@ void TerrainSim::fill_heights(float cx, float cz,float cliffR)
         for (int x=0;x<W;x++)
         {
             int i = z*W + x;
-            float h = 1.0 + ((x+z/2)%4)*0.0025; // slightly uneven floor
+            float h = ((x+z/2)%4)*0.0025; // slightly uneven floor
 
             //float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
             //if (r<cliffR) h=1.5; // rounded cliff 
             
-            if (x==2 && z == 2) h=1.5; // spike, for dirtball calibration
+            if (x==128 && z == 128) h=2.5; // demonstration spike, for dirtball calibration
+            if (x>=180) h=0.25; // demonstration ridge
             
             height_floats[i] = h;
             height_next[i] = h;
@@ -302,7 +303,10 @@ void TerrainSim::animate_physics(double dt)
                 // convert slope to dirtball(s)
         	// Our slope is too high, and we're above our neighbors:
 	        // Convert this terrain to a dirtball
-	        Vector3 spawn_pos = Vector3(0.0,4.0,0.0); // <- testing only
+	        
+		Vector3 o = get_global_position(); // our global origin
+		float above_delta=0.1;
+	        Vector3 spawn_pos = o + Vector3(x*MESH_SPACING,h + above_delta,z*MESH_SPACING);
 	        
 	        float r = 0.5 + 1.0*((rand()%32)*(1.0/31.0)); // stochastic material removal
 	        h -= r*dirtball_dh; // material removed from terrain and converted to dirtball

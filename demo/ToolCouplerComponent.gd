@@ -102,7 +102,7 @@ func _on_connector_component_just_connected(_area):
 	curr_joint.set_node_b(current_attachment.get_path())
 	can_attach = false
 
-func _on_connector_component_must_disconnect(area):
+func _on_connector_component_must_disconnect(_area):
 	if not tool_connector.connected: # Because position changes during attach trigger function
 		tool_connector.nearby_connector = null
 		can_attach = false
