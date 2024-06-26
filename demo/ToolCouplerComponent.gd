@@ -81,7 +81,7 @@ func _on_connector_component_can_connect(area):
 		current_attachment = body
 		can_attach = true
 		
-func _on_connector_component_just_connected(area):
+func _on_connector_component_just_connected(_area):
 	# Stick bodies together
 	curr_joint = Generic6DOFJoint3D.new()
 	curr_joint.global_transform = global_transform
