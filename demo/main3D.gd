@@ -21,10 +21,13 @@ func _ready():
 		
 		for spawnpoint in $PlayerSpawnpoints.get_children():
 			if spawnpoint.name == str(index%GameManager.num_spawns):
-				curr_player.global_position = spawnpoint.global_position
+				curr_player.global_transform = spawnpoint.global_transform
 		index += 1
 
 func _physics_process(_delta):
+	if multiplayer.get_unique_id() == 1 and GameManager.has_host:
+		return
+	
 	# Despawn oldest dirtballs (that have fallen through terrain)
 	for dirtball in despawn.get_children():
 		if dirtball.linear_velocity.y<-1.0: # has fallen for a while

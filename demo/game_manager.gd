@@ -12,3 +12,5 @@ var max_players: int = 4:
 		else:
 			max_players = value
 var num_spawns = 4
+var has_host: bool = false
+var game_in_progress: bool = false

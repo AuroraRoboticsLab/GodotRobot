@@ -20,10 +20,11 @@ const DRIVE_FORCE_MULT = 1200
 @onready var tp_height: float = 1.0
 @export var is_npc: bool = false
 
+@onready var cam_load = load("res://components/movable_camera_3d.tscn")
 @onready var cam_scene = null
 
 var sync_pos = Vector3.ZERO
-var sync_rot = Vector3.ZERO
+var sync_rot = Quaternion.IDENTITY
 
 var nametag_text: String = "unnamed robot":
 	get:
@@ -35,26 +36,27 @@ func _ready():
 	# Identify which components we have
 	add_to_group("chargeable")
 	add_to_group("connectable")
+	add_to_group("player")
 	
 	center_of_mass = $CenterOfMass.position
 	
 	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	
 	if not is_npc and $MultiplayerSynchronizer.is_multiplayer_authority():
-		cam_scene = load("res://components/movable_camera_3d.tscn").instantiate()
+		cam_scene = cam_load.instantiate()
 		add_child(cam_scene)
-		$Nametag.visible = false
+		$Nametag.visible = false # We don't want to see our own nametag
 
 var time = 0
 func _physics_process(delta):
 	if not $MultiplayerSynchronizer.is_multiplayer_authority():
 		global_position = global_position.lerp(sync_pos, 0.5)
-		global_rotation = global_rotation.lerp(sync_rot, 0.5)
+		set_quaternion(get_quaternion().slerp(sync_rot, 0.5))
 		return
 	
 	time += delta
 	sync_pos = global_position
-	sync_rot = global_rotation
+	sync_rot = get_quaternion()
 	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float
@@ -126,7 +128,7 @@ func _physics_process(delta):
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):
 	# For now, automatically connect to any chargeable connector.
-	if area.is_in_group("connector") and area.is_in_group("chargeable"):
+	if area.is_in_group("connector") and area.parent.is_in_group("chargeable"):
 		area.do_connect(rear_connector)
 		rear_connector.do_connect()
 

@@ -103,10 +103,13 @@ text = "Press E to attach"
 
 [node name="SettingsMenu" type="PanelContainer" parent="."]
 visible = false
-offset_left = 240.0
-offset_top = 135.0
-offset_right = 1680.0
-offset_bottom = 945.0
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.125
+anchor_right = 0.875
+anchor_bottom = 0.875
+offset_right = -0.00012207
+offset_bottom = -6.10352e-05
 theme = ExtResource("3_qlyme")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu"]
