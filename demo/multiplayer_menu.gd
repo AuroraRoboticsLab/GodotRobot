@@ -23,7 +23,7 @@ func _ready():
 			arguments[argument.lstrip("--")] = ""
 	
 	if "port" in arguments:
-		port = arguments["port"]
+		port = arguments["port"].to_int()
 	if "address" in arguments:
 		address = arguments["address"]
 	if "host" in arguments:
@@ -50,6 +50,7 @@ func send_player_info(id, username):
 		}
 	if multiplayer.is_server():
 		for pid in GameManager.players:
+			#if id != pid:
 			send_player_info.rpc(pid, GameManager.players[pid].username)
 
 @rpc("any_peer", "call_local")
@@ -59,6 +60,8 @@ func start_game():
 		var scene = load("res://main3D.tscn").instantiate()
 		get_tree().root.add_child(scene)
 		self.hide()
+	else:
+		print("Game already in progress.")
 
 func player_connected(id):
 	print("Player Connected (ID ", id, ")")
@@ -66,7 +69,9 @@ func player_connected(id):
 func player_disconnected(id):
 	print("Player Disconnected (ID #", id, ")")
 	GameManager.players.erase(id)
-	get_tree().root.get_node("main3D/" + str(id)).queue_free()
+	var player_node = get_tree().root.get_node_or_null("main3D/" + str(id))
+	if player_node:
+		player_node.queue_free()
 	
 func connected_to_server():
 	print("Connected to server!")
@@ -80,6 +85,8 @@ func _on_host_button_pressed():
 	send_player_info(multiplayer.get_unique_id(), name_textbox.text)
 
 func _on_join_button_pressed():
+	if peer:
+		peer.close_connection()
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(address, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
