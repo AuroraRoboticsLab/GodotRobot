@@ -81,7 +81,7 @@ func _on_connector_component_can_connect(area):
 		current_attachment = body
 		can_attach = true
 		
-func _on_connector_component_just_connected(area):
+func _on_connector_component_just_connected(_area):
 	# Stick bodies together
 	curr_joint = Generic6DOFJoint3D.new()
 	curr_joint.global_transform = global_transform
@@ -102,7 +102,7 @@ func _on_connector_component_just_connected(area):
 	curr_joint.set_node_b(current_attachment.get_path())
 	can_attach = false
 
-func _on_connector_component_must_disconnect(area):
+func _on_connector_component_must_disconnect(_area):
 	if not tool_connector.connected: # Because position changes during attach trigger function
 		tool_connector.nearby_connector = null
 		can_attach = false

@@ -6,7 +6,7 @@ extends Node3D
 
 @onready var is_dead: bool = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	const MOTOR_MULT = 0.8
 	var hopper_force = Input.get_axis("hopper_open", "hopper_close") * MOTOR_MULT
 	

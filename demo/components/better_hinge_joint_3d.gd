@@ -16,7 +16,7 @@ extends Generic6DOFJoint3D
 @export var x_max_lower_angle: float = 0
 @onready var moving: bool = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	pass
 
 func move_motor(force: float, current_angle):

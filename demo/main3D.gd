@@ -39,9 +39,12 @@ func _physics_process(_delta):
 			if abs(dirtball.linear_velocity.y) < 0.02:  # very low vertical velocity (m/s)
 				if dirtball.angular_velocity.length() < 0.1: # not rotating much (rad/s)
 					if terrain.dirtball_merge(dirtball):
+						var pos = dirtball.global_position
 						spawn.remove_child(dirtball)
 						dirtball.collision_mask = 0 # fall down through terrain
 						despawn.add_child(dirtball)
+						dirtball.global_position=pos # preserve position
+		
 		# A few tend to break through terrain and just plummet
 		if dirtball.linear_velocity.y<-10.0: 
 			dirtball.queue_free()
