@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=12 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://main3D.gd" id="1_l30dg"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_ojqbc"]
@@ -11,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://dirt_spawner.tscn" id="6_u4twd"]
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="10_pm4e6"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="11_c3lv0"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_848ex"]
 
 [node name="main3D" type="Node3D"]
 script = ExtResource("1_l30dg")
@@ -53,10 +51,10 @@ transform = Transform3D(-0.996196, 0, -0.0871383, 0, 1, 0, 0.0871383, 0, -0.9961
 transform = Transform3D(-0.614189, 0, -0.789159, 0, 1, 0, 0.789159, 0, -0.614189, 1.77219, 0.240605, 1.21038)
 
 [node name="SawBladeAttachment" parent="." instance=ExtResource("10_pm4e6")]
-transform = Transform3D(-0.958178, 0, 0.286173, 0, 1, 0, -0.286173, 0, -0.958178, -0.899827, 1.78296, 1.68005)
+transform = Transform3D(-0.958178, 0, 0.286173, 0, 1, 0, -0.286173, 0, -0.958178, -0.899827, 0.190962, 1.68005)
 
 [node name="MadsenCinderblock" parent="." instance=ExtResource("11_c3lv0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.40922, 1.95274, 0.57346)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.40922, 0.360742, 0.57346)
 
 [node name="PlayerSpawnpoints" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.50841, 0)
