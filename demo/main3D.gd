@@ -25,7 +25,7 @@ func _ready():
 		index += 1
 
 func _physics_process(_delta):
-	if multiplayer.get_unique_id() == 1 and GameManager.has_host:
+	if multiplayer.get_unique_id() == 1:
 		return
 	
 	# Despawn oldest dirtballs (that have fallen through terrain)

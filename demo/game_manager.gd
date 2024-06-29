@@ -12,5 +12,14 @@ var max_players: int = 4:
 		else:
 			max_players = value
 var num_spawns = 4
-var has_host: bool = false
 var game_in_progress: bool = false
+
+func end_game():
+	game_in_progress = false
+	players = {}
+
+func get_num_players():
+	return len(players)
+	
+func remove_player(id):
+	players.erase(id)
