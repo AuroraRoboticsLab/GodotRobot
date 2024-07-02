@@ -53,7 +53,7 @@ using namespace godot;
 /*
  See: https://docs.godotengine.org/en/stable/contributing/development/core_and_modules/object_class.html#properties-set-get
 */
-void TerrainSim::_bind_methods() {	
+void TerrainSim::_bind_methods() {    
     printf("TerrainSim binding methods\n");
     
     // The get methods are so script can access our terrain data
@@ -129,10 +129,10 @@ TerrainSim::TerrainSim()
 
     height_shape->set_map_width(W);
     height_shape->set_map_depth(H);
-	
-	publish_first();
-	
-	fill_heights(0,0,30);
+    
+    publish_first();
+    
+    fill_heights(0,0,30);
     printf("TerrainSim constructor finished (this=%p)\n",this);
 }
 
@@ -301,19 +301,19 @@ void TerrainSim::animate_physics(double dt)
                 // h += 1.0*(neighborhood-C);
                 
                 // convert slope to dirtball(s)
-        	// Our slope is too high, and we're above our neighbors:
-	        // Convert this terrain to a dirtball
-	        
-		Vector3 o = get_global_position(); // our global origin
-		float above_delta=0.1;
-	        Vector3 spawn_pos = o + Vector3(x*MESH_SPACING,h + above_delta,z*MESH_SPACING);
-	        
-	        float r = 0.5 + 1.0*((rand()%32)*(1.0/31.0)); // stochastic material removal
-	        h -= r*dirtball_dh; // material removed from terrain and converted to dirtball
-	        
-	        printf("spawn dirtball at (%.2f,%.2f,%.2f)\n",spawn_pos.x,spawn_pos.y,spawn_pos.z);
-	        
-	        emit_signal("spawn_dirtball", spawn_pos);
+            // Our slope is too high, and we're above our neighbors:
+            // Convert this terrain to a dirtball
+            
+        Vector3 o = get_global_position(); // our global origin
+        float above_delta=0.1;
+            Vector3 spawn_pos = o + Vector3(x*MESH_SPACING,h + above_delta,z*MESH_SPACING);
+            
+            float r = 0.5 + 1.0*((rand()%32)*(1.0/31.0)); // stochastic material removal
+            h -= r*dirtball_dh; // material removed from terrain and converted to dirtball
+            
+            printf("spawn dirtball at (%.2f,%.2f,%.2f)\n",spawn_pos.x,spawn_pos.y,spawn_pos.z);
+            
+            emit_signal("spawn_dirtball", spawn_pos);
             }
             else {
                 // very weak erosion everywhere (prevents weird cliffs)
