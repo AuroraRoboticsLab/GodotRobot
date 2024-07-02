@@ -20,6 +20,26 @@ func _ready():
 			if spawnpoint.name == str(index%GameManager.num_spawns):
 				curr_player.global_transform = spawnpoint.global_transform
 		index += 1
+		
+	GameManager.new_player_info.connect(_on_new_player_info)
+
+@rpc("any_peer")
+func _on_new_player_info(id, username):
+	if not GameManager.players.has(id):
+		GameManager.players[id] = {
+			"username": username
+		}
+		print("New player joined: ", username)
+		var curr_player = robot_scene.instantiate()
+		curr_player.name = str(id)
+		add_child(curr_player)
+		curr_player.nametag_text = username
+		
+		# Assign a spawn point
+		var index = GameManager.players.keys().size() - 1
+		for spawnpoint in $PlayerSpawnpoints.get_children():
+			if spawnpoint.name == str(index % GameManager.num_spawns):
+				curr_player.global_transform = spawnpoint.global_transform
 
 func _physics_process(_delta):
 	if multiplayer.get_unique_id() == 1:
