@@ -63,7 +63,7 @@ func send_player_info(id, username):
 		GameManager.players[id] = {
 			"username": username
 		}
-		%AlertLabel.text = str(username) + " has connected."
+		%AlertLabel.text = str(GameManager.players[id]["username"]) + " has connected."
 	if multiplayer.is_server():
 		for pid in GameManager.players:
 			if pid != id:
@@ -72,7 +72,7 @@ func send_player_info(id, username):
 				# Notify the new player of all existing players
 				for existing_id in GameManager.players:
 					if existing_id != id:
-						send_player_info.rpc(id, GameManager.players[existing_id].username)
+						send_player_info.rpc(id, username)#GameManager.players[existing_id].username)
 	update_num_players()
 
 # The function called when the host starts the game
@@ -105,7 +105,6 @@ func player_disconnected(id):
 func connected_to_server():
 	print("Connected to server!")
 	send_player_info.rpc_id(1, multiplayer.get_unique_id(), name_textbox.text)
-	print("Checking for ongoing game...")
 	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id())
 	update_num_players()
 
@@ -133,7 +132,7 @@ func hide_menu():
 
 func _on_host_button_pressed():
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
-		print("Has peer!")
+		print("Already connected to a peer.")
 		%AlertLabel.text = "Cannot host: Already connected to a peer."
 		return
 	if not host_exists():
@@ -148,7 +147,7 @@ func _on_host_button_pressed():
 #       they must wait for a new game to begin (which is most desirable?)
 func _on_join_button_pressed():
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
-		print("Has peer!")
+		print("Already connected to a peer.")
 		%AlertLabel.text = "Cannot join: Already connected to a peer."
 		return
 	peer = ENetMultiplayerPeer.new()
