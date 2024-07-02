@@ -14,6 +14,8 @@ var max_players: int = 4:
 var num_spawns = 4
 var game_in_progress: bool = false
 
+signal new_player_info(id, username)
+
 func end_game():
 	game_in_progress = false
 	players = {}

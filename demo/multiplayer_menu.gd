@@ -1,4 +1,6 @@
 extends Control
+# NOTE: If hosting a server from the console, be sure to
+# add the tags --host AND --headless.
 
 @export var address   = "127.0.0.1"
 @export var port: int = 31415 # Pi!
@@ -29,47 +31,58 @@ func _ready():
 	if "address" in arguments:
 		address = arguments["address"]
 	if "host" in arguments:
-		host_game()
+		host_game(true)
 
-		
-func host_game():
+
+func host_game(console_host=false):
+	if host_exists():
+		print("Host already exists!")
+		return
 	peer = ENetMultiplayerPeer.new()
 	var err = peer.create_server(port, GameManager.max_players)
 	if err != OK:
 		print("Unable to host: ", err)
-		if err == 20:
-			%AlertLabel.text = "Unable to host: Host already exists."
-		else:
-			%AlertLabel.text = "Unable to host: Error #" + str(err)
+		%AlertLabel.text = "Unable to host: Error #" + str(err)
 		return
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	
 	multiplayer.set_multiplayer_peer(peer)
-	%ConnectLabel.text = "Hosting game. Press start game to begin the game."
-	$PanelContainer/VBoxContainer/HBoxContainer/StartButton.disabled = false
-	update_num_players()
+	if console_host:
+		print("Hosting game from console.")
+		start_game()
+	else:
+		%ConnectLabel.text = "Hosting game. Press start game to begin the game."
+		$PanelContainer/VBoxContainer/HBoxContainer/StartButton.disabled = false
+		update_num_players()
 	print("Waiting for players...")
 
 @rpc("any_peer")
 func send_player_info(id, username):
 	if not GameManager.players.has(id):
+		GameManager.new_player_info.emit(id, username)
 		GameManager.players[id] = {
 			"username": username
 		}
 		%AlertLabel.text = str(username) + " has connected."
 	if multiplayer.is_server():
 		for pid in GameManager.players:
-			#if id != pid:
-			send_player_info.rpc(pid, GameManager.players[pid].username)
+			if pid != id:
+				send_player_info.rpc(pid, GameManager.players[pid].username)
+			else:
+				# Notify the new player of all existing players
+				for existing_id in GameManager.players:
+					if existing_id != id:
+						send_player_info.rpc(id, GameManager.players[existing_id].username)
 	update_num_players()
 
 # The function called when the host starts the game
 @rpc("any_peer", "call_local")
 func start_game():
-	GameManager.game_in_progress = true
-	scene = load("res://main3D.tscn").instantiate()
-	get_tree().root.add_child(scene)
-	hide_menu()
+	if not GameManager.game_in_progress:
+		GameManager.game_in_progress = true
+		scene = load("res://main3D.tscn").instantiate()
+		get_tree().root.add_child(scene)
+		hide_menu()
 		
 
 func player_connected(id):
@@ -92,6 +105,8 @@ func player_disconnected(id):
 func connected_to_server():
 	print("Connected to server!")
 	send_player_info.rpc_id(1, multiplayer.get_unique_id(), name_textbox.text)
+	print("Checking for ongoing game...")
+	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id())
 	update_num_players()
 
 func connection_failed():
@@ -121,8 +136,12 @@ func _on_host_button_pressed():
 		print("Has peer!")
 		%AlertLabel.text = "Cannot host: Already connected to a peer."
 		return
-	host_game()
-	send_player_info(multiplayer.get_unique_id(), name_textbox.text)
+	if not host_exists():
+		host_game()
+		send_player_info(multiplayer.get_unique_id(), name_textbox.text)
+	else:
+		print("Host already exists.")
+		%AlertLabel.text = "Cannot host: Host already exists."
 
 # TODO: Allow player to spawn into game when game has already started.
 #       OR, notify the joining player that a game is in progress and
@@ -133,15 +152,12 @@ func _on_join_button_pressed():
 		%AlertLabel.text = "Cannot join: Already connected to a peer."
 		return
 	peer = ENetMultiplayerPeer.new()
-	var err = peer.create_client(address, port)
-	if err != OK:
-		print("Unable to join: ", err)
-		%AlertLabel.text = "Unable to join: Error #" + str(err)
-		return
+	peer.create_client(address, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	
 	if host_exists(): # If server responded
+		# If game is ongoing, start locally.
 		%ConnectLabel.text = "Joined game. Waiting for game to start..."
 	else:
 		%AlertLabel.text = "Cannot join: Host not found."
@@ -151,7 +167,7 @@ func _on_join_button_pressed():
 func host_exists():
 	var temp_peer = ENetMultiplayerPeer.new()
 	var err = temp_peer.create_server(port, GameManager.max_players)
-	if err == 20:
+	if err != OK:
 		return true
 	else:
 		return false
@@ -165,3 +181,9 @@ func update_num_players():
 		%NumPlayers.text = str(GameManager.get_num_players()) + "/" + str(GameManager.max_players)
 	else:
 		%NumPlayersContainer.hide()
+		
+@rpc("any_peer")
+func start_if_ongoing_game(querying_id):
+	print("Checking for ongoing game in ", multiplayer.get_unique_id())
+	if multiplayer.get_unique_id() == 1 and GameManager.game_in_progress:
+		start_game.rpc_id(querying_id)
