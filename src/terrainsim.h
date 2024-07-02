@@ -19,7 +19,7 @@ namespace godot {
 
 // Draw a demo sprite
 class TerrainSim : public Node3D {
-	GDCLASS(TerrainSim, Node3D)
+    GDCLASS(TerrainSim, Node3D)
 
 public:
     /// Pixel dimensions of one chunk of terrain.
@@ -34,27 +34,27 @@ public:
     /// Size in meters of pixel, horizontal distance (along X or Z axes).
     float sz;
     
-	TerrainSim();
-	~TerrainSim();
+    TerrainSim();
+    ~TerrainSim();
 
-	
-	/// Fill our mesh centered on this location
-	void fill_heights(float cx, float cz, float cliffR);
-	
-	/// Animate our mesh with smoothly wobbling cosines
-	void animate_heights(double dt);
-	
-	/// Apply physics of sand transport
-	void animate_physics(double dt);
-	
+    
+    /// Fill our mesh centered on this location
+    void fill_heights(float cx, float cz, float cliffR);
+    
+    /// Animate our mesh with smoothly wobbling cosines
+    void animate_heights(double dt);
+    
+    /// Apply physics of sand transport
+    void animate_physics(double dt);
+    
     /// Publish updated height data to collision and image buffers
     void publish(void);
-	
-	void _physics_process(double delta) override;
+    
+    void _physics_process(double delta) override;
     
     
     
-	/// Allows collision detection (add this to a collider)
+    /// Allows collision detection (add this to a collider)
     Ref<HeightMapShape3D> get_height_shape(void) { return height_shape; }
     
     /// Get float grayscale image of height map (allows rendering)
@@ -80,6 +80,10 @@ public:
     /// Consider merging this dirtball with our terrain.
     ///   If so, do it and return true.  If not, return false.
     bool try_merge(Node3D *dirtball);
+    
+    /// Excavate down to this world-coordinates location.
+    ///   Returns an estimate of the amount of material excavated.
+    float excavate_point(Vector3 world);
     
 
 private:
@@ -107,8 +111,11 @@ private:
     /// Simulated time
     double time;
     
+    /// Create a dirtball at this world coordinates location
+    void spawn_dirtball(const char *reason, Vector3 pos);
+    
 protected:
-	static void _bind_methods();
+    static void _bind_methods();
 };
 
 }

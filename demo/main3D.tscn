@@ -46,8 +46,9 @@ terrain = NodePath("../Terrain")
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]
 
-[node name="BucketAttachment" parent="." instance=ExtResource("4_5fymx")]
+[node name="BucketAttachment" parent="." node_paths=PackedStringArray("terrain") instance=ExtResource("4_5fymx")]
 transform = Transform3D(-0.996196, 0, -0.0871383, 0, 1, 0, 0.0871383, 0, -0.996196, 0.433362, 0.316855, 1.93606)
+terrain = NodePath("../Terrain/TerrainSim")
 
 [node name="ForkAttachment" parent="." instance=ExtResource("5_r12xm")]
 transform = Transform3D(-0.614189, 0, -0.789159, 0, 1, 0, 0.789159, 0, -0.614189, 1.77219, 0.240605, 1.21038)
