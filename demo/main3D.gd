@@ -1,9 +1,6 @@
 extends Node3D
 
 @onready var spawn = $DirtSpawner
-@onready var despawn = $DirtballDespawn
-@onready var terrain = $TerrainScript
-
 @export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
 var robot = null
 
@@ -28,26 +25,6 @@ func _physics_process(_delta):
 	if multiplayer.get_unique_id() == 1:
 		return
 	
-	# Despawn oldest dirtballs (that have fallen through terrain)
-	for dirtball in despawn.get_children():
-		if dirtball.linear_velocity.y<-1.0: # has fallen for a while
-			dirtball.queue_free()
-	
-	# Check for stationary dirtballs and consider terrain merge
-	for dirtball in spawn.get_children():
-		if dirtball.linear_velocity.length() < 0.2:  # low horizontal velocity (m/s)
-			if abs(dirtball.linear_velocity.y) < 0.02:  # very low vertical velocity (m/s)
-				if dirtball.angular_velocity.length() < 0.1: # not rotating much (rad/s)
-					if terrain.dirtball_merge(dirtball):
-						var pos = dirtball.global_position
-						spawn.remove_child(dirtball)
-						dirtball.collision_mask = 0 # fall down through terrain
-						despawn.add_child(dirtball)
-						dirtball.global_position=pos # preserve position
-		
-		# A few tend to break through terrain and just plummet
-		if dirtball.linear_velocity.y<-10.0: 
-			dirtball.queue_free()
 	
 	$UI.ball_count = spawn.get_child_count()
 	$UI.fps = $"FPS Counter".fps

@@ -15,11 +15,15 @@
 [node name="main3D" type="Node3D"]
 script = ExtResource("1_l30dg")
 
-[node name="TerrainScript" type="Node3D" parent="."]
+[node name="Terrain" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6405, 0, -13.346)
 script = ExtResource("2_ojqbc")
 
-[node name="TerrainSim" type="TerrainSim" parent="TerrainScript"]
+[node name="TerrainSim" type="TerrainSim" parent="Terrain"]
+
+[node name="DirtballDespawn" type="Marker3D" parent="Terrain"]
+
+[node name="Dirtballs" type="Marker3D" parent="Terrain"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415257, 0.611129, 0.119584, -0.981699, 0.148212, 0, 2.40859, 0)
@@ -36,11 +40,9 @@ environment = ExtResource("3_58k4c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, -1.49154, -0.0148048)
 script = ExtResource("3_qie7w")
 
-[node name="DirtSpawner" parent="." instance=ExtResource("6_u4twd")]
+[node name="DirtSpawner" parent="." node_paths=PackedStringArray("terrain") instance=ExtResource("6_u4twd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 2.06504, 0)
-
-[node name="DirtballDespawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 2.06504, 0)
+terrain = NodePath("../Terrain")
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]
 
@@ -74,4 +76,4 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5820
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")
 
-[connection signal="spawn_dirtball" from="TerrainScript/TerrainSim" to="DirtSpawner" method="_on_terrain_sim_spawn_dirtball"]
+[connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
