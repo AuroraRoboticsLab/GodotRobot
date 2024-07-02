@@ -81,6 +81,10 @@ public:
     ///   If so, do it and return true.  If not, return false.
     bool try_merge(Node3D *dirtball);
     
+    /// Excavate down to this world-coordinates location.
+    ///   Returns an estimate of the amount of material excavated.
+    float excavate_point(Vector3 world);
+    
 
 private:
     /// Raw height data, in meters (can't be refcounted, hence no Ref<> here)
@@ -106,6 +110,9 @@ private:
     
     /// Simulated time
     double time;
+    
+    /// Create a dirtball at this world coordinates location
+    void spawn_dirtball(const char *reason, Vector3 pos);
     
 protected:
     static void _bind_methods();
