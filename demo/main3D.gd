@@ -36,9 +36,8 @@ func _on_new_player_info(id, username):
 		
 
 func _physics_process(_delta):
-	if multiplayer.get_unique_id() == 1:
-		return
-	
+	if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
+		return # We don't have a UI to update if we are a console host.
 	
 	$UI.ball_count = spawn.get_child_count()
 	$UI.fps = $"FPS Counter".fps

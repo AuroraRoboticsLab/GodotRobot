@@ -7,7 +7,6 @@ extends Control
 
 var peer: ENetMultiplayerPeer = null
 var scene: Node = null
-@onready var name_textbox = $PanelContainer/VBoxContainer/HBoxContainer2/NameTextEdit
 
 func _ready():
 	multiplayer.set_multiplayer_peer(null)
@@ -49,6 +48,7 @@ func host_game(console_host=false):
 	multiplayer.set_multiplayer_peer(peer)
 	if console_host:
 		print("Hosting game from console.")
+		GameManager.is_console_host = true
 		start_game()
 	else:
 		%ConnectLabel.text = "Hosting game. Press start game to begin the game."
@@ -63,7 +63,7 @@ func send_player_info(id, username):
 		GameManager.players[id] = {
 			"username": username
 		}
-		%AlertLabel.text = str(GameManager.players[id]["username"]) + " has connected."
+		%AlertLabel.text = str(GameManager.players[id].username) + " has connected."
 	if multiplayer.is_server():
 		for pid in GameManager.players:
 			if pid != id:
@@ -72,7 +72,7 @@ func send_player_info(id, username):
 				# Notify the new player of all existing players
 				for existing_id in GameManager.players:
 					if existing_id != id:
-						send_player_info.rpc(id, username)#GameManager.players[existing_id].username)
+						send_player_info.rpc(id, username)
 	update_num_players()
 
 # The function called when the host starts the game
@@ -83,7 +83,6 @@ func start_game():
 		scene = load("res://main3D.tscn").instantiate()
 		get_tree().root.add_child(scene)
 		hide_menu()
-		
 
 func player_connected(id):
 	print("Player Connected (ID ", id, ")")
@@ -104,7 +103,7 @@ func player_disconnected(id):
 
 func connected_to_server():
 	print("Connected to server!")
-	send_player_info.rpc_id(1, multiplayer.get_unique_id(), name_textbox.text)
+	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text)
 	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id())
 	update_num_players()
 
@@ -137,7 +136,7 @@ func _on_host_button_pressed():
 		return
 	if not host_exists():
 		host_game()
-		send_player_info(multiplayer.get_unique_id(), name_textbox.text)
+		send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text)
 	else:
 		print("Host already exists.")
 		%AlertLabel.text = "Cannot host: Host already exists."
@@ -183,6 +182,5 @@ func update_num_players():
 		
 @rpc("any_peer")
 func start_if_ongoing_game(querying_id):
-	print("Checking for ongoing game in ", multiplayer.get_unique_id())
 	if multiplayer.get_unique_id() == 1 and GameManager.game_in_progress:
 		start_game.rpc_id(querying_id)
