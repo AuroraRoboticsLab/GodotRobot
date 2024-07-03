@@ -4,8 +4,10 @@ extends RigidBody3D
 @onready var attachment_type = "bucket"
 @onready var cutter = $CuttingEdge
 
+@export var pushback_scale = 5.0  # backward force per dirtball excavated
 @export var terrain : Node3D # terrain to excavate with our cutting edge
 var rigid = self  # rigid body to grab velocity & forces
+var pushback_spread = 0.0 # spreads pushback over several physics frames
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,19 +17,24 @@ func _ready():
 func _physics_process(_delta):
 	if not connector.connected:
 		return # Buckets shouldn't excavate if they are set down.
-	# Only cut if moving forward into the terrain
-	var xf = cutter.global_transform
-	var forward = rigid.linear_velocity.dot(-xf.basis.z)
-	if forward>0.0:
-		var pushback = 0.0
-		var pushpoint = Vector3(0,0,0)
-		for xi in range(0,8):
-			var x = xi * 0.125
-			var world = xf * Vector3(x,0,0)
-			var weight = terrain.excavate_point(world)
-			pushback += weight
-			pushpoint += weight*world
-		if pushback > 0.0:
-			var avgpoint = pushpoint / pushback
-			var local_pushback = Vector3(0,0,+1.0) # pushback direction (local coords)
-			rigid.apply_central_force(pushback * local_pushback) # , avgpoint)
+		
+	var xf = cutter.global_transform  # physics is mostly global coords
+	pushback_spread *= exp(-10.0*_delta) # damp away the pushback over time
+	if pushback_spread < 0.5:
+		# Only cut if not pushed back, and moving forward into the terrain
+		var forward = rigid.linear_velocity.dot(-xf.basis.z)
+		if forward>0.1: # moving mostly forward, try to cut
+			var pushback = 0.0
+			var pushpoint = Vector3(0,0,0)
+			for xi in range(0,8):
+				var x = xi * 0.125
+				var world = xf * Vector3(x,0,0) # move along cutting edge 
+				var spawn_offset = Vector3(0,0.15,0) # shift new dirtballs off the ground (into bucket)
+				var spawn_vel = Vector3(0,0.2,0) # new dirtballs need to fly upward
+				var weight = terrain.excavate_point(world,spawn_offset,spawn_vel)
+				pushback += weight
+				pushpoint += weight*world
+			pushback_spread += pushback
+	if pushback_spread > 0.0:
+		var pushdir = xf.basis.z # pushback direction (global coords)
+		# rigid.apply_central_force(pushback_scale * pushback_spread * pushdir) # <- bounces joints too strongly

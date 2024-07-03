@@ -163,6 +163,8 @@ scroll_down={
 
 common/physics_ticks_per_second=45
 3d/default_gravity=1.62
+3d/default_linear_damp=0.2
+3d/default_angular_damp=0.2
 
 [rendering]
 

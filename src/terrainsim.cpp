@@ -73,7 +73,7 @@ void TerrainSim::_bind_methods() {
     ClassDB::bind_method(D_METHOD("excavate_point"), &TerrainSim::excavate_point);
     
     // We call this signal when we want to spawn a new dirtball
-    ADD_SIGNAL(MethodInfo("spawn_dirtball", PropertyInfo(Variant::VECTOR3, "spawn_pos")));
+    ADD_SIGNAL(MethodInfo("spawn_dirtball", PropertyInfo(Variant::VECTOR3, "spawn_pos"), PropertyInfo(Variant::VECTOR3, "spawn_vel")));
 
     
     /*
@@ -312,7 +312,7 @@ void TerrainSim::animate_physics(double dt)
                 float r = 0.5 + 1.0*((rand()%32)*(1.0/31.0)); // stochastic material removal
                 h -= r*dirtball_dh; // material removed from terrain and converted to dirtball
                 
-                spawn_dirtball("slope", spawn_pos);
+                spawn_dirtball("slope", spawn_pos, Vector3(0,0,0));
             }
             else {
                 // very weak erosion everywhere (prevents weird cliffs)
@@ -337,11 +337,11 @@ void TerrainSim::_physics_process(double delta) {
 }
 
 /// Create a dirtball at this world coordinates location
-void TerrainSim::spawn_dirtball(const char *reason, Vector3 spawn_pos)
+void TerrainSim::spawn_dirtball(const char *reason, Vector3 spawn_pos, Vector3 spawn_vel)
 {
     printf("spawn %s dirtball at (%.2f,%.2f,%.2f)\n",reason, spawn_pos.x,spawn_pos.y,spawn_pos.z);
     
-    emit_signal("spawn_dirtball", spawn_pos);
+    emit_signal("spawn_dirtball", spawn_pos, spawn_vel);
 }
 
 /// Consider merging this dirtball down into our terrain.
@@ -401,8 +401,9 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
 }
 
 /// Excavate down to this world-coordinates location.
+///   dirtball_offset determines the spawn point of any dirtballs excavated.
 ///   Returns an estimate of the amount of material excavated.
-float TerrainSim::excavate_point(Vector3 world)
+float TerrainSim::excavate_point(Vector3 world, Vector3 dirtball_offset, Vector3 spawn_vel)
 {
     float pushback = 0.0f;
     Vector3 o = get_global_position(); // our global position
@@ -415,19 +416,21 @@ float TerrainSim::excavate_point(Vector3 world)
     // Load the terrain height
     float &h = height_floats[iz*W+ix];
     float dY = (o.y + h) - world.y; // height over terrain surface
-    printf("excavating world %.2f, %.2f, %.2f: dY %.2f, h %.2f\n", world.x,world.y,world.z, dY,h);
     
-    if (dY < 0) { // this point isn't inside the terrain
+    if (dY < 0.0) { // the cutting edge isn't really inside the terrain yet
         return 0.0f;
     }
     
     int nspawn = roundf(dY / dirtball_dh);
     //printf("excavating world %.2f, %.2f, %.2f: dY %.2f, nspawn %d\n", world.x,world.y,world.z, dY,nspawn);
+    if (nspawn>2) { // just stall out instead of making huge cut (detonates a crater)
+        return dY / dirtball_dh;
+    }
     
     for (int i=0;i<nspawn;i++)
-        spawn_dirtball("excavate", world + Vector3(0,(0.5+i)*dirtball_dh,0));
+        spawn_dirtball("excavate", world + dirtball_offset + Vector3(0,(0.5+i)*dirtball_dh,0), spawn_vel);
 
-    h -= dY; // lower the terrain height    
+    h -= dY; // lower the terrain height to match the dirtballs excavated here
     
     pushback += dY / dirtball_dh;
     return pushback;
