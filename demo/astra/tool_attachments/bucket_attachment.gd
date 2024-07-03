@@ -25,7 +25,7 @@ func _physics_process(_delta):
 		var forward = rigid.linear_velocity.dot(-xf.basis.z)
 		if forward>0.1: # moving mostly forward, try to cut
 			var pushback = 0.0
-			var pushpoint = Vector3(0,0,0)
+			#var pushpoint = Vector3(0,0,0)
 			for xi in range(0,10):
 				var x = xi * 0.1
 				var world = xf * Vector3(x,0,0) # move along cutting edge 
@@ -33,7 +33,7 @@ func _physics_process(_delta):
 				var spawn_vel = Vector3(0,0.2,0) # new dirtballs need to fly upward
 				var weight = terrain.excavate_point(world,spawn_offset,spawn_vel)
 				pushback += weight
-				pushpoint += weight*world
+				#pushpoint += weight*world
 			pushback_spread += pushback
 	if pushback_spread > 0.0:
 		var pushdir = xf.basis.z + 0.2*xf.basis.y # pushback direction (global coords)
