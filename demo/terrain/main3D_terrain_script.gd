@@ -56,6 +56,7 @@ func spawn_dirtball(pos, vel):
 			new_ball.linear_velocity = vel
 
 # Signal from terrain (perhaps should be linked directly to spawn_dirtball?)
-func _on_terrain_sim_spawn_dirtball(spawn_pos):
-	spawn_dirtball(spawn_pos,create_random_Vector3(0.05))
+func _on_terrain_sim_spawn_dirtball(spawn_pos,spawn_vel):
+	var random_vel = create_random_Vector3(0.05)
+	spawn_dirtball(spawn_pos,spawn_vel + random_vel)
 
