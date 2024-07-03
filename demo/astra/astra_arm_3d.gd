@@ -45,7 +45,7 @@ func _physics_process(delta):
 		has_set_arm_angle = false
 		arm_force = arm_move_vec * MOTOR_MULT
 		
-	# Bollard PID
+	# Bollard PID (commented out since BetterHingeJoint3D swap)
 	var bollard_move_vec = Input.get_axis("bollard_curl", "bollard_dump")
 	var bollard_force = 0
 	#var bollard_angle_diff = bollard_target_angle - bollard_angle

@@ -13,6 +13,8 @@ func _ready():
 
 # Excavate along cutting edge
 func _physics_process(_delta):
+	if not connector.connected:
+		return # Buckets shouldn't excavate if they are set down.
 	# Only cut if moving forward into the terrain
 	var xf = cutter.global_transform
 	var forward = rigid.linear_velocity.dot(-xf.basis.z)
