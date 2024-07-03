@@ -16,7 +16,7 @@
 script = ExtResource("1_l30dg")
 
 [node name="Terrain" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6405, 0, -13.346)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8352, 0, -9.21729)
 script = ExtResource("2_ojqbc")
 
 [node name="TerrainSim" type="TerrainSim" parent="Terrain"]
@@ -41,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, -1.49154, -0.0148
 script = ExtResource("3_qie7w")
 
 [node name="DirtSpawner" parent="." node_paths=PackedStringArray("terrain") instance=ExtResource("6_u4twd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51126, 2.06504, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.427181, 2.06504, 2.12669)
 terrain = NodePath("../Terrain")
 
 [node name="UI" parent="." instance=ExtResource("5_pud20")]

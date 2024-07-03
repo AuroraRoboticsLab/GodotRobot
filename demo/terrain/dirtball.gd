@@ -1,11 +1,3 @@
 extends RigidBody3D
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-
-func _on_despawn_timer_timeout():
-	queue_free()
+@export var bucket_count = 0  # number of buckets that we are currently inside (0 == free on terrain)

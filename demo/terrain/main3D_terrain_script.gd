@@ -26,15 +26,16 @@ func _physics_process(_delta):
 	
 	# Check for stationary dirtballs and consider terrain merge
 	for dirtball in spawn.get_children():
-		if dirtball.linear_velocity.length() < 0.2:  # low horizontal velocity (m/s)
-			if abs(dirtball.linear_velocity.y) < 0.02:  # very low vertical velocity (m/s)
-				if dirtball.angular_velocity.length() < 0.1: # not rotating much (rad/s)
-					if terrain.try_merge(dirtball):
-						var pos = dirtball.global_position
-						spawn.remove_child(dirtball)
-						dirtball.collision_mask = 0 # fall down through terrain
-						despawn.add_child(dirtball)
-						dirtball.global_position=pos # preserve position
+		if dirtball.bucket_count <= 0: # not inside a bucket
+			if dirtball.linear_velocity.length() < 0.2:  # low horizontal velocity (m/s)
+				if abs(dirtball.linear_velocity.y) < 0.02:  # very low vertical velocity (m/s)
+					if dirtball.angular_velocity.length() < 0.1: # not rotating much (rad/s)
+						if terrain.try_merge(dirtball):
+							var pos = dirtball.global_position
+							spawn.remove_child(dirtball)
+							dirtball.collision_mask = 0 # fall down through terrain
+							despawn.add_child(dirtball)
+							dirtball.global_position=pos # preserve position
 		
 		# A few tend to break through terrain and just plummet
 		if dirtball.linear_velocity.y<-20.0: 
