@@ -423,6 +423,9 @@ float TerrainSim::excavate_point(Vector3 world, Vector3 dirtball_offset, Vector3
     
     int nspawn = roundf(dY / dirtball_dh);
     //printf("excavating world %.2f, %.2f, %.2f: dY %.2f, nspawn %d\n", world.x,world.y,world.z, dY,nspawn);
+    if (nspawn>2) { // just stall out instead of making huge cut (detonates a crater)
+        return dY / dirtball_dh;
+    }
     
     for (int i=0;i<nspawn;i++)
         spawn_dirtball("excavate", world + dirtball_offset + Vector3(0,(0.5+i)*dirtball_dh,0), spawn_vel);

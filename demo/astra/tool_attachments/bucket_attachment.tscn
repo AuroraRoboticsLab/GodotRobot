@@ -10,13 +10,13 @@ friction = 0.22
 rough = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6tyxi"]
-size = Vector3(0.798813, 0.285736, 0.0234375)
+size = Vector3(0.798813, 0.261154, 0.0234375)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jmije"]
-size = Vector3(0.0057373, 0.312622, 0.352844)
+size = Vector3(0.0194702, 0.289246, 0.327797)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xs3pl"]
-size = Vector3(0.799, 0.425016, 0.023)
+size = Vector3(0.799, 0.404036, 0.0299326)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wfa72"]
 size = Vector3(0.0108643, 0.173706, 0.169434)
@@ -35,19 +35,19 @@ skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("3_mxbys")
 
 [node name="BuckerCollider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.10553e-05, -0.202644, -0.176133)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.10553e-05, -0.209021, -0.163842)
 shape = SubResource("BoxShape3D_6tyxi")
 
 [node name="BuckerCollider3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.396564, -0.0415148, -0.161604)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.396564, -0.029964, -0.161604)
 shape = SubResource("BoxShape3D_jmije")
 
 [node name="BuckerCollider4" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.403722, -0.0415148, -0.161604)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.399182, -0.033252, -0.161762)
 shape = SubResource("BoxShape3D_jmije")
 
 [node name="BuckerCollider2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.999913, 0.0131593, 0, -0.0131593, -0.999913, 2.10553e-05, -0.00641365, -0.0233545)
+transform = Transform3D(1, 0, 0, 0, -0.999913, 0.0131593, 0, -0.0131593, -0.999913, 2.10553e-05, 0.00412088, -0.0266825)
 shape = SubResource("BoxShape3D_xs3pl")
 
 [node name="BuckerCollider5" type="CollisionShape3D" parent="."]
@@ -62,4 +62,4 @@ shape = SubResource("BoxShape3D_wfa72")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="CuttingEdge" type="Node3D" parent="."]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.4, -0.243956, -0.369875)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.4, -0.230319, -0.385997)
