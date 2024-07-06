@@ -19,18 +19,27 @@ enum Axis { X, Y, Z }
 		
 @export var max_upper_angle: float = 0
 @export var max_lower_angle: float = 0
+
 @onready var moving: bool = false
 @onready var force: float = 0
+@onready var prev_set_angle: float = INF
 
 func _physics_process(delta):
 	if moving:
-		var new_angle = get_angle() + (force*delta)
+		var new_angle = prev_set_angle
+		if prev_set_angle != INF:
+			new_angle += (force*delta) * 0.5
+		else:
+			new_angle = get_angle() + (force*delta)
 		if new_angle > deg_to_rad(max_upper_angle):
 			set_angle(deg_to_rad(max_upper_angle))
 		elif new_angle < deg_to_rad(max_lower_angle):
 			set_angle(deg_to_rad(max_lower_angle))
 		else:
+			print("Change: ", rad_to_deg(new_angle - prev_set_angle))
+			print(" Prev : ", rad_to_deg(new_angle - get_angle()))
 			set_angle(new_angle)
+			prev_set_angle = new_angle
 		
 
 func move_motor(move_force: float):

@@ -70,6 +70,11 @@ func _physics_process(delta):
 	
 	engine_force_multiplier = 1.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
+	# Turbo ultra racing mode
+	if Input.is_action_pressed("shift"):
+		print("Shifting!")
+		engine_force_multiplier = sqrt(abs(movement_speed))/2
+	
 	const max_turn_force = 15.0 # Starting (and max) turn force
 	const turn_amp = 8.0 # How quickly does turn force fall off with speed?
 	var rotation_speed = angular_velocity.length()
@@ -120,6 +125,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump"):
 		linear_velocity = Vector3.ZERO
 		global_position += Vector3(0, tp_height, 0)
+		
 
 
 # Connector logic. Very simple, because the connector component

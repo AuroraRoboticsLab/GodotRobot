@@ -51,3 +51,8 @@ func _physics_process(_delta):
 	robot.cam_scene.v_sens = $UI.v_cam_sens
 	robot.cam_scene.zoom_sens = $UI.cam_zoom_sens
 	robot.tp_height = $UI.tp_height
+	if robot.arm.tool_coupler_component.current_attachment:
+		if robot.arm.tool_coupler_component.current_attachment.attachment_type == "bucket":
+			$UI.dirtballs_in_bucket = robot.arm.tool_coupler_component.current_attachment.in_bucket.num_dirtballs
+	else:
+		$UI.dirtballs_in_bucket = -1

@@ -33,40 +33,8 @@ func _physics_process(delta):
 	if not $"MultiplayerSynchronizer".is_multiplayer_authority():
 		return
 	
-	var arm_angle = arm.get_rotation()[0]
-	
 	const MOTOR_MULT = 0.8
-	# Arm PID
-	var arm_move_vec = Input.get_axis("arm_up", "arm_down")
-	var arm_force = 0
-	var arm_angle_diff = arm_target_angle - arm_angle
-	if arm_move_vec == 0:
-		if not has_set_arm_angle:
-			arm_target_angle = arm_angle
-			has_set_arm_angle = true
-			arm_integral = 0.0  # Reset integral when target angle is set
-			arm_previous_error = 0.0  # Reset previous error when target angle is set
-		elif abs(arm_angle_diff) > deg_to_rad(0.1):
-			# Proportional term
-			var p_term = KP * arm_angle_diff
-			# Integral term (with clamping to prevent windup)
-			arm_integral += arm_angle_diff * delta
-			arm_integral = clamp(arm_integral, -10.0, 10.0)
-			var i_term = KI * arm_integral
-			# Derivative term
-			var d_term = KD * (arm_angle_diff - arm_previous_error) / delta
-			# Compute total force
-			arm_force = -(p_term + i_term + d_term)
-			# Update previous error
-			arm_previous_error = arm_angle_diff
-			
-			# Debug prints to check values
-			#print("P:", p_term, " I:", i_term, " D:", d_term, " Force:", arm_force)
-	else:
-		has_set_arm_angle = false
-		arm_force = arm_move_vec * MOTOR_MULT
-	#var arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 2
-	# Bollard and Tilt F
+	var arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 2
 	var bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT * 2
 	var tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
 	

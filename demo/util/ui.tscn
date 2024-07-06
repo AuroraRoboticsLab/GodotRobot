@@ -55,6 +55,20 @@ text = "Charge:"
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="BucketDirtballsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BucketDirtballsLabel" type="Label" parent="PanelContainer/VBoxContainer/BucketDirtballsHBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Dirtballs in bucket:"
+
+[node name="BucketDirtballs" type="Label" parent="PanelContainer/VBoxContainer/BucketDirtballsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "0"
+
 [node name="ChargingLabel" type="Label" parent="PanelContainer/VBoxContainer"]
 visible = false
 layout_mode = 2

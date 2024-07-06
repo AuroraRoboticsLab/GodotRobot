@@ -3,6 +3,7 @@ extends RigidBody3D
 @onready var connector = $ConnectorComponent
 @onready var attachment_type = "bucket"
 @onready var cutter = $CuttingEdge
+@onready var in_bucket = $InsideBucket
 
 @export var pushback_scale = 4.0  # backward force per dirtball excavated
 @export var terrain : Node3D # terrain to excavate with our cutting edge
