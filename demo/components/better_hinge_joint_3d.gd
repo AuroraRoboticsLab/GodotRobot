@@ -36,8 +36,6 @@ func _physics_process(delta):
 		elif new_angle < deg_to_rad(max_lower_angle):
 			set_angle(deg_to_rad(max_lower_angle))
 		else:
-			print("Change: ", rad_to_deg(new_angle - prev_set_angle))
-			print(" Prev : ", rad_to_deg(new_angle - get_angle()))
 			set_angle(new_angle)
 			prev_set_angle = new_angle
 		

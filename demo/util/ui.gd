@@ -7,7 +7,6 @@ extends CanvasLayer
 @export var cam_zoom_sens: float = 2.5
 @export var tp_height: float = 1.0
 
-@onready var num_dirtballs: int = 0
 @onready var can_attach: bool = false
 @onready var stalling: bool = false
 @onready var charging: bool = false
