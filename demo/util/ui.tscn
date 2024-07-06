@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c73kovjg5pcd3"]
+[gd_scene load_steps=7 format=3 uid="uid://c73kovjg5pcd3"]
 
 [ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
 [ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://Settings Gear.png" id="3_bbais"]
 [ext_resource type="Theme" uid="uid://b0sf7fmx7al7i" path="res://theme.tres" id="3_qlyme"]
 [ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://tick_button.tscn" id="4_0yspv"]
+[ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://leave_game_icon.png" id="4_cx4nv"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1j2nn")
@@ -56,6 +57,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="BucketDirtballsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="BucketDirtballsLabel" type="Label" parent="PanelContainer/VBoxContainer/BucketDirtballsHBox"]
@@ -84,17 +86,27 @@ text = "Stalling!"
 [node name="FPS Counter" type="Node3D" parent="."]
 script = ExtResource("1_mxmhq")
 
-[node name="SettingsButton" type="Button" parent="."]
-anchors_preset = 1
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -80.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 80.0
-grow_horizontal = 0
+offset_left = -151.0
+offset_top = 22.0
+offset_right = -22.0
+offset_bottom = 84.0
+
+[node name="SettingsButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
 icon = ExtResource("3_bbais")
+expand_icon = true
+
+[node name="LeaveGameButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+icon = ExtResource("4_cx4nv")
 expand_icon = true
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -358,7 +370,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]

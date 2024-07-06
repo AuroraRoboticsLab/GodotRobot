@@ -57,3 +57,7 @@ func _on_tp_height_tick_button_value_changed(value):
 func _on_zoom_sens_slider_value_changed(value):
 	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensValLabel.text = str(value)
 	cam_zoom_sens = value
+
+func _on_leave_game_button_pressed():
+	multiplayer.multiplayer_peer.close()
+	GameManager.self_disconnected.emit()

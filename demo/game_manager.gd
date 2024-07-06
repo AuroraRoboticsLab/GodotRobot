@@ -16,6 +16,7 @@ var game_in_progress: bool = false
 var is_console_host: bool = false
 
 signal new_player_info(id, username)
+signal self_disconnected
 
 func end_game():
 	game_in_progress = false

@@ -14,6 +14,7 @@ func _ready():
 	multiplayer.peer_disconnected.connect(player_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
+	GameManager.self_disconnected.connect(on_self_disconnected)
 	
 	var arguments = {}
 	for argument in OS.get_cmdline_args():
@@ -113,10 +114,17 @@ func connection_failed():
 @rpc("any_peer", "call_local")
 func on_host_disconnected():
 	print("Host has disconnected, returning to menu.")
+	leave_game("The host has disconnected.")
+
+func on_self_disconnected():
+	print("Disconnected, returning to menu.")
+	leave_game("You have disconnected.")
+		
+func leave_game(message):
 	GameManager.end_game()
 	multiplayer.set_multiplayer_peer(null)  # Disconnect the peer
 	update_num_players()
-	show_menu("The host has disconnected.")
+	show_menu(message)
 	if scene:
 		scene.queue_free()
 

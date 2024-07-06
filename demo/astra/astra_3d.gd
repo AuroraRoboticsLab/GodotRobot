@@ -72,7 +72,6 @@ func _physics_process(delta):
 	
 	# Turbo ultra racing mode
 	if Input.is_action_pressed("shift"):
-		print("Shifting!")
 		engine_force_multiplier = sqrt(abs(movement_speed))/2
 	
 	const max_turn_force = 15.0 # Starting (and max) turn force
