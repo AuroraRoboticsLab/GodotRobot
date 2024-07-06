@@ -26,7 +26,7 @@ func _physics_process(_delta):
 	
 	# Check for stationary dirtballs and consider terrain merge
 	for dirtball in spawn.get_children():
-		if dirtball.bucket_count <= 0: # not inside a bucket
+		if dirtball.bucket_count <= 0 and dirtball.hopper_count <= 0: # not inside a bucket or hopper
 			if dirtball.linear_velocity.length() < 0.2:  # low horizontal velocity (m/s)
 				if abs(dirtball.linear_velocity.y) < 0.02:  # very low vertical velocity (m/s)
 					if dirtball.angular_velocity.length() < 0.1: # not rotating much (rad/s)

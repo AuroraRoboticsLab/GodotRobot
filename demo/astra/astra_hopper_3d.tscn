@@ -1,15 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://bksiiw7xwjeec"]
+[gd_scene load_steps=10 format=3 uid="uid://bksiiw7xwjeec"]
 
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="1_6r7hv"]
 [ext_resource type="Script" path="res://astra/astra_hopper_3d.gd" id="1_b4e7o"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="2_xvuc3"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="3_aj8vk"]
+[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="5_sfs7r"]
+[ext_resource type="Script" path="res://astra/InsideHopper.gd" id="6_8n7uj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l3m53"]
 size = Vector3(0.024931, 0.391102, 0.585922)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lvmlh"]
 size = Vector3(0.160156, 0.0521545, 0.628235)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ux4h4"]
+size = Vector3(0.607239, 0.541924, 0.634567)
 
 [node name="AstraHopper3D" type="Node3D"]
 script = ExtResource("1_b4e7o")
@@ -79,26 +84,28 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0895522, 0.0486908, -0.0148621)
 shape = SubResource("BoxShape3D_lvmlh")
 
-[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
+[node name="BetterHingeJoint3D" parent="." instance=ExtResource("5_sfs7r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127, 0.064, 0)
 node_a = NodePath("../Hopper")
 node_b = NodePath("../HopperDoor1")
-angular_limit/enable = true
-angular_limit/upper = 0.0
-angular_limit/bias = 0.5
-angular_limit/relaxation = 0.5
-motor/enable = true
-motor/target_velocity = 0.0
-motor/max_impulse = 100.0
+rotation_axis = 2
+max_lower_angle = -90.0
 
-[node name="HingeJoint3D2" type="HingeJoint3D" parent="."]
+[node name="BetterHingeJoint3D2" parent="." instance=ExtResource("5_sfs7r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127, 0.064, 0)
 node_a = NodePath("../Hopper")
 node_b = NodePath("../HopperDoor2")
-angular_limit/enable = true
-angular_limit/lower = 0.0
-angular_limit/bias = 0.5
-angular_limit/relaxation = 0.5
-motor/enable = true
-motor/target_velocity = 0.0
-motor/max_impulse = 100.0
+rotation_axis = 2
+max_upper_angle = 90.0
+
+[node name="InsideHopper" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("6_8n7uj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InsideHopper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000762939, 0.187473, -0.0120773)
+shape = SubResource("BoxShape3D_ux4h4")
+
+[connection signal="body_entered" from="InsideHopper" to="InsideHopper" method="_on_body_entered"]
+[connection signal="body_exited" from="InsideHopper" to="InsideHopper" method="_on_body_exited"]
