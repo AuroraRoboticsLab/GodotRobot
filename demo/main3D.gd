@@ -33,7 +33,6 @@ func _on_new_player_info(id, username):
 		curr_player.name = str(id)
 		add_child(curr_player)
 		curr_player.nametag_text = username
-		
 
 func _physics_process(_delta):
 	if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
@@ -52,5 +51,3 @@ func _physics_process(_delta):
 	robot.cam_scene.v_sens = $UI.v_cam_sens
 	robot.cam_scene.zoom_sens = $UI.cam_zoom_sens
 	robot.tp_height = $UI.tp_height
-	
-
