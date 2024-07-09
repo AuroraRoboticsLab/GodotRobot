@@ -20,7 +20,7 @@ const DRIVE_FORCE_MULT = 1200
 @onready var tp_height: float = 1.0
 @export var is_npc: bool = false
 
-@onready var cam_load = load("res://components/movable_camera_3d.tscn")
+@onready var cam_load = preload("res://components/movable_camera_3d.tscn")
 @onready var cam_scene = null
 
 var sync_pos = Vector3.ZERO
@@ -40,16 +40,20 @@ func _ready():
 	
 	center_of_mass = $CenterOfMass.position
 	
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
-	
-	if not is_npc and $MultiplayerSynchronizer.is_multiplayer_authority():
+	if GameManager.using_multiplayer:
+		$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+		if not is_npc and $MultiplayerSynchronizer.is_multiplayer_authority():
+			cam_scene = cam_load.instantiate()
+			add_child(cam_scene)
+			$Nametag.visible = false # We don't want to see our own nametag
+	else:
 		cam_scene = cam_load.instantiate()
 		add_child(cam_scene)
-		$Nametag.visible = false # We don't want to see our own nametag
+		$Nametag.visible = false
 
 var time = 0
 func _physics_process(delta):
-	if not $MultiplayerSynchronizer.is_multiplayer_authority():
+	if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
 		global_position = global_position.lerp(sync_pos, 0.5)
 		set_quaternion(get_quaternion().slerp(sync_rot, 0.5))
 		return

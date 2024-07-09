@@ -9,6 +9,7 @@ var peer: ENetMultiplayerPeer = null
 var scene: Node = null
 
 func _ready():
+	GameManager.using_multiplayer = true
 	multiplayer.set_multiplayer_peer(null)
 	multiplayer.peer_connected.connect(player_connected)
 	multiplayer.peer_disconnected.connect(player_disconnected)
@@ -81,7 +82,7 @@ func send_player_info(id, username):
 func start_game():
 	if not GameManager.game_in_progress:
 		GameManager.game_in_progress = true
-		scene = load("res://main3D.tscn").instantiate()
+		scene = preload("res://main3D.tscn").instantiate()
 		get_tree().root.add_child(scene)
 		hide_menu()
 
@@ -192,3 +193,9 @@ func update_num_players():
 func start_if_ongoing_game(querying_id):
 	if multiplayer.get_unique_id() == 1 and GameManager.game_in_progress:
 		start_game.rpc_id(querying_id)
+
+func _on_local_game_button_pressed():
+	GameManager.using_multiplayer = false
+	scene = preload("res://main3D.tscn").instantiate()
+	get_tree().root.add_child(scene)
+	queue_free()

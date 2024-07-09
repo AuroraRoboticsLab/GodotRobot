@@ -1,26 +1,31 @@
 extends Node3D
 
 @onready var spawn = $DirtSpawner
-@export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
+@export var robot_scene: PackedScene = preload("res://astra/astra_3d.tscn")
 var robot = null
 
 func _ready():
-	var index = 0
-	for pid in GameManager.players:
-		var curr_player = robot_scene.instantiate()
-		curr_player.name = str(pid)
-		add_child(curr_player)
-		if pid == multiplayer.get_unique_id():
-			robot = curr_player
-		
-		curr_player.nametag_text = GameManager.players[pid]["username"]
-		
-		for spawnpoint in $PlayerSpawnpoints.get_children():
-			if spawnpoint.name == str(index%GameManager.num_spawns):
-				curr_player.global_transform = spawnpoint.global_transform
-		index += 1
-		
-	GameManager.new_player_info.connect(_on_new_player_info)
+	if GameManager.using_multiplayer:
+		var index = 0
+		for pid in GameManager.players:
+			var curr_player = robot_scene.instantiate()
+			curr_player.name = str(pid)
+			add_child(curr_player)
+			if pid == multiplayer.get_unique_id():
+				robot = curr_player
+			
+			curr_player.nametag_text = GameManager.players[pid]["username"]
+			
+			for spawnpoint in $PlayerSpawnpoints.get_children():
+				if spawnpoint.name == str(index%GameManager.num_spawns):
+					curr_player.global_transform = spawnpoint.global_transform
+			index += 1
+			
+		GameManager.new_player_info.connect(_on_new_player_info)
+	else:
+		robot = robot_scene.instantiate()
+		robot.global_transform = $PlayerSpawnpoints.get_children()[0].global_transform
+		add_child(robot)
 
 @rpc("any_peer")
 func _on_new_player_info(id, username):
@@ -35,10 +40,11 @@ func _on_new_player_info(id, username):
 		curr_player.nametag_text = username
 
 func _physics_process(_delta):
-	if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
-		return # We don't have a UI to update if we are a console host.
-	if not robot:
-		return # We don't have a UI if we aren't in the game!
+	if GameManager.using_multiplayer:
+		if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
+			return # We don't have a UI to update if we are a console host.
+		if not robot:
+			return # We don't have a UI if we aren't in the game!
 	
 	$UI.ball_count = spawn.get_child_count()
 	$UI.fps = $"FPS Counter".fps

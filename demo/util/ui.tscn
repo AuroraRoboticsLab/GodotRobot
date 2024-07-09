@@ -90,10 +90,10 @@ script = ExtResource("1_mxmhq")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -151.0
-offset_top = 22.0
-offset_right = -22.0
-offset_bottom = 84.0
+offset_left = -158.0
+offset_top = 12.0
+offset_right = -20.0
+offset_bottom = 77.0
 
 [node name="SettingsButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -138,47 +138,52 @@ offset_right = -0.00012207
 offset_bottom = -6.10352e-05
 theme = ExtResource("3_qlyme")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/HBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 29.0
 
-[node name="TitleLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
 text = "Settings"
 
-[node name="SpawnRateHBox" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="SpawnRateHBox" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
-[node name="SpawnRateLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox"]
+[node name="SpawnRateLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"MediumLabel"
 text = "Spawn Rate:"
 
-[node name="TickButton" parent="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox" instance=ExtResource("4_0yspv")]
+[node name="TickButton" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox" instance=ExtResource("4_0yspv")]
 layout_mode = 2
 size_flags_vertical = 4
 value = 1.0
 
-[node name="VertCamSensLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="VertCamSensLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"MediumLabel"
 text = "Vertical Camera Sensitivity:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
-[node name="VertSensValLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="VertSensValLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
@@ -187,7 +192,7 @@ text = "0.1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VertSensSlider" type="HSlider" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="VertSensSlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -197,20 +202,20 @@ max_value = 1.0
 step = 0.05
 value = 0.1
 
-[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HorizCamSensLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="HorizCamSensLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"MediumLabel"
 text = "Horizontal Camera Sensitivity:"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
-[node name="HorizSensValLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+[node name="HorizSensValLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
@@ -219,7 +224,7 @@ text = "0.1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HorizSensSlider" type="HSlider" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+[node name="HorizSensSlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -229,20 +234,20 @@ max_value = 1.0
 step = 0.05
 value = 0.1
 
-[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CamZoomSensLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="CamZoomSensLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"MediumLabel"
 text = "Camera Zoom Sensitivity:"
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
-[node name="ZoomSensValLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+[node name="ZoomSensValLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
@@ -251,7 +256,7 @@ text = "2.5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ZoomSensSlider" type="HSlider" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+[node name="ZoomSensSlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -261,119 +266,146 @@ max_value = 10.0
 step = 0.5
 value = 2.5
 
-[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
-[node name="TPUpLabel" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3"]
+[node name="TPUpLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Space Teleport Height (meters): "
 
-[node name="TPHeightTickButton" parent="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3" instance=ExtResource("4_0yspv")]
+[node name="TPHeightTickButton" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3" instance=ExtResource("4_0yspv")]
 layout_mode = 2
 size_flags_vertical = 4
 value = 1.0
 step_size = 0.5
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/HBoxContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 29.0
 
-[node name="Label" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
+[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
 text = "Controls:
 "
 
-[node name="GridContainer" type="GridContainer" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
+[node name="GridContainer" type="GridContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 theme_type_variation = &"DisplayGridContainer"
 columns = 2
 
-[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control2" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Toggle Dirt Spawning"
 
-[node name="Label2" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label2" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "X"
 
-[node name="Label3" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label3" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Move Arm"
 
-[node name="Label4" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label4" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Numpad"
 
-[node name="Label5" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label5" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Movement"
 
-[node name="Label6" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label6" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "WASD"
 
-[node name="Label7" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label7" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Teleport Up"
 
-[node name="Label8" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label8" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Spacebar"
 
-[node name="Label9" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label9" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Move Camera"
 
-[node name="Label10" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label10" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Hold Left Click"
 
-[node name="Label11" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label11" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Zoom Camera"
 
-[node name="Label12" type="Label" parent="SettingsMenu/HBoxContainer2/VBoxContainer2/GridContainer"]
+[node name="Label12" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
 layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Mouse Wheel"
 
-[node name="Control" type="Control" parent="SettingsMenu/HBoxContainer2/VBoxContainer2"]
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 
-[node name="Control2" type="Control" parent="SettingsMenu/HBoxContainer2"]
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="MultiMenuButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Exit to Multiplayer Menu"
+
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
-[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
-[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
-[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
-[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
-[connection signal="value_changed" from="SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer/MultiMenuButton" to="." method="_on_multi_menu_button_pressed"]

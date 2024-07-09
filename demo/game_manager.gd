@@ -14,6 +14,7 @@ var max_players: int = 4:
 var num_spawns = 4
 var game_in_progress: bool = false
 var is_console_host: bool = false
+var using_multiplayer: bool = false
 
 signal new_player_info(id, username)
 signal self_disconnected

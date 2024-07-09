@@ -14,9 +14,11 @@ extends CanvasLayer
 @onready var fps = 60
 @onready var dirtballs_in_bucket: int = 0
 
+@onready var multi_menu_scene: PackedScene = load("res://multiplayer_menu.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 # Code from Godot forums
 func round_to_dec(num, digit):
@@ -59,5 +61,12 @@ func _on_zoom_sens_slider_value_changed(value):
 	cam_zoom_sens = value
 
 func _on_leave_game_button_pressed():
-	multiplayer.multiplayer_peer.close()
-	GameManager.self_disconnected.emit()
+	if GameManager.using_multiplayer:
+		multiplayer.multiplayer_peer.close()
+		GameManager.self_disconnected.emit()
+	else:
+		get_tree().quit() # Exit program
+
+func _on_multi_menu_button_pressed():
+	get_parent().queue_free()
+	get_tree().root.add_child(multi_menu_scene.instantiate())
