@@ -23,9 +23,15 @@ func _ready():
 # Attempt to attach or detach
 func try_toggle_attach():
 	if can_attach and not tool_connector.connected and current_attachment:
-		_attach.rpc()
+		if GameManager.using_multiplayer:
+			_attach.rpc()
+		else:
+			_attach()
 	elif tool_connector.connected and tool_connector.nearby_connector:
-		_detach.rpc()
+		if GameManager.using_multiplayer:
+			_detach.rpc()
+		else:
+			_detach()
 	else:
 		print("Cannot attach or detach!")
 

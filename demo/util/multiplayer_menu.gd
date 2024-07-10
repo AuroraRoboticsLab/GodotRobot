@@ -10,7 +10,6 @@ var scene: Node = null
 @onready var main_scene: PackedScene = load("res://levels/main3D.tscn")
 
 func _ready():
-	GameManager.using_multiplayer = true
 	multiplayer.set_multiplayer_peer(null)
 	multiplayer.peer_connected.connect(player_connected)
 	multiplayer.peer_disconnected.connect(player_disconnected)
@@ -140,6 +139,7 @@ func hide_menu():
 	self.hide()
 
 func _on_host_button_pressed():
+	GameManager.using_multiplayer = true
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
 		print("Already connected to a peer.")
 		%AlertLabel.text = "Cannot host: Already connected to a peer."
@@ -152,6 +152,7 @@ func _on_host_button_pressed():
 		%AlertLabel.text = "Cannot host: Host already exists."
 
 func _on_join_button_pressed():
+	GameManager.using_multiplayer = true
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
 		print("Already connected to a peer.")
 		%AlertLabel.text = "Cannot join: Already connected to a peer."
