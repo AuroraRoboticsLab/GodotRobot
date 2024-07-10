@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cth62soa2rrha"
-path="res://.godot/imported/excahauler.png-4b51688ed819681018b6b0799c771312.ctex"
+uid="uid://nsigq8tvigkc"
+path="res://.godot/imported/icon.svg-f1ae053ac80fafcfd76c3db57d1eb2bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://robot/excahauler.png"
-dest_files=["res://.godot/imported/excahauler.png-4b51688ed819681018b6b0799c771312.ctex"]
+source_file="res://graphics/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-f1ae053ac80fafcfd76c3db57d1eb2bb.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=0.1
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

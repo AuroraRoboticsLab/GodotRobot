@@ -12,15 +12,6 @@ extends Node3D
 @onready var tool_coupler_component = $Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent
 @onready var is_dead: bool = false
 
-# Arm PID control constants
-const KP = 50.0
-const KI = 5.0
-const KD = 0.02
-var arm_target_angle: float
-var arm_integral: float
-var arm_previous_error: float
-var has_set_arm_angle: bool = false
-
 func _ready():
 	if GameManager.using_multiplayer:
 		$MultiplayerSynchronizer.set_multiplayer_authority(str(get_parent().name).to_int())

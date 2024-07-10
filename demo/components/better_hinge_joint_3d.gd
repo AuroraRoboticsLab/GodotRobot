@@ -2,8 +2,7 @@ extends Generic6DOFJoint3D
 
 enum Axis { X, Y, Z }
 @export var rotation_axis: Axis = Axis.X
-@onready var axis_string: String = "x" if rotation_axis == Axis.X else "y" if rotation_axis == Axis.Y else "z"
-@onready var axis_idx: int = 0 if rotation_axis == Axis.X else 1 if rotation_axis == Axis.Y else 2
+@onready var axis_string: String = {Axis.X: "x", Axis.Y: "y", Axis.Z: "z"}[rotation_axis]
 
 @onready var upper_angle_limit: float = 0:
 	get:
@@ -38,23 +37,21 @@ func _physics_process(delta):
 		else:
 			set_angle(new_angle)
 			prev_set_angle = new_angle
-		
 
 func move_motor(move_force: float):
 	moving = true
 	force = move_force
-	
-	
+
 func stop_motor():
 	moving = false
-		
+
 func get_angle():
 	var node = get_node_or_null(node_b)
 	if node:
-		return -node.get_rotation()[axis_idx]
+		return -node.get_rotation()[rotation_axis]
 	else:
 		print("WARN: Getting angle of nonexistant node.")
-	
+
 func set_angle(angle: float):
 	upper_angle_limit = angle
 	lower_angle_limit = angle

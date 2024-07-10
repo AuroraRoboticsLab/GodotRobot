@@ -1,6 +1,5 @@
 extends Node3D
 
-
 var charge_level: float = 100.0 # Battery %
 var is_dead: bool = false # Vehicle is out of battery
 var charging: bool = false # Is vehicle charging?

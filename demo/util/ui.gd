@@ -14,11 +14,7 @@ extends CanvasLayer
 @onready var fps = 60
 @onready var dirtballs_in_bucket: int = 0
 
-@onready var multi_menu_scene: PackedScene = load("res://multiplayer_menu.tscn")
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
+@onready var multi_menu_scene: PackedScene = preload("res://util/multiplayer_menu.tscn")
 
 # Code from Godot forums
 func round_to_dec(num, digit):

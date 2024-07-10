@@ -49,8 +49,7 @@ func _attach():
 	tool_connector.do_connect(current_attachment.connector)
 
 # Detach from current attachment
-# Invariants:
-#   We are currently connected to an attachment
+# Invariant: We are currently connected to an attachment
 @rpc("any_peer", "call_local")
 func _detach():
 	# Remove the joint
@@ -68,8 +67,7 @@ func _detach():
 	can_attach = false
 
 # Another connector is nearby
-# Invariants:
-#   area is a connector
+# Invariant: area is a connector
 func _on_connector_component_can_connect(area):
 	#print("can connect!")
 	var body = area.parent

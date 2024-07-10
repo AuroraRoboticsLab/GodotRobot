@@ -76,12 +76,7 @@ func _on_area_entered(area):
 
 # Area left the connector's area.
 func _on_area_exited(area):
-	#if not connected: # If we're not connected, we don't care!
-	#	return
-	
 	# Was the area the connected area?
 	if area == nearby_connector:
-		# We aren't near that connector anymore.
-		#nearby_connector = null
 		# Let everyone know we must disconnect!
 		must_disconnect.emit(area)

@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Demo_GodotRobot"
-run/main_scene="res://main3D.tscn"
+run/main_scene="res://levels/main3D.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://graphics/icon.svg"
 
 [autoload]
 
@@ -31,7 +31,7 @@ movie_writer/disable_vsync=true
 
 [gui]
 
-theme/custom="res://theme.tres"
+theme/custom="res://util/theme.tres"
 
 [input]
 

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
 [ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://astra/Wheel with substance.obj" id="3_bur5r"]
-[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="4_r6kd8"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="4_76ojc"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="PackedScene" uid="uid://cydno5704j3dk" path="res://astra/astra_arm_3d.tscn" id="5_xqxup"]
 [ext_resource type="PackedScene" uid="uid://bksiiw7xwjeec" path="res://astra/astra_hopper_3d.tscn" id="6_u7q2o"]
@@ -67,7 +67,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_r6kd8")
+surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)
@@ -85,7 +85,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_r6kd8")
+surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="BackLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
@@ -103,7 +103,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_r6kd8")
+surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="BackRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
@@ -121,7 +121,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("4_r6kd8")
+surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="AstraArm3D" parent="." instance=ExtResource("5_xqxup")]
 

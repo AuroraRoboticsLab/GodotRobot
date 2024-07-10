@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://astra/tool_attachments/fork/forks.gd" id="1_0reat"]
 [ext_resource type="ArrayMesh" uid="uid://buijme2swldor" path="res://astra/tool_attachments/fork/Forks v7.obj" id="1_t7yws"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_g4wtu"]
-[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="3_tg68u"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_tg68u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ubtq5"]
 size = Vector3(0.0714722, 0.0192261, 0.396362)

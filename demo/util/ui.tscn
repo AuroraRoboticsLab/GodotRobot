@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
-[ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://Settings Gear.png" id="3_bbais"]
-[ext_resource type="Theme" uid="uid://b0sf7fmx7al7i" path="res://theme.tres" id="3_qlyme"]
-[ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://tick_button.tscn" id="4_0yspv"]
-[ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://leave_game_icon.png" id="4_cx4nv"]
+[ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="3_bbais"]
+[ext_resource type="Theme" uid="uid://b0sf7fmx7al7i" path="res://util/theme.tres" id="3_qlyme"]
+[ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://util/tick_button.tscn" id="4_0yspv"]
+[ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://graphics/leave_game_icon.png" id="4_cx4nv"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1j2nn")

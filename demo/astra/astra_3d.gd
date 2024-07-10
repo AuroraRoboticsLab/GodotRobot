@@ -116,7 +116,6 @@ func _physics_process(delta):
 		stalling = false
 		stuck_stalling = false
 	
-	
 	arm.is_dead = charge_component.is_dead
 	hopper.is_dead = charge_component.is_dead
 	
@@ -128,11 +127,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump"):
 		linear_velocity = Vector3.ZERO
 		global_position += Vector3(0, tp_height, 0)
-		
-
-
-# Connector logic. Very simple, because the connector component
-# handles most of it!
 
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):

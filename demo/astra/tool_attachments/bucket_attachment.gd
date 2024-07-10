@@ -10,7 +10,6 @@ extends RigidBody3D
 var rigid = self  # rigid body to grab velocity & forces
 var pushback_spread = 0.0 # spreads pushback over several physics frames
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("attachment")
 

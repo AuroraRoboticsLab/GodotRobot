@@ -1,6 +1,5 @@
 extends StaticBody3D
 
-
 @onready var bodies_charging = [] # Bodies being charged
 
 @onready var connector1 = $ConnectorComponent1
@@ -40,9 +39,6 @@ func set_shader_percentage(new_charge: float) -> void:
 	else:
 		print("Invalid material or not a ShaderMaterial")
 
-# Connector logic. Very simple, because the connector component
-# handles most of it!
-
 # Given a connector, start charging the attached body if possible.
 func init_connect(area):
 	var body = area.parent
@@ -77,4 +73,3 @@ func _on_connector_component_3_just_disconnected(area):
 	init_disconnect(area)
 func _on_connector_component_4_just_disconnected(area):
 	init_disconnect(area)
-

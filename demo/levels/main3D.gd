@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var spawn = $DirtSpawner
-@export var robot_scene: PackedScene = preload("res://astra/astra_3d.tscn")
+@export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
 var robot = null
 
 func _ready():

@@ -7,6 +7,7 @@ extends Control
 
 var peer: ENetMultiplayerPeer = null
 var scene: Node = null
+@onready var main_scene: PackedScene = load("res://levels/main3D.tscn")
 
 func _ready():
 	GameManager.using_multiplayer = true
@@ -82,7 +83,7 @@ func send_player_info(id, username):
 func start_game():
 	if not GameManager.game_in_progress:
 		GameManager.game_in_progress = true
-		scene = preload("res://main3D.tscn").instantiate()
+		scene = main_scene.instantiate()
 		get_tree().root.add_child(scene)
 		hide_menu()
 
@@ -150,9 +151,6 @@ func _on_host_button_pressed():
 		print("Host already exists.")
 		%AlertLabel.text = "Cannot host: Host already exists."
 
-# TODO: Allow player to spawn into game when game has already started.
-#       OR, notify the joining player that a game is in progress and
-#       they must wait for a new game to begin (which is most desirable?)
 func _on_join_button_pressed():
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
 		print("Already connected to a peer.")
@@ -196,6 +194,6 @@ func start_if_ongoing_game(querying_id):
 
 func _on_local_game_button_pressed():
 	GameManager.using_multiplayer = false
-	scene = preload("res://main3D.tscn").instantiate()
+	scene = main_scene.instantiate()
 	get_tree().root.add_child(scene)
 	queue_free()

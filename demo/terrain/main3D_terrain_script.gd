@@ -10,13 +10,10 @@ extends Node3D
 # Load dirtball 
 var ball: PackedScene = preload("res://terrain/dirtball.tscn")
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	terrain.add_mesh(shader)
 	terrain.add_static_collider();
 	terrain.fill_heights(100,100,40);
-
 
 func _physics_process(_delta):
 	# Despawn oldest dirtballs (that have fallen through terrain)
@@ -41,7 +38,6 @@ func _physics_process(_delta):
 		if dirtball.linear_velocity.y<-20.0: 
 			dirtball.queue_free()
 
-
 # Create a random 3D velocity vector in this range
 #   (Surprising there isn't a builtin Godot utility function for this)
 func create_random_Vector3(vrange):
@@ -60,4 +56,3 @@ func spawn_dirtball(pos, vel):
 func _on_terrain_sim_spawn_dirtball(spawn_pos,spawn_vel):
 	var random_vel = create_random_Vector3(0.05)
 	spawn_dirtball(spawn_pos,spawn_vel + random_vel)
-

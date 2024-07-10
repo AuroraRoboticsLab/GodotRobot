@@ -2,7 +2,7 @@
 
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="1_6r7hv"]
 [ext_resource type="Script" path="res://astra/astra_hopper_3d.gd" id="1_b4e7o"]
-[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://metal_material_3d.tres" id="2_xvuc3"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="2_xvuc3"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="3_aj8vk"]
 [ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="5_sfs7r"]
 [ext_resource type="Script" path="res://astra/InsideHopper.gd" id="6_8n7uj"]

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cnx6htsy88fqs"
-path="res://.godot/imported/excahauler.blend-7a928be4c4b22ebad2721f1ed5b8ddaa.scn"
+path="res://.godot/imported/excahauler.blend-7780468c709f5b9d02237d33336c8f32.scn"
 
 [deps]
 
-source_file="res://robot/excahauler.blend"
-dest_files=["res://.godot/imported/excahauler.blend-7a928be4c4b22ebad2721f1ed5b8ddaa.scn"]
+source_file="res://excahauler/excahauler.blend"
+dest_files=["res://.godot/imported/excahauler.blend-7780468c709f5b9d02237d33336c8f32.scn"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://v6k4sjvue810"]
 
-[ext_resource type="Script" path="res://robot/excahauler_static.gd" id="1_exou3"]
-[ext_resource type="PackedScene" uid="uid://cnx6htsy88fqs" path="res://robot/excahauler.blend" id="1_xp40i"]
+[ext_resource type="Script" path="res://excahauler/excahauler_static.gd" id="1_exou3"]
+[ext_resource type="PackedScene" uid="uid://cnx6htsy88fqs" path="res://excahauler/excahauler.blend" id="1_xp40i"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="3_wjspi"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qgrlw"]
