@@ -18,6 +18,9 @@ func _ready():
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $"MultiplayerSynchronizer".is_multiplayer_authority():
+		if tool_coupler_component.tool_connector.connected and tool_coupler_component.current_attachment:
+			tool_coupler_component.current_attachment.global_transform = tool_coupler_component.get_parent().global_transform
+			tool_coupler_component.current_attachment.global_position = tool_coupler_component.global_position
 		return
 	
 	const MOTOR_MULT = 0.8
@@ -33,6 +36,9 @@ func _physics_process(delta):
 	arm_joint.move_motor(arm_force) if abs(arm_force) > 0 else arm_joint.stop_motor()
 	bollard_joint.move_motor(bollard_force) if abs(bollard_force) > 0 else bollard_joint.stop_motor()
 	tilt_joint.move_motor(tilt_force) if abs(tilt_force) > 0 else tilt_joint.stop_motor()
+	
+	var power_spent = (arm_force + bollard_force + tilt_force) * 3
+	get_parent().charge_component.change_charge(-power_spent * delta)
 	
 	# Tool attachment/detachment
 	if Input.is_action_just_pressed("generic_action"): 
