@@ -39,8 +39,9 @@ Routes to get PackedFlat32Array onscreen:
 
 #include <godot_cpp/variant/signal.hpp>
 
-
-
+#ifndef M_PI
+#define M_PI 3.141592653589793238 // Windows export doesn't have M_PI defined.
+#endif
 
 // Parameters for our dirtball (discrete block of dust)
 const float dirtball_sz = 0.1; // meters across a dirtball (for volume estimate)
