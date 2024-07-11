@@ -40,6 +40,7 @@ func host_game(console_host=false):
 		print("Host already exists!")
 		return
 	peer = ENetMultiplayerPeer.new()
+	peer.set_bind_ip(address)
 	var err = peer.create_server(port, GameManager.max_players)
 	if err != OK:
 		print("Unable to host: ", err)
@@ -50,12 +51,14 @@ func host_game(console_host=false):
 	multiplayer.set_multiplayer_peer(peer)
 	if console_host:
 		print("Hosting game from console.")
+		GameManager.using_multiplayer = true
 		GameManager.is_console_host = true
 		start_game()
 	else:
 		%ConnectLabel.text = "Hosting game. Press start game to begin the game."
 		$PanelContainer/VBoxContainer/HBoxContainer/StartButton.disabled = false
 		update_num_players()
+	print("Successfully hosting on ", address, " at port ", port)
 	print("Waiting for players...")
 
 @rpc("any_peer")
@@ -105,6 +108,7 @@ func player_disconnected(id):
 
 func connected_to_server():
 	print("Connected to server!")
+	send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text)
 	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text)
 	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id())
 	update_num_players()
@@ -140,6 +144,9 @@ func hide_menu():
 
 func _on_host_button_pressed():
 	GameManager.using_multiplayer = true
+	address = %AddressTextEdit.text
+	port = %PortTextEdit.text.to_int()
+	print("Attempting to become host at ", address, " on port ", port)
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
 		print("Already connected to a peer.")
 		%AlertLabel.text = "Cannot host: Already connected to a peer."
@@ -153,6 +160,9 @@ func _on_host_button_pressed():
 
 func _on_join_button_pressed():
 	GameManager.using_multiplayer = true
+	address = %AddressTextEdit.text
+	port = %PortTextEdit.text.to_int()
+	print("Attempting to join host at ", address, " on port ", port)
 	if multiplayer.get_multiplayer_peer(): # Can't join if we have a peer already!
 		print("Already connected to a peer.")
 		%AlertLabel.text = "Cannot join: Already connected to a peer."
@@ -161,6 +171,7 @@ func _on_join_button_pressed():
 	peer.create_client(address, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
+	peer.set_bind_ip(address)
 	
 	if host_exists(): # If server responded
 		# If game is ongoing, start locally.
@@ -172,6 +183,7 @@ func _on_join_button_pressed():
 # Try to become a host. If we can, there isn't a host to be found.
 func host_exists():
 	var temp_peer = ENetMultiplayerPeer.new()
+	temp_peer.set_bind_ip(address)
 	var err = temp_peer.create_server(port, GameManager.max_players)
 	if err != OK:
 		return true

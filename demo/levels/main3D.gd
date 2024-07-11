@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var spawn = $DirtSpawner
+@onready var multi_menu_scene: PackedScene = preload("res://util/multiplayer_menu.tscn")
 @export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
 var robot = null
 

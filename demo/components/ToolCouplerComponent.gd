@@ -59,6 +59,8 @@ func _attach():
 @rpc("any_peer", "call_local")
 func _detach():
 	# Remove the joint
+	if not curr_joint:
+		return # Newly joining players won't synchronize new joints... yet.
 	curr_joint.queue_free()
 	curr_joint = null
 	
