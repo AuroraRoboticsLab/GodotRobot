@@ -7,8 +7,12 @@ var robot = null
 
 func _ready():
 	if GameManager.using_multiplayer:
+		var sorted_players = GameManager.players.keys()
+		sorted_players.sort()
+		print(sorted_players)
+		
 		var index = 0
-		for pid in GameManager.players:
+		for pid in sorted_players:
 			var curr_player = robot_scene.instantiate()
 			curr_player.name = str(pid)
 			add_child(curr_player)
@@ -17,9 +21,9 @@ func _ready():
 			
 			curr_player.nametag_text = GameManager.players[pid]["username"]
 			
-			for spawnpoint in $PlayerSpawnpoints.get_children():
-				if spawnpoint.name == str(index%GameManager.num_spawns):
-					curr_player.global_transform = spawnpoint.global_transform
+			var spawnpoint = get_node("PlayerSpawnpoints/"+str(index%GameManager.num_spawns))
+			curr_player.global_transform = spawnpoint.global_transform
+			
 			index += 1
 			
 		GameManager.new_player_info.connect(_on_new_player_info)

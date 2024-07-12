@@ -18,9 +18,6 @@ func _ready():
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $"MultiplayerSynchronizer".is_multiplayer_authority():
-		if tool_coupler_component.tool_connector.connected and tool_coupler_component.current_attachment:
-			tool_coupler_component.current_attachment.global_transform = tool_coupler_component.get_parent().global_transform
-			tool_coupler_component.current_attachment.global_position = tool_coupler_component.global_position
 		return
 	
 	const MOTOR_MULT = 0.8

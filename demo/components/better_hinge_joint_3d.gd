@@ -31,11 +31,20 @@ func _physics_process(delta):
 		else:
 			new_angle = get_angle() + (force*delta)
 		if new_angle > deg_to_rad(max_upper_angle):
-			set_angle(deg_to_rad(max_upper_angle))
+			if GameManager.using_multiplayer:
+				set_angle.rpc(deg_to_rad(max_upper_angle))
+			else:
+				set_angle(deg_to_rad(max_upper_angle))
 		elif new_angle < deg_to_rad(max_lower_angle):
-			set_angle(deg_to_rad(max_lower_angle))
+			if GameManager.using_multiplayer:
+				set_angle.rpc(deg_to_rad(max_lower_angle))
+			else:
+				set_angle(deg_to_rad(max_lower_angle))
 		else:
-			set_angle(new_angle)
+			if GameManager.using_multiplayer:
+				set_angle.rpc(new_angle)
+			else:
+				set_angle(new_angle)
 			prev_set_angle = new_angle
 
 func move_motor(move_force: float):
@@ -52,6 +61,7 @@ func get_angle():
 	else:
 		print("WARN: Getting angle of nonexistant node.")
 
+@rpc("any_peer","call_local")
 func set_angle(angle: float):
 	upper_angle_limit = angle
 	lower_angle_limit = angle
