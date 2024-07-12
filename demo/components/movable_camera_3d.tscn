@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdadlayx3kmpi"]
+
+[ext_resource type="PackedScene" uid="uid://rd8c2qdql2v" path="res://components/clipped_camera.tscn" id="1_sy8fg"]
+[ext_resource type="Script" path="res://components/movable_camera_3d.gd" id="1_txhd5"]
+
+[node name="MovableCamera3D" type="Node3D"]
+script = ExtResource("1_txhd5")
+
+[node name="Horizontal" type="Node3D" parent="."]
+
+[node name="Vertical" type="Node3D" parent="Horizontal"]
+
+[node name="ClippedCamera" parent="Horizontal/Vertical" instance=ExtResource("1_sy8fg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)

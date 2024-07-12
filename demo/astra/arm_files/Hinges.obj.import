@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bg4g2g0ptuyr3"
+path="res://.godot/imported/Hinges.obj-21ff5f79f2f2fb874604eb7821c8945d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Hinges.obj-21ff5f79f2f2fb874604eb7821c8945d.mesh"]
+
+source_file="res://astra/arm_files/Hinges.obj"
+dest_files=["res://.godot/imported/Hinges.obj-21ff5f79f2f2fb874604eb7821c8945d.mesh", "res://.godot/imported/Hinges.obj-21ff5f79f2f2fb874604eb7821c8945d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

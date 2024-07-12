@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://cydno5704j3dk"]
+
+[ext_resource type="Script" path="res://astra/astra_arm_3d.gd" id="1_2mulu"]
+[ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="1_dvup2"]
+[ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="2_p4gbc"]
+[ext_resource type="PackedScene" uid="uid://c26cseexjqmt4" path="res://components/tool_coupler_component.tscn" id="3_8fupj"]
+[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="3_bb355"]
+[ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="4_ylj6w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_020ih"]
+size = Vector3(0.859802, 0.0501113, 0.432617)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ej40"]
+size = Vector3(0.81134, 0.270643, 0.0641555)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lu4b4"]
+properties/0/path = NodePath("Arm3D:transform")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Arm3D/Bollard3D:transform")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Arm3D/Bollard3D/ToolCoupler3D:transform")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent:current_attachment_path")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="AstraArm3D" type="Node3D"]
+script = ExtResource("1_2mulu")
+
+[node name="FrameToArmJoint" parent="." instance=ExtResource("3_bb355")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.088, -0.203)
+node_a = NodePath("../..")
+node_b = NodePath("../Arm3D")
+max_lower_angle = -90.0
+
+[node name="Arm3D" type="RigidBody3D" parent="."]
+collision_layer = 4
+
+[node name="Arm1" type="MeshInstance3D" parent="Arm3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("1_dvup2")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000181735, 0.0886151, -0.417619)
+shape = SubResource("BoxShape3D_020ih")
+
+[node name="ArmToBollardJoint" parent="Arm3D" instance=ExtResource("3_bb355")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.107, -0.82)
+node_a = NodePath("..")
+node_b = NodePath("../Bollard3D")
+max_upper_angle = 90.0
+max_lower_angle = -45.0
+
+[node name="Bollard3D" type="RigidBody3D" parent="Arm3D"]
+collision_layer = 4
+
+[node name="BollardToCouplerJoint" parent="Arm3D/Bollard3D" instance=ExtResource("3_bb355")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049, -0.896)
+node_a = NodePath("..")
+node_b = NodePath("../ToolCoupler3D")
+rotation_axis = 2
+max_upper_angle = 10.0
+max_lower_angle = -10.0
+
+[node name="Bollard" type="MeshInstance3D" parent="Arm3D/Bollard3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("2_p4gbc")
+skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arm3D/Bollard3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.862018)
+shape = SubResource("BoxShape3D_6ej40")
+
+[node name="ToolCoupler3D" type="RigidBody3D" parent="Arm3D/Bollard3D"]
+collision_layer = 4
+
+[node name="ToolCouplerComponent" parent="Arm3D/Bollard3D/ToolCoupler3D" instance=ExtResource("3_8fupj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.91)
+
+[node name="ToolCouplerMesh" type="MeshInstance3D" parent="Arm3D/Bollard3D/ToolCoupler3D"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
+mesh = ExtResource("4_ylj6w")
+skeleton = NodePath("../../../../..")
+
+[node name="ToolCollider" type="CollisionShape3D" parent="Arm3D/Bollard3D/ToolCoupler3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
+shape = SubResource("BoxShape3D_6ej40")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_lu4b4")

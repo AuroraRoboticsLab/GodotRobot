@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgcktkvlefs46"]
+
+[ext_resource type="Script" path="res://util/TickButton.gd" id="1_npk1i"]
+
+[node name="TickButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_npk1i")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = -33.0
+offset_right = 77.0
+offset_bottom = 33.0
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ValueLabel" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+theme_type_variation = &"MediumLabel"
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonUp" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "▲"
+
+[node name="ButtonDown" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "▼"
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/ButtonUp" to="." method="_on_button_up_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/ButtonDown" to="." method="_on_button_down_pressed"]

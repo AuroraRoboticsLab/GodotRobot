@@ -1,0 +1,21 @@
+From Max Grueter's NASA Mark III Mars Exploration Suit model:
+	https://www.thingiverse.com/thing:353548/files
+	CC BY-NC
+It's from circa 2014, but the 2024-era xEMU looks quite similar.
+
+I rotated this model 30 degrees to stand more upright. 
+
+The backpack PLSS unit is canted 15 degrees.
+
+References:
+	https://core.ac.uk/download/pdf/227726308.pdf
+		Good side shot
+	https://nvite.jsc.nasa.gov/presentations/b2/D2_xPortableLifeSupportSystem_Campbell.pdf
+	Actual PLSS dimensions from 2017 (inches!)
+		width 23 inches = 585mm
+		height 30.5 inches = 775mm
+		depth 8 inches = 200mm
+
+
+
+

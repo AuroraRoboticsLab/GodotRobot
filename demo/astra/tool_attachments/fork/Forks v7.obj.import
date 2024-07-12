@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://buijme2swldor"
+path="res://.godot/imported/Forks v7.obj-a104f2bf48c78274e8e5896a9184007a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Forks v7.obj-a104f2bf48c78274e8e5896a9184007a.mesh"]
+
+source_file="res://astra/tool_attachments/fork/Forks v7.obj"
+dest_files=["res://.godot/imported/Forks v7.obj-a104f2bf48c78274e8e5896a9184007a.mesh", "res://.godot/imported/Forks v7.obj-a104f2bf48c78274e8e5896a9184007a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

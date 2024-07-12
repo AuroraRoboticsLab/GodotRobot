@@ -1,6 +1,16 @@
-[gd_resource type="Environment" format=3 uid="uid://cw6e84ra2jvqc"]
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://cw6e84ra2jvqc"]
+
+[ext_resource type="Texture2D" uid="uid://c4lxdv7ioe1hd" path="res://environment/gsfc_risinger_composite_8k.jpg" id="1_0nfuy"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pnyv7"]
+panorama = ExtResource("1_0nfuy")
+
+[sub_resource type="Sky" id="Sky_kjllf"]
+sky_material = SubResource("PanoramaSkyMaterial_pnyv7")
 
 [resource]
-background_mode = 1
-ambient_light_source = 1
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_kjllf")
+ambient_light_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 reflected_light_source = 2

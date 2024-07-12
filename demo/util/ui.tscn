@@ -1,0 +1,426 @@
+[gd_scene load_steps=7 format=3 uid="uid://c73kovjg5pcd3"]
+
+[ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
+[ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
+[ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="3_bbais"]
+[ext_resource type="Theme" uid="uid://b0sf7fmx7al7i" path="res://util/theme.tres" id="3_qlyme"]
+[ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://util/tick_button.tscn" id="4_0yspv"]
+[ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://graphics/leave_game_icon.png" id="4_cx4nv"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_1j2nn")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = -1
+anchor_right = 0.052
+anchor_bottom = 0.09
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 0.159996
+offset_bottom = -0.200005
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+columns = 2
+
+[node name="FPSLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "FPS:"
+
+[node name="FPS" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BallCountLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Dirt Balls:"
+
+[node name="BallCount" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ChargeLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Charge:"
+
+[node name="Charge" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BucketDirtballsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="BucketDirtballsLabel" type="Label" parent="PanelContainer/VBoxContainer/BucketDirtballsHBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Dirtballs in bucket:"
+
+[node name="BucketDirtballs" type="Label" parent="PanelContainer/VBoxContainer/BucketDirtballsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "0"
+
+[node name="HopperDirtballsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HopperDirtballsLabel" type="Label" parent="PanelContainer/VBoxContainer/HopperDirtballsHBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Dirtballs in hopper:"
+
+[node name="HopperDirtballs" type="Label" parent="PanelContainer/VBoxContainer/HopperDirtballsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "0"
+
+[node name="ChargingLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+text = "Charging!"
+
+[node name="StallingLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+text = "Stalling!"
+
+[node name="FPS Counter" type="Node3D" parent="."]
+script = ExtResource("1_mxmhq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -158.0
+offset_top = 12.0
+offset_right = -20.0
+offset_bottom = 77.0
+
+[node name="SettingsButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+icon = ExtResource("3_bbais")
+expand_icon = true
+
+[node name="LeaveGameButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+icon = ExtResource("4_cx4nv")
+expand_icon = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.5
+offset_top = -11.5
+offset_right = 64.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PressToAttach" type="Label" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+text = "Press E to attach"
+
+[node name="SettingsMenu" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.125
+anchor_right = 0.875
+anchor_bottom = 0.875
+offset_right = -0.00012207
+offset_bottom = -6.10352e-05
+theme = ExtResource("3_qlyme")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 29.0
+
+[node name="TitleLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Settings"
+
+[node name="SpawnRateHBox" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="SpawnRateLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Spawn Rate:"
+
+[node name="TickButton" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox" instance=ExtResource("4_0yspv")]
+layout_mode = 2
+size_flags_vertical = 4
+value = 1.0
+
+[node name="VertCamSensLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Vertical Camera Sensitivity:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="VertSensValLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_type_variation = &"MediumLabel"
+text = "0.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VertSensSlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.1
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HorizCamSensLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Horizontal Camera Sensitivity:"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="HorizSensValLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_type_variation = &"MediumLabel"
+text = "0.1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HorizSensSlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+min_value = 0.05
+max_value = 1.0
+step = 0.05
+value = 0.1
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CamZoomSensLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Camera Zoom Sensitivity:"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="ZoomSensValLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_type_variation = &"MediumLabel"
+text = "2.5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ZoomSensSlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+min_value = 1.0
+max_value = 10.0
+step = 0.5
+value = 2.5
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="TPUpLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Space Teleport Height (meters): "
+
+[node name="TPHeightTickButton" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3" instance=ExtResource("4_0yspv")]
+layout_mode = 2
+size_flags_vertical = 4
+value = 1.0
+step_size = 0.5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 29.0
+
+[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Controls:
+"
+
+[node name="GridContainer" type="GridContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"DisplayGridContainer"
+columns = 2
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Toggle Dirt Spawning"
+
+[node name="Label2" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "X"
+
+[node name="Label3" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Move Arm"
+
+[node name="Label4" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Numpad"
+
+[node name="Label5" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Movement"
+
+[node name="Label6" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "WASD"
+
+[node name="Label7" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Teleport Up"
+
+[node name="Label8" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Spacebar"
+
+[node name="Label9" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Move Camera"
+
+[node name="Label10" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Hold Left Click"
+
+[node name="Label11" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Zoom Camera"
+
+[node name="Label12" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/GridContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Mouse Wheel"
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="MultiMenuButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Exit to Multiplayer Menu"
+
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer/MultiMenuButton" to="." method="_on_multi_menu_button_pressed"]

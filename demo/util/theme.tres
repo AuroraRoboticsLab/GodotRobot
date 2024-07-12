@@ -1,0 +1,12 @@
+[gd_resource type="Theme" format=3 uid="uid://b0sf7fmx7al7i"]
+
+[resource]
+DisplayGridContainer/base_type = &"GridContainer"
+MediumButton/base_type = &"Button"
+MediumButton/font_sizes/font_size = 64
+MediumLabel/base_type = &"Label"
+MediumLabel/font_sizes/font_size = 32
+MediumTextEdit/base_type = &"TextEdit"
+MediumTextEdit/font_sizes/font_size = 32
+TitleLabel/base_type = &"Label"
+TitleLabel/font_sizes/font_size = 64

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://brqo4uvi4vhmh"]
+
+[ext_resource type="Script" path="res://static_objects/static_solar_panel_3d.gd" id="1_gt3t6"]
+[ext_resource type="Texture2D" uid="uid://eevqh0taooaa" path="res://graphics/solar_panel_texture.png" id="2_o4upw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d5kvr"]
+size = Vector3(1, 0.05, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ka2o"]
+size = Vector3(1, 0.05, 1)
+
+[node name="StaticSolarPanel3D" type="StaticBody3D"]
+script = ExtResource("1_gt3t6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_d5kvr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_8ka2o")
+
+[node name="SolarPanelTexture" type="Sprite3D" parent="."]
+transform = Transform3D(0.255, 0, 0, 0, -9.57279e-09, 0.255, 0, -0.219, -1.11464e-08, 0, 0.026, 0)
+texture = ExtResource("2_o4upw")
