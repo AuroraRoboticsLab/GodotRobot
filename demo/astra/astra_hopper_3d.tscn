@@ -14,7 +14,7 @@ size = Vector3(0.024931, 0.391102, 0.585922)
 size = Vector3(0.160156, 0.0521545, 0.628235)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ux4h4"]
-size = Vector3(0.607239, 0.541924, 0.634567)
+size = Vector3(0.607239, 0.578091, 0.634567)
 
 [node name="AstraHopper3D" type="Node3D"]
 script = ExtResource("1_b4e7o")
@@ -104,7 +104,7 @@ collision_mask = 2
 script = ExtResource("6_8n7uj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InsideHopper"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000762939, 0.187473, -0.0120773)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000762939, 0.16939, -0.0120773)
 shape = SubResource("BoxShape3D_ux4h4")
 
 [connection signal="body_entered" from="InsideHopper" to="InsideHopper" method="_on_body_entered"]

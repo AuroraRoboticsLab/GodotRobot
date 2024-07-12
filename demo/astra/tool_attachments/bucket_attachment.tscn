@@ -23,7 +23,7 @@ size = Vector3(0.799, 0.404036, 0.0299326)
 size = Vector3(0.0108643, 0.173706, 0.169434)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ghptm"]
-size = Vector3(1, 0.414734, 0.362366)
+size = Vector3(0.756638, 0.392986, 0.362366)
 
 [node name="BucketAttachment" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -74,7 +74,7 @@ collision_mask = 2
 script = ExtResource("5_k25x5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InsideBucket"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00259399, -0.179535)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00403595, -0.0181751, -0.179535)
 shape = SubResource("BoxShape3D_ghptm")
 
 [connection signal="body_entered" from="InsideBucket" to="InsideBucket" method="_on_body_entered"]

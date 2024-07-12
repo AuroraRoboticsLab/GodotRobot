@@ -71,6 +71,21 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "0"
 
+[node name="HopperDirtballsHBox" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HopperDirtballsLabel" type="Label" parent="PanelContainer/VBoxContainer/HopperDirtballsHBox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Dirtballs in hopper:"
+
+[node name="HopperDirtballs" type="Label" parent="PanelContainer/VBoxContainer/HopperDirtballsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "0"
+
 [node name="ChargingLabel" type="Label" parent="PanelContainer/VBoxContainer"]
 visible = false
 layout_mode = 2

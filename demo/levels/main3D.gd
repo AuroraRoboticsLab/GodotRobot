@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var spawn = $DirtSpawner
-@onready var multi_menu_scene: PackedScene = preload("res://util/multiplayer_menu.tscn")
+@onready var multi_menu_scene: PackedScene = load("res://util/multiplayer_menu.tscn")
 @export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
 var robot = null
 
@@ -47,7 +47,7 @@ func _physics_process(_delta):
 		if not robot:
 			return # We don't have a UI if we aren't in the game!
 	
-	$UI.ball_count = spawn.get_child_count()
+	$UI.ball_count = $"Terrain/Dirtballs".get_child_count()
 	$UI.fps = $"FPS Counter".fps
 	spawn.spawn_rate = $UI.spawn_rate
 	$UI.charging = robot.charge_component.charging
@@ -62,4 +62,6 @@ func _physics_process(_delta):
 		if robot.arm.tool_coupler_component.current_attachment.attachment_type == "bucket":
 			$UI.dirtballs_in_bucket = robot.arm.tool_coupler_component.current_attachment.in_bucket.num_dirtballs
 	else:
-		$UI.dirtballs_in_bucket = -1
+		$UI.dirtballs_in_bucket = 0
+	$UI.dirtballs_in_hopper = robot.hopper.inside_hopper.num_dirtballs
+	

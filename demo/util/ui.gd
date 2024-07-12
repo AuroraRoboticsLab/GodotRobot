@@ -13,8 +13,9 @@ extends CanvasLayer
 @onready var ball_count = 0
 @onready var fps = 60
 @onready var dirtballs_in_bucket: int = 0
+@onready var dirtballs_in_hopper: int = 0
 
-@onready var multi_menu_scene: PackedScene = preload("res://util/multiplayer_menu.tscn")
+@onready var multi_menu_scene: PackedScene = load("res://util/multiplayer_menu.tscn")
 
 # Code from Godot forums
 func round_to_dec(num, digit):
@@ -28,12 +29,20 @@ func _process(_delta):
 	$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
 	$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
 	$PanelContainer/VBoxContainer/StallingLabel.visible = stalling
-	if dirtballs_in_bucket >= 0:
+	
+	if dirtballs_in_bucket > 0:
 		$PanelContainer/VBoxContainer/BucketDirtballsHBox.show()
 		var kg_string = " (" + str(round_to_dec(dirtballs_in_bucket * 0.35, 2)) + " kg)"
 		%BucketDirtballs.text = str(dirtballs_in_bucket) + kg_string
 	else:
 		$PanelContainer/VBoxContainer/BucketDirtballsHBox.hide()
+		
+	if dirtballs_in_hopper > 0:
+		$PanelContainer/VBoxContainer/HopperDirtballsHBox.show()
+		var kg_string = " (" + str(round_to_dec(dirtballs_in_hopper * 0.35, 2)) + " kg)"
+		%HopperDirtballs.text = str(dirtballs_in_hopper) + kg_string
+	else:
+		$PanelContainer/VBoxContainer/HopperDirtballsHBox.hide()
 
 func _on_tick_button_value_changed(value):
 	spawn_rate = value
