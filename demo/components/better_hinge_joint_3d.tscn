@@ -12,5 +12,4 @@ linear_limit_z/damping = 1.2
 angular_limit_x/restitution = 1.5
 angular_limit_y/restitution = 1.0
 angular_limit_z/restitution = 1.0
-angular_motor_x/enabled = true
 script = ExtResource("1_ml10x")

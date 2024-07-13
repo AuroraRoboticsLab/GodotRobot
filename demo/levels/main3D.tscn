@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=13 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
 [ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://static_objects/charge_station.tscn" id="3_47s0a"]
+[ext_resource type="PackedScene" uid="uid://dlj1a0fxsprw1" path="res://static_objects/brick_maker.tscn" id="4_vp1iq"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="4_wv3d2"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="5_8fbcs"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
@@ -31,7 +32,10 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="ChargeStation" parent="." instance=ExtResource("3_47s0a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.99146, 0.43997, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.44, 0)
+
+[node name="BrickMaker" parent="." instance=ExtResource("4_vp1iq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("4_wv3d2")
