@@ -18,10 +18,36 @@ func _ready():
 	if GameManager.using_multiplayer:
 		$MultiplayerSynchronizer.set_multiplayer_authority(str(get_parent().name).to_int())
 	
+	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 
 func toggle_inputs():
 	can_input = !can_input
+
+func _network_process(_delta):
+	var arm_data = null
+	var joint_data = null
+	if not $MultiplayerSynchronizer.is_multiplayer_authority():
+		var player_data = GameManager.get_player_data(str(get_parent().name).to_int())
+		
+		arm_data = player_data["arm_data"]
+		arm.transform = arm.transform.interpolate_with(arm_data[0], 0.5)
+		bollard.transform = bollard.transform.interpolate_with(arm_data[1], 0.5)
+		tilt.transform = tilt.transform.interpolate_with(arm_data[2], 0.5)
+		
+		joint_data = player_data["joint_data"]
+		arm_joint.angle_limit = lerp(arm_joint.angle_limit, joint_data[0], 0.5)
+		bollard_joint.angle_limit = lerp(bollard_joint.angle_limit, joint_data[1], 0.5)
+		tilt_joint.angle_limit = lerp(tilt_joint.angle_limit, joint_data[2], 0.5)
+		return
+	
+	arm_data = [arm.transform, bollard.transform, tilt.transform]
+	joint_data = [arm_joint.angle_limit, bollard_joint.angle_limit, tilt_joint.angle_limit]
+	var new_player_data = {
+		"arm_data": arm_data,
+		"joint_data": joint_data
+	}
+	GameManager.add_new_player_data(new_player_data)
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $"MultiplayerSynchronizer".is_multiplayer_authority():

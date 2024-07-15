@@ -6,23 +6,24 @@ var robot = null
 
 func _ready():
 	if GameManager.using_multiplayer:
-		var sorted_players = GameManager.players.keys()
-		sorted_players.sort()
+		# Add all connected players to client
+		var sorted_pids = GameManager.get_player_ids()
+		sorted_pids.sort()
 		
-		var index = 0
-		for pid in sorted_players:
+		var idx = 0
+		for pid in sorted_pids:
 			var curr_player = robot_scene.instantiate()
 			curr_player.name = str(pid)
 			add_child(curr_player)
 			if pid == multiplayer.get_unique_id():
 				robot = curr_player
 			
-			curr_player.nametag_text = GameManager.players[pid]["username"]
+			curr_player.nametag_text = GameManager.get_player_username(pid)
 			
-			var spawnpoint = get_node("PlayerSpawnpoints/"+str(index%GameManager.num_spawns))
+			var spawnpoint = get_node("PlayerSpawnpoints/"+str(idx%GameManager.num_spawns))
 			curr_player.global_transform = spawnpoint.global_transform
 			
-			index += 1
+			idx += 1
 			
 		GameManager.new_player_info.connect(_on_new_player_info)
 	else:
@@ -32,10 +33,8 @@ func _ready():
 
 @rpc("any_peer")
 func _on_new_player_info(id, username):
-	if not GameManager.players.has(id):
-		GameManager.players[id] = {
-			"username": username
-		}
+	if not GameManager.get_players().has(id):
+		GameManager.add_player(id, username)
 		print("New player joined: ", username)
 		var curr_player = robot_scene.instantiate()
 		curr_player.name = str(id)

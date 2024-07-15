@@ -4,17 +4,11 @@ enum Axis { X, Y, Z }
 @export var rotation_axis: Axis = Axis.X
 @onready var axis_string: String = {Axis.X: "x", Axis.Y: "y", Axis.Z: "z"}[rotation_axis]
 
-@onready var upper_angle_limit: float = 0:
-	get:
-		return get("angular_limit_"+axis_string+"/upper_angle")
+@onready var angle_limit: float = 0:
 	set(value):
 		set("angular_limit_"+axis_string+"/upper_angle", value)
-
-@onready var lower_angle_limit: float = 0:
-	get:
-		return get("angular_limit_ "+axis_string+"/lower_angle")
-	set(value):
 		set("angular_limit_"+axis_string+"/lower_angle", value)
+		angle_limit = value
 		
 @export var max_upper_angle: float = 0
 @export var max_lower_angle: float = 0
@@ -31,20 +25,11 @@ func _physics_process(delta):
 		else:
 			new_angle = get_angle() + (force*delta)
 		if new_angle > deg_to_rad(max_upper_angle):
-			if GameManager.using_multiplayer:
-				set_angle.rpc(deg_to_rad(max_upper_angle))
-			else:
-				set_angle(deg_to_rad(max_upper_angle))
+			set_angle(deg_to_rad(max_upper_angle))
 		elif new_angle < deg_to_rad(max_lower_angle):
-			if GameManager.using_multiplayer:
-				set_angle.rpc(deg_to_rad(max_lower_angle))
-			else:
-				set_angle(deg_to_rad(max_lower_angle))
+			set_angle(deg_to_rad(max_lower_angle))
 		else:
-			if GameManager.using_multiplayer:
-				set_angle.rpc(new_angle)
-			else:
-				set_angle(new_angle)
+			set_angle(new_angle)
 			prev_set_angle = new_angle
 
 func move_motor(move_force: float):
@@ -61,7 +46,5 @@ func get_angle():
 	else:
 		print("WARN: Getting angle of nonexistant node.")
 
-@rpc("any_peer","call_local")
 func set_angle(angle: float):
-	upper_angle_limit = angle
-	lower_angle_limit = angle
+	angle_limit = angle

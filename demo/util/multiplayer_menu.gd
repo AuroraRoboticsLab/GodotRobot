@@ -63,19 +63,17 @@ func host_game(console_host=false):
 
 @rpc("any_peer")
 func send_player_info(id, username):
-	if not GameManager.players.has(id):
+	if not GameManager.get_players().has(id):
 		GameManager.new_player_info.emit(id, username)
-		GameManager.players[id] = {
-			"username": username
-		}
-		%AlertLabel.text = str(GameManager.players[id].username) + " has connected."
+		GameManager.add_player(id, username)
+		%AlertLabel.text = GameManager.get_player_username(id) + " has connected."
 	if multiplayer.is_server():
-		for pid in GameManager.players:
+		for pid in GameManager.get_player_ids():
 			if pid != id:
-				send_player_info.rpc(pid, GameManager.players[pid].username)
+				send_player_info.rpc(pid, GameManager.get_player_username(pid))
 			else:
 				# Notify the new player of all existing players
-				for existing_id in GameManager.players:
+				for existing_id in GameManager.get_players():
 					if existing_id != id:
 						send_player_info.rpc(id, username)
 	update_num_players()
@@ -95,7 +93,7 @@ func player_connected(id):
 	
 func player_disconnected(id):
 	print("Player Disconnected (ID #", id, ")")
-	%AlertLabel.text = str(GameManager.players[id]["username"]) + " has disconnected."
+	%AlertLabel.text = str(GameManager.get_player_username(id)) + " has disconnected."
 	GameManager.remove_player(id)
 	var player_node = get_tree().root.get_node_or_null("main3D/" + str(id))
 	if player_node:

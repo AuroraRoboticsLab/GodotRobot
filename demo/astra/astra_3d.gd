@@ -23,8 +23,8 @@ const DRIVE_FORCE_MULT = 1200
 @onready var cam_load = preload("res://components/movable_camera_3d.tscn")
 @onready var cam_scene = null
 
-var sync_pos = Vector3.ZERO
-var sync_rot = Quaternion.IDENTITY
+#var sync_pos = Vector3.ZERO
+#var sync_rot = Quaternion.IDENTITY
 
 var can_input: bool = true
 
@@ -40,6 +40,7 @@ func _ready():
 	add_to_group("connectable")
 	add_to_group("player")
 	
+	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 	
 	center_of_mass = $CenterOfMass.position
@@ -58,16 +59,24 @@ func _ready():
 func toggle_inputs():
 	can_input = !can_input
 
-var time = 0
-func _physics_process(delta):
-	if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
-		global_position = global_position.lerp(sync_pos, 0.5)
-		set_quaternion(get_quaternion().slerp(sync_rot, 0.5))
+func _network_process(_delta):
+	if not $MultiplayerSynchronizer.is_multiplayer_authority():
+		var player_data = GameManager.get_player_data(str(name).to_int())
+		global_position = global_position.lerp(player_data.global_position, 0.5)
+		set_quaternion(get_quaternion().slerp(player_data.quaternion, 0.5))
+		charge_component.remaining_amp_hours = player_data.remaining_amp_hours
 		return
 	
-	time += delta
-	sync_pos = global_position
-	sync_rot = get_quaternion()
+	var new_player_data = {
+		"global_position": global_position,
+		"quaternion": get_quaternion(),
+		"remaining_amp_hours": charge_component.remaining_amp_hours,
+	}
+	GameManager.add_new_player_data(new_player_data)
+
+func _physics_process(delta):
+	if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
+		return
 	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float
@@ -113,9 +122,9 @@ func _physics_process(delta):
 	# Stalling logic
 	if total_torque > stall_torque:
 		if not stalling:
-			start_stall = time
+			start_stall = GameManager.time
 			stalling = true
-		if time - start_stall > 1.0:
+		if GameManager.time - start_stall > 1.0:
 			stuck_stalling = true
 	else:
 		stalling = false

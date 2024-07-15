@@ -16,15 +16,6 @@ size = Vector3(0.913705, 0.0486816, 0.272271)
 size = Vector3(0.768341, 0.0458984, 0.209961)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_b5vtu"]
-properties/0/path = NodePath(".:sync_pos")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:sync_rot")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("ChargeComponent:remaining_amp_hours")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [node name="Astra3D" type="VehicleBody3D"]
 collision_layer = 4
