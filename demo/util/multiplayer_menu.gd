@@ -114,7 +114,10 @@ func connected_to_server():
 	update_num_players()
 
 func connection_failed():
+	multiplayer.set_multiplayer_peer(null)
 	print("Connection failed.")
+	%ConnectLabel.text = ""
+	%AlertLabel.text = "Connection failed."
 
 @rpc("any_peer", "call_local")
 func on_host_disconnected():
@@ -171,11 +174,11 @@ func _on_join_button_pressed():
 	peer.create_client(address, port)
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
-	peer.set_bind_ip(address)
+	#peer.set_bind_ip(address)
 	
 	if host_exists(): # If server responded
 		# If game is ongoing, start locally.
-		%ConnectLabel.text = "Joined game. Waiting for game to start..."
+		%ConnectLabel.text = "Attempting to join game..."
 	else:
 		%AlertLabel.text = "Cannot join: Host not found."
 		multiplayer.set_multiplayer_peer(null)
@@ -186,8 +189,10 @@ func host_exists():
 	temp_peer.set_bind_ip(address)
 	var err = temp_peer.create_server(port, GameManager.max_players)
 	if err != OK:
+		print(err)
 		return true
 	else:
+		temp_peer.close()
 		return false
 
 func _on_start_button_pressed():

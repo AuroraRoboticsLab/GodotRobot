@@ -26,6 +26,8 @@ const DRIVE_FORCE_MULT = 1200
 var sync_pos = Vector3.ZERO
 var sync_rot = Quaternion.IDENTITY
 
+var can_input: bool = true
+
 var nametag_text: String = "unnamed robot":
 	get:
 		return $Nametag.text
@@ -37,6 +39,8 @@ func _ready():
 	add_to_group("chargeable")
 	add_to_group("connectable")
 	add_to_group("player")
+	
+	GameManager.toggle_inputs.connect(toggle_inputs)
 	
 	center_of_mass = $CenterOfMass.position
 	
@@ -50,6 +54,9 @@ func _ready():
 		cam_scene = cam_load.instantiate()
 		add_child(cam_scene)
 		$Nametag.visible = false
+
+func toggle_inputs():
+	can_input = !can_input
 
 var time = 0
 func _physics_process(delta):
@@ -72,11 +79,11 @@ func _physics_process(delta):
 	const move_amp = 15.0 # How quickly does move force fall off with speed?
 	var movement_speed = linear_velocity.length()
 	
-	engine_force_multiplier = 1.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
+	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if Input.is_action_pressed("shift"):
-		engine_force_multiplier = sqrt(abs(movement_speed))/1.5
+	if Input.is_action_pressed("shift") and can_input:
+		engine_force_multiplier = sqrt(abs(movement_speed))/1.5 + 2
 	
 	const max_turn_force = 15.0 # Starting (and max) turn force
 	const turn_amp = 8.0 # How quickly does turn force fall off with speed?
@@ -84,13 +91,11 @@ func _physics_process(delta):
 	steering_force_multiplier = 1.0 / ((turn_amp*rotation_speed**2) + (1.0/max_turn_force))
 
 	# Calculate drive and steer forces.
-	var drive_force = Input.get_axis("forward", "backward") * DRIVE_FORCE_MULT * delta * engine_force_multiplier
-	var steer_force = Input.get_axis("right", "left") * DRIVE_FORCE_MULT * delta * steering_force_multiplier
-	
-	# If we have no battery, we can't apply any force!
-	if charge_component.is_dead:
-		steer_force = 0
-		drive_force = 0
+	var drive_force = 0
+	var steer_force = 0
+	if can_input and not charge_component.is_dead:
+		drive_force = Input.get_axis("forward", "backward") * DRIVE_FORCE_MULT * delta * engine_force_multiplier
+		steer_force = Input.get_axis("right", "left") * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 		
 	left_front_wheel.engine_force  = drive_force + steer_force
 	left_back_wheel.engine_force = drive_force + steer_force
@@ -124,7 +129,7 @@ func _physics_process(delta):
 	charge_component.change_charge(-power_spent * delta)
 	
 	# Fly away when pressing space
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and can_input:
 		linear_velocity = Vector3.ZERO
 		global_position += Vector3(0, tp_height, 0)
 

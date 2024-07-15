@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=12 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="8_k1a37"]
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="9_amj3f"]
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="10_crrbn"]
-[ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="11_rpihp"]
 
 [node name="main3D" type="Node3D"]
 script = ExtResource("1_dv7pc")
@@ -60,9 +59,6 @@ transform = Transform3D(-0.614189, 0, -0.789159, 0, 1, 0, 0.789159, 0, -0.614189
 [node name="SawBladeAttachment" parent="." instance=ExtResource("10_crrbn")]
 transform = Transform3D(-0.958178, 0, 0.286173, 0, 1, 0, -0.286173, 0, -0.958178, -0.899827, 0.300519, 1.68005)
 
-[node name="MadsenCinderblock" parent="." instance=ExtResource("11_rpihp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.40922, 0.362341, 0.57346)
-
 [node name="PlayerSpawnpoints" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
@@ -77,5 +73,9 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2.3471
 
 [node name="3" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.58208, 2.0361, -2.03699)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://objects/madsen_cinderblock.tscn")
+spawn_path = NodePath("..")
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]

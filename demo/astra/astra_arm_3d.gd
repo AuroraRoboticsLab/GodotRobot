@@ -12,23 +12,30 @@ extends Node3D
 @onready var tool_coupler_component = $Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent
 @onready var is_dead: bool = false
 
+var can_input: bool = true
+
 func _ready():
 	if GameManager.using_multiplayer:
 		$MultiplayerSynchronizer.set_multiplayer_authority(str(get_parent().name).to_int())
+	
+	GameManager.toggle_inputs.connect(toggle_inputs)
+
+func toggle_inputs():
+	can_input = !can_input
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $"MultiplayerSynchronizer".is_multiplayer_authority():
 		return
 	
 	const MOTOR_MULT = 0.8
-	var arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 2
-	var bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT * 2
-	var tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
 	
-	if is_dead:
-		arm_force = 0
-		bollard_force = 0
-		tilt_force = 0
+	var arm_force = 0
+	var bollard_force = 0
+	var tilt_force = 0
+	if can_input and not is_dead:
+		arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 2
+		bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT * 2
+		tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
 	
 	arm_joint.move_motor(arm_force) if abs(arm_force) > 0 else arm_joint.stop_motor()
 	bollard_joint.move_motor(bollard_force) if abs(bollard_force) > 0 else bollard_joint.stop_motor()

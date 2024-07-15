@@ -35,12 +35,6 @@ func try_toggle_attach():
 	else:
 		print("Cannot attach or detach!")
 
-func _relocate_tool(node, to_node):
-	#print("Relocating tool!")
-	if to_node and node:
-		node.get_parent().remove_child(node)
-		to_node.add_child(node)
-
 # Attach to nearby attachment
 # Invariants:
 #   A tool attachment is nearby
@@ -65,7 +59,6 @@ func _detach():
 	curr_joint = null
 	
 	var curr_attach_trans = current_attachment.global_transform
-	_relocate_tool(current_attachment, get_tree().root.get_children()[0])
 	current_attachment.global_transform = curr_attach_trans
 	
 	current_attachment.connector.do_disconnect(tool_connector)
@@ -89,8 +82,6 @@ func _on_connector_component_just_connected(_area):
 	curr_joint.global_transform = global_transform
 	var grandparent = get_parent().get_parent()
 	grandparent.add_child(curr_joint)
-	
-	_relocate_tool(current_attachment, grandparent)
 	
 	current_attachment.global_transform = get_parent().global_transform
 	current_attachment.global_position = tool_connector.global_position

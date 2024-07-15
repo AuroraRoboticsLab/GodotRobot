@@ -1,7 +1,6 @@
 extends Node3D
 
 @onready var spawn = $DirtSpawner
-@onready var multi_menu_scene: PackedScene = load("res://util/multiplayer_menu.tscn")
 @export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
 var robot = null
 
@@ -9,7 +8,6 @@ func _ready():
 	if GameManager.using_multiplayer:
 		var sorted_players = GameManager.players.keys()
 		sorted_players.sort()
-		print(sorted_players)
 		
 		var index = 0
 		for pid in sorted_players:

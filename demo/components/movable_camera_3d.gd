@@ -18,13 +18,20 @@ var v_accel = 10
 @export var camera_distance: float = 2.5 # Distance of camera from rotation origin
 @onready var clipped_cam = $Horizontal/Vertical/ClippedCamera
 @onready var zoom_sens: float = 2.5 # Zoom sensitivity
+
+var can_input: bool = true
 	
 func _ready():
 	clipped_cam.position.z = camera_distance
 	clipped_cam.clip_length = camera_distance
+	
+	GameManager.toggle_inputs.connect(toggle_inputs)
+
+func toggle_inputs():
+	can_input = !can_input
 
 func _input(event):
-	if Input.is_action_pressed("right_click") and not cam_locked and event is InputEventMouseMotion:
+	if Input.is_action_pressed("right_click") and can_input and not cam_locked and event is InputEventMouseMotion:
 		camrot_h -= event.relative.x * h_sens
 		camrot_v -= event.relative.y * v_sens
 
@@ -34,11 +41,11 @@ func _physics_process(delta):
 	cam_h.rotation_degrees.y = lerp(cam_h.rotation_degrees.y, camrot_h, delta * h_accel)
 	cam_v.rotation_degrees.x = lerp(cam_v.rotation_degrees.x, camrot_v, delta * v_accel)
 	
-	if Input.is_action_just_pressed("scroll_up"):
+	if Input.is_action_just_pressed("scroll_up") and can_input:
 		camera_distance = clamp(lerp(camera_distance, camera_distance-0.5*zoom_sens, delta*h_accel), 0, 10)
 		clipped_cam.clip_length = camera_distance
 		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance
-	elif Input.is_action_just_pressed("scroll_down"):
+	elif Input.is_action_just_pressed("scroll_down") and can_input:
 		camera_distance = clamp(lerp(camera_distance, camera_distance+0.5*zoom_sens, delta*h_accel), 0, 10)
 		clipped_cam.clip_length = camera_distance
 		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance

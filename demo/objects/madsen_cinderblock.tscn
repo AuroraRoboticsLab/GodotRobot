@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bp0u4re76enrq"]
+[gd_scene load_steps=6 format=3 uid="uid://bp0u4re76enrq"]
 
 [ext_resource type="ArrayMesh" uid="uid://dujivb230gk1k" path="res://objects/madsen_cinderblock_collision.obj" id="1_htjlh"]
 
@@ -10,9 +10,12 @@ albedo_color = Color(0.12549, 0.12549, 0.12549, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_8ewls"]
 size = Vector3(0.8, 0.4, 0.4)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2imb4"]
+properties/0/path = NodePath(".:global_transform")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="MadsenCinderblock" type="RigidBody3D"]
-collision_layer = 2
-collision_mask = 15
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_l1u20")
 center_of_mass_mode = 1
@@ -25,3 +28,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_jwmnc")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0017589, -0.0263934, -0.000556558)
 shape = SubResource("BoxShape3D_8ewls")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2imb4")

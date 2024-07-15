@@ -51,18 +51,18 @@ func _on_settings_button_pressed():
 	$SettingsMenu.visible = !$SettingsMenu.visible
 
 func _on_vert_sens_slider_value_changed(value):
-	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensValLabel.text = str(value)
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensValLabel.text = str(value)
 	v_cam_sens = value
 
 func _on_horiz_sens_slider_value_changed(value):
-	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensValLabel.text = str(value)
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensValLabel.text = str(value)
 	h_cam_sens = value
 	
 func _on_tp_height_tick_button_value_changed(value):
 	tp_height = value
 
 func _on_zoom_sens_slider_value_changed(value):
-	$SettingsMenu/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensValLabel.text = str(value)
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensValLabel.text = str(value)
 	cam_zoom_sens = value
 
 func _on_leave_game_button_pressed():
@@ -75,3 +75,8 @@ func _on_leave_game_button_pressed():
 func _on_multi_menu_button_pressed():
 	get_parent().queue_free()
 	get_tree().root.add_child(multi_menu_scene.instantiate())
+
+func _on_keybind_menu_button_pressed():
+	if not $KeybindsMenu.visible:
+		GameManager.toggle_inputs.emit()
+		$KeybindsMenu.show()

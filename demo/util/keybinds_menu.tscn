@@ -1,0 +1,333 @@
+[gd_scene load_steps=2 format=3 uid="uid://n5ok5lg8v2ph"]
+
+[ext_resource type="Script" path="res://util/keybinds_menu.gd" id="1_we2yd"]
+
+[node name="KeybindsMenu" type="Control"]
+top_level = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_we2yd")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.01
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Keybind Menu"
+
+[node name="Control" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ExitButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"MediumButton"
+text = "Exit Keybind Menu"
+
+[node name="Control" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.02
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="KeybindGrid" type="GridContainer" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"DisplayGridContainer"
+columns = 2
+
+[node name="ArmUp" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Arm Up"
+
+[node name="Label1" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArmDown" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Arm Down"
+
+[node name="Label2" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BollardUp" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Bollard Up"
+
+[node name="Label3" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BollardDown" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Bollard Down"
+
+[node name="Label4" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TiltLeft" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Tilt Left"
+
+[node name="Label5" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TiltRight" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Tilt Right"
+
+[node name="Label6" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OpenHopper" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Open Hopper"
+
+[node name="Label7" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseHopper" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Close Hopper"
+
+[node name="Label8" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Forward" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Forward"
+
+[node name="Label9" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Backward" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Backward"
+
+[node name="Label10" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnLeft" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Turn Left"
+
+[node name="Label11" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnRight" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Turn Right"
+
+[node name="Label12" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action1" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Action 1 (tool grabbing)"
+
+[node name="Label13" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Action 2 (dirt spawning)"
+
+[node name="Label14" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action3" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Action 3 (teleporting up)"
+
+[node name="Label15" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action4" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumButton"
+text = "Action 4 (turbo racing mode)"
+
+[node name="Label16" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_type_variation = &"TitleLabel"
+text = "N/A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.02
+
+[node name="Control2" type="Control" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.01
+
+[node name="SetBindOverlay" type="PanelContainer" parent="PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/SetBindOverlay"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Press a key to bind"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -18,6 +18,7 @@ var using_multiplayer: bool = false
 
 signal new_player_info(id, username)
 signal self_disconnected
+signal toggle_inputs
 
 func end_game():
 	game_in_progress = false

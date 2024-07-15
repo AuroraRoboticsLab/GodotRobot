@@ -2,6 +2,8 @@
 
 [resource]
 DisplayGridContainer/base_type = &"GridContainer"
+DisplayGridContainer/constants/h_separation = 10
+DisplayGridContainer/constants/v_separation = 10
 MediumButton/base_type = &"Button"
 MediumButton/font_sizes/font_size = 64
 MediumLabel/base_type = &"Label"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bs7ecxqoqypo7"]
+[gd_scene load_steps=8 format=3 uid="uid://bs7ecxqoqypo7"]
 
 [ext_resource type="Script" path="res://astra/tool_attachments/fork/forks.gd" id="1_0reat"]
 [ext_resource type="ArrayMesh" uid="uid://buijme2swldor" path="res://astra/tool_attachments/fork/Forks v7.obj" id="1_t7yws"]
@@ -10,6 +10,11 @@ size = Vector3(0.0714722, 0.0192261, 0.396362)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1f2fd"]
 size = Vector3(0.0762329, 0.337219, 0.0259705)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_byet8"]
+properties/0/path = NodePath(".:global_transform")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="ForkAttachment" type="RigidBody3D"]
 collision_layer = 20
@@ -44,3 +49,6 @@ shape = SubResource("BoxShape3D_1f2fd")
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.199123, 0.0107727, -0.0182953)
 shape = SubResource("BoxShape3D_1f2fd")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_byet8")
