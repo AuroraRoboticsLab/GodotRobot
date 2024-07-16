@@ -29,11 +29,14 @@ func _network_process(_delta):
 	var joint_data = null
 	if not $MultiplayerSynchronizer.is_multiplayer_authority():
 		var player_data = GameManager.get_player_data(str(get_parent().name).to_int())
+		if not player_data:
+			return
 		
 		arm_data = player_data["arm_data"]
 		arm.transform = arm.transform.interpolate_with(arm_data[0], 0.5)
 		bollard.transform = bollard.transform.interpolate_with(arm_data[1], 0.5)
 		tilt.transform = tilt.transform.interpolate_with(arm_data[2], 0.5)
+		tool_coupler_component.current_attachment_path = arm_data[3]
 		
 		joint_data = player_data["joint_data"]
 		arm_joint.angle_limit = lerp(arm_joint.angle_limit, joint_data[0], 0.5)
@@ -41,7 +44,7 @@ func _network_process(_delta):
 		tilt_joint.angle_limit = lerp(tilt_joint.angle_limit, joint_data[2], 0.5)
 		return
 	
-	arm_data = [arm.transform, bollard.transform, tilt.transform]
+	arm_data = [arm.transform, bollard.transform, tilt.transform, tool_coupler_component.current_attachment_path]
 	joint_data = [arm_joint.angle_limit, bollard_joint.angle_limit, tilt_joint.angle_limit]
 	var new_player_data = {
 		"arm_data": arm_data,

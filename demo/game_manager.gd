@@ -1,6 +1,10 @@
 extends Node
 
-var sync_data = {"players":{}}
+var sync_data = {
+	"players":{},
+	"objects":{},
+	"static_bodies":{},
+}
 
 var max_players: int = 4:
 	set(value):
@@ -18,16 +22,19 @@ var is_console_host: bool = false
 var using_multiplayer: bool = false
 
 signal new_player_info(id, username)
+signal new_object(sender_id, body_path, body_name)
 signal self_disconnected
 signal toggle_inputs
 signal network_process(delta)
 
 var time: float = 0
-const network_process_interval = 0.1
+const network_process_interval = 0.04
 var last_network_process = 0
 var network_process_delta = time - last_network_process
 
-var new_player_data = {}
+var new_player_data = {} # Players
+var new_object_data = {} # Rigid bodies
+var new_static_data = {} # Static bodies
 
 func _ready():
 	# Connect the network process signal and function
@@ -48,20 +55,41 @@ func _network_process(_delta):
 	if new_player_data == {}:
 		return # No new data, no need to update!
 	
-	print(new_player_data["arm_data"])
+	# Only server sends object data.
+	if not multiplayer.is_server():
+		new_object_data = {} 
+	
+	var new_sync_data = {
+		"players": new_player_data, 
+		"objects": new_object_data,
+		"static_bodies": new_static_data
+	}
+	
 	if multiplayer.is_server():
-		GameManager.set_player_data(multiplayer.get_unique_id(), new_player_data)
+		GameManager.set_data(multiplayer.get_unique_id(), new_sync_data)
 	else:
-		GameManager.set_player_data.rpc_id(1, multiplayer.get_unique_id(), new_player_data)
+		GameManager.set_data.rpc_id(1, multiplayer.get_unique_id(), new_sync_data)
 	new_player_data = {}
+	new_object_data = {}
+	new_static_data = {}
 
 func add_new_player_data(new_data):
 	new_player_data.merge(new_data)
 
+func add_new_object_data(new_data):
+	new_object_data.merge(new_data)
+
+func add_new_static_data(new_data):
+	new_static_data.merge(new_data)
+
 # Do everything on our side to show the game has ended
 func end_game():
 	game_in_progress = false
-	sync_data = {"players":{}}
+	sync_data = {
+		"players":{},
+		"objects":{},
+		"static_bodies":{},
+	}
 
 # Return the dictionary of all players
 func get_players():
@@ -76,14 +104,15 @@ func get_num_players():
 
 # Add a new player to the players dictionary
 func add_player(id: int, username):
-	sync_data.players[id] = {
-		"username": username,
-		"global_position": Vector3.ZERO,
-		"quaternion": Quaternion.IDENTITY,
-		"remaining_amp_hours": 100.0,
-		"arm_data": [Transform3D.IDENTITY, Transform3D.IDENTITY, Transform3D.IDENTITY],
-		"joint_data": [0.0, 0.0, 0.0]
-	}
+	if not sync_data.players.has(id):
+		sync_data.players[id] = {
+			"username": username,
+			"global_position": Vector3.ZERO,
+			"quaternion": Quaternion.IDENTITY,
+			"remaining_amp_hours": 100.0,
+			"arm_data": [Transform3D.IDENTITY, Transform3D.IDENTITY, Transform3D.IDENTITY, ""],
+			"joint_data": [0.0, 0.0, 0.0]
+		}
 
 # Remove a player from the players dictionary
 func remove_player(id):
@@ -95,20 +124,69 @@ func get_player_username(id):
 
 # Returns a player's in-game data dictionary (which has position, rotation, etc.)
 func get_player_data(id):
-	return get_players()[id]
+	if get_players().has(id):
+		return get_players()[id]
+	else:
+		return null # Player must have disconnected.
 
 # Update player id's data with datapoints in new_data
 @rpc("any_peer")
-func set_player_data(id, new_data):
-	for datapoint in new_data.keys():
-		sync_data.players[id][datapoint] = new_data[datapoint]
+func set_data(sender_id, new_data):
+	# Handle player data
+	for datapoint in new_data.players.keys():
+		sync_data.players[sender_id][datapoint] = new_data.players[datapoint]
+	
+	# Handle instantiated object data
+	for object_name in new_data.objects.keys(): # Get object names
+		if sync_data.objects.has(object_name):
+			for datapoint in new_data.objects[object_name].keys(): 
+				sync_data.objects[object_name][datapoint] = new_data.objects[object_name][datapoint]
+		else: # If we don't have the object, make it!
+			new_object.emit(sender_id, new_data.objects[object_name]["body_path"], object_name)
+	
+	# Handle static bodies
+	for body_name in new_data.static_bodies.keys(): # Get each static body
+		for datapoint in new_data.static_bodies[body_name].keys(): # Get each property of static body
+			sync_data.static_bodies[body_name][datapoint] = new_data.static_bodies[body_name][datapoint]
 	
 	# The server must inform all other players of the updated information.
 	if multiplayer.is_server():
 		for pid in get_player_ids():
 			# Tell everyone but the player and ourselves
-			if pid != id and pid != 1:
-				set_player_data.rpc_id(pid, id, new_data)
+			if pid != sender_id and pid != 1:
+				set_data.rpc_id(pid, sender_id, new_data)
 
+func get_objects():
+	return sync_data.objects
 
+func get_object_names():
+	return get_objects().keys()
 
+func add_object(body, body_path):
+	if not sync_data.objects.has(body.name):
+		sync_data.objects[body.name] = {
+			"global_transform": Transform3D.IDENTITY,
+			"body_path": body_path,
+		}
+
+func remove_object(body):
+	sync_data.objects.erase(body.name)
+
+func get_object_data(body_name):
+	return get_objects()[body_name]
+
+func add_static_body(body):
+	if not sync_data.static_bodies.has(body.name):
+		sync_data.static_bodies[body.name] = {
+			"curr_mass": 0.0,
+			"remaining_amp_hours": 0.0,
+		}
+
+func get_static_bodies():
+	return sync_data.static_bodies
+
+func get_static_data(body_name):
+	if get_static_bodies().has(body_name):
+		return get_static_bodies()[body_name]
+	else:
+		return null

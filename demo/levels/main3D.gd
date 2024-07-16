@@ -3,6 +3,7 @@ extends Node3D
 @onready var spawn = $DirtSpawner
 @export var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
 var robot = null
+@onready var objects = $Objects
 
 func _ready():
 	if GameManager.using_multiplayer:
@@ -24,8 +25,18 @@ func _ready():
 			curr_player.global_transform = spawnpoint.global_transform
 			
 			idx += 1
-			
+		
+		# Add all objects that exist when loading in.
+		for body in objects.get_children():
+			GameManager.add_object(body, body.path)
+		
+		for body in get_children():
+			if body is StaticBody3D:
+				GameManager.add_static_body(body)
+		
+		GameManager.network_process.connect(_network_process)
 		GameManager.new_player_info.connect(_on_new_player_info)
+		GameManager.new_object.connect(_on_new_object)
 	else:
 		robot = robot_scene.instantiate()
 		robot.global_transform = $PlayerSpawnpoints.get_children()[0].global_transform
@@ -40,6 +51,49 @@ func _on_new_player_info(id, username):
 		curr_player.name = str(id)
 		add_child(curr_player)
 		curr_player.nametag_text = username
+	#if multiplayer.is_server():
+	#	for body_name in GameManager.get_objects():
+	#		var body_path = GameManager.get_object_data(body_name)["body_path"]
+	#		_on_new_object.rpc_id(id, 1, body_path, body_name)
+
+@rpc("any_peer")
+func _on_new_object(sender_id, body_path, body_name):
+	if not GameManager.get_objects().has(body_name):
+		var body = load(body_path).instantiate()
+		body.name = body_name
+		GameManager.add_object(body, body_path)
+		objects.add_child(body)
+	if multiplayer.is_server():
+		for pid in GameManager.get_player_ids():
+			if pid != sender_id and pid != 1:
+				_on_new_object.rpc_id(pid, sender_id, body_path, body_name)
+	else:
+		_check_for_server_object.rpc_id(1, sender_id, body_path, body_name)
+
+@rpc("any_peer")
+func _check_for_server_object(sender_id, body_path, body_name):
+	if multiplayer.is_server() and not GameManager.get_objects().has(body_name):
+		_on_new_object(sender_id, body_path, body_name)
+
+func _network_process(_delta):
+	if not multiplayer.is_server():
+		# Sync objects according to host
+		var object_data = GameManager.get_objects()
+		for body_name in object_data:
+			var body = objects.get_node(body_name)
+			if body.is_in_group("attachment") and body.connector.connected:
+				continue
+			body.global_transform = object_data[body_name].global_transform
+		return
+	
+	var new_object_data = {}
+	for body in objects.get_children():
+		new_object_data[body.name] = {
+			"global_transform": body.global_transform,
+			"body_path": GameManager.get_object_data(body.name)["body_path"]
+		}
+	
+	GameManager.add_new_object_data(new_object_data)
 
 func _physics_process(_delta):
 	if GameManager.using_multiplayer:

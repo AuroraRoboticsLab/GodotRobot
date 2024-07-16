@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+const path = "res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn"
+
 @onready var connector = $ConnectorComponent
 @onready var attachment_type = "sawblade"
 

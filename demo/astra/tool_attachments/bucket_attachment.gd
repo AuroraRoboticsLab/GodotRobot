@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+const path = "res://astra/tool_attachments/bucket_attachment.tscn"
+
 @onready var connector = $ConnectorComponent
 @onready var attachment_type = "bucket"
 @onready var cutter = $CuttingEdge

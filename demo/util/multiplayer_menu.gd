@@ -31,6 +31,8 @@ func _ready():
 		port = arguments["port"].to_int()
 	if "address" in arguments:
 		address = arguments["address"]
+	if "maxplayers" in arguments:
+		GameManager.max_players = arguments["maxplayers"].to_int()
 	if "host" in arguments:
 		host_game(true)
 
@@ -92,7 +94,7 @@ func player_connected(id):
 	update_num_players()
 	
 func player_disconnected(id):
-	print("Player Disconnected (ID #", id, ")")
+	print("Player Disconnected (ID ", id, ")")
 	%AlertLabel.text = str(GameManager.get_player_username(id)) + " has disconnected."
 	GameManager.remove_player(id)
 	var player_node = get_tree().root.get_node_or_null("main3D/" + str(id))

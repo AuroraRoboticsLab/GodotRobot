@@ -3,6 +3,8 @@ extends Node3D
 # Wrapper around connector component strictly for tool coupling logic.
 # Expects to be the child of a RigidBody3D
 
+const path = "res://objects/madsen_cinderblock.tscn"
+
 @onready var tool_connector = $ConnectorComponent
 @onready var current_attachment = null:
 	get:
@@ -43,6 +45,8 @@ func try_toggle_attach():
 func _attach():
 	if not current_attachment and current_attachment_path != "":
 		current_attachment = get_node(NodePath(current_attachment_path))
+	if not current_attachment:
+		return
 	
 	# Connect connector components
 	current_attachment.connector.do_connect(tool_connector)

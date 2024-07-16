@@ -1,24 +1,46 @@
 extends StaticBody3D
 
 const dirtball_t = preload("res://terrain/dirtball.gd")
-const brick_t = preload("res://objects/madsen_cinderblock.tscn")
+const brick_path = "res://objects/madsen_cinderblock.tscn"
+const brick_t = preload(brick_path)
 const brick_mass = 10.0
 
 func _ready():
-	if GameManager.using_multiplayer:
-		$MultiplayerSynchronizer.set_multiplayer_authority(1)
+	add_to_group("fillable")
+	
+	GameManager.network_process.connect(_network_process)
+
+func _network_process(_delta):
+	if not multiplayer.is_server():
+		var static_data = GameManager.get_static_data(name)
+		if not static_data:
+			return
+		curr_mass = GameManager.get_static_data(name)["curr_mass"]
+		return
+	
+	var new_static_data = {}
+	new_static_data[name] = {
+		"curr_mass": curr_mass
+	}
+	
+	GameManager.add_new_static_data(new_static_data)
 
 @onready var curr_mass: float = 9.0:
 	set(value):
-		if value >= brick_mass and GameManager.using_multiplayer and $MultiplayerSynchronizer.is_multiplayer_authority():
+		if value >= brick_mass and GameManager.using_multiplayer and multiplayer.is_server():
 			value -= brick_mass
 			var new_brick = brick_t.instantiate()
 			new_brick.global_transform = $BrickSpawnpoint.global_transform
-			get_parent().add_child(new_brick, true)
+			get_parent().objects.add_child(new_brick, true)
+			GameManager.add_object(new_brick, brick_path)
+			GameManager.new_object.emit(multiplayer.get_unique_id(), brick_path, new_brick.name)
 		
 		var percent_string = str(round_to_dec(value/brick_mass, 2)*100) + "%"
 		$Label3D.text = str(round_to_dec(curr_mass, 2))+"/10 kg (" + percent_string + ")"
 		curr_mass = value
+
+func _physics_process(delta): # FOR TESTING; REMOVE ME
+	curr_mass += delta/4
 
 # Code from Godot forums
 func round_to_dec(num, digit):

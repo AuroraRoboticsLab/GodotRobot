@@ -12,6 +12,22 @@ extends StaticBody3D
 
 func _ready():
 	add_to_group("chargeable")
+	GameManager.network_process.connect(_network_process)
+
+func _network_process(_delta):
+	if not multiplayer.is_server():
+		var static_data = GameManager.get_static_data(name)
+		if not static_data:
+			return
+		charge_component.remaining_amp_hours = static_data["remaining_amp_hours"]
+		return
+	
+	var new_static_data = {}
+	new_static_data[name] = {
+		"remaining_amp_hours": charge_component.remaining_amp_hours
+	}
+	
+	GameManager.add_new_static_data(new_static_data)
 
 func _physics_process(delta):
 	# For battery-like shader level.

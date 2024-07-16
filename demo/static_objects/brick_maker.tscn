@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dlj1a0fxsprw1"]
+[gd_scene load_steps=11 format=3 uid="uid://dlj1a0fxsprw1"]
 
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="1_7hyol"]
 [ext_resource type="Script" path="res://static_objects/brick_maker.gd" id="1_a1uip"]
@@ -30,11 +30,6 @@ points = PackedVector3Array(0.25, 0.25, 0.05, 0.25, 0.25, -0.05, -0.25, 0.25, 0.
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1m6kg"]
 size = Vector3(0.5, 0.5, 0.9)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vfqy2"]
-properties/0/path = NodePath(".:curr_mass")
-properties/0/spawn = true
-properties/0/replication_mode = 2
 
 [node name="BrickMaker" type="StaticBody3D"]
 script = ExtResource("1_a1uip")
@@ -85,8 +80,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1.5)
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.507829, 0.904033, -0.000251412)
 text = "9/10 kg (90%)"
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_vfqy2")
 
 [connection signal="body_entered" from="HopperArea3D" to="." method="_on_hopper_area_3d_body_entered"]

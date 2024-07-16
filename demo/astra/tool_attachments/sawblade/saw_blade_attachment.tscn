@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bdndtt86s6py8"]
+[gd_scene load_steps=11 format=3 uid="uid://bdndtt86s6py8"]
 
 [ext_resource type="ArrayMesh" uid="uid://d05skolidq8ko" path="res://astra/tool_attachments/sawblade/SawBlade.obj" id="1_6qcj2"]
 [ext_resource type="Script" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.gd" id="1_j62vj"]
@@ -34,11 +34,6 @@ tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.1, 1, -0.558, 0, 0, 0.83)
 _data = {
 "spin_blade": SubResource("Animation_lwg3w")
 }
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wmx3v"]
-properties/0/path = NodePath(".:global_transform")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="SawBladeAttachment" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
@@ -80,6 +75,3 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 
 libraries = {
 "": SubResource("AnimationLibrary_u1fkv")
 }
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_wmx3v")

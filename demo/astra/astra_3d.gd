@@ -62,6 +62,8 @@ func toggle_inputs():
 func _network_process(_delta):
 	if not $MultiplayerSynchronizer.is_multiplayer_authority():
 		var player_data = GameManager.get_player_data(str(name).to_int())
+		if not player_data:
+			return
 		global_position = global_position.lerp(player_data.global_position, 0.5)
 		set_quaternion(get_quaternion().slerp(player_data.quaternion, 0.5))
 		charge_component.remaining_amp_hours = player_data.remaining_amp_hours
