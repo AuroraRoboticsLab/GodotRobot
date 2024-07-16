@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://br1qgvk1r7twe"]
+[gd_scene load_steps=3 format=3 uid="uid://br1qgvk1r7twe"]
 
 [ext_resource type="Script" path="res://util/multiplayer_menu.gd" id="1_qumoq"]
+[ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://graphics/leave_game_icon.png" id="2_7f71v"]
 
 [node name="MultiplayerMenu" type="Control"]
 layout_mode = 3
@@ -43,6 +44,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"MediumButton"
 text = "Start Local Game"
+
+[node name="LeaveGameButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.45
+focus_mode = 0
+icon = ExtResource("2_7f71v")
+expand_icon = true
 
 [node name="Control2" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer5"]
 layout_mode = 2
@@ -283,6 +292,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer5/LocalGameButton" to="." method="_on_local_game_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer5/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

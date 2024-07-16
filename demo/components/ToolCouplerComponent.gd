@@ -26,7 +26,10 @@ func _ready():
 func try_toggle_attach():
 	if can_attach and not tool_connector.connected and current_attachment:
 		if GameManager.using_multiplayer:
-			_attach.rpc()
+			if multiplayer.is_server():
+				_attach.rpc(1)
+			else:
+				_attach.rpc_id(1, multiplayer.get_unique_id())
 		else:
 			_attach()
 	elif tool_connector.connected and tool_connector.nearby_connector:
@@ -42,7 +45,19 @@ func try_toggle_attach():
 #   A tool attachment is nearby
 #   We are not already connected
 @rpc("any_peer", "call_local")
-func _attach():
+func _attach(sender_id=null):
+	if sender_id and sender_id != 1:
+		if can_attach and current_attachment and not current_attachment.connector.connected:
+			_attach.rpc(1)
+		elif current_attachment:
+			# Fixes when players leave while holding attachment
+			if not current_attachment.connector.nearby_connector:
+				current_attachment.connector.do_disconnect()
+				_attach.rpc(1)
+			return
+		else:
+			return
+			
 	if not current_attachment and current_attachment_path != "":
 		current_attachment = get_node(NodePath(current_attachment_path))
 	if not current_attachment:

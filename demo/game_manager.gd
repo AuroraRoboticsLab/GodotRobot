@@ -110,7 +110,7 @@ func add_player(id: int, username):
 			"global_position": Vector3.ZERO,
 			"quaternion": Quaternion.IDENTITY,
 			"remaining_amp_hours": 100.0,
-			"arm_data": [Transform3D.IDENTITY, Transform3D.IDENTITY, Transform3D.IDENTITY, ""],
+			"curr_attach_path": "",
 			"joint_data": [0.0, 0.0, 0.0]
 		}
 

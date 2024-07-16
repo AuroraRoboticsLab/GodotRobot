@@ -126,11 +126,15 @@ func on_host_disconnected():
 
 func on_self_disconnected():
 	print("Disconnected, returning to menu.")
-	leave_game("You have disconnected.")
+	if GameManager.using_multiplayer:
+		leave_game("You have disconnected.")
+	else:
+		leave_game("Left local game.")
 		
 func leave_game(message):
 	GameManager.end_game()
-	multiplayer.set_multiplayer_peer(null)  # Disconnect the peer
+	if GameManager.using_multiplayer:
+		multiplayer.set_multiplayer_peer(null)  # Disconnect the peer
 	update_num_players()
 	show_menu(message)
 	if scene:
@@ -214,4 +218,7 @@ func _on_local_game_button_pressed():
 	GameManager.using_multiplayer = false
 	scene = main_scene.instantiate()
 	get_tree().root.add_child(scene)
-	queue_free()
+	hide()
+
+func _on_leave_game_button_pressed():
+	get_tree().quit() # Exit program

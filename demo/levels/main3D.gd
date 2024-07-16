@@ -21,8 +21,12 @@ func _ready():
 			
 			curr_player.nametag_text = GameManager.get_player_username(pid)
 			
+			if curr_player.arm.tool_coupler_component.current_attachment_path:
+				curr_player.arm.tool_coupler_component.try_toggle_attach()
+			
 			var spawnpoint = get_node("PlayerSpawnpoints/"+str(idx%GameManager.num_spawns))
 			curr_player.global_transform = spawnpoint.global_transform
+			curr_player.spawn_trans = spawnpoint.global_transform
 			
 			idx += 1
 		
@@ -39,7 +43,9 @@ func _ready():
 		GameManager.new_object.connect(_on_new_object)
 	else:
 		robot = robot_scene.instantiate()
-		robot.global_transform = $PlayerSpawnpoints.get_children()[0].global_transform
+		var spawnpoint = $PlayerSpawnpoints.get_children()[0]
+		robot.global_transform = spawnpoint.global_transform
+		robot.spawn_trans = spawnpoint.global_transform
 		add_child(robot)
 
 @rpc("any_peer")
@@ -51,10 +57,6 @@ func _on_new_player_info(id, username):
 		curr_player.name = str(id)
 		add_child(curr_player)
 		curr_player.nametag_text = username
-	#if multiplayer.is_server():
-	#	for body_name in GameManager.get_objects():
-	#		var body_path = GameManager.get_object_data(body_name)["body_path"]
-	#		_on_new_object.rpc_id(id, 1, body_path, body_name)
 
 @rpc("any_peer")
 func _on_new_object(sender_id, body_path, body_name):
@@ -90,7 +92,7 @@ func _network_process(_delta):
 	for body in objects.get_children():
 		new_object_data[body.name] = {
 			"global_transform": body.global_transform,
-			"body_path": GameManager.get_object_data(body.name)["body_path"]
+			"body_path": GameManager.get_object_data(body.name)["body_path"],
 		}
 	
 	GameManager.add_new_object_data(new_object_data)

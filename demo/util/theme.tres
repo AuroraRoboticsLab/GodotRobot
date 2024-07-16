@@ -10,5 +10,7 @@ MediumLabel/base_type = &"Label"
 MediumLabel/font_sizes/font_size = 32
 MediumTextEdit/base_type = &"TextEdit"
 MediumTextEdit/font_sizes/font_size = 32
+SmallButton/base_type = &"Button"
+SmallButton/font_sizes/font_size = 32
 TitleLabel/base_type = &"Label"
 TitleLabel/font_sizes/font_size = 64

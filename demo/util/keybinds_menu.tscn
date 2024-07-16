@@ -12,7 +12,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_we2yd")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.313726, 0.313726, 0.313726, 1)
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,240 +79,240 @@ columns = 2
 
 [node name="ArmUp" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Arm Up"
 
 [node name="Label1" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ArmDown" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Arm Down"
 
 [node name="Label2" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BollardUp" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Bollard Up"
 
 [node name="Label3" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BollardDown" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Bollard Down"
 
 [node name="Label4" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TiltLeft" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Tilt Left"
 
 [node name="Label5" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TiltRight" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Tilt Right"
 
 [node name="Label6" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="OpenHopper" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Open Hopper"
 
 [node name="Label7" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CloseHopper" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Close Hopper"
 
 [node name="Label8" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Forward" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Forward"
 
 [node name="Label9" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Backward" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Backward"
 
 [node name="Label10" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TurnLeft" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Turn Left"
 
 [node name="Label11" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TurnRight" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Turn Right"
 
 [node name="Label12" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Action1" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Action 1 (tool grabbing)"
 
 [node name="Label13" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Action2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Action 2 (dirt spawning)"
 
 [node name="Label14" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Action3" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Action 3 (teleporting up)"
 
 [node name="Label15" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Action4" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Action 4 (turbo racing mode)"
 
 [node name="Label16" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 size_flags_vertical = 1
-theme_type_variation = &"TitleLabel"
+theme_type_variation = &"MediumLabel"
 text = "N/A"
 horizontal_alignment = 1
 vertical_alignment = 1

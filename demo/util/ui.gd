@@ -15,8 +15,6 @@ extends CanvasLayer
 @onready var dirtballs_in_bucket: int = 0
 @onready var dirtballs_in_hopper: int = 0
 
-@onready var multi_menu_scene: PackedScene = load("res://util/multiplayer_menu.tscn")
-
 # Code from Godot forums
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
@@ -68,15 +66,15 @@ func _on_zoom_sens_slider_value_changed(value):
 func _on_leave_game_button_pressed():
 	if GameManager.using_multiplayer:
 		multiplayer.multiplayer_peer.close()
-		GameManager.self_disconnected.emit()
-	else:
-		get_tree().quit() # Exit program
-
-func _on_multi_menu_button_pressed():
+	GameManager.self_disconnected.emit()
 	get_parent().queue_free()
-	get_tree().root.add_child(multi_menu_scene.instantiate())
 
 func _on_keybind_menu_button_pressed():
 	if not $KeybindsMenu.visible:
 		GameManager.toggle_inputs.emit()
 		$KeybindsMenu.show()
+
+func _on_respawn_button_pressed():
+	pass # Setting positions isn't working for some reason...
+	#print("Resetting to spawn")
+	#get_parent().robot.reset_to_spawn()

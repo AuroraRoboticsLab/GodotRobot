@@ -23,6 +23,8 @@ const DRIVE_FORCE_MULT = 1200
 @onready var cam_load = preload("res://components/movable_camera_3d.tscn")
 @onready var cam_scene = null
 
+var spawn_trans = null
+
 #var sync_pos = Vector3.ZERO
 #var sync_rot = Quaternion.IDENTITY
 

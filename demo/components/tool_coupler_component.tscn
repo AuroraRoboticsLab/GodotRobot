@@ -1,20 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://c26cseexjqmt4"]
+[gd_scene load_steps=3 format=3 uid="uid://c26cseexjqmt4"]
 
 [ext_resource type="Script" path="res://components/ToolCouplerComponent.gd" id="1_7d8h8"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_drkmn"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wlqee"]
-properties/0/path = NodePath(".:current_attachment_path")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="ToolCouplerComponent" type="Node3D"]
 script = ExtResource("1_7d8h8")
 
 [node name="ConnectorComponent" parent="." instance=ExtResource("2_drkmn")]
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_wlqee")
 
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="just_connected" from="ConnectorComponent" to="." method="_on_connector_component_just_connected"]

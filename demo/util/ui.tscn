@@ -173,6 +173,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 29.0
 
+[node name="Control3" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="TitleLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_type_variation = &"TitleLabel"
@@ -302,37 +306,49 @@ size_flags_vertical = 4
 value = 1.0
 step_size = 0.5
 
-[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 29.0
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.8
+theme_type_variation = &"TitleLabel"
+text = "Options"
 
-[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="KeybindMenuButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
-text = "Open Keybind Menu"
-
-[node name="Control4" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+[node name="Control6" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="MultiMenuButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+[node name="RespawnButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"MediumButton"
-text = "Exit to Multiplayer Menu"
+theme_type_variation = &"SmallButton"
+text = "Teleport to Spawn"
 
-[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer"]
+[node name="Control4" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="KeybindMenuButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SmallButton"
+text = "Open Keybind Menu"
+
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -351,5 +367,5 @@ visible = false
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
-[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
-[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer/MultiMenuButton" to="." method="_on_multi_menu_button_pressed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
