@@ -21,13 +21,21 @@ var actions = ["arm_up",
 			   "jump",
 			   "shift",
 			  ]
+var keyboard_buttons   = []
+var controller_buttons = []
 
 func _ready() -> void:
 	# Connect the button pressed signals
 	var keybind_grid_children = %KeybindGrid.get_children()
-	for idx in range(int(%KeybindGrid.get_child_count())/2):
-		var curr_button = keybind_grid_children[idx * 2]
-		curr_button.pressed.connect(_on_button_pressed.bind(curr_button, idx*2))
+	for idx in range((int(%KeybindGrid.get_child_count())-3)/3):
+		# Keyboard assign buttons
+		var curr_button_key = keybind_grid_children[idx*3+4]
+		keyboard_buttons.append(curr_button_key) # Add to list of keyboard buttons
+		curr_button_key.pressed.connect(_on_button_pressed.bind(curr_button_key, idx))
+		# Controller assign buttons
+		var curr_button_cont = keybind_grid_children[idx*3+5]
+		controller_buttons.append(curr_button_cont) # Add to list of controller buttons
+		curr_button_cont.pressed.connect(_on_button_pressed.bind(curr_button_cont, idx))
 	
 	_update_labels()
 	
@@ -41,46 +49,85 @@ func _input(event: InputEvent) -> void:
 	if not current_button or not visible:
 		return
 	
-	var curr_action = actions[int(current_idx)/2]
+	if event is InputEventMouse:
+		return
 	
-	if event is InputEventKey or event is InputEventMouseButton:
-		
-		# This part is for deleting duplicate assignments:
-		# Add all assigned keys to a dictionary
-		var all_ies : Dictionary = {}
-		for ia in InputMap.get_actions():
-			for iae in InputMap.action_get_events(ia):
-				all_ies[iae.as_text()] = ia
-		
-		# check if the new key is already in the dict.
-		# If yes, delete the old one.
-		if all_ies.keys().has(event.as_text()):
-			InputMap.action_erase_events(all_ies[event.as_text()])
-		
-		# This part is where the actual remapping occures:
-		# Erase the event in the Input map
-		InputMap.action_erase_events(curr_action)
-		# And assign the new event to it
-		InputMap.action_add_event(curr_action, event)
-		
-		# After a key is assigned, set current_button back to null
+	if event.as_text() == "Escape":
 		current_button = null
-		set_bind_panel.hide() # hide the info panel again
-		
-		_update_labels() # refresh the labels
+		set_bind_panel.hide()
+		return
+	
+	if current_button in keyboard_buttons and not event is InputEventKey:
+		return
+	if current_button in controller_buttons and not (event is InputEventJoypadButton or event is InputEventJoypadMotion):
+		return
+	
+	var curr_action = actions[current_idx]
+	# This part is for deleting duplicate assignments:
+	# Add all assigned keys to a dictionary
+	var all_input_events = {}
+	for input_action in InputMap.get_actions():
+		for input_action_event in InputMap.action_get_events(input_action):
+			all_input_events[input_action_event.as_text()] = input_action
+	
+	# check if the new key is already in the dict.
+	# If yes, delete the old one.
+	if all_input_events.keys().has(event.as_text()):
+		InputMap.action_erase_event(all_input_events[event.as_text()], event)
+	
+	# This part is where the actual remapping occurs:
+	# Erase the key event in the Input map
+	if current_button in keyboard_buttons and event is InputEventKey:
+		var curr_event = null
+		for set_event in InputMap.action_get_events(curr_action):
+			if set_event is InputEventKey:
+				curr_event = set_event
+				print("Event changed from: ", curr_event.as_text())
+		if curr_event:
+			InputMap.action_erase_event(curr_action, curr_event)
+		# Assign the new event to it
+		InputMap.action_add_event(curr_action, event)
+		print("to: ", event.as_text())
+	elif current_button in controller_buttons and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
+		var curr_event = null
+		for set_event in InputMap.action_get_events(curr_action):
+			if set_event is InputEventJoypadButton or event is InputEventJoypadMotion:
+				curr_event = set_event
+		if curr_event:
+			InputMap.action_erase_event(curr_action, curr_event)
+		# Assign the new event to it
+		InputMap.action_add_event(curr_action, event)
+	
+	current_button = null
+	set_bind_panel.hide()
+	_update_labels()
 		
 func _update_labels() -> void:
-	var keybind_grid_children = %KeybindGrid.get_children()
-	
-	for idx in range(int(%KeybindGrid.get_child_count())/2):
-		var button_idx = idx * 2
-		var bind : Array[InputEvent] = InputMap.action_get_events(actions[idx])
-		var label = keybind_grid_children[button_idx + 1]
-		if !bind.is_empty():
-			label.text = bind[0].as_text()
+	for idx in range(len(actions)):
+		var binds : Array[InputEvent] = InputMap.action_get_events(actions[idx])
+		
+		# Set keyboard button labels
+		var bind = null
+		for set_bind in binds:
+			if set_bind is InputEventKey:
+				bind = set_bind
+		if bind:
+			keyboard_buttons[idx].text = bind.as_text()
 		else:
-			label.text = ""
-
+			keyboard_buttons[idx].text = "Unbound"
+		
+		# Set controller button labels
+		bind = null
+		for set_bind in binds:
+			if set_bind is InputEventJoypadButton or set_bind is InputEventJoypadMotion:
+				bind = set_bind
+				#print("Set bind to ", bind.as_text(), "!")
+		if bind:
+			#print("Setting controller bind to ", bind.as_text())
+			controller_buttons[idx].text = bind.as_text()
+		else:
+			controller_buttons[idx].text = "Unbound"
+		
 func _on_exit_button_pressed():
 	GameManager.toggle_inputs.emit()
 	hide()

@@ -13,6 +13,8 @@ func _ready():
 		
 		var idx = 0
 		for pid in sorted_pids:
+			if pid == 1 and GameManager.is_console_host:
+				continue # We don't need a robot as a console host.
 			var curr_player = robot_scene.instantiate()
 			curr_player.name = str(pid)
 			add_child(curr_player)
@@ -32,7 +34,7 @@ func _ready():
 		
 		# Add all objects that exist when loading in.
 		for body in objects.get_children():
-			GameManager.add_object(body, body.path)
+			GameManager.add_object(body, body.path, body.global_transform)
 		
 		for body in get_children():
 			if body is StaticBody3D:

@@ -162,10 +162,10 @@ func get_objects():
 func get_object_names():
 	return get_objects().keys()
 
-func add_object(body, body_path):
+func add_object(body, body_path, trans=Transform3D.IDENTITY):
 	if not sync_data.objects.has(body.name):
 		sync_data.objects[body.name] = {
-			"global_transform": Transform3D.IDENTITY,
+			"global_transform": trans,
 			"body_path": body_path,
 		}
 
