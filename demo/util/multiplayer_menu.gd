@@ -36,6 +36,7 @@ func _ready():
 	if "maxplayers" in arguments:
 		GameManager.max_players = arguments["maxplayers"].to_int()
 	if "host" in arguments:
+		GameManager.using_multiplayer = true
 		host_game(true)
 
 
@@ -56,8 +57,7 @@ func host_game(console_host=false):
 	multiplayer.set_multiplayer_peer(peer)
 	if console_host:
 		print("Hosting game from console.")
-		GameManager.using_multiplayer = true
-		start_game()
+		start_game.rpc()
 	else:
 		%ConnectLabel.text = "Hosting game. Press start game to begin the game."
 		$PanelContainer/VBoxContainer/HBoxContainer/StartButton.disabled = false
@@ -88,7 +88,7 @@ func start_game():
 	if not GameManager.game_in_progress:
 		GameManager.game_in_progress = true
 		scene = main_scene.instantiate()
-		get_tree().root.add_child(scene)
+		get_tree().root.add_child.call_deferred(scene)
 		hide_menu()
 
 func player_connected(id):
@@ -196,7 +196,6 @@ func host_exists():
 	temp_peer.set_bind_ip(address)
 	var err = temp_peer.create_server(port, GameManager.max_players)
 	if err != OK:
-		print(err)
 		return true
 	else:
 		temp_peer.close()

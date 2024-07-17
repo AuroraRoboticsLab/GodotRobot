@@ -67,12 +67,16 @@ func _network_process(_delta):
 		if not player_data:
 			return
 		global_position = global_position.lerp(player_data.global_position, 0.5)
+		linear_velocity = linear_velocity.lerp(player_data.linear_velocity, 0.5)
+		angular_velocity = angular_velocity.lerp(player_data.angular_velocity, 0.5)
 		set_quaternion(get_quaternion().slerp(player_data.quaternion, 0.5))
 		charge_component.remaining_amp_hours = player_data.remaining_amp_hours
 		return
 	
 	var new_player_data = {
 		"global_position": global_position,
+		"linear_velocity": linear_velocity,
+		"angular_velocity": angular_velocity,
 		"quaternion": get_quaternion(),
 		"remaining_amp_hours": charge_component.remaining_amp_hours,
 	}

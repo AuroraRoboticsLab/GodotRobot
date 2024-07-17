@@ -6,6 +6,9 @@ var robot = null
 @onready var objects = $Objects
 
 func _ready():
+	GameManager.network_process.connect(_network_process)
+	GameManager.new_player_info.connect(_on_new_player_info)
+	GameManager.new_object.connect(_on_new_object)
 	if GameManager.using_multiplayer:
 		# Add all connected players to client
 		var sorted_pids = GameManager.get_player_ids()
@@ -37,10 +40,6 @@ func _ready():
 		for body in get_children():
 			if body is StaticBody3D:
 				GameManager.add_static_body(body)
-		
-		GameManager.network_process.connect(_network_process)
-		GameManager.new_player_info.connect(_on_new_player_info)
-		GameManager.new_object.connect(_on_new_object)
 	else:
 		robot = robot_scene.instantiate()
 		var spawnpoint = $PlayerSpawnpoints.get_children()[0]
@@ -87,7 +86,6 @@ func _network_process(_delta):
 				continue
 			body.global_transform = object_data[body_name].global_transform
 		return
-	
 	var new_object_data = {}
 	for body in objects.get_children():
 		new_object_data[body.name] = {

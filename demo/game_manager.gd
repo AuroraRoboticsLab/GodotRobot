@@ -52,23 +52,48 @@ func _process(delta):
 	
 
 func _network_process(_delta):
-	# Only server sends object data.
-	if not multiplayer.is_server():
-		new_object_data = {}
-	
 	var new_sync_data = {
 		"players": new_player_data, 
 		"objects": new_object_data,
 		"static_bodies": new_static_data
 	}
 	
-	if multiplayer.is_server():
-		GameManager.set_data(multiplayer.get_unique_id(), new_sync_data)
-	else:
-		GameManager.set_data.rpc_id(1, multiplayer.get_unique_id(), new_sync_data)
+	if game_in_progress:
+		if multiplayer.is_server():
+			set_data(multiplayer.get_unique_id(), new_sync_data)
+		else:
+			set_data.rpc_id(1, multiplayer.get_unique_id(), new_sync_data)
 	new_player_data = {}
 	new_object_data = {}
 	new_static_data = {}
+
+# Update player id's data with datapoints in new_data
+@rpc("any_peer")
+func set_data(sender_id, new_data):
+	# Handle player data
+	for datapoint in new_data.players.keys():
+		sync_data.players[sender_id][datapoint] = new_data.players[datapoint]
+	
+	# Handle instantiated object data
+	for object_name in new_data.objects.keys(): # Get object names
+		if sync_data.objects.has(object_name):
+			for datapoint in new_data.objects[object_name].keys(): 
+				sync_data.objects[object_name][datapoint] = new_data.objects[object_name][datapoint]
+		else: # If we don't have the object, make it!
+			new_object.emit(sender_id, new_data.objects[object_name]["body_path"], object_name)
+	
+	# Handle static bodies
+	for body_name in new_data.static_bodies.keys(): # Get each static body
+		if sync_data.static_bodies.has(body_name):# If we don't have the object, we must be loading in.
+			for datapoint in new_data.static_bodies[body_name].keys(): # Get each property of static body
+				sync_data.static_bodies[body_name][datapoint] = new_data.static_bodies[body_name][datapoint]
+	
+	# The server must inform all other players of the updated information.
+	if multiplayer.is_server():
+		for pid in get_player_ids():
+			# Tell everyone but the player and ourselves
+			if pid != sender_id and pid != 1:
+				set_data.rpc_id(pid, sender_id, new_data)
 
 func add_new_player_data(new_data):
 	new_player_data.merge(new_data)
@@ -105,6 +130,8 @@ func add_player(id: int, username):
 		sync_data.players[id] = {
 			"username": username,
 			"global_position": Vector3.ZERO,
+			"linear_velocity": Vector3.ZERO,
+			"angular_velocity": Vector3.ZERO,
 			"quaternion": Quaternion.IDENTITY,
 			"remaining_amp_hours": 100.0,
 			"curr_attach_path": "",
@@ -128,33 +155,6 @@ func get_player_data(id):
 		return get_players()[id]
 	else:
 		return null # Player must have disconnected.
-
-# Update player id's data with datapoints in new_data
-@rpc("any_peer")
-func set_data(sender_id, new_data):
-	# Handle player data
-	for datapoint in new_data.players.keys():
-		sync_data.players[sender_id][datapoint] = new_data.players[datapoint]
-	
-	# Handle instantiated object data
-	for object_name in new_data.objects.keys(): # Get object names
-		if sync_data.objects.has(object_name):
-			for datapoint in new_data.objects[object_name].keys(): 
-				sync_data.objects[object_name][datapoint] = new_data.objects[object_name][datapoint]
-		else: # If we don't have the object, make it!
-			new_object.emit(sender_id, new_data.objects[object_name]["body_path"], object_name)
-	
-	# Handle static bodies
-	for body_name in new_data.static_bodies.keys(): # Get each static body
-		for datapoint in new_data.static_bodies[body_name].keys(): # Get each property of static body
-			sync_data.static_bodies[body_name][datapoint] = new_data.static_bodies[body_name][datapoint]
-	
-	# The server must inform all other players of the updated information.
-	if multiplayer.is_server():
-		for pid in get_player_ids():
-			# Tell everyone but the player and ourselves
-			if pid != sender_id and pid != 1:
-				set_data.rpc_id(pid, sender_id, new_data)
 
 func get_objects():
 	return sync_data.objects
