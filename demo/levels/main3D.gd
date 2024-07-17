@@ -13,8 +13,6 @@ func _ready():
 		
 		var idx = 0
 		for pid in sorted_pids:
-			if pid == 1 and GameManager.is_console_host:
-				continue # We don't need a robot as a console host.
 			var curr_player = robot_scene.instantiate()
 			curr_player.name = str(pid)
 			add_child(curr_player)
@@ -96,7 +94,6 @@ func _network_process(_delta):
 			"global_transform": body.global_transform,
 			"body_path": GameManager.get_object_data(body.name)["body_path"],
 		}
-	
 	GameManager.add_new_object_data(new_object_data)
 
 func _physics_process(_delta):

@@ -52,12 +52,9 @@ func _process(delta):
 	
 
 func _network_process(_delta):
-	if new_player_data == {}:
-		return # No new data, no need to update!
-	
 	# Only server sends object data.
 	if not multiplayer.is_server():
-		new_object_data = {} 
+		new_object_data = {}
 	
 	var new_sync_data = {
 		"players": new_player_data, 
@@ -120,7 +117,10 @@ func remove_player(id):
 
 # Return the username of a given player
 func get_player_username(id):
-	return get_players()[id].username
+	if get_players().has(id):
+		return get_players()[id].username
+	else:
+		return null
 
 # Returns a player's in-game data dictionary (which has position, rotation, etc.)
 func get_player_data(id):

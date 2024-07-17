@@ -9,6 +9,8 @@ var peer: ENetMultiplayerPeer = null
 var scene: Node = null
 @onready var main_scene: PackedScene = load("res://levels/main3D.tscn")
 
+var debugging_console_host = false
+
 func _ready():
 	multiplayer.set_multiplayer_peer(null)
 	multiplayer.peer_connected.connect(player_connected)
@@ -38,6 +40,7 @@ func _ready():
 
 
 func host_game(console_host=false):
+	GameManager.is_console_host = console_host
 	if host_exists():
 		print("Host already exists!")
 		return
@@ -54,7 +57,6 @@ func host_game(console_host=false):
 	if console_host:
 		print("Hosting game from console.")
 		GameManager.using_multiplayer = true
-		GameManager.is_console_host = true
 		start_game()
 	else:
 		%ConnectLabel.text = "Hosting game. Press start game to begin the game."
@@ -159,8 +161,9 @@ func _on_host_button_pressed():
 		%AlertLabel.text = "Cannot host: Already connected to a peer."
 		return
 	if not host_exists():
-		host_game()
-		send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text)
+		host_game(debugging_console_host)
+		if not debugging_console_host:
+			send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text)
 	else:
 		print("Host already exists.")
 		%AlertLabel.text = "Cannot host: Host already exists."
