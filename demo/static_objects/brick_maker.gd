@@ -44,9 +44,6 @@ func _network_process(_delta):
 		$Label3D.text = str(round_to_dec(curr_mass, 2))+"/10 kg (" + percent_string + ")"
 		curr_mass = value
 
-func _physics_process(delta): # FOR TESTING; REMOVE ME
-	curr_mass += delta/4
-
 # Code from Godot forums
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
