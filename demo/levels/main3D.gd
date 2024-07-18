@@ -50,7 +50,8 @@ func _ready():
 @rpc("any_peer")
 func _on_new_player_info(id, username):
 	if not GameManager.get_players().has(id):
-		GameManager.add_player(id, username)
+		var spawn_pos = $PlayerSpawnpoints.get_children()[0].global_position
+		GameManager.add_player(id, username, spawn_pos)
 		print("New player joined: ", username)
 		var curr_player = robot_scene.instantiate()
 		curr_player.name = str(id)
@@ -82,6 +83,8 @@ func _network_process(_delta):
 		var object_data = GameManager.get_objects()
 		for body_name in object_data:
 			var body = objects.get_node(body_name)
+			body.linear_velocity = object_data[body_name].linear_velocity
+			body.angular_velocity = object_data[body_name].angular_velocity
 			if body is ToolAttachment and body.connector.connected:
 				continue
 			body.global_transform = object_data[body_name].global_transform
@@ -90,6 +93,8 @@ func _network_process(_delta):
 	for body in objects.get_children():
 		new_object_data[body.name] = {
 			"global_transform": body.global_transform,
+			"linear_velocity": body.linear_velocity,
+			"angular_velocity": body.angular_velocity,
 			"body_path": GameManager.get_object_data(body.name)["body_path"],
 		}
 	GameManager.add_new_object_data(new_object_data)

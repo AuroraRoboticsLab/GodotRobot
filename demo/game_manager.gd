@@ -125,11 +125,11 @@ func get_num_players():
 	return len(get_players())
 
 # Add a new player to the players dictionary
-func add_player(id: int, username):
+func add_player(id: int, username, pos=Vector3.ZERO):
 	if not sync_data.players.has(id):
 		sync_data.players[id] = {
 			"username": username,
-			"global_position": Vector3.ZERO,
+			"global_position": pos,
 			"linear_velocity": Vector3.ZERO,
 			"angular_velocity": Vector3.ZERO,
 			"quaternion": Quaternion.IDENTITY,
@@ -166,6 +166,8 @@ func add_object(body, body_path, trans=Transform3D.IDENTITY):
 	if not sync_data.objects.has(body.name):
 		sync_data.objects[body.name] = {
 			"global_transform": trans,
+			"linear_velocity": Vector3.ZERO,
+			"angular_velocity": Vector3.ZERO,
 			"body_path": body_path,
 		}
 
