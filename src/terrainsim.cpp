@@ -221,7 +221,7 @@ void TerrainSim::add_static_collider(void)
 
 
 /// Fill our initial heights centered on this location
-void TerrainSim::fill_heights(float cx, float cz,float cliffR)
+/*void TerrainSim::fill_heights(float cx, float cz,float cliffR)
 {
     for (int z=0;z<H;z++)
         for (int x=0;x<W;x++)
@@ -232,12 +232,50 @@ void TerrainSim::fill_heights(float cx, float cz,float cliffR)
             //float r = sqrt((x-cx)*(x-cx)+(z-cz)*(z-cz));
             //if (r<cliffR) h=1.5; // rounded cliff 
             
-            if (x==128 && z == 128) h=2.5; // demonstration spike, for dirtball calibration
+            
+
+            if (x==64 && z == 64) h=2.5; // demonstration spike, for dirtball calibration
             if (x>=180) h=0.25; // demonstration ridge
             
             height_floats[i] = h;
             height_next[i] = h;
         }
+    publish();
+}*/
+void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
+    float crater_radius = 126.0f;
+    float rim_height = 43.0f;
+    float crater_depth = 5.0f;
+    float sigma = crater_radius / 5.0f;
+    int center_x = 128;
+    int center_z = 128;
+    const float METERS_PER_UNIT = 25.25f / 256.0f;
+
+    for (int z = 0; z < H; ++z) {
+        for (int x = 0; x < W; ++x) {
+            int i = z * W + x;
+            float dx = x - center_x;
+            float dz = z - center_z;
+            float r = std::sqrt(dx * dx + dz * dz);
+            float h = 0.0f;
+
+            // Gaussian function for the rim
+            float rim_height_value = rim_height * std::exp(-((r - crater_radius) * (r - crater_radius)) / (2 * sigma * sigma));
+            h = rim_height_value*METERS_PER_UNIT + ((x+z/2)%4)*0.0025f;
+            // Demonstration ridge
+            if (x>=180 and h <=0.5f)
+                h = 0.5f;
+            // Flat ground outside of crater
+            if (r>=crater_radius+5.0f && h<=rim_height*METERS_PER_UNIT-0.5f)
+                h = rim_height*METERS_PER_UNIT-0.5f;
+            // demonstration spike, for dirtball calibration
+            if (x==90 && z == 90) h=2.5;
+
+            height_floats[i] = h;
+            height_next[i] = h;
+        }
+    }
+
     publish();
 }
 
@@ -272,7 +310,7 @@ void TerrainSim::animate_physics(double dt)
     float big = 1000.0; // limit height
     
     // Slope stability threshold
-    float angle_of_repose = 50.0f; // degrees up from horizontal (high for jagged moon dust)
+    float angle_of_repose = 60.0f; // degrees up from horizontal (high for jagged moon dust)
     float stability_Y = cos(angle_of_repose * M_PI/180.0f); // for dot product
     
     for (int z=1;z<H-1;z++)

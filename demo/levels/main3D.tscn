@@ -16,7 +16,7 @@
 script = ExtResource("1_dv7pc")
 
 [node name="Terrain" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.8352, 0, -9.21729)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.63, 0, -12.63)
 script = ExtResource("2_2x3be")
 
 [node name="TerrainSim" type="TerrainSim" parent="Terrain"]
@@ -31,10 +31,10 @@ light_energy = 3.439
 shadow_enabled = true
 
 [node name="ChargeStation" parent="." instance=ExtResource("3_47s0a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.44, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.44, -2.10583)
 
 [node name="BrickMaker" parent="." instance=ExtResource("4_vp1iq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2.89417)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("4_wv3d2")

@@ -4,8 +4,6 @@ class_name ToolCoupler
 # Wrapper around connector component strictly for tool coupling logic.
 # Expects to be the child of a RigidBody3D
 
-const path = "res://objects/madsen_cinderblock.tscn"
-
 @onready var current_attachment = null:
 	get:
 		return current_attachment
