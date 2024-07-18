@@ -19,9 +19,6 @@ var current_attachment_path: String = ""
 @onready var can_attach: bool = false
 @onready var curr_joint: Generic6DOFJoint3D = null
 
-func _ready():
-	add_to_group("tool_coupler")
-
 # Attempt to attach or detach
 func try_toggle_attach():
 	if can_attach and not tool_connector.connected and current_attachment:
@@ -91,7 +88,7 @@ func _detach():
 func _on_connector_component_can_connect(area):
 	#print("can connect!")
 	var body = area.parent
-	if body.is_in_group("attachment"): # Body is an attachment
+	if body is ToolAttachment: # Body is an attachment
 		current_attachment = body
 		can_attach = true
 		

@@ -1,4 +1,5 @@
 extends Area3D
+class_name Connector
 
 # If another connector is nearby, we can attempt
 # to connect to it. Let the parent know!
@@ -20,13 +21,10 @@ signal just_disconnected(area)
 # Are we connected, or not?
 @onready var connected: bool = false
 @export var enabled: bool = true
+@export var charge_component: ChargeComponent = null
 
 # Body connected to this connector.
 @onready var parent = get_parent()
-
-func _ready():
-	# So connectors can identify other connectors.
-	add_to_group("connector")
 
 # We have been told to connect.
 func do_connect(connect_to=nearby_connector):
@@ -66,7 +64,7 @@ func _on_area_entered(area):
 		return
 	
 	# We aren't already near a connector, and the area is a connector.
-	if not nearby_connector and area.is_in_group("connector"):
+	if not nearby_connector and area is Connector:
 		if not area.enabled:
 			return
 		# We are now near a connector.

@@ -13,9 +13,6 @@ var right_back_wheel   : VehicleWheel3D
 @onready var charge_component = $ChargeComponent
 
 func _ready():
-	# Identify which components we have
-	add_to_group("chargeable")
-	
 	left_front_wheel   = $VehicleWheel3D4
 	left_middle_wheel  = $VehicleWheel3D5
 	left_back_wheel    = $VehicleWheel3D6

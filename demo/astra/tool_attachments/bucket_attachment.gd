@@ -1,9 +1,6 @@
-extends RigidBody3D
+extends ToolAttachment
+class_name Bucket
 
-const path = "res://astra/tool_attachments/bucket_attachment.tscn"
-
-@onready var connector = $ConnectorComponent
-@onready var attachment_type = "bucket"
 @onready var cutter = $CuttingEdge
 @onready var in_bucket = $InsideBucket
 
@@ -11,9 +8,6 @@ const path = "res://astra/tool_attachments/bucket_attachment.tscn"
 @export var terrain : Node3D # terrain to excavate with our cutting edge
 var rigid = self  # rigid body to grab velocity & forces
 var pushback_spread = 0.0 # spreads pushback over several physics frames
-
-func _ready():
-	add_to_group("attachment")
 
 # Excavate along cutting edge
 func _physics_process(_delta):

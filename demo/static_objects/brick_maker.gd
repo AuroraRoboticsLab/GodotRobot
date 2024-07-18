@@ -6,8 +6,6 @@ const brick_t = preload(brick_path)
 const brick_mass = 10.0
 
 func _ready():
-	add_to_group("fillable")
-	
 	GameManager.network_process.connect(_network_process)
 
 func _network_process(_delta):

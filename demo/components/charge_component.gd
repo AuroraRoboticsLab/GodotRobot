@@ -1,4 +1,5 @@
 extends Node3D
+class_name ChargeComponent
 
 var charge_level: float = 100.0 # Battery %
 var is_dead: bool = false # Vehicle is out of battery
@@ -9,7 +10,7 @@ var voltage: float = 12.0
 @export var remaining_amp_hours: float = 100.0
 @export var max_draw_rate: float = 100.0
 @export var max_charge_rate: float = 50.0
-	
+
 func _physics_process(_delta):
 	charge_level = (remaining_amp_hours/amp_hours) * 100
 

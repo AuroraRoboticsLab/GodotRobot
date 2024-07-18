@@ -25,9 +25,6 @@ const DRIVE_FORCE_MULT = 1200
 
 var spawn_trans = null
 
-#var sync_pos = Vector3.ZERO
-#var sync_rot = Quaternion.IDENTITY
-
 var can_input: bool = true
 
 var nametag_text: String = "unnamed robot":
@@ -37,11 +34,6 @@ var nametag_text: String = "unnamed robot":
 		$Nametag.text = value
 
 func _ready():
-	# Identify which components we have
-	add_to_group("chargeable")
-	add_to_group("connectable")
-	add_to_group("player")
-	
 	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 	
@@ -153,7 +145,7 @@ func _physics_process(delta):
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):
 	# For now, automatically connect to any chargeable connector.
-	if area.is_in_group("connector") and area.parent.is_in_group("chargeable"):
+	if area is Connector and area.charge_component:
 		area.do_connect(rear_connector)
 		rear_connector.do_connect()
 

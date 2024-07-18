@@ -82,7 +82,7 @@ func _network_process(_delta):
 		var object_data = GameManager.get_objects()
 		for body_name in object_data:
 			var body = objects.get_node(body_name)
-			if body.is_in_group("attachment") and body.connector.connected:
+			if body is ToolAttachment and body.connector.connected:
 				continue
 			body.global_transform = object_data[body_name].global_transform
 		return
@@ -113,7 +113,7 @@ func _physics_process(_delta):
 	robot.cam_scene.zoom_sens = $UI.cam_zoom_sens
 	robot.tp_height = $UI.tp_height
 	if robot.arm.tool_coupler_component.current_attachment:
-		if robot.arm.tool_coupler_component.current_attachment.attachment_type == "bucket":
+		if robot.arm.tool_coupler_component.current_attachment is Bucket:
 			$UI.dirtballs_in_bucket = robot.arm.tool_coupler_component.current_attachment.in_bucket.num_dirtballs
 	else:
 		$UI.dirtballs_in_bucket = 0
