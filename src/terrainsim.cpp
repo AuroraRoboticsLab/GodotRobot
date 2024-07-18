@@ -247,15 +247,13 @@ void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
     float rim_height = 43.0f;
     float crater_depth = 5.0f;
     float sigma = crater_radius / 5.0f;
-    int center_x = 128;
-    int center_z = 128;
     const float METERS_PER_UNIT = 25.25f / 256.0f;
 
     for (int z = 0; z < H; ++z) {
         for (int x = 0; x < W; ++x) {
             int i = z * W + x;
-            float dx = x - center_x;
-            float dz = z - center_z;
+            float dx = x - cx;
+            float dz = z - cz;
             float r = std::sqrt(dx * dx + dz * dz);
             float h = 0.0f;
 

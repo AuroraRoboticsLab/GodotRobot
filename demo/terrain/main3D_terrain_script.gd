@@ -13,7 +13,7 @@ var ball: PackedScene = preload("res://terrain/dirtball.tscn")
 func _ready():
 	terrain.add_mesh(shader)
 	terrain.add_static_collider();
-	terrain.fill_heights(100,100,40);
+	terrain.fill_heights(128,128,40);
 
 func _physics_process(_delta):
 	# Despawn oldest dirtballs (that have fallen through terrain)
