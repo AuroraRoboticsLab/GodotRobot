@@ -1,11 +1,11 @@
-extends Node3D
+extends Connector
+class_name ToolCoupler
 # ToolCouplerComponent
 # Wrapper around connector component strictly for tool coupling logic.
 # Expects to be the child of a RigidBody3D
 
 const path = "res://objects/madsen_cinderblock.tscn"
 
-@onready var tool_connector = $ConnectorComponent
 @onready var current_attachment = null:
 	get:
 		return current_attachment
@@ -21,7 +21,7 @@ var current_attachment_path: String = ""
 
 # Attempt to attach or detach
 func try_toggle_attach():
-	if can_attach and not tool_connector.connected and current_attachment:
+	if can_attach and not connected and current_attachment:
 		if GameManager.using_multiplayer:
 			if multiplayer.is_server():
 				_attach.rpc(1)
@@ -29,7 +29,7 @@ func try_toggle_attach():
 				_attach.rpc_id(1, multiplayer.get_unique_id())
 		else:
 			_attach()
-	elif tool_connector.connected and tool_connector.nearby_connector:
+	elif connected and nearby_connector:
 		if GameManager.using_multiplayer:
 			_detach.rpc()
 		else:
@@ -61,8 +61,8 @@ func _attach(sender_id=null):
 		return
 	
 	# Connect connector components
-	current_attachment.connector.do_connect(tool_connector)
-	tool_connector.do_connect(current_attachment.connector)
+	current_attachment.connector.do_connect(self)
+	do_connect(current_attachment.connector)
 
 # Detach from current attachment
 # Invariant: We are currently connected to an attachment
@@ -77,8 +77,8 @@ func _detach():
 	var curr_attach_trans = current_attachment.global_transform
 	current_attachment.global_transform = curr_attach_trans
 	
-	current_attachment.connector.do_disconnect(tool_connector)
-	tool_connector.do_disconnect(current_attachment.connector)
+	current_attachment.connector.do_disconnect(self)
+	do_disconnect(current_attachment.connector)
 	
 	current_attachment = null
 	can_attach = false
@@ -86,7 +86,6 @@ func _detach():
 # Another connector is nearby
 # Invariant: area is a connector
 func _on_connector_component_can_connect(area):
-	#print("can connect!")
 	var body = area.parent
 	if body is ToolAttachment: # Body is an attachment
 		current_attachment = body
@@ -100,7 +99,7 @@ func _on_connector_component_just_connected(_area):
 	grandparent.add_child(curr_joint)
 	
 	current_attachment.global_transform = get_parent().global_transform
-	current_attachment.global_position = tool_connector.global_position
+	current_attachment.global_position = global_position
 
 	curr_joint.global_transform = global_transform
 	curr_joint.set_node_a(get_parent().get_path())
@@ -108,7 +107,7 @@ func _on_connector_component_just_connected(_area):
 	can_attach = false
 
 func _on_connector_component_must_disconnect(_area):
-	if not tool_connector.connected: # Because position changes during attach trigger function
-		tool_connector.nearby_connector = null
+	if not connected: # Because position changes during attach trigger function
+		nearby_connector = null
 		can_attach = false
 		current_attachment = null
