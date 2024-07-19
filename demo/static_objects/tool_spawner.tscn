@@ -1,0 +1,191 @@
+[gd_scene load_steps=18 format=3 uid="uid://co1noklregyjs"]
+
+[ext_resource type="Script" path="res://static_objects/tool_spawner.gd" id="1_bw78t"]
+[ext_resource type="PackedScene" uid="uid://cu05cfh5qhtv" path="res://static_objects/work_light_3d.tscn" id="1_ohysu"]
+[ext_resource type="ArrayMesh" uid="uid://buijme2swldor" path="res://astra/tool_attachments/fork/Forks v7.obj" id="2_4ayy2"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_gc6uo"]
+[ext_resource type="ArrayMesh" uid="uid://d05skolidq8ko" path="res://astra/tool_attachments/sawblade/SawBlade.obj" id="3_mwt2q"]
+[ext_resource type="ArrayMesh" uid="uid://srcfe5wuq87v" path="res://astra/tool_attachments/BetterBucket.obj" id="4_6d2a3"]
+[ext_resource type="ArrayMesh" uid="uid://bp31x6de3gatm" path="res://astra/tool_attachments/sawblade/SawBlade_attactchmanet.obj" id="5_hywpq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i4hte"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rjvps"]
+points = PackedVector3Array(0.1, 0.05, 0.05, 0.1, 0.05, -0.05, -0.1, 0.05, 0.05, 0.1, -0.05, 0.05, 0.1, -0.05, -0.05, -0.1, 0.05, -0.05, -0.1, -0.05, 0.05, -0.1, -0.05, -0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wcj4q"]
+material = ExtResource("3_gc6uo")
+size = Vector3(2, 1.5, 0.2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kvdiw"]
+points = PackedVector3Array(1, 0.75, 0.1, 1, 0.75, -0.1, -1, 0.75, 0.1, 1, -0.75, 0.1, 1, -0.75, -0.1, -1, 0.75, -0.1, -1, -0.75, 0.1, -1, -0.75, -0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_crulm"]
+points = PackedVector3Array(1, 0.75, 0.1, 1, 0.75, -0.1, -1, 0.75, 0.1, 1, -0.75, 0.1, 1, -0.75, -0.1, -1, 0.75, -0.1, -1, -0.75, 0.1, -1, -0.75, -0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4d01n"]
+points = PackedVector3Array(1, 0.75, 0.1, 1, 0.75, -0.1, -1, 0.75, 0.1, 1, -0.75, 0.1, 1, -0.75, -0.1, -1, 0.75, -0.1, -1, -0.75, 0.1, -1, -0.75, -0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_abaxm"]
+points = PackedVector3Array(1, 0.75, 0.1, 1, 0.75, -0.1, -1, 0.75, 0.1, 1, -0.75, 0.1, 1, -0.75, -0.1, -1, 0.75, -0.1, -1, -0.75, 0.1, -1, -0.75, -0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cfkyd"]
+material = ExtResource("3_gc6uo")
+size = Vector3(2.1, 2, 0.2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jj7sv"]
+points = PackedVector3Array(1.05, 1, 0.1, 1.05, 1, -0.1, -1.05, 1, 0.1, 1.05, -1, 0.1, 1.05, -1, -0.1, -1.05, 1, -0.1, -1.05, -1, 0.1, -1.05, -1, -0.1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_deokq"]
+points = PackedVector3Array(1.05, 1, 0.1, 1.05, 1, -0.1, -1.05, 1, 0.1, 1.05, -1, 0.1, 1.05, -1, -0.1, -1.05, 1, -0.1, -1.05, -1, 0.1, -1.05, -1, -0.1)
+
+[node name="ToolSpawner" type="StaticBody3D"]
+script = ExtResource("1_bw78t")
+
+[node name="WorkLight3D" parent="." instance=ExtResource("1_ohysu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.35, 1.1, 1.9)
+
+[node name="WorkLight3D2" parent="." instance=ExtResource("1_ohysu")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.35, 1.1, -1.9)
+
+[node name="BucketPlaceholder" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.235179, 0.303028, 1.27)
+
+[node name="BetterBucket" type="MeshInstance3D" parent="BucketPlaceholder"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, -0.05, 0.9)
+mesh = ExtResource("4_6d2a3")
+skeleton = NodePath("../../../..")
+surface_material_override/0 = ExtResource("3_gc6uo")
+
+[node name="ConnectorBody" type="MeshInstance3D" parent="BucketPlaceholder"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_i4hte")
+
+[node name="BucketArea3D" type="Area3D" parent="BucketPlaceholder"]
+
+[node name="ConnectorBody" type="MeshInstance3D" parent="BucketPlaceholder/BucketArea3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_i4hte")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BucketPlaceholder/BucketArea3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_rjvps")
+
+[node name="BucketTimer" type="Timer" parent="BucketPlaceholder"]
+wait_time = 5.0
+one_shot = true
+
+[node name="ForksPlaceholder" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.235179, 0.303028, 0)
+
+[node name="ForksV7_L" type="MeshInstance3D" parent="ForksPlaceholder"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, -0.2, 0, 0.9)
+mesh = ExtResource("2_4ayy2")
+surface_material_override/0 = ExtResource("3_gc6uo")
+
+[node name="ForksV7_R" type="MeshInstance3D" parent="ForksPlaceholder"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0.2, 0, 0.9)
+mesh = ExtResource("2_4ayy2")
+surface_material_override/0 = ExtResource("3_gc6uo")
+
+[node name="ForkArea3D" type="Area3D" parent="ForksPlaceholder"]
+
+[node name="ConnectorBody" type="MeshInstance3D" parent="ForksPlaceholder/ForkArea3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_i4hte")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ForksPlaceholder/ForkArea3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_rjvps")
+
+[node name="ForksTimer" type="Timer" parent="ForksPlaceholder"]
+wait_time = 5.0
+one_shot = true
+
+[node name="SawbladePlaceholder" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.235179, 0.303028, -1.27)
+
+[node name="SawBladeAttachment" type="MeshInstance3D" parent="SawbladePlaceholder"]
+transform = Transform3D(0.01, -4.01365e-06, -1.75442e-13, 3.65918e-24, -4.37114e-10, 0.01, -4.01365e-06, -0.01, -4.37114e-10, 0, -0.05, 0.92)
+mesh = ExtResource("5_hywpq")
+
+[node name="SawBladeOrigin" type="Node3D" parent="SawbladePlaceholder"]
+transform = Transform3D(1, 0, 0, 0, 0.942091, 0.335356, 0, -0.335356, 0.942091, 0, 0, -0.38)
+
+[node name="SawBlade" type="MeshInstance3D" parent="SawbladePlaceholder/SawBladeOrigin"]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -1.77636e-15, -1.3, -0.05)
+mesh = ExtResource("3_mwt2q")
+skeleton = NodePath("../..")
+
+[node name="SawbladeArea3D" type="Area3D" parent="SawbladePlaceholder"]
+
+[node name="ConnectorBody" type="MeshInstance3D" parent="SawbladePlaceholder/SawbladeArea3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("BoxMesh_i4hte")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SawbladePlaceholder/SawbladeArea3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_rjvps")
+
+[node name="SawbladeTimer" type="Timer" parent="SawbladePlaceholder"]
+wait_time = 5.0
+one_shot = true
+
+[node name="WallMesh3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 2)
+mesh = SubResource("BoxMesh_wcj4q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 2)
+shape = SubResource("ConvexPolygonShape3D_kvdiw")
+
+[node name="WallMesh3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
+mesh = SubResource("BoxMesh_wcj4q")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -2)
+shape = SubResource("ConvexPolygonShape3D_crulm")
+
+[node name="WallMesh3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.9, 0.75, 1)
+mesh = SubResource("BoxMesh_wcj4q")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.9, 0.75, 1)
+shape = SubResource("ConvexPolygonShape3D_4d01n")
+
+[node name="WallMesh3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.9, 0.75, -1)
+mesh = SubResource("BoxMesh_wcj4q")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.9, 0.75, -1)
+shape = SubResource("ConvexPolygonShape3D_abaxm")
+
+[node name="WallMesh3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 1.5, -1.05)
+mesh = SubResource("BoxMesh_cfkyd")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 1.5, -1.05)
+shape = SubResource("ConvexPolygonShape3D_jj7sv")
+
+[node name="WallMesh3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 1.5, 1.05)
+mesh = SubResource("BoxMesh_cfkyd")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 1.5, 1.05)
+shape = SubResource("ConvexPolygonShape3D_deokq")
+
+[connection signal="area_entered" from="BucketPlaceholder/BucketArea3D" to="." method="_on_bucket_area_3d_area_entered"]
+[connection signal="timeout" from="BucketPlaceholder/BucketTimer" to="." method="_on_bucket_timer_timeout"]
+[connection signal="area_entered" from="ForksPlaceholder/ForkArea3D" to="." method="_on_fork_area_3d_area_entered"]
+[connection signal="timeout" from="ForksPlaceholder/ForksTimer" to="." method="_on_forks_timer_timeout"]
+[connection signal="area_entered" from="SawbladePlaceholder/SawbladeArea3D" to="." method="_on_sawblade_area_3d_area_entered"]
+[connection signal="timeout" from="SawbladePlaceholder/SawbladeTimer" to="." method="_on_sawblade_timer_timeout"]

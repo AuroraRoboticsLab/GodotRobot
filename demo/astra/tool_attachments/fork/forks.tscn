@@ -15,6 +15,7 @@ size = Vector3(0.0762329, 0.337219, 0.0259705)
 collision_layer = 20
 collision_mask = 5
 script = ExtResource("1_0reat")
+path = "res://astra/tool_attachments/fork/forks.tscn"
 
 [node name="ForksV7_L" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, -0.2, 0, 0.9)

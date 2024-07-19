@@ -61,7 +61,8 @@ func _on_new_player_info(id, username):
 @rpc("any_peer")
 func _on_new_object(sender_id, body_path, body_name):
 	if not GameManager.get_objects().has(body_name):
-		var body = load(body_path).instantiate()
+		var loaded_body = load(body_path)
+		var body = loaded_body.instantiate()
 		body.name = body_name
 		GameManager.add_object(body, body_path)
 		objects.add_child(body)
