@@ -37,7 +37,8 @@ _data = {
 
 [node name="SawBladeAttachment" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-collision_layer = 16
+collision_layer = 20
+collision_mask = 23
 physics_material_override = SubResource("PhysicsMaterial_s6d6h")
 script = ExtResource("1_j62vj")
 path = "res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn"

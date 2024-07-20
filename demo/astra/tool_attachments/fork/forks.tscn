@@ -13,7 +13,7 @@ size = Vector3(0.0762329, 0.337219, 0.0259705)
 
 [node name="ForkAttachment" type="RigidBody3D"]
 collision_layer = 20
-collision_mask = 5
+collision_mask = 23
 script = ExtResource("1_0reat")
 path = "res://astra/tool_attachments/fork/forks.tscn"
 
