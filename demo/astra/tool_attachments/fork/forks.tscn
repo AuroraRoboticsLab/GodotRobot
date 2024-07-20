@@ -6,14 +6,14 @@
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_tg68u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ubtq5"]
-size = Vector3(0.0714722, 0.0192261, 0.396362)
+size = Vector3(0.0714722, 0.0257263, 0.394592)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1f2fd"]
-size = Vector3(0.0762329, 0.337219, 0.0259705)
+size = Vector3(0.0762329, 0.35807, 0.0522823)
 
 [node name="ForkAttachment" type="RigidBody3D"]
 collision_layer = 20
-collision_mask = 5
+collision_mask = 23
 script = ExtResource("1_0reat")
 path = "res://astra/tool_attachments/fork/forks.tscn"
 
@@ -31,17 +31,17 @@ surface_material_override/0 = ExtResource("3_tg68u")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20183, -0.154073, -0.201437)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.166678, -0.2)
 shape = SubResource("BoxShape3D_ubtq5")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.196315, -0.16155, -0.201437)
-shape = SubResource("BoxShape3D_ubtq5")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200287, 0.00860596, -0.0182953)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, -0.031575)
 shape = SubResource("BoxShape3D_1f2fd")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.199123, 0.0107727, -0.0182953)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.198893, -0.166678, -0.2)
+shape = SubResource("BoxShape3D_ubtq5")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.198893, 0, -0.031575)
 shape = SubResource("BoxShape3D_1f2fd")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=13 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
@@ -8,7 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://co1noklregyjs" path="res://static_objects/tool_spawner.tscn" id="5_1rppn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="5_8fbcs"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
+[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="6_k4qam"]
+[ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="7_5iltw"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
+[ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
 
 [node name="main3D" type="Node3D"]
 script = ExtResource("1_dv7pc")
@@ -32,10 +35,13 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64657, 0.44, -0.132835)
 
 [node name="BrickMaker" parent="." instance=ExtResource("4_vp1iq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.156523, 0, -4.86574)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.156523, 0.0188498, -4.86574)
 
 [node name="ToolSpawner" parent="." instance=ExtResource("5_1rppn")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.541915, 0, 5.26094)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.270254, 0.196277, 5.26094)
+tool_1_scene = ExtResource("6_k4qam")
+tool_2_scene = ExtResource("7_5iltw")
+tool_3_scene = ExtResource("8_5pjry")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("4_wv3d2")

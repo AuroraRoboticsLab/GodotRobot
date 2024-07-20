@@ -28,7 +28,7 @@ size = Vector3(0.756638, 0.392986, 0.362366)
 [node name="BucketAttachment" type="RigidBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 collision_layer = 20
-collision_mask = 7
+collision_mask = 23
 physics_material_override = SubResource("PhysicsMaterial_3v1of")
 script = ExtResource("1_tbghr")
 path = "res://astra/tool_attachments/bucket_attachment.tscn"

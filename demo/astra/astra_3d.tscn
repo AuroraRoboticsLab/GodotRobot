@@ -19,6 +19,7 @@ size = Vector3(0.768341, 0.0458984, 0.209961)
 
 [node name="Astra3D" type="VehicleBody3D"]
 collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_8yddr")
 
 [node name="Chassie+hubs" type="MeshInstance3D" parent="."]

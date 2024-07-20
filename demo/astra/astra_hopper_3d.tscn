@@ -25,6 +25,7 @@ node_b = NodePath("../Hopper")
 
 [node name="Hopper" type="RigidBody3D" parent="."]
 collision_layer = 4
+collision_mask = 5
 
 [node name="HopperBody" type="MeshInstance3D" parent="Hopper"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
