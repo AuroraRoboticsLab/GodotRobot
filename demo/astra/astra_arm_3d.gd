@@ -20,11 +20,6 @@ func _ready():
 	
 	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
-	
-	# Collision exceptions to prevent mass destruction
-	arm.add_collision_exception_with(bollard)
-	arm.add_collision_exception_with(tilt)
-	bollard.add_collision_exception_with(tilt)
 
 func toggle_inputs():
 	can_input = !can_input
