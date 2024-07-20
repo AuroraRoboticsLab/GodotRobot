@@ -1,4 +1,5 @@
 extends Node
+const version="v0.2.5-alpha"
 
 var sync_data = {
 	"players":{},
@@ -21,7 +22,7 @@ var game_in_progress: bool = false
 var is_console_host: bool = false
 var using_multiplayer: bool = false
 
-signal new_player_info(id, username)
+signal new_player_info(id, username, version)
 signal new_object(sender_id, body_path, body_name)
 signal self_disconnected
 signal toggle_inputs
@@ -125,10 +126,11 @@ func get_num_players():
 	return len(get_players())
 
 # Add a new player to the players dictionary
-func add_player(id: int, username, pos=Vector3.ZERO):
+func add_player(id: int, username, version, pos=Vector3.ZERO):
 	if not sync_data.players.has(id):
 		sync_data.players[id] = {
 			"username": username,
+			"version": version,
 			"global_position": pos,
 			"linear_velocity": Vector3.ZERO,
 			"angular_velocity": Vector3.ZERO,
@@ -146,6 +148,12 @@ func remove_player(id):
 func get_player_username(id):
 	if get_players().has(id):
 		return get_players()[id].username
+	else:
+		return null
+
+func get_player_version(id):
+	if get_players().has(id):
+		return get_players()[id].version
 	else:
 		return null
 

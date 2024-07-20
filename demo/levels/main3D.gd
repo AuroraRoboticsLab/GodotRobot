@@ -48,13 +48,16 @@ func _ready():
 		add_child(robot)
 
 @rpc("any_peer")
-func _on_new_player_info(id, username):
+func _on_new_player_info(id, username, version):
+	if not version == GameManager.version:
+		return # Don't make a new player if they are on the wrong version!
 	if not GameManager.get_players().has(id):
 		var spawn_pos = $PlayerSpawnpoints.get_children()[0].global_position
-		GameManager.add_player(id, username, spawn_pos)
+		GameManager.add_player(id, username, version, spawn_pos)
 		print("New player joined: ", username)
 		var curr_player = robot_scene.instantiate()
 		curr_player.name = str(id)
+		curr_player.global_position = spawn_pos
 		add_child(curr_player)
 		curr_player.nametag_text = username
 
