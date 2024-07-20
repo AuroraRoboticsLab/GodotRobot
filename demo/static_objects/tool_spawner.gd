@@ -1,84 +1,58 @@
 extends StaticBody3D
-# TODO: Instead of using fake tools, use real tools that are connected by
-# an instantiated joint that gets removed when someone attaches to the tool.
-# (is this possible?)
-# OR, spawn real tools, and when the tool leaves an Area3D,
-# spawn a new tool in its place. 
-# Either of these alternate methods would allow us to drag/drop tools into
-# exported variables!
 
-const bucket_path = "res://astra/tool_attachments/bucket_attachment.tscn"
-var can_spawn_bucket: bool = true
-const forks_path = "res://astra/tool_attachments/fork/forks.tscn"
-var can_spawn_forks: bool = true
-const sawblade_path = "res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn"
-var can_spawn_sawblade: bool = true
+# The bodies in each tool space
+var tool_space_bodies = [null, null, null]
+# The scenes for each tool
+@export var tool_1_scene: PackedScene = null
+@export var tool_2_scene: PackedScene = null
+@export var tool_3_scene: PackedScene = null
 
-func _on_bucket_area_3d_area_entered(area):
-	if can_spawn_bucket:
-		if GameManager.using_multiplayer and multiplayer.is_server():
-			_spawn_new_tool(area, bucket_path, $BucketPlaceholder.global_transform)
-			can_spawn_bucket = false
-			_hide_bucket.rpc()
-		elif not GameManager.using_multiplayer:
-			_spawn_new_tool(area, bucket_path, $BucketPlaceholder.global_transform)
-			can_spawn_bucket = false
-			_hide_bucket()
+func _ready():
+	$ToolSpace1/ToolTimer1.start()
+	$ToolSpace2/ToolTimer2.start()
+	$ToolSpace3/ToolTimer3.start()
 
-@rpc("any_peer", "call_local")
-func _hide_bucket():
-	$BucketPlaceholder.hide()
-	$BucketPlaceholder/BucketTimer.start()
+func _on_tool_space_1_body_exited(body):
+	if tool_space_bodies[0] and body.name == tool_space_bodies[0].name:
+		tool_space_bodies[0] = null
+		$ToolSpace1/ToolTimer1.start()
 
-func _on_bucket_timer_timeout():
-	can_spawn_bucket = true
-	$BucketPlaceholder.show()
+func _on_tool_timer_1_timeout():
+	if GameManager.using_multiplayer and multiplayer.is_server():
+		_spawn_new_tool(0, tool_1_scene, $ToolSpace1.global_transform)
+	elif not GameManager.using_multiplayer:
+		_spawn_new_tool(0, tool_1_scene, $ToolSpace1.global_transform)
 
-func _on_fork_area_3d_area_entered(area):
-	if can_spawn_forks:
-		if GameManager.using_multiplayer and multiplayer.is_server():
-			_spawn_new_tool(area, forks_path, $ForksPlaceholder.global_transform)
-			can_spawn_forks = false
-			_hide_forks.rpc()
-		elif not GameManager.using_multiplayer:
-			_spawn_new_tool(area, forks_path, $ForksPlaceholder.global_transform)
-			can_spawn_forks = false
-			_hide_forks()
+func _on_tool_space_2_body_exited(body):
+	if tool_space_bodies[1] and body.name == tool_space_bodies[1].name:
+		tool_space_bodies[1] = null
+		$ToolSpace2/ToolTimer2.start()
 
-@rpc("any_peer", "call_local")
-func _hide_forks():
-	$ForksPlaceholder.hide()
-	$ForksPlaceholder/ForksTimer.start()
+func _on_tool_timer_2_timeout():
+	if GameManager.using_multiplayer and multiplayer.is_server():
+		_spawn_new_tool(1, tool_2_scene, $ToolSpace2.global_transform)
+	elif not GameManager.using_multiplayer:
+		_spawn_new_tool(1, tool_2_scene, $ToolSpace2.global_transform)
 
-func _on_forks_timer_timeout():
-	can_spawn_forks = true
-	$ForksPlaceholder.show()
+func _on_tool_space_3_body_exited(body):
+	if tool_space_bodies[2] and body.name == tool_space_bodies[2].name:
+		tool_space_bodies[2] = null
+		$ToolSpace3/ToolTimer3.start()
 
-func _on_sawblade_area_3d_area_entered(area):
-	if can_spawn_sawblade:
-		if GameManager.using_multiplayer and multiplayer.is_server():
-			_spawn_new_tool(area, sawblade_path, $SawbladePlaceholder.global_transform)
-			can_spawn_sawblade = false
-			_hide_sawblade.rpc()
-		elif not GameManager.using_multiplayer:
-			_spawn_new_tool(area, sawblade_path, $SawbladePlaceholder.global_transform)
-			can_spawn_sawblade = false
-			_hide_sawblade()
+func _on_tool_timer_3_timeout():
+	if GameManager.using_multiplayer and multiplayer.is_server():
+		_spawn_new_tool(2, tool_3_scene, $ToolSpace3.global_transform)
+	elif not GameManager.using_multiplayer:
+		_spawn_new_tool(2, tool_3_scene, $ToolSpace3.global_transform)
 
-@rpc("any_peer", "call_local")
-func _hide_sawblade():
-	$SawbladePlaceholder.hide()
-	$SawbladePlaceholder/SawbladeTimer.start()
+func _spawn_new_tool(space_num, tool_scene, tool_trans):
+	if not tool_scene:
+		return
+	var new_tool = tool_scene.instantiate()
+	tool_space_bodies[space_num] = new_tool
+	new_tool.global_transform = tool_trans
+	get_parent().objects.add_child(new_tool, true)
+	if GameManager.using_multiplayer:
+		GameManager.add_object(new_tool, new_tool.path)
+		GameManager.new_object.emit(multiplayer.get_unique_id(), new_tool.path, new_tool.name)
 
-func _on_sawblade_timer_timeout():
-	can_spawn_sawblade = true
-	$SawbladePlaceholder.show()
-
-func _spawn_new_tool(area, tool_path, tool_trans):
-	if area is ToolCoupler and not area.connected:
-		var new_tool = load(tool_path).instantiate()
-		new_tool.global_transform = tool_trans
-		get_parent().objects.add_child(new_tool, true)
-		if GameManager.using_multiplayer:
-			GameManager.add_object(new_tool, tool_path)
-			GameManager.new_object.emit(multiplayer.get_unique_id(), tool_path, new_tool.name)

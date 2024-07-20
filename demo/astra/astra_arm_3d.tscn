@@ -8,10 +8,10 @@
 [ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://astra/arm_files/ToolCoupler.obj" id="4_ylj6w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_020ih"]
-size = Vector3(0.859802, 0.0501113, 0.432617)
+size = Vector3(0.0264586, 0.0501113, 0.317841)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ej40"]
-size = Vector3(0.81134, 0.270643, 0.0641555)
+size = Vector3(0.81134, 0.270643, 0.0408214)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lu4b4"]
 
@@ -26,6 +26,7 @@ max_lower_angle = -90.0
 
 [node name="Arm3D" type="RigidBody3D" parent="."]
 collision_layer = 4
+collision_mask = 5
 
 [node name="Arm1" type="MeshInstance3D" parent="Arm3D"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
@@ -33,7 +34,11 @@ mesh = ExtResource("1_dvup2")
 skeleton = NodePath("../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000181735, 0.0886151, -0.417619)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.417, 0.089, -0.4)
+shape = SubResource("BoxShape3D_020ih")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Arm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.417, 0.089, -0.4)
 shape = SubResource("BoxShape3D_020ih")
 
 [node name="ArmToBollardJoint" parent="Arm3D" instance=ExtResource("3_bb355")]
@@ -45,6 +50,7 @@ max_lower_angle = -45.0
 
 [node name="Bollard3D" type="RigidBody3D" parent="Arm3D"]
 collision_layer = 4
+collision_mask = 5
 
 [node name="BollardToCouplerJoint" parent="Arm3D/Bollard3D" instance=ExtResource("3_bb355")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049, -0.896)
@@ -60,7 +66,7 @@ mesh = ExtResource("2_p4gbc")
 skeleton = NodePath("../../../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arm3D/Bollard3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.862018)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.872074)
 shape = SubResource("BoxShape3D_6ej40")
 
 [node name="ToolCoupler3D" type="RigidBody3D" parent="Arm3D/Bollard3D"]

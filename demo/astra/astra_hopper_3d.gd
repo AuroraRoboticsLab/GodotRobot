@@ -4,6 +4,7 @@ extends Node3D
 @onready var hopper_1 = $BetterHingeJoint3D
 @onready var hopper_2 = $BetterHingeJoint3D2
 @onready var inside_hopper = $InsideHopper
+@onready var hopper = $Hopper
 
 @onready var is_dead: bool = false
 var can_input: bool = true

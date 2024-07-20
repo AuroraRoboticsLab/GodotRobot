@@ -360,6 +360,21 @@ size_flags_stretch_ratio = 0.1
 [node name="KeybindsMenu" parent="." instance=ExtResource("7_nuj1q")]
 visible = false
 
+[node name="VersionLabel" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.996
+anchor_right = 1.0
+anchor_bottom = 0.996
+offset_left = -443.0
+offset_top = -44.6801
+offset_right = -7.0
+offset_bottom = 0.319946
+theme_type_variation = &"MediumLabel"
+text = "v0.2.5-alpha"
+horizontal_alignment = 2
+vertical_alignment = 2
+
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]

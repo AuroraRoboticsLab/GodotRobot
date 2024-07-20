@@ -37,6 +37,11 @@ func _ready():
 	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 	
+	add_collision_exception_with(arm.arm)
+	add_collision_exception_with(arm.bollard)
+	add_collision_exception_with(arm.tilt)
+	add_collision_exception_with(hopper.hopper)
+	
 	center_of_mass = $CenterOfMass.position
 	
 	if GameManager.using_multiplayer:

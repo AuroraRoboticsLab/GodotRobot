@@ -19,6 +19,9 @@ extends CanvasLayer
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
+func _ready():
+	$VersionLabel.text = str(GameManager.version)
+
 func _process(_delta):
 	$CenterContainer/PressToAttach.visible = can_attach
 	

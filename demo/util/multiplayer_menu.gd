@@ -29,6 +29,9 @@ func _ready():
 			# with the value set to an empty string.
 			arguments[argument.lstrip("--")] = ""
 	
+	if "game-version" in arguments:
+		print(GameManager.version)
+		get_tree().quit()
 	if "port" in arguments:
 		port = arguments["port"].to_int()
 	if "address" in arguments:
@@ -66,21 +69,31 @@ func host_game(console_host=false):
 	print("Waiting for players...")
 
 @rpc("any_peer")
-func send_player_info(id, username):
-	if not GameManager.get_players().has(id):
-		GameManager.new_player_info.emit(id, username)
-		GameManager.add_player(id, username)
+func send_player_info(id, username, version):
+	if multiplayer.is_server():
+		if id != 1 and version != GameManager.version: # Version mismatch!
+			GameManager.remove_player(id)
+			_throw_version_mismatch.rpc_id(id, GameManager.version)
+			return
+	if not GameManager.get_players().has(id) and version == GameManager.version:
+		GameManager.new_player_info.emit(id, username, version)
+		GameManager.add_player(id, username, version)
 		%AlertLabel.text = GameManager.get_player_username(id) + " has connected."
 	if multiplayer.is_server():
 		for pid in GameManager.get_player_ids():
 			if pid != id:
-				send_player_info.rpc(pid, GameManager.get_player_username(pid))
+				send_player_info.rpc(pid, GameManager.get_player_username(pid), GameManager.get_player_version(pid))
 			else:
 				# Notify the new player of all existing players
 				for existing_id in GameManager.get_players():
 					if existing_id != id:
-						send_player_info.rpc(id, username)
+						send_player_info.rpc(id, username, version)
 	update_num_players()
+
+@rpc("any_peer")
+func _throw_version_mismatch(host_version):
+	multiplayer.set_multiplayer_peer(null)
+	leave_game("Version mismatch! Host is using "+str(host_version)+".")
 
 # The function called when the host starts the game
 @rpc("any_peer", "call_local")
@@ -97,7 +110,8 @@ func player_connected(id):
 	
 func player_disconnected(id):
 	print("Player Disconnected (ID ", id, ")")
-	%AlertLabel.text = str(GameManager.get_player_username(id)) + " has disconnected."
+	if GameManager.get_player_username(id):
+		%AlertLabel.text = str(GameManager.get_player_username(id)) + " has disconnected."
 	GameManager.remove_player(id)
 	var player_node = get_tree().root.get_node_or_null("main3D/" + str(id))
 	if player_node:
@@ -110,9 +124,9 @@ func player_disconnected(id):
 
 func connected_to_server():
 	print("Connected to server!")
-	send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text)
-	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text)
-	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id())
+	send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
+	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
+	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id(), GameManager.version)
 	update_num_players()
 
 func connection_failed():
@@ -141,6 +155,7 @@ func leave_game(message):
 	show_menu(message)
 	if scene:
 		scene.queue_free()
+		scene = null
 
 func show_menu(message: String):
 	self.show()
@@ -152,6 +167,7 @@ func hide_menu():
 	self.hide()
 
 func _on_host_button_pressed():
+	%AlertLabel.text = ""
 	GameManager.using_multiplayer = true
 	address = %AddressTextEdit.text
 	port = %PortTextEdit.text.to_int()
@@ -163,12 +179,13 @@ func _on_host_button_pressed():
 	if not host_exists():
 		host_game(debugging_console_host)
 		if not debugging_console_host:
-			send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text)
+			send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
 	else:
 		print("Host already exists.")
 		%AlertLabel.text = "Cannot host: Host already exists."
 
 func _on_join_button_pressed():
+	%AlertLabel.text = ""
 	GameManager.using_multiplayer = true
 	address = %AddressTextEdit.text
 	port = %PortTextEdit.text.to_int()
@@ -186,6 +203,7 @@ func _on_join_button_pressed():
 	if host_exists(): # If server responded
 		# If game is ongoing, start locally.
 		%ConnectLabel.text = "Attempting to join game..."
+		update_num_players()
 	else:
 		%AlertLabel.text = "Cannot join: Host not found."
 		multiplayer.set_multiplayer_peer(null)
@@ -205,16 +223,20 @@ func _on_start_button_pressed():
 	start_game.rpc()
 	
 func update_num_players():
-	if GameManager.get_num_players() > 0:
+	if multiplayer.get_multiplayer_peer() and GameManager.get_num_players() > 0:
 		%NumPlayersContainer.show()
 		%NumPlayers.text = str(GameManager.get_num_players()) + "/" + str(GameManager.max_players)
 	else:
 		%NumPlayersContainer.hide()
 		
 @rpc("any_peer")
-func start_if_ongoing_game(querying_id):
+func start_if_ongoing_game(querying_id, version):
 	if multiplayer.get_unique_id() == 1 and GameManager.game_in_progress:
-		start_game.rpc_id(querying_id)
+		if version != GameManager.version:
+			GameManager.remove_player(querying_id)
+			_throw_version_mismatch.rpc_id(querying_id, GameManager.version)
+		else:
+			start_game.rpc_id(querying_id)
 
 func _on_local_game_button_pressed():
 	GameManager.using_multiplayer = false
@@ -223,4 +245,13 @@ func _on_local_game_button_pressed():
 	hide()
 
 func _on_leave_game_button_pressed():
-	get_tree().quit() # Exit program
+	if multiplayer.get_multiplayer_peer() or peer:
+		multiplayer.set_multiplayer_peer(null)
+		peer = null
+		%AlertLabel.text = "Disconnected from peer."
+		%ConnectLabel.text = ""
+		$PanelContainer/VBoxContainer/HBoxContainer/StartButton.disabled = true
+		GameManager.end_game()
+		update_num_players()
+	else:
+		get_tree().quit() # Exit program
