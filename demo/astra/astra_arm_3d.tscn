@@ -22,6 +22,7 @@ script = ExtResource("1_2mulu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.088, -0.203)
 node_a = NodePath("../..")
 node_b = NodePath("../Arm3D")
+angular_limit_x/softness = 0.4
 max_lower_angle = -90.0
 
 [node name="Arm3D" type="RigidBody3D" parent="."]

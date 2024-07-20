@@ -50,8 +50,11 @@ func _ready():
 		add_child(cam_scene)
 		$Nametag.visible = false
 
-func toggle_inputs():
-	can_input = !can_input
+func toggle_inputs(in_bool = null):
+	if in_bool != null:
+		can_input = !can_input
+	else:
+		can_input = in_bool
 
 func _network_process(_delta):
 	if not $MultiplayerSynchronizer.is_multiplayer_authority():

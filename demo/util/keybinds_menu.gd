@@ -129,5 +129,5 @@ func _update_labels() -> void:
 			controller_buttons[idx].text = "Unbound"
 		
 func _on_exit_button_pressed():
-	GameManager.toggle_inputs.emit()
+	GameManager.toggle_inputs.emit(true)
 	hide()

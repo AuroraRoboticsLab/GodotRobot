@@ -21,6 +21,10 @@ func round_to_dec(num, digit):
 
 func _ready():
 	$VersionLabel.text = str(GameManager.version)
+	if not GameManager.using_multiplayer:
+		%ToggleChatButton.hide()
+		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control5.hide()
+		$ChatContainer.hide()
 
 func _process(_delta):
 	$CenterContainer/PressToAttach.visible = can_attach
@@ -74,10 +78,50 @@ func _on_leave_game_button_pressed():
 
 func _on_keybind_menu_button_pressed():
 	if not $KeybindsMenu.visible:
-		GameManager.toggle_inputs.emit()
+		GameManager.toggle_inputs.emit(false)
 		$KeybindsMenu.show()
 
 func _on_respawn_button_pressed():
 	pass # Setting positions isn't working for some reason...
 	#print("Resetting to spawn")
 	#get_parent().robot.reset_to_spawn()
+
+func _on_toggle_chat_button_pressed():
+	$ChatContainer.visible = !$ChatContainer.visible
+	if $ChatContainer.visible:
+		%ToggleChatButton.text = "Hide Chat Window"
+	else:
+		%ToggleChatButton.text = "Show Chat Window"
+
+var enter_pressed = false
+func _on_chat_text_edit_text_submitted(new_text: String):
+	if enter_pressed:
+		return
+	var username = GameManager.get_player_username(multiplayer.get_unique_id())
+	if %ChatTextEdit.text != "":
+		_send_chat_message.rpc(str(username)+": "+new_text)
+		%ChatTextEdit.text = ""
+	enter_pressed = true
+	$ChatContainer/VBoxContainer/ChatTextEdit/SendMessageTimer.start()
+
+@rpc("any_peer", "call_local")
+func _send_chat_message(message):
+	var new_message_label = Label.new()
+	new_message_label.text = message
+	%ChatVBox.add_child(new_message_label)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	%ScrollContainer.ensure_control_visible(new_message_label)
+
+func _on_send_message_timer_timeout():
+	enter_pressed = false
+
+func _on_chat_text_edit_focus_entered():
+	GameManager.toggle_inputs.emit(false)
+
+func _on_chat_text_edit_focus_exited():
+	GameManager.toggle_inputs.emit(true)
+
+func _on_click_control_gui_input(event):
+	if event is InputEventMouseButton and event.pressed:
+		%ChatTextEdit.release_focus()

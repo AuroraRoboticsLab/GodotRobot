@@ -21,8 +21,11 @@ func _ready():
 	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 
-func toggle_inputs():
-	can_input = !can_input
+func toggle_inputs(in_bool = null):
+	if in_bool != null:
+		can_input = !can_input
+	else:
+		can_input = in_bool
 
 func _network_process(_delta):
 	var curr_attach_path = null
@@ -59,8 +62,8 @@ func _physics_process(delta):
 	var bollard_force = 0
 	var tilt_force = 0
 	if can_input and not is_dead:
-		arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 2
-		bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT * 2
+		arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 1.5
+		bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT * 1.5
 		tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
 	
 	arm_joint.move_motor(arm_force) if abs(arm_force) > 0 else arm_joint.stop_motor()

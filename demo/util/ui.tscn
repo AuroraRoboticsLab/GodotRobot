@@ -102,6 +102,14 @@ text = "Stalling!"
 [node name="FPS Counter" type="Node3D" parent="."]
 script = ExtResource("1_mxmhq")
 
+[node name="ClickControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
@@ -344,6 +352,18 @@ size_flags_horizontal = 3
 theme_type_variation = &"SmallButton"
 text = "Open Keybind Menu"
 
+[node name="Control5" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="ToggleChatButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SmallButton"
+text = "Hide Chat Window"
+
 [node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -360,6 +380,42 @@ size_flags_stretch_ratio = 0.1
 [node name="KeybindsMenu" parent="." instance=ExtResource("7_nuj1q")]
 visible = false
 
+[node name="ChatContainer" type="PanelContainer" parent="."]
+anchors_preset = -1
+anchor_top = 0.722
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 0.239929
+offset_right = 582.0
+offset_bottom = -27.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChatContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ChatContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ChatVBox" type="VBoxContainer" parent="ChatContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WelcomeMessage" type="Label" parent="ChatContainer/VBoxContainer/ScrollContainer/ChatVBox"]
+layout_mode = 2
+text = "Welcome to the chat!"
+
+[node name="ChatTextEdit" type="LineEdit" parent="ChatContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+placeholder_text = "Enter chat message here"
+
+[node name="SendMessageTimer" type="Timer" parent="ChatContainer/VBoxContainer/ChatTextEdit"]
+one_shot = true
+
 [node name="VersionLabel" type="Label" parent="."]
 anchors_preset = -1
 anchor_left = 1.0
@@ -371,10 +427,12 @@ offset_top = -44.6801
 offset_right = -7.0
 offset_bottom = 0.319946
 theme_type_variation = &"MediumLabel"
-text = "v0.2.5-alpha"
+theme_override_colors/font_color = Color(0.533333, 0.533333, 0.533333, 1)
+text = "version not specified"
 horizontal_alignment = 2
 vertical_alignment = 2
 
+[connection signal="gui_input" from="ClickControl" to="." method="_on_click_control_gui_input"]
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
@@ -384,3 +442,8 @@ vertical_alignment = 2
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleChatButton" to="." method="_on_toggle_chat_button_pressed"]
+[connection signal="focus_entered" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_entered"]
+[connection signal="focus_exited" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_exited"]
+[connection signal="text_submitted" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_text_submitted"]
+[connection signal="timeout" from="ChatContainer/VBoxContainer/ChatTextEdit/SendMessageTimer" to="." method="_on_send_message_timer_timeout"]

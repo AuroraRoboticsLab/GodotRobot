@@ -291,6 +291,22 @@ size_flags_stretch_ratio = 0.5
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="VersionLabel" type="Label" parent="."]
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -433.0
+offset_top = -50.0
+offset_right = -6.0
+offset_bottom = -5.0
+theme_type_variation = &"MediumLabel"
+theme_override_colors/font_color = Color(0.533333, 0.533333, 0.533333, 1)
+text = "version not specified"
+horizontal_alignment = 2
+vertical_alignment = 2
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer5/LocalGameButton" to="." method="_on_local_game_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer5/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/HostButton" to="." method="_on_host_button_pressed"]

@@ -19,6 +19,8 @@ func _ready():
 	multiplayer.connection_failed.connect(connection_failed)
 	GameManager.self_disconnected.connect(on_self_disconnected)
 	
+	$VersionLabel.text = str(GameManager.version)
+	
 	var arguments = {}
 	for argument in OS.get_cmdline_args():
 		if argument.find("=") > -1:
@@ -41,7 +43,6 @@ func _ready():
 	if "host" in arguments:
 		GameManager.using_multiplayer = true
 		host_game(true)
-
 
 func host_game(console_host=false):
 	GameManager.is_console_host = console_host
@@ -127,6 +128,7 @@ func connected_to_server():
 	send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
 	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
 	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id(), GameManager.version)
+	%ConnectLabel.text = "Connected. Waiting for game to start..."
 	update_num_players()
 
 func connection_failed():

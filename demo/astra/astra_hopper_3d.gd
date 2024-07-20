@@ -12,8 +12,11 @@ var can_input: bool = true
 func _ready():
 	GameManager.toggle_inputs.connect(toggle_inputs)
 
-func toggle_inputs():
-	can_input = !can_input
+func toggle_inputs(in_bool = null):
+	if in_bool != null:
+		can_input = !can_input
+	else:
+		can_input = in_bool
 
 func _physics_process(_delta):
 	const MOTOR_MULT = 0.8

@@ -27,8 +27,11 @@ func _ready():
 	
 	GameManager.toggle_inputs.connect(toggle_inputs)
 
-func toggle_inputs():
-	can_input = !can_input
+func toggle_inputs(in_bool = null):
+	if in_bool != null:
+		can_input = !can_input
+	else:
+		can_input = in_bool
 
 func _input(event):
 	if Input.is_action_pressed("right_click") and can_input and not cam_locked and event is InputEventMouseMotion:

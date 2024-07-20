@@ -25,7 +25,7 @@ var using_multiplayer: bool = false
 signal new_player_info(id, username, version)
 signal new_object(sender_id, body_path, body_name)
 signal self_disconnected
-signal toggle_inputs
+signal toggle_inputs(in_bool)
 signal network_process(delta)
 
 var time: float = 0
@@ -126,11 +126,11 @@ func get_num_players():
 	return len(get_players())
 
 # Add a new player to the players dictionary
-func add_player(id: int, username, version, pos=Vector3.ZERO):
+func add_player(id: int, username, in_version, pos=Vector3.ZERO):
 	if not sync_data.players.has(id):
 		sync_data.players[id] = {
 			"username": username,
-			"version": version,
+			"version": in_version,
 			"global_position": pos,
 			"linear_velocity": Vector3.ZERO,
 			"angular_velocity": Vector3.ZERO,

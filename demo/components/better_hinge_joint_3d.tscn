@@ -9,6 +9,7 @@ linear_limit_y/restitution = 2.0
 linear_limit_y/damping = 1.2
 linear_limit_z/restitution = 2.0
 linear_limit_z/damping = 1.2
+angular_limit_x/softness = 0.3
 angular_limit_x/restitution = 1.1
 angular_limit_y/restitution = 1.0
 angular_limit_z/restitution = 1.0
