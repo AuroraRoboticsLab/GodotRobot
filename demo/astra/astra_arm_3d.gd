@@ -74,5 +74,5 @@ func _physics_process(delta):
 	get_parent().charge_component.change_charge(-power_spent * delta)
 	
 	# Tool attachment/detachment
-	if Input.is_action_just_pressed("generic_action"): 
+	if Input.is_action_just_pressed("generic_action") and can_input: 
 		tool_coupler_component.try_toggle_attach()
