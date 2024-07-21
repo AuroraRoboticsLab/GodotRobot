@@ -62,12 +62,13 @@ func _on_new_player_info(id, username, version):
 		curr_player.nametag_text = username
 
 @rpc("any_peer")
-func _on_new_object(sender_id, body_path, body_name):
+func _on_new_object(sender_id, body_path, body_name, body_trans=Transform3D.IDENTITY):
 	if not GameManager.get_objects().has(body_name):
 		var loaded_body = load(body_path)
 		var body = loaded_body.instantiate()
 		body.name = body_name
-		GameManager.add_object(body, body_path)
+		body.global_transform = body_trans
+		GameManager.add_object(body, body_path, body_trans)
 		objects.add_child(body)
 	if multiplayer.is_server():
 		for pid in GameManager.get_player_ids():
@@ -91,7 +92,7 @@ func _network_process(_delta):
 			body.angular_velocity = object_data[body_name].angular_velocity
 			if body is ToolAttachment and body.connector.connected:
 				continue
-			body.global_transform = object_data[body_name].global_transform
+			body.global_transform = body.global_transform.interpolate_with(object_data[body_name].global_transform, 0.2)
 		return
 	var new_object_data = {}
 	for body in objects.get_children():
@@ -127,4 +128,8 @@ func _physics_process(_delta):
 	else:
 		$UI.dirtballs_in_bucket = 0
 	$UI.dirtballs_in_hopper = robot.hopper.inside_hopper.num_dirtballs
-	
+
+func _on_fallen_area_3d_body_entered(body):
+	body.global_transform = $"PlayerSpawnpoints/0".global_transform
+	body.linear_velocity = Vector3.ZERO
+	body.angular_velocity = Vector3.ZERO

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=14 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="7_5iltw"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yvrwd"]
+size = Vector3(200, 20, 200)
 
 [node name="main3D" type="Node3D"]
 script = ExtResource("1_dv7pc")
@@ -73,4 +76,12 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5820
 
 [node name="Objects" type="Node3D" parent="."]
 
+[node name="FallenArea3D" type="Area3D" parent="."]
+collision_mask = 29
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FallenArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -30, 0)
+shape = SubResource("BoxShape3D_yvrwd")
+
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
+[connection signal="body_entered" from="FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]

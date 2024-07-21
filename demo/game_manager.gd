@@ -1,5 +1,5 @@
 extends Node
-const version="v0.2.5-alpha"
+const version="v0.2.6-alpha"
 
 var sync_data = {
 	"players":{},
@@ -78,10 +78,10 @@ func set_data(sender_id, new_data):
 	# Handle instantiated object data
 	for object_name in new_data.objects.keys(): # Get object names
 		if sync_data.objects.has(object_name):
-			for datapoint in new_data.objects[object_name].keys(): 
+			for datapoint in new_data.objects[object_name].keys():
 				sync_data.objects[object_name][datapoint] = new_data.objects[object_name][datapoint]
 		else: # If we don't have the object, make it!
-			new_object.emit(sender_id, new_data.objects[object_name]["body_path"], object_name)
+			new_object.emit(sender_id, new_data.objects[object_name].body_path, object_name, new_data.objects[object_name].global_transform)
 	
 	# Handle static bodies
 	for body_name in new_data.static_bodies.keys(): # Get each static body
@@ -200,3 +200,4 @@ func get_static_data(body_name):
 		return get_static_bodies()[body_name]
 	else:
 		return null
+

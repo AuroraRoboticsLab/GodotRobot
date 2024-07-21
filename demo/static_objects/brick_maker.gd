@@ -30,8 +30,7 @@ func _network_process(_delta):
 			var new_brick = brick_t.instantiate()
 			new_brick.global_transform = $BrickSpawnpoint.global_transform
 			get_parent().objects.add_child(new_brick, true)
-			GameManager.add_object(new_brick, brick_path)
-			GameManager.new_object.emit(multiplayer.get_unique_id(), brick_path, new_brick.name)
+			GameManager.add_object(new_brick, brick_path, $BrickSpawnpoint.global_transform)
 		elif value >= brick_mass and not GameManager.using_multiplayer:
 			value -= brick_mass
 			var new_brick = brick_t.instantiate()

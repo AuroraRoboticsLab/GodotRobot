@@ -24,4 +24,7 @@ func _physics_process(_delta):
 
 func _process(_delta):
 	if Input.is_action_just_pressed("action1"):
-		toggle_spawning()
+		if GameManager.using_multiplayer and multiplayer.is_server():
+			toggle_spawning() # Only host can spawn dirt in multiplayer.
+		elif not GameManager.using_multiplayer:
+			toggle_spawning() # Can spawn dirt in local sessions.

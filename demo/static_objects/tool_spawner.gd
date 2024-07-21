@@ -53,6 +53,5 @@ func _spawn_new_tool(space_num, tool_scene, tool_trans):
 	new_tool.global_transform = tool_trans
 	get_parent().objects.add_child(new_tool, true)
 	if GameManager.using_multiplayer:
-		GameManager.add_object(new_tool, new_tool.path)
-		GameManager.new_object.emit(multiplayer.get_unique_id(), new_tool.path, new_tool.name)
+		GameManager.add_object(new_tool, new_tool.path, tool_trans)
 
