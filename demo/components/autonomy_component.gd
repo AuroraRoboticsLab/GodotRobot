@@ -10,41 +10,58 @@ func create_random_Vector3(vrange):
 
 var rand_pos = null
 var dir = Vector3.ZERO
-
-func _ready():
-	nav_agent.target_reached.connect(_target_reached)
-
+var total_target_time = 0.0
 var just_created = false
-func _process(_delta):
-	if not just_created and GameManager.is_npc:
+func _process(delta):
+	if (not just_created and GameManager.is_npc) or total_target_time > 60.0:
 		have_arrived = false
-		rand_pos = create_random_Vector3(10)
+		rand_pos = create_random_Vector3(9)
 		nav_agent.set_target_position(rand_pos)
+		if total_target_time > 60.0:
+			print("Time > 1 minute. Giving up on target.")
+		total_target_time = 0.0
 		just_created = true
-	elif not GameManager.is_npc:
-		just_created = false
+	else:
+		total_target_time += delta
 
-func _physics_process(_delta):
+var havent_moved_time = 0.0
+var prev_local_dest = Vector3.ZERO
+var prev_dir = Vector3.ZERO
+func _physics_process(delta):
 	if not GameManager.is_npc or not rand_pos:
 		return
 	var dest = nav_agent.get_next_path_position()
 	var local_dest = dest - subject.global_position
+	if (local_dest-prev_local_dest).length_squared() < 0.15 and dir.dot(prev_dir) > 0.95:
+		# We haven't moved very far
+		havent_moved_time += delta
+	else:
+		prev_local_dest = local_dest
+		prev_dir = dir
+		havent_moved_time = 0.0
+	if havent_moved_time > 7.0:
+		try_get_unstuck(delta, local_dest)
+	
 	dir = local_dest.normalized()
-	if abs(local_dest.x) < 0.4 and abs(local_dest.y) < 0.4 and abs(local_dest.z) < 0.4:
+	if local_dest.length() < 0.7:
 		_target_reached()
 
+func try_get_unstuck(delta, local_dest):
+	subject.linear_velocity += Vector3(0, 1.8*delta, 0)
+	subject.linear_velocity += local_dest*delta*1.5
+
 var have_arrived = false
+@onready var targets_reached = 0
 func _target_reached():
 	print("Target reached!")
 	just_created = false
 	have_arrived = true
+	targets_reached += 1
+	print("Total targets reached: ", targets_reached)
 
 # Called when asking for drive direction, from -1 to 1
 var do_drive = false
 func get_drive():
-	var my_dir = -subject.transform.basis.z.normalized()
-	if my_dir.dot(subject.linear_velocity.normalized()) < -0.9:
-		return 0
 	if not have_arrived and do_drive:
 		return -1
 	else:
@@ -56,7 +73,7 @@ func get_steer():
 		var my_dir = -subject.transform.basis.z.normalized()
 		var dir_cross = my_dir.cross(dir)
 		var dir_dot = my_dir.dot(dir)
-		if dir_dot > 0.8:
+		if dir_dot > 0.9:
 			do_drive = true
 		else:
 			do_drive = false

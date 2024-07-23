@@ -112,6 +112,7 @@ func _physics_process(_delta):
 			return # We don't have a UI if we aren't in the game!
 	
 	$UI.ball_count = $"Terrain/Dirtballs".get_child_count()
+	$UI.targets_reached = robot.auto_component.targets_reached
 	$UI.fps = $"FPS Counter".fps
 	spawn.spawn_rate = $UI.spawn_rate
 	$UI.charging = robot.charge_component.charging

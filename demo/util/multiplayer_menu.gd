@@ -9,7 +9,7 @@ var peer: ENetMultiplayerPeer = null
 var scene: Node = null
 @onready var main_scene: PackedScene = load("res://levels/main3D.tscn")
 
-var debugging_console_host = true
+var debugging_console_host = false
 
 func _ready():
 	multiplayer.set_multiplayer_peer(null)

@@ -116,7 +116,17 @@ func _physics_process(delta):
 	if can_input and not charge_component.is_dead:
 		drive_force = drive_input * DRIVE_FORCE_MULT * delta * engine_force_multiplier
 		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
-		
+	
+	
+	var my_dir = -transform.basis.z.normalized()
+	var my_vel = linear_velocity.normalized()
+	if not linear_velocity.length_squared() < 0.01 and my_dir.dot(my_vel) < -0.9 and drive_input < 0:
+		# We're trying to go forwards but are moving backwards
+		drive_force = 0
+	if not linear_velocity.length_squared() < 0.01 and my_dir.dot(my_vel) > 0.9 and drive_input > 0:
+		# We're trying to go backwards but are moving forwards
+		drive_force = 0
+	
 	left_front_wheel.engine_force  = drive_force + steer_force
 	left_back_wheel.engine_force = drive_force + steer_force
 	right_front_wheel.engine_force = drive_force - steer_force

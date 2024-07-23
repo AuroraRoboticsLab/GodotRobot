@@ -39,6 +39,16 @@ text = "FPS:"
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="TargetsReachedLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "AI Targets Reached: "
+
+[node name="TargetsReached" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "0"
+
 [node name="BallCountLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 3

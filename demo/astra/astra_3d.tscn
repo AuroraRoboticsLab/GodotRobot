@@ -45,7 +45,7 @@ shape = SubResource("BoxShape3D_g2gd1")
 
 [node name="FrontLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, -0.495)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -63,7 +63,7 @@ surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -81,7 +81,7 @@ surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="BackLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -99,7 +99,7 @@ surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="BackRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6

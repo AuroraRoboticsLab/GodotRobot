@@ -14,6 +14,7 @@ extends CanvasLayer
 @onready var fps = 60
 @onready var dirtballs_in_bucket: int = 0
 @onready var dirtballs_in_hopper: int = 0
+@onready var targets_reached: int = 0
 
 # Code from Godot forums
 func round_to_dec(num, digit):
@@ -36,6 +37,7 @@ func _process(_delta):
 	$CenterContainer/PressToAttach.visible = can_attach
 	
 	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
+	$PanelContainer/VBoxContainer/GridContainer/TargetsReached.text = str(targets_reached)
 	$PanelContainer/VBoxContainer/GridContainer/BallCount.text = str(ball_count)
 	$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
 	$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
