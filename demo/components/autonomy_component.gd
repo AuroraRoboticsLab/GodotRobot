@@ -13,7 +13,7 @@ var dir = Vector3.ZERO
 var total_target_time = 0.0
 var just_created = false
 func _process(delta):
-	if (not just_created and GameManager.is_npc) or total_target_time > 60.0:
+	if GameManager.is_npc and (not just_created or total_target_time > 60.0):
 		have_arrived = false
 		rand_pos = create_random_Vector3(9)
 		nav_agent.set_target_position(rand_pos)
