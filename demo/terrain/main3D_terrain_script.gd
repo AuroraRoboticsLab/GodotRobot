@@ -1,5 +1,5 @@
 @tool   #<- allows you to see terrain in editor, though has weird side effects
-extends Node3D
+extends NavigationRegion3D
 
 @onready var spawn = $Dirtballs
 @onready var despawn = $DirtballDespawn

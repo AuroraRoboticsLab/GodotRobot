@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbhvaxh4k0aux"]
+
+[ext_resource type="Script" path="res://components/autonomy_component.gd" id="1_p14v6"]
+
+[node name="AutonomyComponent" type="Node3D"]
+script = ExtResource("1_p14v6")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true

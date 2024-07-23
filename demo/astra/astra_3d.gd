@@ -18,7 +18,8 @@ const DRIVE_FORCE_MULT = 1200
 @onready var start_stall: float = 0
 
 @onready var tp_height: float = 1.0
-@export var is_npc: bool = false
+
+@onready var auto_component = $AutonomyComponent
 
 @onready var cam_load = preload("res://components/movable_camera_3d.tscn")
 @onready var cam_scene = null
@@ -27,13 +28,15 @@ var spawn_trans = null
 
 var can_input: bool = true
 
-var nametag_text: String = "unnamed robot":
+@export var nametag_text: String = "unnamed robot":
 	get:
 		return $Nametag.text
 	set(value):
 		$Nametag.text = value
 
 func _ready():
+	arm.auto_component = auto_component
+	
 	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 	
@@ -41,7 +44,7 @@ func _ready():
 	
 	if GameManager.using_multiplayer:
 		$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
-		if not is_npc and $MultiplayerSynchronizer.is_multiplayer_authority():
+		if $MultiplayerSynchronizer.is_multiplayer_authority():
 			cam_scene = cam_load.instantiate()
 			add_child(cam_scene)
 			$Nametag.visible = false # We don't want to see our own nametag
@@ -57,6 +60,7 @@ func toggle_inputs(in_bool = null):
 		can_input = in_bool
 
 func _network_process(_delta):
+	# This client is a player we do not control
 	if not $MultiplayerSynchronizer.is_multiplayer_authority():
 		var player_data = GameManager.get_player_data(str(name).to_int())
 		if not player_data:
@@ -94,7 +98,7 @@ func _physics_process(delta):
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if Input.is_action_pressed("shift") and can_input:
+	if Input.is_action_pressed("shift") and can_input and not GameManager.is_npc:
 		engine_force_multiplier = sqrt(abs(movement_speed))/1.5 + 2
 	
 	const max_turn_force = 15.0 # Starting (and max) turn force
@@ -105,9 +109,13 @@ func _physics_process(delta):
 	# Calculate drive and steer forces.
 	var drive_force = 0
 	var steer_force = 0
+	
+	var drive_input = Input.get_axis("forward", "backward") if not GameManager.is_npc else auto_component.get_drive()
+	var steer_input = Input.get_axis("right", "left") if not GameManager.is_npc else auto_component.get_steer()
+	
 	if can_input and not charge_component.is_dead:
-		drive_force = Input.get_axis("forward", "backward") * DRIVE_FORCE_MULT * delta * engine_force_multiplier
-		steer_force = Input.get_axis("right", "left") * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
+		drive_force = drive_input * DRIVE_FORCE_MULT * delta * engine_force_multiplier
+		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 		
 	left_front_wheel.engine_force  = drive_force + steer_force
 	left_back_wheel.engine_force = drive_force + steer_force
@@ -141,7 +149,7 @@ func _physics_process(delta):
 	charge_component.change_charge(-power_spent * delta)
 	
 	# Fly away when pressing space
-	if Input.is_action_just_pressed("jump") and can_input:
+	if Input.is_action_just_pressed("jump") and can_input and not GameManager.is_npc:
 		linear_velocity = Vector3.ZERO
 		global_position += Vector3(0, tp_height, 0)
 

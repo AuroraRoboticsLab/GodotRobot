@@ -21,10 +21,16 @@ func round_to_dec(num, digit):
 
 func _ready():
 	$VersionLabel.text = str(GameManager.version)
+	
 	if not GameManager.using_multiplayer:
 		%ToggleChatButton.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control5.hide()
 		$ChatContainer.hide()
+	
+	if GameManager.is_npc:
+		%ToggleNPC.text = "Autopilot (ON)"
+	else:
+		%ToggleNPC.text = "Autopilot (OFF)"
 
 func _process(_delta):
 	$CenterContainer/PressToAttach.visible = can_attach
@@ -125,3 +131,10 @@ func _on_chat_text_edit_focus_exited():
 func _on_click_control_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		%ChatTextEdit.release_focus()
+
+func _on_toggle_npc_pressed():
+	GameManager.is_npc = !GameManager.is_npc
+	if GameManager.is_npc:
+		%ToggleNPC.text = "Autopilot (ON)"
+	else:
+		%ToggleNPC.text = "Autopilot (OFF)"

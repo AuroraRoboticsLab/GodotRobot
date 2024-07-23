@@ -364,6 +364,18 @@ size_flags_horizontal = 3
 theme_type_variation = &"SmallButton"
 text = "Hide Chat Window"
 
+[node name="Control7" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="ToggleNPC" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"SmallButton"
+text = "Autopilot (OFF)"
+
 [node name="Control2" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -443,6 +455,7 @@ vertical_alignment = 2
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleChatButton" to="." method="_on_toggle_chat_button_pressed"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleNPC" to="." method="_on_toggle_npc_pressed"]
 [connection signal="focus_entered" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_entered"]
 [connection signal="focus_exited" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_exited"]
 [connection signal="text_submitted" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_text_submitted"]

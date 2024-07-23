@@ -12,6 +12,8 @@ extends Node3D
 @onready var tool_coupler_component = $Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent
 @onready var is_dead: bool = false
 
+@onready var auto_component = null
+
 var can_input: bool = true
 
 func _ready():
@@ -62,9 +64,16 @@ func _physics_process(delta):
 	var bollard_force = 0
 	var tilt_force = 0
 	if can_input and not is_dead:
-		arm_force = Input.get_axis("arm_up", "arm_down") * MOTOR_MULT * 1.5
-		bollard_force = Input.get_axis("bollard_curl", "bollard_dump") * MOTOR_MULT * 1.5
-		tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
+		var arm_inputs = [0, 0, 0]
+		if not GameManager.is_npc:
+			arm_inputs[0] = Input.get_axis("arm_up", "arm_down")
+			arm_inputs[1] = Input.get_axis("bollard_curl", "bollard_dump")
+			arm_inputs[2] = Input.get_axis("tilt_left", "tilt_right")
+		else:
+			arm_inputs = auto_component.get_arm_inputs()
+		arm_force = arm_inputs[0] * MOTOR_MULT * 1.5
+		bollard_force = arm_inputs[1] * MOTOR_MULT * 1.5
+		tilt_force = arm_inputs[2] * MOTOR_MULT
 	
 	arm_joint.move_motor(arm_force) if abs(arm_force) > 0 else arm_joint.stop_motor()
 	bollard_joint.move_motor(bollard_force) if abs(bollard_force) > 0 else bollard_joint.stop_motor()
@@ -74,5 +83,10 @@ func _physics_process(delta):
 	get_parent().charge_component.change_charge(-power_spent * delta)
 	
 	# Tool attachment/detachment
-	if Input.is_action_just_pressed("generic_action") and can_input: 
+	var attach_input = null
+	if not GameManager.is_npc:
+		attach_input = Input.is_action_just_pressed("generic_action")
+	else:
+		auto_component.get_toggle_attach()
+	if attach_input and can_input: 
 		tool_coupler_component.try_toggle_attach()
