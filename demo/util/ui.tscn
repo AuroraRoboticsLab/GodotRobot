@@ -152,7 +152,6 @@ layout_mode = 2
 text = "Press E to attach"
 
 [node name="SettingsMenu" type="PanelContainer" parent="."]
-visible = false
 anchors_preset = -1
 anchor_left = 0.125
 anchor_top = 0.125
@@ -314,6 +313,17 @@ size_flags_vertical = 4
 value = 1.0
 step_size = 0.5
 
+[node name="HBoxContainer5" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+
+[node name="InvertCameraLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Invert Camera Y-Axis? "
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -440,6 +450,7 @@ vertical_alignment = 2
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
+[connection signal="toggled" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer5/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleChatButton" to="." method="_on_toggle_chat_button_pressed"]

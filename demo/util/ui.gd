@@ -14,6 +14,7 @@ extends CanvasLayer
 @onready var fps = 60
 @onready var dirtballs_in_bucket: int = 0
 @onready var dirtballs_in_hopper: int = 0
+@onready var invert_cam: bool = false
 
 # Code from Godot forums
 func round_to_dec(num, digit):
@@ -62,6 +63,10 @@ func _on_vert_sens_slider_value_changed(value):
 func _on_horiz_sens_slider_value_changed(value):
 	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensValLabel.text = str(value)
 	h_cam_sens = value
+
+# Invert camera checkbox
+func _on_check_box_toggled(toggled_on):
+	invert_cam = toggled_on
 	
 func _on_tp_height_tick_button_value_changed(value):
 	tp_height = value

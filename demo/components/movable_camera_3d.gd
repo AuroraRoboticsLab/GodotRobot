@@ -9,6 +9,14 @@ var cam_v_max = 75 # Max vertical camera angle (lower bound)
 var cam_v_min = -75 # Min vertical camera angle (upper bound)
 @onready var h_sens = 0.1 # Horizontal sensitivity
 @onready var v_sens = 0.1 # Vertical sensitivity
+var invert_mult = 1
+@onready var invert_cam: bool = false:
+	set(value):
+		if value:
+			invert_mult = -1
+		else:
+			invert_mult = 1
+		invert_cam = value
 var h_accel = 10
 var v_accel = 10
 @onready var cam_h = $Horizontal
@@ -36,9 +44,20 @@ func toggle_inputs(in_bool = null):
 func _input(event):
 	if Input.is_action_pressed("right_click") and can_input and not cam_locked and event is InputEventMouseMotion:
 		camrot_h -= event.relative.x * h_sens
-		camrot_v -= event.relative.y * v_sens
+		camrot_v -= event.relative.y * v_sens * invert_mult
 
+const SENS_MULT = 5
 func _physics_process(delta):
+	if can_input and not cam_locked:
+		if Input.is_action_pressed("dpad_up"):
+			camrot_v -= v_sens * SENS_MULT * invert_mult
+		if Input.is_action_pressed("dpad_down"):
+			camrot_v += v_sens * SENS_MULT * invert_mult
+		if Input.is_action_pressed("dpad_left"):
+			camrot_h -= h_sens * SENS_MULT
+		if Input.is_action_pressed("dpad_right"):
+			camrot_h += h_sens * SENS_MULT
+	
 	# Camera movement logic
 	camrot_v = clamp(camrot_v, cam_v_min, cam_v_max)
 	cam_h.rotation_degrees.y = lerp(cam_h.rotation_degrees.y, camrot_h, delta * h_accel)
