@@ -7,5 +7,5 @@ script = ExtResource("1_p14v6")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.8
-path_max_distance = 3.01
+path_max_distance = 1.01
 debug_enabled = true

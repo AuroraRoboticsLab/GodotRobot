@@ -77,10 +77,15 @@ func get_steer():
 			do_drive = true
 		else:
 			do_drive = false
-		if dir_cross.y < 0: # Turn right
+		if dir_cross.y < -0.02: # Turn right
 			return -1
-		elif dir_cross.y >= 0: #Turn left
+		elif dir_cross.y > 0.02: #Turn left
 			return 1
+		else:
+			if dir_dot > 0.9:
+				return 0
+			else:
+				return 1
 
 		#return clampf(dir_cross.y, -1, 1)
 	else:
