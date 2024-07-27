@@ -95,7 +95,8 @@ func _input(event: InputEvent) -> void:
 	elif current_button in controller_buttons and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		if event is InputEventJoypadMotion and abs(event.axis_value) < 0.5:
 			return # Controller binding deadzone for joysticks
-		event.axis_value = 1.0 if event.axis_value > 0 else -1.0 # Make sure we bind with full strenght
+		if event is InputEventJoypadMotion:
+			event.axis_value = 1.0 if event.axis_value > 0 else -1.0 # Make sure we bind with full strenght
 		var curr_event = null
 		for set_event in InputMap.action_get_events(curr_action):
 			if set_event is InputEventJoypadButton or set_event is InputEventJoypadMotion:
