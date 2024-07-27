@@ -30,6 +30,7 @@ script = ExtResource("4_8seck")
 
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
 offset_left = -3108.0
 offset_top = -3108.0
 offset_right = 3108.0
