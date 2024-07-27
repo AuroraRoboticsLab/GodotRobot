@@ -2,7 +2,9 @@ extends Control
 # NOTE: If hosting a server from the console, be sure to
 # add the tags --host AND --headless.
 
-@export var address   = "127.0.0.1"
+@export var address   = "127.0.0.1":
+	set(value):
+		address = IP.resolve_hostname(value)
 @export var port: int = 31415 # Pi!
 
 var peer: ENetMultiplayerPeer = null

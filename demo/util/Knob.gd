@@ -11,7 +11,7 @@ func _ready():
 	max_length *= joystick.scale.x
 	deadzone *= joystick.scale.x
 
-func _process(delta):
+func _process(_delta):
 	if not pressing:
 		joystick.pos_vector = Vector2.ZERO
 		global_position = lerp(global_position, joystick.global_position, 0.5)
