@@ -116,6 +116,7 @@ func _send_chat_message(message):
 	%ChatVBox.add_child(new_message_label)
 	await get_tree().process_frame
 	await get_tree().process_frame
+	print(message) # Print the chat in the console
 	%ScrollContainer.ensure_control_visible(new_message_label)
 
 func _on_send_message_timer_timeout():

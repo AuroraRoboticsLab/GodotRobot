@@ -20,6 +20,10 @@ var actions = ["arm_up",
 			   "action1",
 			   "jump",
 			   "shift",
+			   "dpad_up",
+			   "dpad_down",
+			   "dpad_left",
+			   "dpad_right",
 			  ]
 var keyboard_buttons   = []
 var controller_buttons = []
@@ -75,8 +79,7 @@ func _input(event: InputEvent) -> void:
 	if all_input_events.keys().has(event.as_text()):
 		InputMap.action_erase_event(all_input_events[event.as_text()], event)
 	
-	# This part is where the actual remapping occurs:
-	# Erase the key event in the Input map
+	# We are binding on a keyboard
 	if current_button in keyboard_buttons and event is InputEventKey:
 		var curr_event = null
 		for set_event in InputMap.action_get_events(curr_action):
@@ -88,15 +91,22 @@ func _input(event: InputEvent) -> void:
 		# Assign the new event to it
 		InputMap.action_add_event(curr_action, event)
 		print("to: ", event.as_text())
+	# We are binding on a controller
 	elif current_button in controller_buttons and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
+		if event is InputEventJoypadMotion and abs(event.axis_value) < 0.5:
+			return # Controller binding deadzone for joysticks
+		event.axis_value = 1.0 if event.axis_value > 0 else -1.0 # Make sure we bind with full strenght
 		var curr_event = null
 		for set_event in InputMap.action_get_events(curr_action):
-			if set_event is InputEventJoypadButton or event is InputEventJoypadMotion:
+			if set_event is InputEventJoypadButton or set_event is InputEventJoypadMotion:
 				curr_event = set_event
+				print("Event changed from: ", curr_event.as_text())
+				break
 		if curr_event:
 			InputMap.action_erase_event(curr_action, curr_event)
 		# Assign the new event to it
 		InputMap.action_add_event(curr_action, event)
+		print("to: ", event.as_text())
 	
 	current_button = null
 	set_bind_panel.hide()

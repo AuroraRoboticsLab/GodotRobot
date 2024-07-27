@@ -429,6 +429,86 @@ layout_mode = 2
 theme_type_variation = &"SmallButton"
 text = "N/A"
 
+[node name="Label20" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Camera Up"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CameraUp" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="CameraUp2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="Label21" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Camera Down"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CameraDown" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="CameraDown2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="Label22" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Camera Left"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CameraLeft" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="CameraLeft2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="Label23" type="Label" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Camera Right"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CameraRight" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
+[node name="CameraRight2" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/KeybindGrid"]
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "N/A"
+
 [node name="Control2" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
