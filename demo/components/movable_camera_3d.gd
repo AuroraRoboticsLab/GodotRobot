@@ -42,9 +42,10 @@ func toggle_inputs(in_bool = null):
 		can_input = in_bool
 
 func _input(event):
-	if Input.is_action_pressed("right_click") and can_input and not cam_locked and event is InputEventMouseMotion:
-		camrot_h -= event.relative.x * h_sens
-		camrot_v -= event.relative.y * v_sens * invert_mult
+	if can_input and not cam_locked and event is InputEventMouseMotion:
+		if Input.is_action_pressed("right_click") or (OS.get_name() == "Android" and Input.is_action_pressed("left_click")):
+			camrot_h -= event.relative.x * h_sens
+			camrot_v -= event.relative.y * v_sens * invert_mult
 
 const SENS_MULT = 5
 func _physics_process(delta):

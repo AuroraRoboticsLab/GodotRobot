@@ -17,6 +17,8 @@ const DRIVE_FORCE_MULT = 1200
 @onready var stalling: bool = false
 @onready var start_stall: float = 0
 
+@onready var ext_input = null
+
 @onready var tp_height: float = 1.0
 @export var is_npc: bool = false
 
@@ -106,9 +108,15 @@ func _physics_process(delta):
 	var drive_force = 0
 	var steer_force = 0
 	var drive_input = Input.get_axis("forward", "backward")
+	var steer_input = Input.get_axis("right", "left")
+	
+	if ext_input:
+		drive_input = ext_input.y
+		steer_input = -ext_input.x
+		
 	if can_input and not charge_component.is_dead:
 		drive_force = drive_input * DRIVE_FORCE_MULT * delta * engine_force_multiplier
-		steer_force = Input.get_axis("right", "left") * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
+		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 	
 	var my_dir = -transform.basis.z.normalized()
 	var my_vel = linear_velocity.normalized()

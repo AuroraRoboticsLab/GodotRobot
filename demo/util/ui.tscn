@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c73kovjg5pcd3"]
+[gd_scene load_steps=9 format=3 uid="uid://c73kovjg5pcd3"]
 
 [ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://util/tick_button.tscn" id="4_0yspv"]
 [ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://graphics/leave_game_icon.png" id="4_cx4nv"]
 [ext_resource type="PackedScene" uid="uid://n5ok5lg8v2ph" path="res://util/keybinds_menu.tscn" id="7_nuj1q"]
+[ext_resource type="PackedScene" uid="uid://dah0pyxlluldj" path="res://util/joystick.tscn" id="8_ck3hr"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1j2nn")
@@ -109,6 +110,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RightJoystick" parent="." instance=ExtResource("8_ck3hr")]
+visible = false
+anchor_left = 0.72
+anchor_top = 0.276
+anchor_right = 0.974
+anchor_bottom = 0.727
+offset_left = 237.6
+offset_top = 241.92
+offset_right = -250.08
+offset_bottom = -245.16
+scale = Vector2(0.08, 0.08)
+
+[node name="LeftJoystick" parent="." instance=ExtResource("8_ck3hr")]
+visible = false
+anchor_left = 0.019
+anchor_top = 0.265
+anchor_right = 0.291
+anchor_bottom = 0.744
+offset_left = 263.52
+offset_top = 253.8
+offset_right = -258.72
+offset_bottom = -263.52
+scale = Vector2(0.08, 0.08)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 1
@@ -300,6 +325,40 @@ value = 2.5
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="MobileJoystickSizeLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"MediumLabel"
+text = "Mobile Joystick Size:"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MobileUILabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_type_variation = &"MediumLabel"
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MobileUISlider" type="HSlider" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+
+[node name="Control" type="Control" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 
@@ -450,6 +509,7 @@ vertical_alignment = 2
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensSlider" to="." method="_on_zoom_sens_slider_value_changed"]
+[connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6/MobileUISlider" to="." method="_on_mobile_ui_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
 [connection signal="toggled" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer5/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]

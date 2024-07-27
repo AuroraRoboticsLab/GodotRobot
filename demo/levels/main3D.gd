@@ -129,6 +129,11 @@ func _physics_process(_delta):
 	else:
 		$UI.dirtballs_in_bucket = 0
 	$UI.dirtballs_in_hopper = robot.hopper.inside_hopper.num_dirtballs
+	
+	if OS.get_name() == "Android":
+		robot.cam_scene.cam_locked = $UI.cam_locked
+		robot.ext_input = $UI.left_joystick.get_axis()
+		robot.arm.ext_input = $UI.right_joystick.get_axis()
 
 func _on_fallen_area_3d_body_entered(body):
 	body.global_transform = $"PlayerSpawnpoints/0".global_transform

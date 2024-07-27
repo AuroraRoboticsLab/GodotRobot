@@ -15,12 +15,21 @@ extends CanvasLayer
 @onready var dirtballs_in_bucket: int = 0
 @onready var dirtballs_in_hopper: int = 0
 @onready var invert_cam: bool = false
+@onready var left_joystick = $LeftJoystick
+@onready var right_joystick = $RightJoystick
+@onready var cam_locked: bool = false
 
 # Code from Godot forums
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
 func _ready():
+	if OS.get_name() == "Android":
+		left_joystick.show()
+		right_joystick.show()
+		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MobileJoystickSizeLabel.show()
+		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6.show()
+	
 	$VersionLabel.text = str(GameManager.version)
 	if not GameManager.using_multiplayer:
 		%ToggleChatButton.hide()
@@ -28,6 +37,12 @@ func _ready():
 		$ChatContainer.hide()
 
 func _process(_delta):
+	# Lock the camera when using joysticks in mobile
+	if left_joystick.knob.pressing or right_joystick.knob.pressing:
+		cam_locked = true
+	else:
+		cam_locked = false
+	
 	$CenterContainer/PressToAttach.visible = can_attach
 	
 	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
@@ -131,3 +146,9 @@ func _on_chat_text_edit_focus_exited():
 func _on_click_control_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		%ChatTextEdit.release_focus()
+
+func _on_mobile_ui_slider_value_changed(value):
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6/MobileUILabel.text = str(value)
+	var scale_val = 0.08 * value
+	left_joystick.scale = Vector2(scale_val, scale_val)
+	right_joystick.scale = Vector2(scale_val, scale_val)

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhyrfdicoe5qq"
 path.s3tc="res://.godot/imported/rock_lump_normal_atlas.jpg-5651854823971de5f2d270ad317c1503.s3tc.ctex"
+path.etc2="res://.godot/imported/rock_lump_normal_atlas.jpg-5651854823971de5f2d270ad317c1503.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://terrain/rocks/rock_lump_normal_atlas.jpg"
-dest_files=["res://.godot/imported/rock_lump_normal_atlas.jpg-5651854823971de5f2d270ad317c1503.s3tc.ctex"]
+dest_files=["res://.godot/imported/rock_lump_normal_atlas.jpg-5651854823971de5f2d270ad317c1503.s3tc.ctex", "res://.godot/imported/rock_lump_normal_atlas.jpg-5651854823971de5f2d270ad317c1503.etc2.ctex"]
 
 [params]
 
