@@ -7,6 +7,7 @@ extends CanvasLayer
 @export var cam_zoom_sens: float = 2.5
 @export var tp_height: float = 1.0
 
+@onready var robot = null
 @onready var can_attach: bool = false
 @onready var stalling: bool = false
 @onready var charging: bool = false
@@ -43,6 +44,12 @@ func _process(_delta):
 		cam_locked = true
 	else:
 		cam_locked = false
+	
+	# Toggle command window
+	if Input.is_action_just_pressed("f1"):
+		if GameManager.using_multiplayer and not multiplayer.is_server():
+			return
+		$CommandLineEdit.visible = !$CommandLineEdit.visible
 	
 	$CenterContainer/PressToAttach.visible = can_attach
 	
@@ -147,6 +154,7 @@ func _on_chat_text_edit_focus_exited():
 func _on_click_control_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
 		%ChatTextEdit.release_focus()
+		$CommandLineEdit.release_focus()
 
 func _on_mobile_ui_slider_value_changed(value):
 	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6/MobileUILabel.text = str(value)
@@ -159,3 +167,50 @@ func _on_mobile_button_1_button_down():
 
 func _on_mobile_button_1_button_up():
 	Input.action_release("generic_action")
+
+func _on_command_line_edit_text_submitted(new_text):
+	$CommandLineEdit.text = ""
+	var args = new_text.strip_edges().split(" ")
+	if args.size() > 0:
+		var command = args[0].to_lower()
+		match command:
+			"grav": # Modify gravity!
+				if args.size() == 2:
+					PhysicsServer3D.area_set_param(
+						get_viewport().find_world_3d().space,
+						PhysicsServer3D.AREA_PARAM_GRAVITY,
+						args[1]
+					)
+				else:
+					print("Error: 'grav' requires a float for gravity.")
+			"tp":
+				if not robot:
+					print("Error: No robot to teleport!")
+				if args.size() == 4:
+					var x = args[1]
+					if x == "~":
+						x = robot.global_position.x
+					else:
+						x = x.to_float()
+					var y = args[2]
+					if y == "~":
+						y = robot.global_position.y
+					else:
+						y = y.to_float()
+					var z = args[3]
+					if z == "~":
+						z = robot.global_position.z
+					else:
+						z = z.to_float()
+					print("Teleporting to ", x, ", ", y, ", ", z)
+					robot.global_position = Vector3(x, y, z)
+				else:
+					print("Error: 'tp' command requires x, y, and z coordinates.")
+			_:
+				print("Error: Unknown command: ", command)
+
+func _on_command_line_edit_focus_entered():
+	GameManager.toggle_inputs.emit(false)
+
+func _on_command_line_edit_focus_exited():
+	GameManager.toggle_inputs.emit(true)

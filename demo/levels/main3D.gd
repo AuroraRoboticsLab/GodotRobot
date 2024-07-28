@@ -111,6 +111,7 @@ func _physics_process(_delta):
 		if not robot:
 			return # We don't have a UI if we aren't in the game!
 	
+	$UI.robot = robot
 	$UI.ball_count = $"Terrain/Dirtballs".get_child_count()
 	$UI.fps = $"FPS Counter".fps
 	spawn.spawn_rate = $UI.spawn_rate

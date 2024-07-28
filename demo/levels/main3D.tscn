@@ -59,6 +59,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.427181, 2.06504, 2.12669)
 terrain = NodePath("../Terrain")
 
 [node name="UI" parent="." instance=ExtResource("7_s8ac7")]
+spawn_rate = 1
+charge_level = 100.0
+v_cam_sens = 0.1
+h_cam_sens = 0.1
+cam_zoom_sens = 2.5
+tp_height = 1.0
 
 [node name="PlayerSpawnpoints" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

@@ -111,6 +111,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="CommandLineEdit" type="LineEdit" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.028
+anchor_right = 0.812
+anchor_bottom = 0.083
+offset_left = 0.959991
+offset_top = -0.240002
+offset_right = 0.959961
+offset_bottom = 0.359993
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Enter command here"
+
 [node name="RightJoystick" parent="." instance=ExtResource("8_ck3hr")]
 visible = false
 anchor_left = 0.72
@@ -517,6 +531,9 @@ horizontal_alignment = 2
 vertical_alignment = 2
 
 [connection signal="gui_input" from="ClickControl" to="." method="_on_click_control_gui_input"]
+[connection signal="focus_entered" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_entered"]
+[connection signal="focus_exited" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_exited"]
+[connection signal="text_submitted" from="CommandLineEdit" to="." method="_on_command_line_edit_text_submitted"]
 [connection signal="button_down" from="MobileButton1" to="." method="_on_mobile_button_1_button_down"]
 [connection signal="button_up" from="MobileButton1" to="." method="_on_mobile_button_1_button_up"]
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
