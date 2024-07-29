@@ -1,6 +1,22 @@
 # GodotRobot
 Simple early proof of concept C++ robot simulation using Godot 4.2's GDExtension interface.
 
+## How to Host a Server
+
+To host the demo from a Linux server, run (at minimum) the following command:
+
+    ./Demo_GodotRobot.x86_64 --headless --host --address=YourLocalIPAddress
+
+Here are the flags available for use:
+* `--headless` disables the use of any windows, enabling console-only servers.
+* `--host` specifies that you are trying to host a server from the console.
+* `--address=YourLocalIPAddress` sets the server's IP (127.0.0.1 by default) (can use wildcard `*` to use all available interfaces).
+* `--game-version` prints out the sim's version number and exits the program.
+* `--port=YourPort` sets a custom port value (31415 by default).
+* `--max-players=PlayerNumberHere` sets the maximum number of players.
+* `--disable-chat` disables the chat for all connected users.
+
+
 ## Build Process
 
 To build this, start by downloading the [Godot 4.2.2 engine](https://godotengine.org/download/) for your machine.
