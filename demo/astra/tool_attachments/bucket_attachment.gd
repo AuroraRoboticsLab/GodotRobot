@@ -10,6 +10,7 @@ var rigid = self  # rigid body to grab velocity & forces
 var pushback_spread = 0.0 # spreads pushback over several physics frames
 
 func _ready():
+	center_of_mass = $CenterOfMass.position
 	if not terrain:
 		terrain = get_tree().root.get_node("main3D/Terrain/TerrainSim")
 

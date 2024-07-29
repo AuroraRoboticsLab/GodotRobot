@@ -42,6 +42,8 @@ func _ready():
 		address = arguments["address"]
 	if "maxplayers" in arguments:
 		GameManager.max_players = arguments["maxplayers"].to_int()
+	if "disable-chat" in arguments:
+		GameManager.using_chat = false
 	if "host" in arguments:
 		GameManager.using_multiplayer = true
 		host_game(true)

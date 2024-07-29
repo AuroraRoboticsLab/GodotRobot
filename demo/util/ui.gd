@@ -116,10 +116,11 @@ func _on_respawn_button_pressed():
 
 func _on_toggle_chat_button_pressed():
 	$ChatContainer.visible = !$ChatContainer.visible
+	GameManager.using_chat = $ChatContainer.visible # Disable chat if invisible
 	if $ChatContainer.visible:
-		%ToggleChatButton.text = "Hide Chat Window"
+		%ToggleChatButton.text = "Disable Chat Window"
 	else:
-		%ToggleChatButton.text = "Show Chat Window"
+		%ToggleChatButton.text = "Enable Chat Window"
 
 var enter_pressed = false
 func _on_chat_text_edit_text_submitted(new_text: String):
@@ -127,13 +128,27 @@ func _on_chat_text_edit_text_submitted(new_text: String):
 		return
 	var username = GameManager.get_player_username(multiplayer.get_unique_id())
 	if %ChatTextEdit.text != "":
-		_send_chat_message.rpc(str(username)+": "+new_text)
+		if multiplayer.is_server():
+			if GameManager.using_chat:
+				_send_chat_message.rpc(str(username)+": "+new_text)
+		else: # All chat messages go through the server.
+			_try_send_chat_message.rpc_id(1, multiplayer.get_unique_id(), str(username)+": "+new_text)
 		%ChatTextEdit.text = ""
 	enter_pressed = true
 	$ChatContainer/VBoxContainer/ChatTextEdit/SendMessageTimer.start()
 
+@rpc("any_peer")
+func _try_send_chat_message(sender_id, message):
+	if multiplayer.is_server():
+		if GameManager.using_chat:
+			_send_chat_message.rpc(message)
+		else:
+			_send_chat_message.rpc_id(sender_id, "Host has disabled chat!")
+
 @rpc("any_peer", "call_local")
 func _send_chat_message(message):
+	if not GameManager.using_chat:
+		return # No messages for those who have disabled chat!
 	var new_message_label = Label.new()
 	new_message_label.text = message
 	%ChatVBox.add_child(new_message_label)

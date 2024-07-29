@@ -17,8 +17,12 @@ size = Vector3(0.0762329, 0.35807, 0.0522823)
 [node name="ForkAttachment" type="RigidBody3D"]
 collision_layer = 20
 collision_mask = 23
+center_of_mass_mode = 1
 script = ExtResource("1_0reat")
 path = "res://astra/tool_attachments/fork/forks.tscn"
+
+[node name="CenterOfMass" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1707, -0.1447)
 
 [node name="ForksV7_L" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, -0.2, 0, 0.9)
