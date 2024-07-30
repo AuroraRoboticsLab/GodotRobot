@@ -73,8 +73,10 @@ func _physics_process(delta):
 		
 		arm_force = arm_input * MOTOR_MULT * 1.5
 		bollard_force = bollard_input * MOTOR_MULT * 1.5
-		if bollard_force == 0 and not arm_joint.stopped: # Auto-level bollard
-			bollard_force = -arm_force
+		if not arm_joint.stopped: # Auto-level bollard
+			bollard_force = clamp(bollard_force-arm_force, -MOTOR_MULT * 1.5, MOTOR_MULT * 1.5)
+			if bollard_force == 0: # We must be moving opposite the arm movement
+				bollard_force = bollard_input * MOTOR_MULT * 1.5
 		tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
 	
 	arm_joint.move_motor(arm_force) if abs(arm_force) > 0 else arm_joint.stop_motor()

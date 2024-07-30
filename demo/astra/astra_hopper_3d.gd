@@ -23,6 +23,8 @@ func _physics_process(_delta):
 	var hopper_force = 0
 	if can_input and not is_dead:
 		hopper_force = Input.get_axis("hopper_open", "hopper_close") * MOTOR_MULT
+	if hopper_force == 0: # Close hopper by default
+		hopper_force = MOTOR_MULT
 	
 	hopper_1.move_motor(hopper_force) if abs(hopper_force) > 0 else hopper_1.stop_motor()
 	hopper_2.move_motor(-hopper_force) if abs(hopper_force) > 0 else hopper_2.stop_motor()
