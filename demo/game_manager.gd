@@ -1,5 +1,5 @@
 extends Node
-const version="v0.3.2-alpha"
+const version="v0.3.3-alpha"
 
 var sync_data = {
 	"players":{},
