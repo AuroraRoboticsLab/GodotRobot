@@ -19,6 +19,7 @@ extends CanvasLayer
 @onready var left_joystick = $LeftJoystick
 @onready var right_joystick = $RightJoystick
 @onready var cam_locked: bool = false
+@onready var unsafe_mode: bool = false
 
 # Code from Godot forums
 func round_to_dec(num, digit):
@@ -110,9 +111,13 @@ func _on_keybind_menu_button_pressed():
 		$KeybindsMenu.show()
 
 func _on_respawn_button_pressed():
-	pass # Setting positions isn't working for some reason...
-	#print("Resetting to spawn")
-	#get_parent().robot.reset_to_spawn()
+	if not robot:
+		return
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	robot.linear_velocity = Vector3.ZERO
+	robot.angular_velocity = Vector3.ZERO
+	robot.global_transform = robot.spawn_trans
 
 func _on_toggle_chat_button_pressed():
 	$ChatContainer.visible = !$ChatContainer.visible
@@ -189,6 +194,23 @@ func _on_command_line_edit_text_submitted(new_text):
 	if args.size() > 0:
 		var command = args[0].to_lower()
 		match command:
+			"respawn":
+				_on_respawn_button_pressed()
+			"move": # Teleport relative to our current location
+				if not robot:
+					print("Error: No robot to teleport!")
+				if args.size() == 4:
+					var x = args[1].to_float()
+					var y = args[2].to_float()
+					var z = args[3].to_float()
+					print("Moving to ", x, ", ", y, ", ", z)
+					await get_tree().physics_frame
+					await get_tree().physics_frame
+					robot.global_position += Vector3(x, y, z)
+					robot.linear_velocity = Vector3.ZERO
+					robot.angular_velocity = Vector3.ZERO
+				else:
+					print("Error: 'move' command requires x, y, and z coordinates.")
 			"grav": # Modify gravity!
 				if args.size() == 2:
 					PhysicsServer3D.area_set_param(
@@ -198,7 +220,7 @@ func _on_command_line_edit_text_submitted(new_text):
 					)
 				else:
 					print("Error: 'grav' requires a float for gravity.")
-			"tp":
+			"tp": # Teleport to a location
 				if not robot:
 					print("Error: No robot to teleport!")
 				if args.size() == 4:
@@ -218,9 +240,13 @@ func _on_command_line_edit_text_submitted(new_text):
 					else:
 						z = z.to_float()
 					print("Teleporting to ", x, ", ", y, ", ", z)
+					await get_tree().physics_frame
+					await get_tree().physics_frame
 					robot.global_position = Vector3(x, y, z)
+					robot.linear_velocity = Vector3.ZERO
+					robot.angular_velocity = Vector3.ZERO
 				else:
-					print("Error: 'tp' command requires x, y, and z coordinates.")
+					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
 			_:
 				print("Error: Unknown command: ", command)
 
@@ -229,3 +255,10 @@ func _on_command_line_edit_focus_entered():
 
 func _on_command_line_edit_focus_exited():
 	GameManager.toggle_inputs.emit(true)
+
+func _on_toggle_unsafe_mode_pressed():
+	unsafe_mode = !unsafe_mode
+	if unsafe_mode:
+		%ToggleUnsafeMode.text = "Disable Unsafe Mode"
+	else:
+		%ToggleUnsafeMode.text = "Enable Unsafe Mode"

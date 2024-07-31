@@ -14,6 +14,7 @@ extends Node3D
 @onready var tool_coupler_component = $Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent
 @onready var is_dead: bool = false
 
+@onready var unsafe_mode: bool = false
 var can_input: bool = true
 
 func _ready():
@@ -78,6 +79,14 @@ func _physics_process(delta):
 			if bollard_force == 0: # We must be moving opposite the arm movement
 				bollard_force = bollard_input * MOTOR_MULT * 1.5
 		tilt_force = Input.get_axis("tilt_left", "tilt_right") * MOTOR_MULT
+	
+		# Some tools will want to move slower for more precision
+		var tool = tool_coupler_component.current_attachment
+		if not unsafe_mode and tool and tool.has_method("get_speed_mod"):
+			var speed_mod = tool.get_speed_mod()
+			arm_force *= speed_mod
+			bollard_force *= speed_mod
+			tilt_force *= speed_mod
 	
 	arm_joint.move_motor(arm_force) if abs(arm_force) > 0 else arm_joint.stop_motor()
 	bollard_joint.move_motor(bollard_force) if abs(bollard_force) > 0 else bollard_joint.stop_motor()
