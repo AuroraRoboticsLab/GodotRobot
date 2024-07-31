@@ -30,7 +30,7 @@ func _physics_process(_delta):
 			for xi in range(0,10):
 				var x = xi * 0.1
 				var world = xf * Vector3(x,0,0) # move along cutting edge 
-				var spawn_offset = Vector3(0,0.15,0) # shift new dirtballs off the ground (into bucket)
+				var spawn_offset = Vector3(0,0.15,0) # shift new dirtballs into bucket
 				var spawn_vel = Vector3(0,0.2,0) # new dirtballs need to fly upward
 				var weight = terrain.excavate_point(world,spawn_offset,spawn_vel)
 				pushback += weight

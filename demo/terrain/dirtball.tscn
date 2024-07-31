@@ -27,3 +27,9 @@ shape = SubResource("BoxShape3D_c3r5l")
 
 [node name="RockLump1" parent="." instance=ExtResource("2_y5onx")]
 transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
