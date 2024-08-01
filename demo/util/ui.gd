@@ -182,12 +182,6 @@ func _on_mobile_ui_slider_value_changed(value):
 	left_joystick.scale = Vector2(scale_val, scale_val)
 	right_joystick.scale = Vector2(scale_val, scale_val)
 
-func _on_mobile_button_1_button_down():
-	Input.action_press("generic_action")
-
-func _on_mobile_button_1_button_up():
-	Input.action_release("generic_action")
-
 func _on_command_line_edit_text_submitted(new_text):
 	$CommandLineEdit.text = ""
 	var args = new_text.strip_edges().split(" ")
