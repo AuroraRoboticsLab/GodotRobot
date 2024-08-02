@@ -1,17 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://c73kovjg5pcd3"]
+[gd_scene load_steps=9 format=3 uid="uid://c73kovjg5pcd3"]
 
 [ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
 [ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="3_bbais"]
 [ext_resource type="Theme" uid="uid://b0sf7fmx7al7i" path="res://util/theme.tres" id="3_qlyme"]
 [ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://util/tick_button.tscn" id="4_0yspv"]
-[ext_resource type="Texture2D" uid="uid://dgnhp8fxapvhf" path="res://graphics/E_Button.png" id="4_147h2"]
 [ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://graphics/leave_game_icon.png" id="4_cx4nv"]
 [ext_resource type="PackedScene" uid="uid://n5ok5lg8v2ph" path="res://util/keybinds_menu.tscn" id="7_nuj1q"]
 [ext_resource type="PackedScene" uid="uid://dah0pyxlluldj" path="res://util/joystick.tscn" id="8_ck3hr"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fwe3"]
-size = Vector2(150, 100)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1j2nn")
@@ -153,14 +149,19 @@ offset_right = -258.72
 offset_bottom = -263.52
 scale = Vector2(0.08, 0.08)
 
-[node name="MobileButton1" type="TouchScreenButton" parent="."]
+[node name="MobileButton1" type="Button" parent="."]
 visible = false
-position = Vector2(780, 713)
+anchors_preset = -1
+anchor_left = 0.498
+anchor_top = 0.743
+anchor_right = 0.498
+anchor_bottom = 0.743
+offset_left = -136.16
+offset_top = -107.44
+offset_right = -31.16
+offset_bottom = -19.4401
 scale = Vector2(2.60714, 2.43011)
-texture_normal = ExtResource("4_147h2")
-texture_pressed = ExtResource("4_147h2")
-shape = SubResource("RectangleShape2D_2fwe3")
-action = "generic_action"
+text = "E"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 1
@@ -545,6 +546,8 @@ vertical_alignment = 2
 [connection signal="focus_entered" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_entered"]
 [connection signal="focus_exited" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_exited"]
 [connection signal="text_submitted" from="CommandLineEdit" to="." method="_on_command_line_edit_text_submitted"]
+[connection signal="button_down" from="MobileButton1" to="." method="_on_mobile_button_1_button_down"]
+[connection signal="button_up" from="MobileButton1" to="." method="_on_mobile_button_1_button_up"]
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]

@@ -256,3 +256,9 @@ func _on_toggle_unsafe_mode_pressed():
 		%ToggleUnsafeMode.text = "Disable Unsafe Mode"
 	else:
 		%ToggleUnsafeMode.text = "Enable Unsafe Mode"
+
+func _on_mobile_button_1_button_down():
+	Input.action_press("generic_action")
+
+func _on_mobile_button_1_button_up():
+	Input.action_release("generic_action")
