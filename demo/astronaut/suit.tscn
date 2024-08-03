@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfna2d2x5v5v4"]
+[gd_scene load_steps=4 format=3 uid="uid://cfna2d2x5v5v4"]
 
 [ext_resource type="PackedScene" uid="uid://cnlgfqnpu8v18" path="res://astronaut/suit_maxgrueter.glb" id="1_gkcnt"]
 [ext_resource type="Script" path="res://astronaut/start_IK.gd" id="2_jer7l"]
+[ext_resource type="Script" path="res://astronaut/suit.gd" id="2_tyjyr"]
 
 [node name="suit_maxgrueter" instance=ExtResource("1_gkcnt")]
+script = ExtResource("2_tyjyr")
 
 [node name="Skeleton3D" parent="metarig" index="0"]
 bones/0/position = Vector3(0, 1.1023, -0.0552)
@@ -26,10 +28,10 @@ bones/19/rotation = Quaternion(0.34862, 0.332162, -0.209086, 0.851126)
 bones/20/rotation = Quaternion(0.147228, 0.96507, 0.0859618, -0.198935)
 
 [node name="PLSS" parent="metarig/Skeleton3D" index="0"]
-transform = Transform3D(0.999951, -0.00975821, 0.0014443, 0.00970529, 0.999409, 0.0329761, -0.00176523, -0.0329604, 0.999455, -0.00512725, 1.60945, -0.229679)
+transform = Transform3D(0.999951, -0.00975822, 0.00144431, 0.0097053, 0.999409, 0.0329756, -0.00176524, -0.0329599, 0.999455, -0.00512726, 1.60945, -0.229679)
 
 [node name="Visor" parent="metarig/Skeleton3D" index="1"]
-transform = Transform3D(0.999951, -0.00975821, 0.0014443, 0.00970529, 0.999409, 0.0329761, -0.00176523, -0.0329604, 0.999455, 0.00102667, 1.7425, 0.154078)
+transform = Transform3D(0.999951, -0.00975822, 0.00144431, 0.0097053, 0.999409, 0.0329756, -0.00176524, -0.0329599, 0.999455, 0.00102667, 1.74251, 0.154078)
 
 [node name="FootIK_SkeletonIK3D_R" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="3"]
 process_priority = 1

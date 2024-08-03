@@ -28,6 +28,7 @@ var v_accel = 10
 @onready var zoom_sens: float = 2.5 # Zoom sensitivity
 
 var can_input: bool = true
+var lock_horiz: bool = false
 	
 func _ready():
 	clipped_cam.position.z = camera_distance
@@ -61,7 +62,8 @@ func _physics_process(delta):
 	
 	# Camera movement logic
 	camrot_v = clamp(camrot_v, cam_v_min, cam_v_max)
-	cam_h.rotation_degrees.y = lerp(cam_h.rotation_degrees.y, camrot_h, delta * h_accel)
+	if not lock_horiz:
+		cam_h.rotation_degrees.y = lerp(cam_h.rotation_degrees.y, camrot_h, delta * h_accel)
 	cam_v.rotation_degrees.x = lerp(cam_v.rotation_degrees.x, camrot_v, delta * v_accel)
 	
 	if Input.is_action_just_pressed("scroll_up") and can_input:

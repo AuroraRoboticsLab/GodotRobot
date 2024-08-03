@@ -23,14 +23,17 @@ var is_console_host: bool = false
 var using_multiplayer: bool = false
 var using_chat: bool = true
 
-signal new_player_info(id, username, version)
+enum Character { ASTRO, ROBOT }
+var player_choice: Character = Character.ASTRO
+
+signal new_player_info(id, username, version, player_choice)
 signal new_object(sender_id, body_path, body_name)
 signal self_disconnected
 signal toggle_inputs(in_bool)
 signal network_process(delta)
 
 var time: float = 0
-const network_process_interval = 0.04
+const network_process_interval = 0.05
 var last_network_process = 0
 var network_process_delta = time - last_network_process
 
@@ -127,11 +130,12 @@ func get_num_players():
 	return len(get_players())
 
 # Add a new player to the players dictionary
-func add_player(id: int, username, in_version, pos=Vector3.ZERO):
+func add_player(id: int, username, in_version, in_player_choice, pos=Vector3.ZERO):
 	if not sync_data.players.has(id):
 		sync_data.players[id] = {
 			"username": username,
 			"version": in_version,
+			"player_choice": in_player_choice,
 			"global_position": pos,
 			"linear_velocity": Vector3.ZERO,
 			"angular_velocity": Vector3.ZERO,
@@ -149,6 +153,13 @@ func remove_player(id):
 func get_player_username(id):
 	if get_players().has(id):
 		return get_players()[id].username
+	else:
+		return null
+
+# Return the player choice of a given player
+func get_player_choice(id):
+	if get_players().has(id):
+		return get_players()[id].player_choice
 	else:
 		return null
 

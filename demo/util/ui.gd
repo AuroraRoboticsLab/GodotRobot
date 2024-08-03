@@ -7,7 +7,7 @@ extends CanvasLayer
 @export var cam_zoom_sens: float = 2.5
 @export var tp_height: float = 1.0
 
-@onready var robot = null
+@onready var player = null
 @onready var can_attach: bool = false
 @onready var stalling: bool = false
 @onready var charging: bool = false
@@ -38,7 +38,14 @@ func _ready():
 		%ToggleChatButton.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control5.hide()
 		$ChatContainer.hide()
-
+	
+	if GameManager.player_choice == GameManager.Character.ASTRO:
+		%ToggleUnsafeMode.hide()
+		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control7.hide()
+		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3.hide()
+	elif GameManager.player_choice == GameManager.Character.ROBOT:
+		$PanelContainer/VBoxContainer/GridContainer/ChargeLabel.show()
+		$PanelContainer/VBoxContainer/GridContainer/Charge.show()
 func _process(_delta):
 	# Lock the camera when using joysticks in mobile
 	if left_joystick.knob.pressing or right_joystick.knob.pressing:
@@ -52,27 +59,27 @@ func _process(_delta):
 			return
 		$CommandLineEdit.visible = !$CommandLineEdit.visible
 	
-	$CenterContainer/PressToAttach.visible = can_attach
-	
 	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
 	$PanelContainer/VBoxContainer/GridContainer/BallCount.text = str(ball_count)
-	$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
-	$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
-	$PanelContainer/VBoxContainer/StallingLabel.visible = stalling
+	if GameManager.player_choice == GameManager.Character.ROBOT:
+		$CenterContainer/PressToAttach.visible = can_attach
+		$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
+		$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
+		$PanelContainer/VBoxContainer/StallingLabel.visible = stalling
 	
-	if dirtballs_in_bucket > 0:
-		$PanelContainer/VBoxContainer/BucketDirtballsHBox.show()
-		var kg_string = " (" + str(round_to_dec(dirtballs_in_bucket * 0.35, 2)) + " kg)"
-		%BucketDirtballs.text = str(dirtballs_in_bucket) + kg_string
-	else:
-		$PanelContainer/VBoxContainer/BucketDirtballsHBox.hide()
+		if dirtballs_in_bucket > 0:
+			$PanelContainer/VBoxContainer/BucketDirtballsHBox.show()
+			var kg_string = " (" + str(round_to_dec(dirtballs_in_bucket * 0.35, 2)) + " kg)"
+			%BucketDirtballs.text = str(dirtballs_in_bucket) + kg_string
+		else:
+			$PanelContainer/VBoxContainer/BucketDirtballsHBox.hide()
 		
-	if dirtballs_in_hopper > 0:
-		$PanelContainer/VBoxContainer/HopperDirtballsHBox.show()
-		var kg_string = " (" + str(round_to_dec(dirtballs_in_hopper * 0.35, 2)) + " kg)"
-		%HopperDirtballs.text = str(dirtballs_in_hopper) + kg_string
-	else:
-		$PanelContainer/VBoxContainer/HopperDirtballsHBox.hide()
+		if dirtballs_in_hopper > 0:
+			$PanelContainer/VBoxContainer/HopperDirtballsHBox.show()
+			var kg_string = " (" + str(round_to_dec(dirtballs_in_hopper * 0.35, 2)) + " kg)"
+			%HopperDirtballs.text = str(dirtballs_in_hopper) + kg_string
+		else:
+			$PanelContainer/VBoxContainer/HopperDirtballsHBox.hide()
 
 func _on_tick_button_value_changed(value):
 	spawn_rate = value
@@ -111,13 +118,16 @@ func _on_keybind_menu_button_pressed():
 		$KeybindsMenu.show()
 
 func _on_respawn_button_pressed():
-	if not robot:
+	if not player:
 		return
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	robot.linear_velocity = Vector3.ZERO
-	robot.angular_velocity = Vector3.ZERO
-	robot.global_transform = robot.spawn_trans
+	if GameManager.player_choice == GameManager.Character.ROBOT:
+		player.linear_velocity = Vector3.ZERO
+		player.angular_velocity = Vector3.ZERO
+	elif GameManager.player_choice == GameManager.Character.ASTRO:
+		player.velocity = Vector3.ZERO
+	player.global_transform = player.spawn_trans
 
 func _on_toggle_chat_button_pressed():
 	$ChatContainer.visible = !$ChatContainer.visible
@@ -191,8 +201,8 @@ func _on_command_line_edit_text_submitted(new_text):
 			"respawn":
 				_on_respawn_button_pressed()
 			"move": # Teleport relative to our current location
-				if not robot:
-					print("Error: No robot to teleport!")
+				if not player:
+					print("Error: No player to teleport!")
 				if args.size() == 4:
 					var x = args[1].to_float()
 					var y = args[2].to_float()
@@ -200,9 +210,9 @@ func _on_command_line_edit_text_submitted(new_text):
 					print("Moving to ", x, ", ", y, ", ", z)
 					await get_tree().physics_frame
 					await get_tree().physics_frame
-					robot.global_position += Vector3(x, y, z)
-					robot.linear_velocity = Vector3.ZERO
-					robot.angular_velocity = Vector3.ZERO
+					player.global_position += Vector3(x, y, z)
+					player.linear_velocity = Vector3.ZERO
+					player.angular_velocity = Vector3.ZERO
 				else:
 					print("Error: 'move' command requires x, y, and z coordinates.")
 			"grav": # Modify gravity!
@@ -215,30 +225,30 @@ func _on_command_line_edit_text_submitted(new_text):
 				else:
 					print("Error: 'grav' requires a float for gravity.")
 			"tp": # Teleport to a location
-				if not robot:
-					print("Error: No robot to teleport!")
+				if not player:
+					print("Error: No player to teleport!")
 				if args.size() == 4:
 					var x = args[1]
 					if x == "~":
-						x = robot.global_position.x
+						x = player.global_position.x
 					else:
 						x = x.to_float()
 					var y = args[2]
 					if y == "~":
-						y = robot.global_position.y
+						y = player.global_position.y
 					else:
 						y = y.to_float()
 					var z = args[3]
 					if z == "~":
-						z = robot.global_position.z
+						z = player.global_position.z
 					else:
 						z = z.to_float()
 					print("Teleporting to ", x, ", ", y, ", ", z)
 					await get_tree().physics_frame
 					await get_tree().physics_frame
-					robot.global_position = Vector3(x, y, z)
-					robot.linear_velocity = Vector3.ZERO
-					robot.angular_velocity = Vector3.ZERO
+					player.global_position = Vector3(x, y, z)
+					player.linear_velocity = Vector3.ZERO
+					player.angular_velocity = Vector3.ZERO
 				else:
 					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
 			_:

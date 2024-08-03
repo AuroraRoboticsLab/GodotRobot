@@ -74,25 +74,25 @@ func host_game(console_host=false):
 	print("Waiting for players...")
 
 @rpc("any_peer")
-func send_player_info(id, username, version):
+func send_player_info(id, username, version, player_choice):
 	if multiplayer.is_server():
 		if id != 1 and version != GameManager.version: # Version mismatch!
 			GameManager.remove_player(id)
 			_throw_version_mismatch.rpc_id(id, GameManager.version)
 			return
 	if not GameManager.get_players().has(id) and version == GameManager.version:
-		GameManager.new_player_info.emit(id, username, version)
-		GameManager.add_player(id, username, version)
+		GameManager.new_player_info.emit(id, username, version, player_choice)
+		GameManager.add_player(id, username, version, player_choice)
 		%AlertLabel.text = GameManager.get_player_username(id) + " has connected."
 	if multiplayer.is_server():
 		for pid in GameManager.get_player_ids():
 			if pid != id:
-				send_player_info.rpc(pid, GameManager.get_player_username(pid), GameManager.get_player_version(pid))
+				send_player_info.rpc(pid, GameManager.get_player_username(pid), GameManager.get_player_version(pid), GameManager.get_player_choice(pid))
 			else:
 				# Notify the new player of all existing players
 				for existing_id in GameManager.get_players():
 					if existing_id != id:
-						send_player_info.rpc(id, username, version)
+						send_player_info.rpc(id, username, version, player_choice)
 	update_num_players()
 
 @rpc("any_peer")
@@ -129,8 +129,8 @@ func player_disconnected(id):
 
 func connected_to_server():
 	print("Connected to server!")
-	send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
-	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
+	send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version, GameManager.player_choice)
+	send_player_info.rpc_id(1, multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version, GameManager.player_choice)
 	start_if_ongoing_game.rpc_id(1, multiplayer.get_unique_id(), GameManager.version)
 	%ConnectLabel.text = "Connected. Waiting for game to start..."
 	update_num_players()
@@ -173,6 +173,14 @@ func hide_menu():
 	self.hide()
 
 func _on_host_button_pressed():
+	$PanelContainer/VBoxContainer/HBoxContainer2/OptionButton.hide()
+	var character_text = ""
+	if GameManager.player_choice == GameManager.Character.ASTRO:
+		character_text = "Astronaut"
+	elif GameManager.player_choice == GameManager.Character.ROBOT:
+		character_text = "Robot"
+	$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = character_text
+	
 	%AlertLabel.text = ""
 	GameManager.using_multiplayer = true
 	address = %AddressTextEdit.text
@@ -185,12 +193,20 @@ func _on_host_button_pressed():
 	if not host_exists():
 		host_game(debugging_console_host)
 		if not debugging_console_host:
-			send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version)
+			send_player_info(multiplayer.get_unique_id(), %NameTextEdit.text, GameManager.version, GameManager.player_choice)
 	else:
 		print("Host already exists.")
 		%AlertLabel.text = "Cannot host: Host already exists."
 
 func _on_join_button_pressed():
+	$PanelContainer/VBoxContainer/HBoxContainer2/OptionButton.hide()
+	var character_text = ""
+	if GameManager.player_choice == GameManager.Character.ASTRO:
+		character_text = "Astronaut"
+	elif GameManager.player_choice == GameManager.Character.ROBOT:
+		character_text = "Robot"
+	$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = character_text
+	
 	%AlertLabel.text = ""
 	GameManager.using_multiplayer = true
 	address = %AddressTextEdit.text
@@ -257,7 +273,12 @@ func _on_leave_game_button_pressed():
 		%AlertLabel.text = "Disconnected from peer."
 		%ConnectLabel.text = ""
 		$PanelContainer/VBoxContainer/HBoxContainer/StartButton.disabled = true
+		$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = "Player Type: "
+		$PanelContainer/VBoxContainer/HBoxContainer2/OptionButton.show()
 		GameManager.end_game()
 		update_num_players()
 	else:
 		get_tree().quit() # Exit program
+
+func _on_option_button_item_selected(index):
+	GameManager.player_choice = index

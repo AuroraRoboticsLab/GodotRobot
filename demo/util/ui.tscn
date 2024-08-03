@@ -15,7 +15,7 @@ script = ExtResource("1_1j2nn")
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = -1
 anchor_right = 0.052
-anchor_bottom = 0.09
+anchor_bottom = 0.065
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 0.159996
@@ -50,11 +50,13 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ChargeLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "Charge:"
 
 [node name="Charge" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

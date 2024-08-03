@@ -151,6 +151,7 @@ alignment = 1
 [node name="Control2" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -164,12 +165,33 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.0
 theme_type_variation = &"MediumTextEdit"
-text = "unnamed robot"
+text = "unnamed player"
 placeholder_text = "Enter name here"
+
+[node name="Control3" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "Player Type: "
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+item_count = 2
+selected = 0
+popup/item_0/text = "Astronaut"
+popup/item_0/id = 0
+popup/item_1/text = "Robot"
+popup/item_1/id = 1
 
 [node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
 
 [node name="Control3" type="Control" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -309,6 +331,7 @@ vertical_alignment = 2
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer5/LocalGameButton" to="." method="_on_local_game_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer5/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/HBoxContainer2/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
