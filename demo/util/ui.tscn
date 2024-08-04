@@ -188,6 +188,42 @@ focus_mode = 0
 icon = ExtResource("4_cx4nv")
 expand_icon = true
 
+[node name="ChatContainer" type="PanelContainer" parent="."]
+anchors_preset = -1
+anchor_top = 0.722
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 0.239929
+offset_right = 582.0
+offset_bottom = -27.0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChatContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ChatContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ChatVBox" type="VBoxContainer" parent="ChatContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="WelcomeMessage" type="Label" parent="ChatContainer/VBoxContainer/ScrollContainer/ChatVBox"]
+layout_mode = 2
+text = "Welcome to the chat!"
+
+[node name="ChatTextEdit" type="LineEdit" parent="ChatContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+placeholder_text = "Enter chat message here"
+
+[node name="SendMessageTimer" type="Timer" parent="ChatContainer/VBoxContainer/ChatTextEdit"]
+one_shot = true
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -492,42 +528,6 @@ size_flags_stretch_ratio = 0.1
 [node name="KeybindsMenu" parent="." instance=ExtResource("7_nuj1q")]
 visible = false
 
-[node name="ChatContainer" type="PanelContainer" parent="."]
-anchors_preset = -1
-anchor_top = 0.722
-anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = 0.239929
-offset_right = 582.0
-offset_bottom = -27.0
-grow_vertical = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ChatContainer"]
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="ChatContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ChatVBox" type="VBoxContainer" parent="ChatContainer/VBoxContainer/ScrollContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="WelcomeMessage" type="Label" parent="ChatContainer/VBoxContainer/ScrollContainer/ChatVBox"]
-layout_mode = 2
-text = "Welcome to the chat!"
-
-[node name="ChatTextEdit" type="LineEdit" parent="ChatContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
-placeholder_text = "Enter chat message here"
-
-[node name="SendMessageTimer" type="Timer" parent="ChatContainer/VBoxContainer/ChatTextEdit"]
-one_shot = true
-
 [node name="VersionLabel" type="Label" parent="."]
 anchors_preset = -1
 anchor_left = 1.0
@@ -552,6 +552,10 @@ vertical_alignment = 2
 [connection signal="button_up" from="MobileButton1" to="." method="_on_mobile_button_1_button_up"]
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[connection signal="focus_entered" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_entered"]
+[connection signal="focus_exited" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_exited"]
+[connection signal="text_submitted" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_text_submitted"]
+[connection signal="timeout" from="ChatContainer/VBoxContainer/ChatTextEdit/SendMessageTimer" to="." method="_on_send_message_timer_timeout"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/SpawnRateHBox/TickButton" to="." method="_on_tick_button_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensSlider" to="." method="_on_vert_sens_slider_value_changed"]
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensSlider" to="." method="_on_horiz_sens_slider_value_changed"]
@@ -563,7 +567,3 @@ vertical_alignment = 2
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleChatButton" to="." method="_on_toggle_chat_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleUnsafeMode" to="." method="_on_toggle_unsafe_mode_pressed"]
-[connection signal="focus_entered" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_entered"]
-[connection signal="focus_exited" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_focus_exited"]
-[connection signal="text_submitted" from="ChatContainer/VBoxContainer/ChatTextEdit" to="." method="_on_chat_text_edit_text_submitted"]
-[connection signal="timeout" from="ChatContainer/VBoxContainer/ChatTextEdit/SendMessageTimer" to="." method="_on_send_message_timer_timeout"]

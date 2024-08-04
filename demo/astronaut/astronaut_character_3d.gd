@@ -9,6 +9,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var cam_load = preload("res://components/movable_camera_3d.tscn")
 @onready var cam_scene = null
 
+@onready var ext_input = null
+
 @onready var suit = $suit_maxgrueter
 
 var spawn_trans = null
@@ -80,6 +82,9 @@ func _physics_process(delta):
 	rotation_degrees.y = cam_scene.camrot_h * delta * 150
 	
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	if ext_input:
+		input_dir = ext_input
+	
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		velocity.x = direction.x * SPEED

@@ -112,7 +112,7 @@ func _on_leave_game_button_pressed():
 	GameManager.self_disconnected.emit()
 	get_parent().queue_free()
 
-func _on_keybind_menu_button_pressed():
+func _on_keybind_menu_button_pressed():	
 	if not $KeybindsMenu.visible:
 		GameManager.toggle_inputs.emit(false)
 		$KeybindsMenu.show()

@@ -89,8 +89,8 @@ func _physics_process(delta):
 	
 	# Forces are determined as an inverse square of movement speed to
 	# put a cap on acceleration (and avoid insanely high speeds).
-	const max_move_force = 20.0 # Starting (and max) move force
-	const move_amp = 15.0 # How quickly does move force fall off with speed?
+	const max_move_force = 40.0 # Starting (and max) move force
+	const move_amp = 5.0 # How quickly does move force fall off with speed?
 	var movement_speed = linear_velocity.length()
 	
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
@@ -99,8 +99,8 @@ func _physics_process(delta):
 	if Input.is_action_pressed("shift") and can_input:
 		engine_force_multiplier = sqrt(abs(movement_speed))/1.5 + 2
 	
-	const max_turn_force = 15.0 # Starting (and max) turn force
-	const turn_amp = 8.0 # How quickly does turn force fall off with speed?
+	const max_turn_force = 30.0 # Starting (and max) turn force
+	const turn_amp = 3.0 # How quickly does turn force fall off with speed?
 	var rotation_speed = angular_velocity.length()
 	steering_force_multiplier = 1.0 / ((turn_amp*rotation_speed**2) + (1.0/max_turn_force))
 
@@ -115,7 +115,7 @@ func _physics_process(delta):
 		steer_input = -ext_input.x
 		
 	if can_input and not charge_component.is_dead:
-		drive_force = drive_input * DRIVE_FORCE_MULT * delta * engine_force_multiplier
+		drive_force = drive_input * 2 * DRIVE_FORCE_MULT * delta * engine_force_multiplier
 		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 	
 	var my_dir = -transform.basis.z.normalized()

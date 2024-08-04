@@ -26,6 +26,8 @@ var v_accel = 10
 @export var camera_distance: float = 2.5 # Distance of camera from rotation origin
 @onready var clipped_cam = $Horizontal/Vertical/ClippedCamera
 @onready var zoom_sens: float = 2.5 # Zoom sensitivity
+@onready var min_zoom: float = 1
+@onready var max_zoom: float = 10
 
 var can_input: bool = true
 var lock_horiz: bool = false
@@ -67,10 +69,10 @@ func _physics_process(delta):
 	cam_v.rotation_degrees.x = lerp(cam_v.rotation_degrees.x, camrot_v, delta * v_accel)
 	
 	if Input.is_action_just_pressed("scroll_up") and can_input:
-		camera_distance = clamp(lerp(camera_distance, camera_distance-0.5*zoom_sens, delta*h_accel), 0, 10)
+		camera_distance = clamp(lerp(camera_distance, camera_distance-0.5*zoom_sens, delta*h_accel), min_zoom, max_zoom)
 		clipped_cam.clip_length = camera_distance
 		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance
 	elif Input.is_action_just_pressed("scroll_down") and can_input:
-		camera_distance = clamp(lerp(camera_distance, camera_distance+0.5*zoom_sens, delta*h_accel), 0, 10)
+		camera_distance = clamp(lerp(camera_distance, camera_distance+0.5*zoom_sens, delta*h_accel), min_zoom, max_zoom)
 		clipped_cam.clip_length = camera_distance
 		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance

@@ -149,9 +149,10 @@ func _physics_process(_delta):
 			$UI.dirtballs_in_bucket = 0
 		$UI.dirtballs_in_hopper = player.hopper.inside_hopper.num_dirtballs
 		
-		if OS.get_name() == "Android":
-			player.cam_scene.cam_locked = $UI.cam_locked
-			player.ext_input = $UI.left_joystick.get_axis()
+	if OS.get_name() == "Android":
+		player.cam_scene.cam_locked = $UI.cam_locked
+		player.ext_input = $UI.left_joystick.get_axis()
+		if GameManager.player_choice == GameManager.Character.ROBOT:
 			player.arm.ext_input = $UI.right_joystick.get_axis()
 
 func _on_fallen_area_3d_body_entered(body):

@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cfna2d2x5v5v4" path="res://astronaut/suit.tscn" id="1_t3oyg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gplb5"]
+radius = 0.419636
+height = 1.83386
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c21ac"]
 
@@ -16,7 +18,7 @@ script = ExtResource("1_kvu3g")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.0947292, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.948384, 0)
 shape = SubResource("CapsuleShape3D_gplb5")
 
 [node name="Nametag" type="Label3D" parent="."]
