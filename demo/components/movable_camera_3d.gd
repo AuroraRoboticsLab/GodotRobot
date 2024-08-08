@@ -51,7 +51,16 @@ func _input(event):
 			camrot_v -= event.relative.y * v_sens * invert_mult
 
 const SENS_MULT = 5
+var switch_pov = false
 func _physics_process(delta):
+	if Input.is_action_just_pressed("switch_view"):
+		switch_pov = !switch_pov
+	
+	if switch_pov:
+		rotation.y = PI
+	else:
+		rotation.y = 0
+	
 	if can_input and not cam_locked:
 		if Input.is_action_pressed("dpad_up"):
 			camrot_v -= v_sens * SENS_MULT * invert_mult

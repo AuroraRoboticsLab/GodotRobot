@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://c73kovjg5pcd3"]
+[gd_scene load_steps=8 format=3 uid="uid://c73kovjg5pcd3"]
 
 [ext_resource type="Script" path="res://util/ui.gd" id="1_1j2nn"]
-[ext_resource type="Script" path="res://util/fps_counter.gd" id="1_mxmhq"]
 [ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="3_bbais"]
 [ext_resource type="Theme" uid="uid://b0sf7fmx7al7i" path="res://util/theme.tres" id="3_qlyme"]
 [ext_resource type="PackedScene" uid="uid://dgcktkvlefs46" path="res://util/tick_button.tscn" id="4_0yspv"]
@@ -101,9 +100,6 @@ visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "Stalling!"
-
-[node name="FPS Counter" type="Node3D" parent="."]
-script = ExtResource("1_mxmhq")
 
 [node name="ClickControl" type="Control" parent="."]
 layout_mode = 3

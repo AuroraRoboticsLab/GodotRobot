@@ -11,4 +11,3 @@ script = ExtResource("1_txhd5")
 [node name="Vertical" type="Node3D" parent="Horizontal"]
 
 [node name="ClippedCamera" parent="Horizontal/Vertical" instance=ExtResource("1_sy8fg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)

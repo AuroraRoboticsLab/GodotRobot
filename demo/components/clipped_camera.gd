@@ -19,7 +19,7 @@ func _ready():
 	cam_col.position.z = -clip_length
 
 func _physics_process(_delta):
-	if cam_col.is_colliding():
+	if cam_col.is_colliding() and (global_position-cam_col.get_collision_point()).length() < clip_length:
 		cam.global_transform.origin = lerp(cam.global_transform.origin, cam_col.get_collision_point(), 0.9)
 	else:
-		cam.global_transform.origin = marker.global_transform.origin
+		cam.transform.origin = marker.transform.origin
