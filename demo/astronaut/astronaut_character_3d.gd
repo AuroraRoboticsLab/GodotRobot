@@ -101,10 +101,10 @@ func _physics_process(delta):
 	
 	rotation_degrees.y = cam_scene.camrot_h * delta * 150
 	
-	var new_input_dir = Input.get_vector("left", "right", "forward", "backward")
-	input_dir = Vector3(new_input_dir.x, new_input_dir.y, 0)
+	var new_input_dir = Input.get_axis("forward", "backward")
+	input_dir = Vector3(0, new_input_dir, 0)
 	if ext_input:
-		input_dir = Vector3(ext_input.x, ext_input.y, 0)
+		input_dir = Vector3(0, ext_input.y, 0)
 	if jumping:
 		input_dir = Vector3.ZERO
 	
