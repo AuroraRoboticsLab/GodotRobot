@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=18 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
@@ -14,6 +14,20 @@
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_e3ixy"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j4i22"]
+albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
+metallic_specular = 0.1
+roughness = 0.98
+clearcoat_enabled = true
+clearcoat = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u2yy0"]
+material = SubResource("StandardMaterial3D_j4i22")
+size = Vector2(100, 100)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvrwd"]
 size = Vector3(200, 20, 200)
 
@@ -28,19 +42,31 @@ script = ExtResource("2_2x3be")
 
 [node name="Dirtballs" type="Marker3D" parent="Terrain"]
 
+[node name="GroundPlate1" type="StaticBody3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.63, 0.001, 12.36)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Terrain/GroundPlate1"]
+shape = SubResource("ConcavePolygonShape3D_e3ixy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/GroundPlate1"]
+mesh = SubResource("PlaneMesh_u2yy0")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.599329, 0.190394, 0.777531, -0.79152, -0.00415257, 0.611129, 0.119584, -0.981699, 0.148212, 0, 2.40859, 0)
 light_energy = 3.439
 shadow_enabled = true
 
+[node name="FPS Counter" type="Node3D" parent="."]
+script = ExtResource("5_8fbcs")
+
 [node name="ChargeStation" parent="." instance=ExtResource("3_47s0a")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64657, 0.44, -0.132835)
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.7088, 0.44, 22.2356)
 
 [node name="BrickMaker" parent="." instance=ExtResource("4_vp1iq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.156523, 0.0188498, -4.86574)
+transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12.0871, 0.0188498, 20.9613)
 
 [node name="ToolSpawner" parent="." instance=ExtResource("5_1rppn")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.270254, 0.196277, 5.26094)
+transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.196277, 15.1276)
 tool_1_scene = ExtResource("6_k4qam")
 tool_2_scene = ExtResource("7_5iltw")
 tool_3_scene = ExtResource("8_5pjry")
@@ -48,18 +74,14 @@ tool_3_scene = ExtResource("8_5pjry")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("4_wv3d2")
 
-[node name="FPS Counter" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00817108, -1.49154, -0.0148048)
-script = ExtResource("5_8fbcs")
-
 [node name="DirtSpawner" parent="." node_paths=PackedStringArray("terrain") instance=ExtResource("6_fqn40")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.427181, 2.06504, 2.12669)
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 17.6943, 2.06504, 16.7749)
 terrain = NodePath("../Terrain")
 
 [node name="UI" parent="." instance=ExtResource("7_s8ac7")]
 
 [node name="PlayerSpawnpoints" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 16.1844, -1, 18.3322)
 
 [node name="0" type="Marker3D" parent="PlayerSpawnpoints" groups=["PlayerSpawnpoint"]]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.338355, 1.97629, 1.2214)
@@ -76,13 +98,13 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5820
 [node name="Objects" type="Node3D" parent="."]
 
 [node name="MadsenCinderblock" parent="Objects" instance=ExtResource("13_pv0wi")]
-transform = Transform3D(-0.534751, 0, 0.84501, 0, 1, 0, -0.84501, 0, -0.534751, -3.27289, 0.34, 2.26713)
+transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 19.9073, 0.34, 19.7435)
 
 [node name="MadsenCinderblock3" parent="Objects" instance=ExtResource("13_pv0wi")]
-transform = Transform3D(-0.534751, 0, 0.84501, 0, 1, 0, -0.84501, 0, -0.534751, -3.70123, 0.34, 1.59027)
+transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 19.5925, 0.34, 20.4801)
 
 [node name="MadsenCinderblock2" parent="Objects" instance=ExtResource("13_pv0wi")]
-transform = Transform3D(-0.534751, 0, 0.84501, 0, 1, 0, -0.84501, 0, -0.534751, -3.48947, 0.774, 1.9249)
+transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 19.7482, 0.774, 20.1159)
 
 [node name="FallenArea3D" type="Area3D" parent="."]
 collision_mask = 29

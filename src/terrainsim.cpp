@@ -242,6 +242,7 @@ void TerrainSim::add_static_collider(void)
         }
     publish();
 }*/
+/* CRATER CODE
 void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
     float crater_radius = 126.0f;
     float rim_height = 43.0f;
@@ -268,6 +269,36 @@ void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
                 h = rim_height*METERS_PER_UNIT-0.5f;
             // demonstration spike, for dirtball calibration
             if (x==90 && z == 90) h=2.5;
+
+            height_floats[i] = h;
+            height_next[i] = h;
+        }
+    }
+
+    publish();
+}*/
+void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
+    const float METERS_PER_UNIT = 25.25f / 256.0f;
+    float hill_height = 3.0;
+    float hill_radius = 10.0;
+
+    for (int z = 0; z < H; ++z) {
+        for (int x = 0; x < W; ++x) {
+            int i = z * W + x;
+            float dx = x - cx;
+            float dz = z - cz;
+            float r = std::sqrt(dx * dx + dz * dz) * METERS_PER_UNIT;
+            float h = 0.0f;
+
+            // Calculate the height value for the hill
+            if (r <= hill_radius) {
+                h = hill_height * (1.0f - (r / hill_radius) * (r / hill_radius));
+            }
+
+            if (x>=200 && x<=240 && z>=200 && z<=240 && h<=0.5f) // Demo ridge
+                h = 0.5f;
+            if (x==90 && z == 90) h=2.5; // Demo spike
+            if (h < 0) h = 0;
 
             height_floats[i] = h;
             height_next[i] = h;
