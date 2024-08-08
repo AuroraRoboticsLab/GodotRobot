@@ -142,7 +142,9 @@ func add_player(id: int, username, in_version, in_player_choice, pos=Vector3.ZER
 			"quaternion": Quaternion.IDENTITY,
 			"remaining_amp_hours": 100.0,
 			"curr_attach_path": "",
-			"joint_data": [0.0, 0.0, 0.0]
+			"joint_data": [0.0, 0.0, 0.0],
+			"walking": false,
+			"jumping": false
 		}
 
 # Remove a player from the players dictionary

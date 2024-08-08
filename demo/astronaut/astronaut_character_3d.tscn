@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cfna2d2x5v5v4" path="res://astronaut/suit.tscn" id="1_t3oyg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gplb5"]
-radius = 0.419636
+radius = 0.302122
 height = 1.83386
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c21ac"]
