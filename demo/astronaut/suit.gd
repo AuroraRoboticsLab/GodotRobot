@@ -24,12 +24,13 @@ var foot_l_pos = false
 var foot_r_pos = false
 
 var stride_height = 0.17
-var stride_length = 0.15
+var stride_length = 0.3
 var stride_mid = Vector3(0.0, -0.55, 0.0) 
 
 var body_z_bob_max = deg_to_rad(3)
 var body_lean = deg_to_rad(3)
-var body_bounce_width = 0.03
+var body_sway = deg_to_rad(1)
+var body_bounce_width = 0.02
 var body_bounce_height = 0.03
 
 func _physics_process(delta: float):
@@ -39,10 +40,11 @@ func _physics_process(delta: float):
 		return
 	
 	if walking:
-		var walk_calc = walk_dir.y*PI*time*1.7
+		var walk_calc = walk_dir.y*PI*time*1.8
 		
-		# Lean
+		# Lean and sway
 		rotation.x = lerp(rotation.x, -walk_dir.y*body_lean, 0.2)
+		rotation.z = lerp(rotation.z, -walk_dir.y*body_sway*cos(walk_calc), 0.2)
 		# Bounce with walking
 		position.x = lerp(position.x, body_bounce_width*cos(walk_calc), 0.2)
 		position.y = lerp(position.y, body_bounce_height*sin(walk_calc*2) - 0.1, 0.2)
