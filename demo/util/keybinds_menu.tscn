@@ -54,9 +54,21 @@ text = "Keybind Menu"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="ResetDefaults" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Restore Default Keybinds"
+
+[node name="Control2" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.02
+
 [node name="ExitButton" type="Button" parent="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-theme_type_variation = &"MediumButton"
+theme_type_variation = &"SmallButton"
 text = "Exit Keybind Menu"
 
 [node name="Control" type="Control" parent="PanelContainer/HBoxContainer/VBoxContainer"]
@@ -531,4 +543,5 @@ text = "Press a key to bind
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2/ResetDefaults" to="." method="_on_reset_defaults_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer2/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -28,6 +28,9 @@ var actions = ["arm_up",
 var keyboard_buttons   = []
 var controller_buttons = []
 
+# {"action_name": {"key": InputEventKey, "joypad": InputEventJoypad*}, ...}
+var changed_actions = {}
+
 func _ready() -> void:
 	# Connect the button pressed signals
 	var keybind_grid_children = %KeybindGrid.get_children()
@@ -41,6 +44,7 @@ func _ready() -> void:
 		controller_buttons.append(curr_button_cont) # Add to list of controller buttons
 		curr_button_cont.pressed.connect(_on_button_pressed.bind(curr_button_cont, idx))
 	
+	load_binds()
 	_update_labels()
 	
 # Whenever a button is pressed, do:
@@ -85,12 +89,14 @@ func _input(event: InputEvent) -> void:
 		for set_event in InputMap.action_get_events(curr_action):
 			if set_event is InputEventKey:
 				curr_event = set_event
+				merge_changed_event(curr_action, event)
 				print("Event changed from: ", curr_event.as_text())
+				print("to: ", event.as_text())
 		if curr_event:
 			InputMap.action_erase_event(curr_action, curr_event)
 		# Assign the new event to it
 		InputMap.action_add_event(curr_action, event)
-		print("to: ", event.as_text())
+
 	# We are binding on a controller
 	elif current_button in controller_buttons and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
 		if event is InputEventJoypadMotion and abs(event.axis_value) < 0.5:
@@ -101,18 +107,71 @@ func _input(event: InputEvent) -> void:
 		for set_event in InputMap.action_get_events(curr_action):
 			if set_event is InputEventJoypadButton or set_event is InputEventJoypadMotion:
 				curr_event = set_event
+				merge_changed_event(curr_action, event)
 				print("Event changed from: ", curr_event.as_text())
+				print("to: ", event.as_text())
 				break
 		if curr_event:
 			InputMap.action_erase_event(curr_action, curr_event)
 		# Assign the new event to it
 		InputMap.action_add_event(curr_action, event)
-		print("to: ", event.as_text())
 	
 	current_button = null
 	set_bind_panel.hide()
 	_update_labels()
+
+func merge_changed_event(action, event):
+	if not changed_actions.has(action):
+		changed_actions[action] = {}
+	
+	var changed_action_data = changed_actions[action]
+	if event is InputEventKey:
+		changed_action_data.merge({"key": event}, true)
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		changed_action_data.merge({"joypad": event}, true)
+	
+	changed_actions[action] = changed_action_data
+
+func save_binds():
+	print("Saving binds!")
+	var file = FileAccess.open("user://keybinds.dat", FileAccess.WRITE_READ)
+	file.store_var(changed_actions, true)
+
+func load_binds():
+	var file = FileAccess.open("user://keybinds.dat", FileAccess.READ)
+	if not file:
+		return # No binds to load!
+	changed_actions = file.get_var(true)
+	print("Loading binds!")
+	print(changed_actions)
+	for curr_action in changed_actions.keys():
+		var event_data = changed_actions[curr_action]
 		
+		if event_data.has("key"):
+			var event = event_data.key
+			var curr_event = null
+			for set_event in InputMap.action_get_events(curr_action):
+				if set_event is InputEventKey:
+					curr_event = set_event
+					print("Key event changed from: ", curr_event.as_text())
+					print("to: ", event.as_text())
+			if curr_event:
+				InputMap.action_erase_event(curr_action, curr_event)
+			# Assign the new event to it
+			InputMap.action_add_event(curr_action, event)
+		if event_data.has("joypad"):
+			var event = event_data.joypad
+			var curr_event = null
+			for set_event in InputMap.action_get_events(curr_action):
+				if set_event is InputEventJoypadMotion or set_event is InputEventJoypadButton:
+					curr_event = set_event
+					print("Controller event changed from: ", curr_event.as_text())
+					print("to: ", event.as_text())
+			if curr_event:
+				InputMap.action_erase_event(curr_action, curr_event)
+			# Assign the new event to it
+			InputMap.action_add_event(curr_action, event)
+
 func _update_labels() -> void:
 	for idx in range(len(actions)):
 		var binds : Array[InputEvent] = InputMap.action_get_events(actions[idx])
@@ -141,4 +200,8 @@ func _update_labels() -> void:
 		
 func _on_exit_button_pressed():
 	GameManager.toggle_inputs.emit(true)
+	save_binds()
 	hide()
+
+func _on_reset_defaults_pressed():
+	pass # Replace with function body.
