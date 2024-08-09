@@ -31,7 +31,7 @@ var body_z_bob_max = deg_to_rad(3)
 var body_lean = deg_to_rad(3)
 var body_sway = deg_to_rad(1)
 var body_bounce_width = 0.02
-var body_bounce_height = 0.03
+var body_bounce_height = 0.06
 
 func _physics_process(delta: float):
 	time += delta
@@ -79,6 +79,7 @@ func _physics_process(delta: float):
 		foot_l_cast.position.z = lerp(foot_l_cast.position.z, 0.0, 0.15)
 		foot_r_cast.position.z = lerp(foot_r_cast.position.z, 0.0, 0.15)
 		rotation.x = lerp(rotation.x, 0.0, 0.15)
+		rotation.z = lerp(rotation.z, 0.0, 0.15)
 		ground_feet()
 	elif jumping:
 		foot_r.position.y = lerp(foot_r.position.y, -0.3, 0.15)

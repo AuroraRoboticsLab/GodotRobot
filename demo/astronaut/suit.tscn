@@ -112,7 +112,7 @@ target_position = Vector3(0, -0.72, 0)
 collision_mask = 21
 
 [node name="FootIK_R" type="Marker3D" parent="metarig/RayCastR" index="0"]
-transform = Transform3D(0.999814, 0.0192771, -3.53024e-10, -1.19556e-09, 4.3695e-08, -1, -0.0192771, 0.999814, 4.371e-08, 0, -0.699767, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.699767, 0)
 
 [node name="RayCastL" type="RayCast3D" parent="metarig" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139, 0.7, 0)
