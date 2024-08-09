@@ -27,14 +27,15 @@ func _ready():
 			elif player_choice == GameManager.Character.ROBOT:
 				curr_player = robot_scene.instantiate()
 			curr_player.name = str(pid)
-			if pid == multiplayer.get_unique_id():
-				player = curr_player
 			
 			curr_player.nametag_text = GameManager.get_player_username(pid)
 			
 			var spawnpoint = get_node("PlayerSpawnpoints/"+str(idx%GameManager.num_spawns))
 			curr_player.global_transform = spawnpoint.global_transform
 			curr_player.spawn_trans = spawnpoint.global_transform
+			
+			if pid == multiplayer.get_unique_id():
+				player = curr_player
 			
 			add_child(curr_player)
 			idx += 1
@@ -160,3 +161,5 @@ func _on_fallen_area_3d_body_entered(body):
 	if GameManager.player_choice == GameManager.Character.ROBOT:
 		body.linear_velocity = Vector3.ZERO
 		body.angular_velocity = Vector3.ZERO
+	elif GameManager.player_choice == GameManager.Character.ASTRO:
+		body.velocity.y = 0

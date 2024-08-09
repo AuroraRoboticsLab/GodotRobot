@@ -29,7 +29,7 @@ material = SubResource("StandardMaterial3D_j4i22")
 size = Vector2(100, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvrwd"]
-size = Vector3(200, 20, 200)
+size = Vector3(300, 20, 300)
 
 [node name="main3D" type="Node3D"]
 script = ExtResource("1_dv7pc")
