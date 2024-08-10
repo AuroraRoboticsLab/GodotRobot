@@ -23,7 +23,7 @@ var is_console_host: bool = false
 var using_multiplayer: bool = false
 var using_chat: bool = true
 
-enum Character { ASTRO, ROBOT }
+enum Character { ASTRO, ROBOT, SPECTATOR }
 var player_choice: Character = Character.ASTRO
 
 signal new_player_info(id, username, version, player_choice)

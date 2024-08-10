@@ -2,8 +2,9 @@ extends Node3D
 
 @onready var spawn = $DirtSpawner
 
-@onready var robot_scene: PackedScene = load("res://astra/astra_3d.tscn")
-@onready var astro_scene: PackedScene = load("res://astronaut/astronaut_character_3d.tscn")
+@onready var robot_scene:   PackedScene = load("res://astra/astra_3d.tscn")
+@onready var astro_scene:   PackedScene = load("res://astronaut/astronaut_character_3d.tscn")
+@onready var freecam_scene: PackedScene = load("res://components/freecam.tscn")
 
 var player = null
 @onready var objects = $Objects
@@ -26,6 +27,8 @@ func _ready():
 				curr_player = astro_scene.instantiate()
 			elif player_choice == GameManager.Character.ROBOT:
 				curr_player = robot_scene.instantiate()
+			elif player_choice == GameManager.Character.SPECTATOR:
+				player = freecam_scene.instantiate()
 			curr_player.name = str(pid)
 			
 			curr_player.nametag_text = GameManager.get_player_username(pid)
@@ -52,6 +55,8 @@ func _ready():
 			player = astro_scene.instantiate()
 		elif GameManager.player_choice == GameManager.Character.ROBOT:
 			player = robot_scene.instantiate()
+		elif GameManager.player_choice == GameManager.Character.SPECTATOR:
+			player = freecam_scene.instantiate()
 		var spawnpoint = $PlayerSpawnpoints.get_children()[0]
 		player.global_transform = spawnpoint.global_transform
 		player.spawn_trans = spawnpoint.global_transform
@@ -70,6 +75,8 @@ func _on_new_player_info(id, username, version, player_choice):
 			curr_player = astro_scene.instantiate()
 		elif player_choice == GameManager.Character.ROBOT:
 			curr_player = robot_scene.instantiate()
+		elif player_choice == GameManager.Character.SPECTATOR:
+			player = freecam_scene.instantiate()
 		curr_player.name = str(id)
 		curr_player.global_position = spawn_pos
 		add_child(curr_player)
@@ -128,10 +135,15 @@ func _physics_process(_delta):
 	$UI.player = player
 	$UI.ball_count = $"Terrain/Dirtballs".get_child_count()
 	$UI.fps = $"FPS Counter".fps
-	player.cam_scene.h_sens = $UI.h_cam_sens
-	player.cam_scene.v_sens = $UI.v_cam_sens
-	player.cam_scene.zoom_sens = $UI.cam_zoom_sens
-	player.cam_scene.invert_cam = $UI.invert_cam
+	if GameManager.player_choice == GameManager.Character.SPECTATOR:
+		player.h_sens = $UI.h_cam_sens
+		player.v_sens = $UI.v_cam_sens
+		player.invert_cam = $UI.invert_cam
+	else:
+		player.cam_scene.h_sens = $UI.h_cam_sens
+		player.cam_scene.v_sens = $UI.v_cam_sens
+		player.cam_scene.zoom_sens = $UI.cam_zoom_sens
+		player.cam_scene.invert_cam = $UI.invert_cam
 	
 	if GameManager.player_choice == GameManager.Character.ASTRO:
 		pass
@@ -151,7 +163,8 @@ func _physics_process(_delta):
 		$UI.dirtballs_in_hopper = player.hopper.inside_hopper.num_dirtballs
 		
 	if OS.get_name() == "Android":
-		player.cam_scene.cam_locked = $UI.cam_locked
+		if not GameManager.player_choice == GameManager.Character.SPECTATOR:
+			player.cam_scene.cam_locked = $UI.cam_locked
 		player.ext_input = $UI.left_joystick.get_axis()
 		if GameManager.player_choice == GameManager.Character.ROBOT:
 			player.arm.ext_input = $UI.right_joystick.get_axis()

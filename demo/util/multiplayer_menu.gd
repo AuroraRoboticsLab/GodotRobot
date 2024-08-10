@@ -179,6 +179,8 @@ func _on_host_button_pressed():
 		character_text = "Astronaut"
 	elif GameManager.player_choice == GameManager.Character.ROBOT:
 		character_text = "Robot"
+	elif GameManager.player_choice == GameManager.Character.SPECTATOR:
+		character_text = "Spectator"
 	$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = character_text
 	
 	%AlertLabel.text = ""
@@ -205,6 +207,8 @@ func _on_join_button_pressed():
 		character_text = "Astronaut"
 	elif GameManager.player_choice == GameManager.Character.ROBOT:
 		character_text = "Robot"
+	elif GameManager.player_choice == GameManager.Character.SPECTATOR:
+		character_text = "Spectator"
 	$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = character_text
 	
 	%AlertLabel.text = ""

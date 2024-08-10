@@ -53,7 +53,7 @@ func _ready():
 		$Nametag.visible = false
 
 func toggle_inputs(in_bool = null):
-	if in_bool != null:
+	if in_bool == null:
 		can_input = !can_input
 	else:
 		can_input = in_bool

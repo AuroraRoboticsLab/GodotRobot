@@ -142,8 +142,6 @@ func load_binds():
 	if not file:
 		return # No binds to load!
 	changed_actions = file.get_var(true)
-	print("Loading binds!")
-	print(changed_actions)
 	for curr_action in changed_actions.keys():
 		var event_data = changed_actions[curr_action]
 		if event_data.has("key"):

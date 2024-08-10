@@ -181,12 +181,14 @@ text = "Player Type: "
 [node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-item_count = 2
+item_count = 3
 selected = 0
 popup/item_0/text = "Astronaut"
 popup/item_0/id = 0
 popup/item_1/text = "Robot"
 popup/item_1/id = 1
+popup/item_2/text = "Spectator"
+popup/item_2/id = 2
 
 [node name="Control" type="Control" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2

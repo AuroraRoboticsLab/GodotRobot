@@ -46,7 +46,7 @@ func _ready():
 		global_transform = spawn_trans
 
 func toggle_inputs(in_bool = null):
-	if in_bool != null:
+	if in_bool == null:
 		can_input = !can_input
 	else:
 		can_input = in_bool
@@ -99,13 +99,14 @@ func _physics_process(delta):
 		jumping = true
 		velocity.y = JUMP_VELOCITY
 	
-	rotation_degrees.y = cam_scene.camrot_h * delta * 150
+	if can_input:
+		rotation_degrees.y = cam_scene.camrot_h * delta * 150
 	
 	var new_input_dir = Input.get_axis("forward", "backward")
 	input_dir = Vector3(0, new_input_dir, 0)
 	if ext_input:
 		input_dir = Vector3(0, ext_input.y, 0)
-	if jumping:
+	if jumping or not can_input:
 		input_dir = Vector3.ZERO
 	
 	# No input_dir.x; Astronauts don't seem to be able to strafe on the moon.

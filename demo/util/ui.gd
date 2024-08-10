@@ -39,14 +39,23 @@ func _ready():
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control5.hide()
 		$ChatContainer.hide()
 	
-	if GameManager.player_choice == GameManager.Character.ASTRO:
+	if GameManager.player_choice == GameManager.Character.ASTRO or GameManager.player_choice == GameManager.Character.SPECTATOR:
 		%ToggleUnsafeMode.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control7.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3.hide()
 	elif GameManager.player_choice == GameManager.Character.ROBOT:
 		$PanelContainer/VBoxContainer/GridContainer/ChargeLabel.show()
 		$PanelContainer/VBoxContainer/GridContainer/Charge.show()
+	
 func _process(_delta):
+	# Toggle UI visibility
+	if Input.is_action_just_pressed("f2"):
+		visible = !visible
+	
+	if Input.is_action_just_pressed("escape") and freecamming:
+		freecamming = false
+		$FreecamLabel.hide()
+	
 	# Lock the camera when using joysticks in mobile
 	if left_joystick.knob.pressing or right_joystick.knob.pressing:
 		cam_locked = true
@@ -192,6 +201,8 @@ func _on_mobile_ui_slider_value_changed(value):
 	left_joystick.scale = Vector2(scale_val, scale_val)
 	right_joystick.scale = Vector2(scale_val, scale_val)
 
+@onready var freecam_scene = load("res://components/freecam.tscn")
+var freecamming = false
 func _on_command_line_edit_text_submitted(new_text):
 	$CommandLineEdit.text = ""
 	var args = new_text.strip_edges().split(" ")
@@ -203,6 +214,7 @@ func _on_command_line_edit_text_submitted(new_text):
 			"move": # Teleport relative to our current location
 				if not player:
 					print("Error: No player to teleport!")
+					return
 				if args.size() == 4:
 					var x = args[1].to_float()
 					var y = args[2].to_float()
@@ -230,6 +242,7 @@ func _on_command_line_edit_text_submitted(new_text):
 			"tp": # Teleport to a location
 				if not player:
 					print("Error: No player to teleport!")
+					return
 				if args.size() == 4:
 					var x = args[1]
 					if x == "~":
@@ -257,6 +270,19 @@ func _on_command_line_edit_text_submitted(new_text):
 						player.velocity = Vector3.ZERO
 				else:
 					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
+			"freecam":
+				if args.size() == 1:
+					if GameManager.player_choice != GameManager.Character.SPECTATOR:
+						GameManager.toggle_inputs.emit(false)
+						$FreecamLabel.show()
+						freecamming = true
+						var freecam = freecam_scene.instantiate()
+						freecam.global_transform = player.global_transform
+						get_parent().add_child(freecam)
+					else:
+						print("Error: Already spectating!")
+				else:
+					print("Error: 'spectator' command expects no arguments!")
 			_:
 				print("Error: Unknown command: ", command)
 
@@ -264,7 +290,8 @@ func _on_command_line_edit_focus_entered():
 	GameManager.toggle_inputs.emit(false)
 
 func _on_command_line_edit_focus_exited():
-	GameManager.toggle_inputs.emit(true)
+	if not freecamming:
+		GameManager.toggle_inputs.emit(true)
 
 func _on_toggle_unsafe_mode_pressed():
 	unsafe_mode = !unsafe_mode

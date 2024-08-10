@@ -540,6 +540,22 @@ text = "version not specified"
 horizontal_alignment = 2
 vertical_alignment = 2
 
+[node name="FreecamLabel" type="Label" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.046
+anchor_right = 0.5
+anchor_bottom = 0.046
+offset_left = -250.0
+offset_top = 930.32
+offset_right = 250.0
+offset_bottom = 1030.32
+theme_type_variation = &"MediumLabel"
+text = "Press Esc to Exit Freecam"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="gui_input" from="ClickControl" to="." method="_on_click_control_gui_input"]
 [connection signal="focus_entered" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_entered"]
 [connection signal="focus_exited" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_exited"]
