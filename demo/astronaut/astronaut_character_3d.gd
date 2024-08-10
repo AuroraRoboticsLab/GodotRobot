@@ -127,7 +127,4 @@ func _physics_process(delta):
 	if not direction:
 		suit.stop_feet()
 	
-	if global_position.y > 40.0:
-		velocity.y = 0 # Undo escape velocity
-	
 	move_and_slide()

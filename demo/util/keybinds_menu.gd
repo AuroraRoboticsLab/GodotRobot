@@ -146,7 +146,6 @@ func load_binds():
 	print(changed_actions)
 	for curr_action in changed_actions.keys():
 		var event_data = changed_actions[curr_action]
-		
 		if event_data.has("key"):
 			var event = event_data.key
 			var curr_event = null

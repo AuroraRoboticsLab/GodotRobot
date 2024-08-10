@@ -157,9 +157,11 @@ func _physics_process(_delta):
 			player.arm.ext_input = $UI.right_joystick.get_axis()
 
 func _on_fallen_area_3d_body_entered(body):
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	body.global_transform = $"PlayerSpawnpoints/0".global_transform
-	if GameManager.player_choice == GameManager.Character.ROBOT:
+	if body is RigidBody3D or body is VehicleBody3D:
 		body.linear_velocity = Vector3.ZERO
 		body.angular_velocity = Vector3.ZERO
-	elif GameManager.player_choice == GameManager.Character.ASTRO:
-		body.velocity.y = 0
+	elif body is CharacterBody3D:
+		body.velocity = Vector3.ZERO

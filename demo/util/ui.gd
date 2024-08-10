@@ -211,8 +211,11 @@ func _on_command_line_edit_text_submitted(new_text):
 					await get_tree().physics_frame
 					await get_tree().physics_frame
 					player.global_position += Vector3(x, y, z)
-					player.linear_velocity = Vector3.ZERO
-					player.angular_velocity = Vector3.ZERO
+					if player is RigidBody3D:
+						player.linear_velocity = Vector3.ZERO
+						player.angular_velocity = Vector3.ZERO
+					elif player is CharacterBody3D:
+						player.velocity = Vector3.ZERO
 				else:
 					print("Error: 'move' command requires x, y, and z coordinates.")
 			"grav": # Modify gravity!
@@ -247,8 +250,11 @@ func _on_command_line_edit_text_submitted(new_text):
 					await get_tree().physics_frame
 					await get_tree().physics_frame
 					player.global_position = Vector3(x, y, z)
-					player.linear_velocity = Vector3.ZERO
-					player.angular_velocity = Vector3.ZERO
+					if player is RigidBody3D:
+						player.linear_velocity = Vector3.ZERO
+						player.angular_velocity = Vector3.ZERO
+					elif player is CharacterBody3D:
+						player.velocity = Vector3.ZERO
 				else:
 					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
 			_:
