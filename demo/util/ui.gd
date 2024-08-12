@@ -277,7 +277,7 @@ func _on_command_line_edit_text_submitted(new_text):
 						$FreecamLabel.show()
 						freecamming = true
 						var freecam = freecam_scene.instantiate()
-						freecam.global_transform = player.global_transform
+						freecam.global_position = player.global_position
 						get_parent().add_child(freecam)
 					else:
 						print("Error: Already spectating!")
