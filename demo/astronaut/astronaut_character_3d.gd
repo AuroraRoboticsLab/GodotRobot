@@ -93,7 +93,7 @@ func _physics_process(delta):
 		jumping = false
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if can_input and Input.is_action_just_pressed("jump") and is_on_floor():
 		#suit.animation_player.play("BounceTrack")
 		#suit.stop_feet()
 		jumping = true

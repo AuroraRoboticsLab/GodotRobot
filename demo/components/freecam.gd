@@ -17,6 +17,9 @@ var invert_mult = 1
 			invert_mult = 1
 		invert_cam = value
 @onready var ext_input = null
+var nametag_text: String = "unnamed spectator"
+
+@export var is_freecam: bool = false
 
 var spawn_trans = null
 
@@ -27,7 +30,7 @@ func _input(event):
 			camrot_v -= event.relative.y * v_sens * invert_mult
 
 func _ready():
-	if GameManager.using_multiplayer:
+	if GameManager.using_multiplayer and not is_freecam:
 		$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 		if $MultiplayerSynchronizer.is_multiplayer_authority():
 			var cam = Camera3D.new()
@@ -40,7 +43,7 @@ func _ready():
 
 const SENS_MULT = 5
 func _physics_process(delta):
-	if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
+	if not is_freecam and GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
 		return
 	
 	if Input.is_action_pressed("escape"):

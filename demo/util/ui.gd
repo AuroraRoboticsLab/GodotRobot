@@ -64,8 +64,6 @@ func _process(_delta):
 	
 	# Toggle command window
 	if Input.is_action_just_pressed("f1"):
-		if GameManager.using_multiplayer and not multiplayer.is_server():
-			return
 		$CommandLineEdit.visible = !$CommandLineEdit.visible
 	
 	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
@@ -212,6 +210,9 @@ func _on_command_line_edit_text_submitted(new_text):
 			"respawn":
 				_on_respawn_button_pressed()
 			"move": # Teleport relative to our current location
+				if GameManager.using_multiplayer and not multiplayer.is_server():
+					print("Error: Must be host to teleport!")
+					return
 				if not player:
 					print("Error: No player to teleport!")
 					return
@@ -231,6 +232,9 @@ func _on_command_line_edit_text_submitted(new_text):
 				else:
 					print("Error: 'move' command requires x, y, and z coordinates.")
 			"grav": # Modify gravity!
+				if GameManager.using_multiplayer and not multiplayer.is_server():
+					print("Error: Must be host to modify gravity!")
+					return
 				if args.size() == 2:
 					PhysicsServer3D.area_set_param(
 						get_viewport().find_world_3d().space,
@@ -240,6 +244,9 @@ func _on_command_line_edit_text_submitted(new_text):
 				else:
 					print("Error: 'grav' requires a float for gravity.")
 			"tp": # Teleport to a location
+				if GameManager.using_multiplayer and not multiplayer.is_server():
+					print("Error: Must be host to teleport!")
+					return
 				if not player:
 					print("Error: No player to teleport!")
 					return
@@ -271,12 +278,14 @@ func _on_command_line_edit_text_submitted(new_text):
 				else:
 					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
 			"freecam":
+				print("Trying to freecam!")
 				if args.size() == 1:
-					if GameManager.player_choice != GameManager.Character.SPECTATOR:
+					if GameManager.player_choice != GameManager.Character.SPECTATOR and not freecamming:
 						GameManager.toggle_inputs.emit(false)
 						$FreecamLabel.show()
 						freecamming = true
 						var freecam = freecam_scene.instantiate()
+						freecam.is_freecam = true # Indicate we are freecamming, not spectating.
 						freecam.global_position = player.global_position
 						get_parent().add_child(freecam)
 					else:

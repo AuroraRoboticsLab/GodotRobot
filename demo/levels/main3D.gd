@@ -28,9 +28,12 @@ func _ready():
 			elif player_choice == GameManager.Character.ROBOT:
 				curr_player = robot_scene.instantiate()
 			elif player_choice == GameManager.Character.SPECTATOR:
-				player = freecam_scene.instantiate()
-			curr_player.name = str(pid)
+				if pid == multiplayer.get_unique_id():
+					curr_player = freecam_scene.instantiate()
+				else:
+					continue # Spectators are invisible to others!
 			
+			curr_player.name = str(pid)
 			curr_player.nametag_text = GameManager.get_player_username(pid)
 			
 			var spawnpoint = get_node("PlayerSpawnpoints/"+str(idx%GameManager.num_spawns))
