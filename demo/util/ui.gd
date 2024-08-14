@@ -34,11 +34,12 @@ func _ready():
 		$MobileButton1.show()
 	
 	$VersionLabel.text = str(GameManager.version)
+	
 	if not GameManager.using_multiplayer:
 		%ToggleChatButton.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control5.hide()
 		$ChatContainer.hide()
-	
+
 	if GameManager.player_choice == GameManager.Character.ASTRO or GameManager.player_choice == GameManager.Character.SPECTATOR:
 		%ToggleUnsafeMode.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control7.hide()
@@ -46,7 +47,7 @@ func _ready():
 	elif GameManager.player_choice == GameManager.Character.ROBOT:
 		$PanelContainer/VBoxContainer/GridContainer/ChargeLabel.show()
 		$PanelContainer/VBoxContainer/GridContainer/Charge.show()
-	
+
 func _process(_delta):
 	# Toggle UI visibility
 	if Input.is_action_just_pressed("f2"):

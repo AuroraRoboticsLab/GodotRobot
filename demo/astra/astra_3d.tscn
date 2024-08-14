@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=13 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="PackedScene" uid="uid://cydno5704j3dk" path="res://astra/astra_arm_3d.tscn" id="5_xqxup"]
 [ext_resource type="PackedScene" uid="uid://bksiiw7xwjeec" path="res://astra/astra_hopper_3d.tscn" id="6_u7q2o"]
+[ext_resource type="PackedScene" path="res://components/autonomy_component.tscn" id="9_5awhk"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]
@@ -44,7 +45,7 @@ shape = SubResource("BoxShape3D_g2gd1")
 
 [node name="FrontLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, -0.495)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -62,7 +63,7 @@ surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -80,7 +81,7 @@ surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="BackLeft" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -98,7 +99,7 @@ surface_material_override/0 = ExtResource("4_76ojc")
 
 [node name="BackRight" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
-brake = 0.4
+brake = 0.8
 use_as_traction = true
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -125,6 +126,8 @@ surface_material_override/0 = ExtResource("4_76ojc")
 [node name="ConnectorComponent" parent="." node_paths=PackedStringArray("charge_component") instance=ExtResource("11_hg1mk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
 charge_component = NodePath("../ChargeComponent")
+
+[node name="AutonomyComponent" parent="." instance=ExtResource("9_5awhk")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_b5vtu")

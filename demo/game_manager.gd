@@ -22,6 +22,7 @@ var game_in_progress: bool = false
 var is_console_host: bool = false
 var using_multiplayer: bool = false
 var using_chat: bool = true
+var is_npc: bool = false
 
 enum Character { ASTRO, ROBOT, SPECTATOR }
 var player_choice: Character = Character.ASTRO

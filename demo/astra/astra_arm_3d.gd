@@ -15,6 +15,8 @@ extends Node3D
 @onready var is_dead: bool = false
 
 @onready var unsafe_mode: bool = false
+@onready var auto_component = null
+
 var can_input: bool = true
 
 func _ready():
