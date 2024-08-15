@@ -208,7 +208,23 @@ func _on_command_line_edit_text_submitted(new_text):
 	if args.size() > 0:
 		var command = args[0].to_lower()
 		match command:
-			"respawn":
+			"goto": # Pathfind to a given location
+				if not player:
+					print("Error: No player to teleport!")
+					return
+				if GameManager.player_choice != GameManager.Character.ROBOT:
+					print("Error: Only a robot can pathfind!")
+					return
+				if args.size() == 4:
+					var x = args[1].to_float()
+					var y = args[2].to_float()
+					var z = args[3].to_float()
+					print("Going to (", x, ", ", y, ", ", z, ")")
+					
+					player.auto_component.pathfind_to(Vector3(x, y, z))
+				else:
+					print("Error: 'move' command requires x, y, and z coordinates.")
+			"respawn": # Teleport back to spawn
 				_on_respawn_button_pressed()
 			"move": # Teleport relative to our current location
 				if GameManager.using_multiplayer and not multiplayer.is_server():

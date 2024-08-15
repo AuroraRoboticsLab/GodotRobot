@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="4_yfgg5"]
 [ext_resource type="PackedScene" uid="uid://cydno5704j3dk" path="res://astra/astra_arm_3d.tscn" id="5_xqxup"]
 [ext_resource type="PackedScene" uid="uid://bksiiw7xwjeec" path="res://astra/astra_hopper_3d.tscn" id="6_u7q2o"]
-[ext_resource type="PackedScene" path="res://components/autonomy_component.tscn" id="9_5awhk"]
+[ext_resource type="PackedScene" uid="uid://cbhvaxh4k0aux" path="res://components/autonomy_component.tscn" id="9_5awhk"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]

@@ -100,7 +100,7 @@ func _physics_process(delta):
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if Input.is_action_pressed("shift") and can_input and not GameManager.is_npc:
+	if Input.is_action_pressed("shift") and (can_input or GameManager.is_npc):
 		engine_force_multiplier = sqrt(abs(movement_speed))/1.5 + 2
 	
 	const max_turn_force = 30.0 # Starting (and max) turn force
@@ -117,8 +117,14 @@ func _physics_process(delta):
 	if ext_input:
 		drive_input = ext_input.y
 		steer_input = -ext_input.x
+	elif GameManager.is_npc:
+		# Let player have priority over controls
+		if drive_input == 0 or not can_input:
+			drive_input = auto_component.get_drive()
+		if steer_input == 0 or not can_input:
+			steer_input = auto_component.get_steer()
 		
-	if can_input and not charge_component.is_dead:
+	if (can_input or GameManager.is_npc) and not charge_component.is_dead:
 		drive_force = drive_input * 2 * DRIVE_FORCE_MULT * delta * engine_force_multiplier
 		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 	

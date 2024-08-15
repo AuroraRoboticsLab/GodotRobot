@@ -9,28 +9,21 @@ class_name AutonomyComponent
 func create_random_Vector3(vrange):
 	return Vector3(randf_range(-vrange,+vrange),randf_range(-vrange,+vrange),randf_range(-vrange,+vrange))
 
-var rand_pos = null
+var goto_pos = null
 var dir = Vector3.ZERO
 var total_target_time = 0.0
-var just_created = false
-func _process(delta):
-	if GameManager.is_npc and (not just_created or total_target_time > 60.0):
-		have_arrived = false
-		rand_pos = create_random_Vector3(9)
-		nav_agent.set_target_position(rand_pos)
-		if total_target_time > 60.0:
-			print("Time > 1 minute. Giving up on target.")
-		total_target_time = 0.0
-		just_created = true
-	else:
-		total_target_time += delta
-
+var goto_just_set = false
 var havent_moved_time = 0.0
 var prev_local_dest = Vector3.ZERO
 var prev_dir = Vector3.ZERO
+
 func _physics_process(delta):
-	if not GameManager.is_npc or not rand_pos:
+	if not goto_pos:
 		return
+	
+	if not have_arrived:
+		total_target_time += delta
+	
 	var dest = nav_agent.get_next_path_position()
 	var local_dest = dest - subject.global_position
 	if (local_dest-prev_local_dest).length_squared() < 0.15 and dir.dot(prev_dir) > 0.95:
@@ -47,18 +40,27 @@ func _physics_process(delta):
 	if local_dest.length() < 0.7:
 		_target_reached()
 
+func pathfind_to(pos: Vector3):
+	GameManager.is_npc = true
+	# set_target_position() does not like Vector3.ZERO
+	goto_pos = pos if pos != Vector3.ZERO else Vector3(0.01, 0, 0)
+	have_arrived = false
+	nav_agent.set_target_position(goto_pos)
+	total_target_time = 0.0
+	goto_just_set = true
+
+# Float up and toward target
 func try_get_unstuck(delta, local_dest):
 	subject.linear_velocity += Vector3(0, 1.8*delta, 0)
 	subject.linear_velocity += local_dest*delta*1.5
 
 var have_arrived = false
-@onready var targets_reached = 0
 func _target_reached():
 	print("Target reached!")
-	just_created = false
+	goto_pos = null
+	goto_just_set = false
 	have_arrived = true
-	targets_reached += 1
-	print("Total targets reached: ", targets_reached)
+	GameManager.is_npc = false
 
 # Called when asking for drive direction, from -1 to 1
 var do_drive = false
@@ -74,14 +76,19 @@ func get_steer():
 		var my_dir = -subject.transform.basis.z.normalized()
 		var dir_cross = my_dir.cross(dir)
 		var dir_dot = my_dir.dot(dir)
+		
 		if dir_dot > 0.9:
 			do_drive = true
 		else:
 			do_drive = false
+		
+		var steer_force = 1
+		if dir_dot > 0:
+			steer_force = clamp(0.25*((1/dir_dot)-1), 0, 0.75) + 0.25
 		if dir_cross.y < -0.02: # Turn right
-			return -1
+			return -steer_force
 		elif dir_cross.y > 0.02: #Turn left
-			return 1
+			return steer_force
 		else:
 			if dir_dot > 0.9:
 				return 0
