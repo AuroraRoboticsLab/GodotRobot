@@ -100,7 +100,7 @@ func _physics_process(delta):
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if Input.is_action_pressed("shift") and (can_input or GameManager.is_npc):
+	if Input.is_action_pressed("shift") and can_input:
 		engine_force_multiplier = sqrt(abs(movement_speed))/1.5 + 2
 	
 	const max_turn_force = 30.0 # Starting (and max) turn force
