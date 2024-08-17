@@ -167,7 +167,7 @@ void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
                 h = hill_height * (1.0f - (r / hill_radius) * (r / hill_radius));
             }
 
-            if (x>=200 && x<=240 && z>=200 && z<=240 && h<=0.5f) // Demo ridge
+            if (x>=cx && x<=200 && z>=cz && z<=240 && h<=0.5f) // Demo ridge
                 h = 0.5f;
             if (x==90 && z == 90) h=2.5; // Demo spike
             if (h < 0) h = 0;
