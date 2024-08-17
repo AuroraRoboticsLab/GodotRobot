@@ -10,7 +10,7 @@ extends NavigationRegion3D
 var ball: PackedScene = preload("res://terrain/dirtball.tscn")
 
 func _ready():
-	terrain.add_mesh(shader)
+	terrain.add_mesh(shader,true)
 	terrain.add_static_collider();
 	terrain.fill_heights(128,128,40);
 

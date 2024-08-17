@@ -49,7 +49,7 @@ using namespace godot;
  See: https://docs.godotengine.org/en/stable/contributing/development/core_and_modules/object_class.html#properties-set-get
 */
 void TerrainSim::_bind_methods() {    
-    printf("TerrainSim binding methods\n");
+    //printf("TerrainSim binding methods\n");
     
     // Methods to do physics or animation
     ClassDB::bind_method(D_METHOD("fill_heights"), &TerrainSim::fill_heights);

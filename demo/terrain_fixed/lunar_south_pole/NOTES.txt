@@ -1,0 +1,27 @@
+Goal: build a coordinate system and set of DEMs for working around Shackleton ridge.
+
+Source: ~olawlor/BreakTheIce/DEM/LOLA/10m_f32/
+
+
+Starting from 10m LOLA data:
+    - Convert to OpenEXR 32-bit float format: dem.exr
+        Scaled -10km .. +10km elevation range to 0-1, so GIMP actually shows topography.
+    - Crop to 8192x8192 centered on south pole: dem_10m_8192x8192_southpole.exr
+        Crop via "Canvas Size" lets you do numeric centered crops easily.
+        GIMP saves a large uncompressed EXR file.
+    Apply radius 3 circular median blur
+
+shackridge:
+    == basemap cropped down to 5120x5120 50km region
+    - Crop to 5120x5120 area centered on ridge: dem_shackridge_10m_5120x5120.exr
+        Cropped at -1096, -2596 from 8192x8192 image, so the south pole should sit at
+            Cropped to +3000, +2500 from the basemap (i.e., shackridge top left is at (-30km, -25km) in lunar pole projection)
+        - Scaled to 256x256 200m DEM: dem_shackridge_200m_256x256.exr
+    - Convert to RGBA and generate Generic -> Normal Map
+        - Scale by 5000 looks about right, not quite saturating
+
+shackzoom:
+    == shackridge cropped centered down to 1024x1024 10km study area    
+    
+
+

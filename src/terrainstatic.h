@@ -120,7 +120,14 @@ public:
     /// Our templated parent class
     typedef TerrainTemplate<256,256> parent;
     
+    /**
+     Load our terrain data from this float heightmap image.
+     Assumptions: float pixels, ideally grayscale image, scaled so
+     0 to 1 in the input is -10000 to +10000 meters of elevation.
+    **/
+    void fill_from_image(Ref<Image> src, float meters_per_pixel);
     
+   
     /// Allows collision detection (add this to a collider)
     Ref<HeightMapShape3D> get_height_shape(void) { return height_shape; }
     
@@ -134,7 +141,7 @@ public:
     /// Create a child mesh instance so you can see our terrain.
     ///  Renders using this shader as the basis,
     ///  replaces the shader's "heights" uniform.
-    void add_mesh(Ref<ShaderMaterial> shader)
+    void add_mesh(Ref<ShaderMaterial> shader, bool casts_shadows = true)
     {
         if (shader==NULL) { //<- we'd crash without a shader
             shader = ResourceLoader::get_singleton()->load("res://terrain/terrain_shader_material.tres");
@@ -144,9 +151,9 @@ public:
             return;
         }
         
-        /// This is static, to share my_mesh with other terrain copies.
-        ///   (Statically allocates memory, might leak if you want terrains all unloaded.)
-        static Ref<PlaneMesh> my_mesh{ memnew(PlaneMesh) };
+        /// Theoretically parts of this could be shared with other terrains with 
+        ///   the same W, H, and sz, but it's not clear how to find them.
+        Ref<PlaneMesh> my_mesh{ memnew(PlaneMesh) };
         
         // Uniform subdivisions are tricky to make exactly align with the terrain heights,
         //   a custom-spaced mesh would be fewer triangles, but this does work.
@@ -162,7 +169,10 @@ public:
         MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
         
         mesh_instance->set_mesh(my_mesh);
-        mesh_instance->set_extra_cull_margin(5.0f); // avoid vanishing when plane itself is not visible
+        mesh_instance->set_cast_shadows_setting(casts_shadows?
+            GeometryInstance3D::SHADOW_CASTING_SETTING_ON:
+            GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
+        mesh_instance->set_extra_cull_margin(5.0f + 10.0*sz); // avoid vanishing when plane itself is not visible
         
         // Copy the shader material, so we can drop in our own heights texture
         Ref<ShaderMaterial> sm{shader->duplicate(true)};

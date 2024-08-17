@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://vai1yrgyxusp"
+path="res://.godot/imported/dem_shackridge_200m_256x256.exr-0901a36a9605eb140d18ef1a04d41fc5.image"
+
+[deps]
+
+source_file="res://terrain_fixed/lunar_south_pole/dem_shackridge_200m_256x256.exr"
+dest_files=["res://.godot/imported/dem_shackridge_200m_256x256.exr-0901a36a9605eb140d18ef1a04d41fc5.image"]
+
+[params]
+
