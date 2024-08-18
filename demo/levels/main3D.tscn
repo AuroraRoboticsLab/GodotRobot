@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=24 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
+[ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_33ek2"]
 geometry_parsed_geometry_type = 2
@@ -39,22 +40,37 @@ size = Vector3(281.007, 20, 300)
 [node name="main3D" type="Node3D" groups=["main_scene"]]
 script = ExtResource("1_dv7pc")
 
-[node name="Terrain_Shackleton_Ridge" type="Node3D" parent="."]
+[node name="Global" type="Node3D" parent="."]
+
+[node name="Terrain_Shackleton_Ridge" type="Node3D" parent="Global"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1535.33, -1673, 2017.36)
 
-[node name="Terrain200mFar" type="TerrainStatic256" parent="Terrain_Shackleton_Ridge"]
+[node name="Terrain200mFar" type="TerrainStatic256" parent="Global/Terrain_Shackleton_Ridge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25600, 0, -25600)
 script = ExtResource("2_0uhdn")
 dem = ExtResource("3_vrpp7")
 pixel_spacing = 200.0
 shader = ExtResource("4_2tw1m")
 
-[node name="Terrain40mNear" type="TerrainStatic256" parent="Terrain_Shackleton_Ridge"]
+[node name="Terrain40mNear" type="TerrainStatic256" parent="Global/Terrain_Shackleton_Ridge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5120, 0, -5120)
 script = ExtResource("4_q1g3g")
 dem = ExtResource("5_ba4kq")
 pixel_spacing = 40.0
 shader = ExtResource("4_2tw1m")
+
+[node name="UI" parent="Global" instance=ExtResource("7_s8ac7")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Global"]
+environment = ExtResource("4_wv3d2")
+
+[node name="FPS Counter" type="Node3D" parent="Global"]
+script = ExtResource("5_8fbcs")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Global"]
+transform = Transform3D(-4.37114e-08, -0.0871557, 0.996195, 0, 0.996195, 0.0871557, -1, 3.8097e-09, -4.35451e-08, 0, 20, 0)
+light_energy = 3.439
+shadow_enabled = true
 
 [node name="Terrain" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.63, 0, -12.63)
@@ -75,35 +91,6 @@ shape = SubResource("BoxShape3D_yxg4e")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/GroundPlate1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 mesh = SubResource("BoxMesh_af3e6")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.0871557, 0.996195, 0, 0.996195, 0.0871557, -1, 3.8097e-09, -4.35451e-08, 0, 20, 0)
-light_energy = 3.439
-shadow_enabled = true
-
-[node name="FPS Counter" type="Node3D" parent="."]
-script = ExtResource("5_8fbcs")
-
-[node name="ChargeStation" parent="." instance=ExtResource("3_47s0a")]
-transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.7088, 0.44, 22.2356)
-
-[node name="BrickMaker" parent="." instance=ExtResource("4_vp1iq")]
-transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12.0871, 0.0188498, 20.9613)
-
-[node name="ToolSpawner" parent="." instance=ExtResource("5_1rppn")]
-transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.196277, 15.1276)
-tool_1_scene = ExtResource("6_k4qam")
-tool_2_scene = ExtResource("7_5iltw")
-tool_3_scene = ExtResource("8_5pjry")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("4_wv3d2")
-
-[node name="DirtSpawner" parent="." node_paths=PackedStringArray("terrain") instance=ExtResource("6_fqn40")]
-transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 17.6943, 2.06504, 16.7749)
-terrain = NodePath("../Terrain")
-
-[node name="UI" parent="." instance=ExtResource("7_s8ac7")]
 
 [node name="PlayerSpawnpoints" type="Node3D" parent="."]
 transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 16.1844, -1, 18.3322)
@@ -131,12 +118,33 @@ transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 
 [node name="MadsenCinderblock2" parent="Objects" instance=ExtResource("13_pv0wi")]
 transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 19.7482, 0.774, 20.1159)
 
-[node name="FallenArea3D" type="Area3D" parent="."]
+[node name="LandingSite" type="Node3D" parent="."]
+
+[node name="DirtSpawner" parent="LandingSite" node_paths=PackedStringArray("terrain") instance=ExtResource("6_fqn40")]
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 17.6943, 2.06504, 16.7749)
+terrain = NodePath("../../Terrain")
+
+[node name="BrickMaker" parent="LandingSite" instance=ExtResource("4_vp1iq")]
+transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12.0871, 0.0188498, 20.9613)
+
+[node name="ToolSpawner" parent="LandingSite" instance=ExtResource("5_1rppn")]
+transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.196277, 15.1276)
+tool_1_scene = ExtResource("6_k4qam")
+tool_2_scene = ExtResource("7_5iltw")
+tool_3_scene = ExtResource("8_5pjry")
+
+[node name="ChargeStation" parent="LandingSite" instance=ExtResource("3_47s0a")]
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.7088, 0.44, 22.2356)
+
+[node name="FallenArea3D" type="Area3D" parent="LandingSite"]
 collision_mask = 29
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FallenArea3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LandingSite/FallenArea3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.49652, -53.7392, 0)
 shape = SubResource("BoxShape3D_yvrwd")
 
+[node name="HLS_large_ship" parent="LandingSite" instance=ExtResource("19_avsg1")]
+transform = Transform3D(-0.937032, 0, -0.349243, 0, 1, 0, 0.349243, 0, -0.937032, -19.2894, 1.39993, -13.6851)
+
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
-[connection signal="body_entered" from="FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]
+[connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]
