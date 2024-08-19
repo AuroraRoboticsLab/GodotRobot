@@ -2,7 +2,7 @@
  Implements static terrain load functions.
 */
 #include "terrainstatic.h"
-
+#include <godot_cpp/variant/plane.hpp>
 
 using namespace godot;
 
@@ -60,51 +60,6 @@ void TerrainStatic256::fill_from_image(Ref<Image> src, float meters_per_pixel)
     publish();
 }
 
-/**
- A plane mesh deformed up into a 3D terrain.
-*/
-class TerrainMesh : public PlaneMesh {
-    float hlo, hhi; // our height range
-    Vector2 size; // our xy size
-public:
-    TerrainMesh(int W, int H, float sz, const float *height_floats) {
-        set_subdivide_width(2*W-1);
-        set_subdivide_depth(2*H-1);
-        
-        size = Vector2(W*sz,H*sz);
-        set_size(size);
-        set_center_offset(0.5f*Vector3(
-            size.x,0.0f,size.y
-        ));
-        
-        
-        hlo=1.0e20; hhi=-1.0e20;
-        
-        for (int z = 0; z < H; ++z)
-            for (int x = 0; x < W; ++x) {
-                int i = z * W + x;
-                float h=height_floats[i];
-                
-                if (h<hlo) hlo=h;
-                if (h>hhi) hhi=h;
-            }
-    }
-    
-    virtual _create_mesh_array(Array &p_arr) const {
-        PlaneMesh::_create_mesh_array(p_arr);
-        
-        /* fix up UVs? */
-        
-    }
-    
-    // The plane has the wrong bounding box, so set this custom one including our terrain heights
-    virtual AABB get_aabb() const
-    {
-        AABB aabb(Vector3(0.0,hlo,0.0), Vector3(size.x,hhi,size.y));
-        return aabb;
-    }
-    
-};
 
 /// Create a child mesh instance so you can see our terrain.
 ///  Renders using this shader as the basis,
@@ -121,12 +76,64 @@ void TerrainStatic256::add_mesh(Ref<ShaderMaterial> shader, bool casts_shadows)
     
     /// Theoretically parts of this could be shared with other terrains with 
     ///   the same W, H, and sz, but it's not clear how to find them.
-    Ref<TerrainMesh> my_mesh{ memnew(TerrainMesh(W,H,sz,height_floats)) };
+    
+    // Hat tip: https://github.com/RancidMilkGames/3DProcGenGDExtension/blob/master/src/proc_square.cpp
+    //   They found SurfaceTool to talk to the RenderingServer.
+    if (surface_tool == NULL) surface_tool = Ref<SurfaceTool>{ memnew(SurfaceTool) };
+    surface_tool->clear();
+    surface_tool->begin(Mesh::PRIMITIVE_TRIANGLES);
+    
+    Vector2 pixel = Vector2(sz,sz);
+    Vector2 uvscale = Vector2(1.0/W,1.0/H);
+    
+    Vector3 normal = Vector3(0.0, 1.0, 0.0);
+    Plane tangent(Vector3(1.0,0.0,0.0),1.0);  // default stock PlaneMesh tangent runs along the X axis
+    
+    int point = 0; // index of current vertex
+    int thisrow = point; // index of vertex starting this row
+    int prevrow = 0; // index of vertex starting prev row
+    for (int z = 0; z < H; ++z) {
+        for (int x = 0; x < W; ++x) {
+            int i = z * W + x;
+            
+            float fx = (x+0.5)*pixel.x;
+            float fz = (z+0.5)*pixel.y;
+        
+		    float u = (x+0.5)*uvscale.x;
+		    float v = (z+0.5)*uvscale.y;
+            
+            // just like OpenGL immediate mode, you set parameters before adding the vertex
+		    surface_tool->set_normal(normal);
+		    
+		    surface_tool->set_tangent(tangent);
+		    
+		    surface_tool->set_uv(Vector2(u,v));
+		    
+			surface_tool->add_vertex(Vector3(fx, height_floats[i], fz));
+		    point++;
+
+		    if (x > 0 && z > 0) 
+		    { // emit two triangles for this quad (is this flipped from what physics heightmap uses?)
+			    surface_tool->add_index(prevrow + x - 1);
+			    surface_tool->add_index(prevrow + x);
+			    surface_tool->add_index(thisrow + x - 1);
+			    
+			    surface_tool->add_index(prevrow + x);
+			    surface_tool->add_index(thisrow + x);
+			    surface_tool->add_index(thisrow + x - 1);
+		    }
+	    }
+
+	    prevrow = thisrow;
+	    thisrow = point;
+    }
+    
     
     // oddly, you can't seem to Ref<Node>, so use bare pointer.
     MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
     
-    mesh_instance->set_mesh(my_mesh);
+    
+    mesh_instance->set_mesh(surface_tool->commit());
     mesh_instance->set_cast_shadows_setting(casts_shadows?
         GeometryInstance3D::SHADOW_CASTING_SETTING_ON:
         GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);

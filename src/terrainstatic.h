@@ -25,6 +25,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/static_body3d.hpp>
+#include <godot_cpp/classes/surface_tool.hpp>
 
 
 namespace godot {
@@ -154,6 +155,9 @@ public:
     void add_static_collider(void);
     
     static void _bind_methods();
+
+private:
+    Ref<SurfaceTool> surface_tool;
 };
 
 

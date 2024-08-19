@@ -293,8 +293,8 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
     Vector3 d = dirtball->get_global_position(); // dirtball's position
     float fx = (d.x-o.x)*(1.0/MESH_SPACING);
     float fz = (d.z-o.z)*(1.0/MESH_SPACING);
-    int ix = (int)roundf(fx); // round to nearest int
-    int iz = (int)roundf(fz); 
+    int ix = (int)floor(fx); // round to lowest int
+    int iz = (int)floor(fz); 
     if (ix<=0 || ix>=W-1 || iz<=0 || iz>=H-1) return false; // out of bounds
     
     // Load the terrain height under the dirtball

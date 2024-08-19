@@ -13,7 +13,7 @@ uniform sampler2D heights : repeat_disable; // height of terrain in meters along
 
 void vertex() {
 	// Loft the geometry to match the texture image
-	VERTEX.y += texture(heights,UV).r;
+	//VERTEX.y += texture(heights,UV).r;
 	NORMAL = vec3(0,1,0);
 }
 
