@@ -26,19 +26,20 @@ height = 0.04
 [node name="WorkLight3D" type="StaticBody3D"]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0926504, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.115913, 0, 0)
 light_color = Color(0.784314, 1, 1, 1)
-light_energy = 3.0
+light_energy = 5.0
 shadow_enabled = true
 shadow_opacity = 0.95
 distance_fade_enabled = true
 distance_fade_begin = 20.0
 distance_fade_length = 5.0
-omni_range = 2.5
+omni_range = 3.5
 omni_attenuation = 0.517632
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+cast_shadow = 0
 mesh = SubResource("SphereMesh_fwhpj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -47,4 +48,5 @@ shape = SubResource("ConvexPolygonShape3D_bgk4y")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_6ghd5")
