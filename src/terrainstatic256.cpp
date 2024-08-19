@@ -133,7 +133,15 @@ void TerrainStatic256::add_mesh(Ref<ShaderMaterial> shader, bool casts_shadows)
     // oddly, you can't seem to Ref<Node>, so use bare pointer.
     MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
     
-    mesh_instance->set_mesh(surface_tool->commit());
+    
+    // This crashes on Windows:
+    //mesh_instance->set_mesh(surface_tool->commit());
+    // Workaround from: https://github.com/godotengine/godot/issues/63392
+    godot::Ref<godot::ArrayMesh> array_mesh;
+    array_mesh.instantiate();
+    surface_tool->commit(array_mesh);
+    mesh_instance->set_mesh(array_mesh);
+    
     mesh_instance->set_cast_shadows_setting(casts_shadows?
         GeometryInstance3D::SHADOW_CASTING_SETTING_ON:
         GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
