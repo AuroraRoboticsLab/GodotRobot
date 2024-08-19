@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3nt4xe5afami"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lprko"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.15
+
+[node name="MountableLight3D" type="Node3D"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0892949)
+light_energy = 5.0
+spot_range = 8.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_lprko")
