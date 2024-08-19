@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://d3d5c0ogesahh"]
+
+[ext_resource type="Shader" path="res://terrain/terrain_shader_normals.gdshader" id="1_nqj20"]
+[ext_resource type="Texture2D" uid="uid://bdsdjjvpigb30" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_24m_2048x2048_normal.jpg" id="2_l3ci6"]
+[ext_resource type="Texture2D" uid="uid://b7pm5b758opew" path="res://terrain_fixed/lunar_south_pole/textures/heightmap_lunar_normals.jpg" id="3_yw268"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_nqj20")
+shader_parameter/normals = ExtResource("2_l3ci6")
+shader_parameter/normals_detail = ExtResource("3_yw268")

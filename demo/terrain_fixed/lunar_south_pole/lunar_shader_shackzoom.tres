@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cy7t1bbj1qlam"]
+
+[ext_resource type="Shader" path="res://terrain/terrain_shader_normals.gdshader" id="1_hiwv4"]
+[ext_resource type="Texture2D" uid="uid://dsnjnva47kmtf" path="res://terrain_fixed/lunar_south_pole/dem_shackzoom_10m_1024x1024_normal.jpg" id="2_ib6rv"]
+[ext_resource type="Texture2D" uid="uid://b7pm5b758opew" path="res://terrain_fixed/lunar_south_pole/textures/heightmap_lunar_normals.jpg" id="3_6co53"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_hiwv4")
+shader_parameter/normals = ExtResource("2_ib6rv")
+shader_parameter/normals_detail = ExtResource("3_6co53")

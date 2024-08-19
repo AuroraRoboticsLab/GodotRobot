@@ -11,7 +11,7 @@ https://docs.godotengine.org/en/stable/tutorials/shaders/shader_reference/spatia
 shader_type spatial;
 render_mode cull_disabled; // draw both faces, for better shadows
 
-uniform sampler2D heights : repeat_disable;
+uniform sampler2D heights : repeat_disable; // height of terrain in meters along Y axis
 
 void vertex() {
 	// Loft the geometry to match the texture image
@@ -27,23 +27,10 @@ void vertex() {
 	NORMAL = normalize(normal.xzy);
 }
 
-void fragment() {
-	ALBEDO = vec3(0.3); 
-	ROUGHNESS = 0.98f;
-	CLEARCOAT = 0.0f;
-	SPECULAR = 0.1f;
-	
-	// ALBEDO = texture(heights,UV).rrr; // draw raw heights as brightness
-	
-	if (true) { // make glowing grid lines
-		vec3 glow = vec3(0.0,0.6,0.0);
-		vec2 gridlines = fract(UV*25.4);
-		if (min(gridlines.x,gridlines.y)<0.01) ALBEDO = EMISSION = glow;
-	}
-	//ALBEDO = vec3(UV.x,UV.y,0.0f); // debug check uv
+
+vec3 lunar_surface_normal(vec2 uv)
+{
+	return vec3(0.5,0.5,1.0); //<- Z up, uses vertex normals calculated above
 }
 
-//void light() {
-	// Called for every pixel for every light affecting the material.
-	// Uncomment to replace the default light processing function with this one.
-//}
+#include "res://terrain/lunar_surface.gdshaderinc"

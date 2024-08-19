@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsnjnva47kmtf"
-path.s3tc="res://.godot/imported/dem_shackzoom_10m_1024x1024_normal.jpg-a839c3f9305f0efa7b46c8c6e078dc56.s3tc.ctex"
-path.etc2="res://.godot/imported/dem_shackzoom_10m_1024x1024_normal.jpg-a839c3f9305f0efa7b46c8c6e078dc56.etc2.ctex"
+uid="uid://b7pm5b758opew"
+path.s3tc="res://.godot/imported/heightmap_lunar_normals.jpg-6df7b7a4a27da66701194f9d9f4bc7e3.s3tc.ctex"
+path.etc2="res://.godot/imported/heightmap_lunar_normals.jpg-6df7b7a4a27da66701194f9d9f4bc7e3.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://terrain_fixed/lunar_south_pole/dem_shackzoom_10m_1024x1024_normal.jpg"
-dest_files=["res://.godot/imported/dem_shackzoom_10m_1024x1024_normal.jpg-a839c3f9305f0efa7b46c8c6e078dc56.s3tc.ctex", "res://.godot/imported/dem_shackzoom_10m_1024x1024_normal.jpg-a839c3f9305f0efa7b46c8c6e078dc56.etc2.ctex"]
+source_file="res://terrain_fixed/lunar_south_pole/textures/heightmap_lunar_normals.jpg"
+dest_files=["res://.godot/imported/heightmap_lunar_normals.jpg-6df7b7a4a27da66701194f9d9f4bc7e3.s3tc.ctex", "res://.godot/imported/heightmap_lunar_normals.jpg-6df7b7a4a27da66701194f9d9f4bc7e3.etc2.ctex"]
 
 [params]
 
