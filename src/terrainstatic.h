@@ -116,9 +116,12 @@ protected:
 class TerrainStatic256 : public TerrainTemplate<256,256>
 {
     GDCLASS(TerrainStatic256,Node3D)
+    
 public:
     /// Our templated parent class
     typedef TerrainTemplate<256,256> parent;
+    
+    TerrainStatic256();
     
     /**
      Load our terrain data from this float heightmap image.
@@ -141,78 +144,14 @@ public:
     /// Create a child mesh instance so you can see our terrain.
     ///  Renders using this shader as the basis,
     ///  replaces the shader's "heights" uniform.
-    void add_mesh(Ref<ShaderMaterial> shader, bool casts_shadows = true)
-    {
-        if (shader==NULL) { //<- we'd crash without a shader
-            shader = ResourceLoader::get_singleton()->load("res://terrain/terrain_shader_material.tres");
-        }
-        if (shader==NULL) { // still NULL, no good.
-            printf("TerrainSim can't find shader material, skipping mesh.\n");
-            return;
-        }
-        
-        /// Theoretically parts of this could be shared with other terrains with 
-        ///   the same W, H, and sz, but it's not clear how to find them.
-        Ref<PlaneMesh> my_mesh{ memnew(PlaneMesh) };
-        
-        // Uniform subdivisions are tricky to make exactly align with the terrain heights,
-        //   a custom-spaced mesh would be fewer triangles, but this does work.
-        my_mesh->set_subdivide_width(2*W-1);
-        my_mesh->set_subdivide_depth(2*H-1);
-        Vector2 size = Vector2(W*sz,H*sz);
-        my_mesh->set_size(size);
-        my_mesh->set_center_offset(0.5f*Vector3(
-            size.x,0.0f,size.y
-        ));
-        
-        // oddly, you can't seem to Ref<Node>, so use bare pointer.
-        MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
-        
-        mesh_instance->set_mesh(my_mesh);
-        mesh_instance->set_cast_shadows_setting(casts_shadows?
-            GeometryInstance3D::SHADOW_CASTING_SETTING_ON:
-            GeometryInstance3D::SHADOW_CASTING_SETTING_OFF);
-        mesh_instance->set_extra_cull_margin(5.0f + 10.0*sz); // avoid vanishing when plane itself is not visible
-        
-        // Copy the shader material, so we can drop in our own heights texture
-        Ref<ShaderMaterial> sm{shader->duplicate(true)};
-        sm->set_shader_parameter("heights", image_texture);
-        mesh_instance->set_surface_override_material(0,sm);
-        
-        add_child(mesh_instance);
-    }
+    void add_mesh(Ref<ShaderMaterial> shader, bool casts_shadows = true);
     
     /// Create a new CollisionShape3D for our collisions.
     ///   Includes a scale factor to match our shader and mesh.
-    CollisionShape3D *create_collider(void) const {
-        CollisionShape3D *c{memnew(CollisionShape3D)};
-        
-        c->set_shape(height_shape);
-        
-        c->set_position(Vector3(
-            W*sz*0.5f,
-            0.0f,
-            H*sz*0.5f
-        ));
-        c->set_scale(Vector3(
-            sz,
-            1.0f,
-            sz
-        ));
-        
-        return c;
-    }
+    CollisionShape3D *create_collider(void) const;
     
     /// Create a child StaticBody3D so stuff bounces off this terrain.
-    void add_static_collider(void)
-    {
-        StaticBody3D *sc{memnew(StaticBody3D)};
-        
-        sc->add_child(create_collider());
-        
-        add_child(sc);
-    }
-    
+    void add_static_collider(void);
     
     static void _bind_methods();
 };
