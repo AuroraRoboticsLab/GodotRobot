@@ -45,10 +45,7 @@ points = PackedVector3Array(0.25, -0.1, 2.1, -0.25, 0.1, 2.1, -0.25, -0.1, 2.1, 
 script = ExtResource("1_bw78t")
 
 [node name="WorkLight3D" parent="." instance=ExtResource("1_ohysu")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.35, 1.1, 1.9)
-
-[node name="WorkLight3D2" parent="." instance=ExtResource("1_ohysu")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.35, 1.1, -1.9)
+transform = Transform3D(-4.37114e-08, 0, -1, 1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -1, 1.91069e-15, 0.870589, 1.38837, 0.000204325)
 
 [node name="ToolSpace1" type="Area3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.25, 0.3, 1.27)

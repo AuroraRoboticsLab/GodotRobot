@@ -1,17 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=22 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
 [ext_resource type="Script" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
 [ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://static_objects/charge_station.tscn" id="3_47s0a"]
-[ext_resource type="Image" uid="uid://vai1yrgyxusp" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_200m_256x256.exr" id="3_vrpp7"]
 [ext_resource type="Material" uid="uid://gf66fh5vii5d" path="res://terrain/terrain_shader_material.tres" id="4_2tw1m"]
 [ext_resource type="Script" path="res://terrain_fixed/lunar_south_pole/dem_shackzoom_loader.gd" id="4_q1g3g"]
 [ext_resource type="PackedScene" uid="uid://dlj1a0fxsprw1" path="res://static_objects/brick_maker.tscn" id="4_vp1iq"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="4_wv3d2"]
 [ext_resource type="PackedScene" uid="uid://co1noklregyjs" path="res://static_objects/tool_spawner.tscn" id="5_1rppn"]
 [ext_resource type="Script" path="res://util/fps_counter.gd" id="5_8fbcs"]
-[ext_resource type="Image" uid="uid://dt35rfvpm0qpo" path="res://terrain_fixed/lunar_south_pole/dem_shackzoom_40m_256x256.exr" id="5_ba4kq"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
 [ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="6_k4qam"]
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="7_5iltw"]
@@ -48,14 +46,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1535.33, -1673, 2017.36)
 [node name="Terrain200mFar" type="TerrainStatic256" parent="Global/Terrain_Shackleton_Ridge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25600, 0, -25600)
 script = ExtResource("2_0uhdn")
-dem = ExtResource("3_vrpp7")
 pixel_spacing = 200.0
 shader = ExtResource("4_2tw1m")
 
 [node name="Terrain40mNear" type="TerrainStatic256" parent="Global/Terrain_Shackleton_Ridge"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5120, 0, -5120)
 script = ExtResource("4_q1g3g")
-dem = ExtResource("5_ba4kq")
 pixel_spacing = 40.0
 shader = ExtResource("4_2tw1m")
 
