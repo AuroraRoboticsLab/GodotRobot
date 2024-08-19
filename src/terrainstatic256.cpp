@@ -27,6 +27,7 @@ void TerrainStatic256::_bind_methods()
 
 
 TerrainStatic256::TerrainStatic256()
+    :surface_tool(NULL)
 {}
 
 
@@ -131,7 +132,6 @@ void TerrainStatic256::add_mesh(Ref<ShaderMaterial> shader, bool casts_shadows)
     
     // oddly, you can't seem to Ref<Node>, so use bare pointer.
     MeshInstance3D *mesh_instance{memnew(MeshInstance3D)};
-    
     
     mesh_instance->set_mesh(surface_tool->commit());
     mesh_instance->set_cast_shadows_setting(casts_shadows?
