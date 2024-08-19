@@ -48,6 +48,16 @@ text = "Dirt Balls:"
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="SpeedLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Speed:"
+
+[node name="Speed" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "0 m/s"
+
 [node name="ChargeLabel" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
 visible = false
 layout_mode = 2

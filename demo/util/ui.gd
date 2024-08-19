@@ -89,6 +89,13 @@ func _process(_delta):
 		else:
 			$PanelContainer/VBoxContainer/HopperDirtballsHBox.hide()
 
+func _physics_process(_delta):
+	if player:
+		if GameManager.player_choice == GameManager.Character.ROBOT:
+			$PanelContainer/VBoxContainer/GridContainer/Speed.text = str(round_to_dec(player.linear_velocity.length(), 2)) + " m/s"
+		elif GameManager.player_choice == GameManager.Character.ASTRO:
+			$PanelContainer/VBoxContainer/GridContainer/Speed.text = str(round_to_dec(player.velocity.length(), 2)) + " m/s"
+
 func _on_tick_button_value_changed(value):
 	spawn_rate = value
 	
