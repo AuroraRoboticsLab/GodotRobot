@@ -327,10 +327,12 @@ bool TerrainSim::try_merge(Node3D *dirtball) {
     float low_ht = h-0.05; //<- definite preference for nearest pixel
     for (int dx=-1;dx<=+1;dx++) for (int dz=-1;dz<=+1;dz++) {
         int i=(iz+dz)*W+(ix+dx);
-        float h = height_floats[i];
-        if (h<low_ht) {
-            low_ht=h;
-            low_i=i;
+        if (i>0 && i<W*H) { // source index is in bounds
+            float h = height_floats[i];
+            if (h<low_ht) {
+                low_ht=h;
+                low_i=i;
+            }
         }
     }
     height_floats[low_i] += dirtball_dh; // dump dirt into low spot
