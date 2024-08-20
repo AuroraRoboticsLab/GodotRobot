@@ -432,6 +432,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TPUpLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3"]

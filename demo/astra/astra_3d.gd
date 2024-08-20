@@ -164,14 +164,13 @@ func _physics_process(delta):
 	arm.is_dead = charge_component.is_dead
 	hopper.is_dead = charge_component.is_dead
 	
-	#power_spent += (abs(arm_force) + abs(bollard_force) + abs(tilt_force) + abs(hopper_force))
-	
 	charge_component.change_charge(-power_spent * delta)
 	
-	# Fly away when pressing space
-	if Input.is_action_just_pressed("jump") and can_input and not GameManager.is_npc:
-		linear_velocity = Vector3.ZERO
-		global_position += Vector3(0, tp_height, 0)
+	# Flip over by holding space
+	if Input.is_action_pressed("jump") and can_input and not GameManager.is_npc:
+		angular_velocity += transform.basis * Vector3(0,0,10)*delta
+		linear_velocity.y += 1.62 * delta
+		#global_position += Vector3(0, tp_height, 0)
 
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):
