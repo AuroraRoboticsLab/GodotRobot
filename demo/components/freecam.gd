@@ -71,9 +71,11 @@ func _physics_process(delta):
 	rotation_degrees.x = camrot_v * delta * 150
 	
 	var speed_mult = 1
-	if Input.is_action_pressed("down"):
+	if Input.is_action_pressed("shift") and Input.is_action_pressed("down"):
+		speed_mult = 100
+	elif Input.is_action_pressed("down"):
 		speed_mult = 0.5
-	if Input.is_action_pressed("shift"):
+	elif Input.is_action_pressed("shift"):
 		speed_mult = 3
 	
 	global_position += direction * delta * SPEED * speed_mult

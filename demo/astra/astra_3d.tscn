@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=13 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cydno5704j3dk" path="res://astra/astra_arm_3d.tscn" id="5_xqxup"]
 [ext_resource type="PackedScene" uid="uid://bksiiw7xwjeec" path="res://astra/astra_hopper_3d.tscn" id="6_u7q2o"]
 [ext_resource type="PackedScene" uid="uid://cbhvaxh4k0aux" path="res://components/autonomy_component.tscn" id="9_5awhk"]
-[ext_resource type="PackedScene" uid="uid://b3nt4xe5afami" path="res://components/mountable_light_3d.tscn" id="10_pfofo"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ngjf"]
@@ -140,12 +139,6 @@ double_sided = false
 text = "unnamed robot"
 autowrap_mode = 2
 width = 400.0
-
-[node name="MountableLight3D" parent="." instance=ExtResource("10_pfofo")]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0.3, 0.45, -0.325)
-
-[node name="MountableLight3D2" parent="." instance=ExtResource("10_pfofo")]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -0.3, 0.45, -0.325)
 
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]

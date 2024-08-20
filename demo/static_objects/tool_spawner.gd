@@ -7,11 +7,6 @@ var tool_space_bodies = [null, null, null]
 @export var tool_2_scene: PackedScene = null
 @export var tool_3_scene: PackedScene = null
 
-func _ready():
-	$ToolSpace1/ToolTimer1.start()
-	$ToolSpace2/ToolTimer2.start()
-	$ToolSpace3/ToolTimer3.start()
-
 func _on_tool_space_1_body_exited(body):
 	if tool_space_bodies[0] and body.name == tool_space_bodies[0].name:
 		tool_space_bodies[0] = null

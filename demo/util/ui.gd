@@ -302,7 +302,6 @@ func _on_command_line_edit_text_submitted(new_text):
 				else:
 					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
 			"freecam":
-				print("Trying to freecam!")
 				if args.size() == 1:
 					if GameManager.player_choice != GameManager.Character.SPECTATOR and not freecamming:
 						GameManager.toggle_inputs.emit(false)
@@ -316,6 +315,21 @@ func _on_command_line_edit_text_submitted(new_text):
 						print("Error: Already spectating!")
 				else:
 					print("Error: 'spectator' command expects no arguments!")
+			"simrate":
+				if args.size() == 2:
+					if GameManager.using_multiplayer:
+						print("Error: Cannot change simulation rate in multiplayer!")
+						return
+					var sim_rate = args[1].to_float()
+					if sim_rate > 1000.0:
+						print("Sim rate too high; capped to 1000.0")
+						sim_rate = 1000.0
+					elif sim_rate <= 0.1:
+						print("Sim rate too low; limited to 0.1")
+						sim_rate = 0.1
+					Engine.set_time_scale(sim_rate)
+				else:
+					print("Error: 'simrate' command expects one argument!")
 			_:
 				print("Error: Unknown command: ", command)
 

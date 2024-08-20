@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bksiiw7xwjeec"]
+[gd_scene load_steps=11 format=3 uid="uid://bksiiw7xwjeec"]
 
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://astra/hopper_files/HopperBody.obj" id="1_6r7hv"]
 [ext_resource type="Script" path="res://astra/astra_hopper_3d.gd" id="1_b4e7o"]
@@ -6,6 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://astra/hopper_files/HopperDoor.obj" id="3_aj8vk"]
 [ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="5_sfs7r"]
 [ext_resource type="Script" path="res://astra/InsideHopper.gd" id="6_8n7uj"]
+[ext_resource type="PackedScene" uid="uid://b3nt4xe5afami" path="res://components/mountable_light_3d.tscn" id="7_ta44c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l3m53"]
 size = Vector3(0.024931, 0.391102, 0.585922)
@@ -107,6 +108,12 @@ script = ExtResource("6_8n7uj")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InsideHopper"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000762939, 0.16939, -0.0120773)
 shape = SubResource("BoxShape3D_ux4h4")
+
+[node name="MountableLight3D" parent="." instance=ExtResource("7_ta44c")]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0.3, 0.45, -0.325)
+
+[node name="MountableLight3D2" parent="." instance=ExtResource("7_ta44c")]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -0.3, 0.45, -0.325)
 
 [connection signal="body_entered" from="InsideHopper" to="InsideHopper" method="_on_body_entered"]
 [connection signal="body_exited" from="InsideHopper" to="InsideHopper" method="_on_body_exited"]
