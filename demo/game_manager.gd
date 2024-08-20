@@ -17,7 +17,7 @@ var max_players: int = 4:
 			max_players = 1
 		else:
 			max_players = value
-var num_spawns = 4
+const num_spawns = 4 # Reflects the number of children of main3D's PlayerSpawnpoints
 var game_in_progress: bool = false
 var is_console_host: bool = false
 var using_multiplayer: bool = false
@@ -47,16 +47,16 @@ func _ready():
 	network_process.connect(_network_process)
 
 func _process(delta):
-	# Handle network process intervals
+	# Handle network process interval signals
 	if not using_multiplayer:
-		return
+		return # No synchronization in local games!
 	time += delta
 	network_process_delta = time - last_network_process
 	if network_process_delta >= network_process_interval:
 		network_process.emit(network_process_delta)
 		last_network_process = time
-	
 
+# Runs every network_process_interval seconds
 func _network_process(_delta):
 	var new_sync_data = {
 		"players": new_player_data, 
@@ -101,12 +101,11 @@ func set_data(sender_id, new_data):
 			if pid != sender_id and pid != 1:
 				set_data.rpc_id(pid, sender_id, new_data)
 
+# Merge new data into the corresponding data dictionary
 func add_new_player_data(new_data):
 	new_player_data.merge(new_data)
-
 func add_new_object_data(new_data):
 	new_object_data.merge(new_data)
-
 func add_new_static_data(new_data):
 	new_static_data.merge(new_data)
 
@@ -123,6 +122,7 @@ func end_game():
 func get_players():
 	return sync_data.players
 
+# Return a list of all connected players' IDs
 func get_player_ids():
 	return get_players().keys()
 
@@ -166,6 +166,7 @@ func get_player_choice(id):
 	else:
 		return null
 
+# Return the given player's client version number
 func get_player_version(id):
 	if get_players().has(id):
 		return get_players()[id].version
@@ -179,12 +180,15 @@ func get_player_data(id):
 	else:
 		return null # Player must have disconnected.
 
+# Returns the dictionary of synced rigid bodies and data
 func get_objects():
 	return sync_data.objects
 
+# Return a list of the synced rigid bodies
 func get_object_names():
 	return get_objects().keys()
 
+# Add a new rigid body to the objects dictionary
 func add_object(body, body_path, trans=Transform3D.IDENTITY):
 	if not sync_data.objects.has(body.name):
 		sync_data.objects[body.name] = {
@@ -194,12 +198,15 @@ func add_object(body, body_path, trans=Transform3D.IDENTITY):
 			"body_path": body_path,
 		}
 
+# Remove a rigid body from the objects dictionary
 func remove_object(body):
 	sync_data.objects.erase(body.name)
 
+# Return an object's data
 func get_object_data(body_name):
 	return get_objects()[body_name]
 
+# Add a static body to the static bodies dictionary
 func add_static_body(body):
 	if not sync_data.static_bodies.has(body.name):
 		sync_data.static_bodies[body.name] = {
@@ -207,9 +214,11 @@ func add_static_body(body):
 			"remaining_amp_hours": 0.0,
 		}
 
+# Return the static bodies dictionary
 func get_static_bodies():
 	return sync_data.static_bodies
 
+# Return the synced data of a given static body
 func get_static_data(body_name):
 	if get_static_bodies().has(body_name):
 		return get_static_bodies()[body_name]
