@@ -50,7 +50,7 @@ func _ready():
 		for body in objects.get_children():
 			GameManager.add_object(body, body.path, body.global_transform)
 		
-		for body in get_children():
+		for body in $LandingSite.get_children():
 			if body is StaticBody3D:
 				GameManager.add_static_body(body)
 	else:
