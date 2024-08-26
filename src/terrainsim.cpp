@@ -164,13 +164,24 @@ void TerrainSim::fill_heights(float cx, float cz, float cliffR) {
 
             // Calculate the height value for the hill
             if (r <= hill_radius) {
-                h = hill_height * (1.0f - (r / hill_radius) * (r / hill_radius));
+                float hill = hill_height * (1.0f - (r / hill_radius) * (r / hill_radius));
+                if (hill < 0) hill = 0;
+                h += hill;
             }
-
-            if (x>=cx && x<=200 && z>=cz && z<=240 && h<=0.5f) // Demo ridge
-                h = 0.5f;
-            if (x==90 && z == 90) h=2.5; // Demo spike
-            if (h < 0) h = 0;
+            
+            // Bevel edge rectangle
+            float close = std::min(
+                std::min( x - cx, 200.0f - x),
+                std::min( z - cz, 240.0f - z)
+            );
+            float slope=0.18; // height change (meters) per terrain pixel (0.1 meters)
+            float edge=close*slope;
+            if (edge<0.0f) edge=0.0f;
+            if (edge>0.5f) edge=0.5f;
+            
+            if (h < edge) // Demo ridge
+                h = edge;
+            
 
             height_floats[i] = h;
             height_next[i] = h;
