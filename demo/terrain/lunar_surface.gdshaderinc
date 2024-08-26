@@ -22,13 +22,13 @@ void fragment() {
 	ROUGHNESS = 0.98f; // it's very rough
 	CLEARCOAT = 0.0f; // no surface coat, all dust
 	SPECULAR = 0.1f; // specular only at low angles
-	
+
 	// Start with map normals
 	// You need to implement this function to look up your packed normal map color here.
 	//    Return vec3(0.5,0.5,1.0) if Y-up is fine.
 	vec3 Nmap = lunar_surface_normal(UV);
 	vec3 N = unpack_normalmap(Nmap);
-	
+
 	// Add detail texture from global coordinates (so separate shaders will line up)
 	float global_scale1=1.0f/4.0f; // makes 4 meter repeat pattern
 	float global_scale2=1.0f/64.0f; // makes 64 meter repeat pattern
@@ -41,11 +41,11 @@ void fragment() {
 	vec3 upvector = vec3(0,0,1);
 	N += out_scale1*(unpack_normalmap(texture(normals_detail, xy1).rgb) - upvector);
 	N += out_scale2*(unpack_normalmap(texture(normals_detail, xy2).rgb) - upvector);
-	
+
 	N.y = -N.y; // DEM normals have a Y flip
 	vec3 Npack = repack_normalmap(N); // unit length
 	NORMAL_MAP = Npack; // wants an "OpenGL style" normal map, including 0.5 bias
-	
+
 	/*
 	if (true) { // make glowing grid lines every 10 meters
 		vec3 glow = vec3(0.0,0.6,0.0);
@@ -53,7 +53,7 @@ void fragment() {
 		if (min(gridlines.x,gridlines.y)<0.001) ALBEDO = EMISSION = glow;
 	}
 	*/
-	
+
 //	ALBEDO=vec3(0); // debug
 //  EMISSION = texture(heights,UV).rrr; // draw raw heights as brightness
 //	EMISSION = vec3(UV.x,UV.y,0.0f); // debug UV texture coords

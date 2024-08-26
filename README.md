@@ -1,5 +1,5 @@
 # GodotRobot
-Simple early proof of concept C++ robot simulation using Godot 4.2's GDExtension interface.
+Simple early proof of concept C++ robot simulation using Godot 4.3's GDExtension interface.
 
 ## How to Host a Server
 
@@ -19,7 +19,7 @@ Here are the flags available for use:
 
 ## Build Process
 
-To build this, start by downloading the [Godot 4.2.2 engine](https://godotengine.org/download/) for your machine.
+To build this, start by downloading the [Godot 4.3 engine](https://godotengine.org/download/) for your machine.
 
 You also need [Blender 3](https://download.blender.org/release/Blender3.0/), at least version 3.0 (Blender 4+ does not seem to work).  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
 
@@ -40,9 +40,9 @@ Inside the MiningRobot/ folder, check out this repo:
 
 Now prep the correct version of the godot-cpp GDExtension interface library inside GodotRobot:
 
-    git clone -b 4.2 https://github.com/godotengine/godot-cpp
+    git clone -b 4.3 https://github.com/godotengine/godot-cpp
     cd godot-cpp
-    git checkout 4.2
+    git checkout 4.3
     cd ..
 
 Build godot-cpp (the GDExtension interface) and this extension by issuing this from inside GodotRobot/:
@@ -55,7 +55,7 @@ Building will take a few minutes the first time, as it builds the whole godot-cp
 
 Finally, you can try out the example project by running 
 
-    Godot-v4.2.2-stable.exe demo/project.godot
+    Godot-v4.3-stable.exe demo/project.godot
 
 The standard edit loop is:
  - Save in Godot Engine.
@@ -64,9 +64,20 @@ The standard edit loop is:
  - Switch to Godot Engine and Project -> Reload Current Project.
 
 
-## Godot Robot Nodes
+## Terrain Nodes
 
-GodotRobot2D is a Sprite2D that pulls its location from C++ and automatically moves around under C++ control. 
+The terrain nodes let you represent static or dynamic terrains.  They can be nested in other Node3Ds or offset around, but should not be scaled.
+
+`TerrainStatic256` stores a 256x256 heightmap, normally loaded from an EXR float height image scaled to -10000 meters (black) to +10000 meters (white). 
+ - `fill_from_image(dem:Image, pixel_spacing:float)` takes an image and pixel spacing in meters to create the height map.
+ - `add_mesh(shader:Shader,casts_shadows:bool)` creates a mesh for rendering, using the specified shader.
+ - `add_static_collider()` creates a StaticBody3D with a CollisionShape3D of our heightmap, so physics interacts with the terrain.
+
+`TerrainSim` stores a dynamic mineable 256x256 heightmap.  It inherits from `TerrainStatic256`.  
+ - `excavate_point(world:Vector3, dirtball_offset:Vector3, spawn_vel:Vector3)` to excavate terrain into dirtballs.  Any locations needing dirtablls will emit the signal `spawn_dirtball` with a spawn position and velocity as Vector3.
+ - `try_merge(dirtball:Node3D)` to merge dirtballs back down onto the terrain.
+
+
 
 
 ## Debug Clues
@@ -76,6 +87,9 @@ When you start the Godot engine, you'll get errors like this if your version of 
     ERROR: Attempt to get non-existent interface function: object_has_script_method.
 
 This is caused by godot-cpp being 4.3, but engine being 4.2.  Check out the right version and rebuild godot-cpp.
+
+    ERROR: Cannot load a GDExtension built for Godot 4.3.0 using an older version of Godot (4.2.2).
+This is caused by compiling for 4.3, but engine being 4.2.  Upgrade your engine.
 
 
 

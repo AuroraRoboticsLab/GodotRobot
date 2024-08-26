@@ -49,4 +49,3 @@ func _spawn_new_tool(space_num, tool_scene, tool_trans):
 	$"../../Objects".add_child(new_tool, true)
 	if GameManager.using_multiplayer:
 		GameManager.add_object(new_tool, new_tool.path, tool_trans)
-

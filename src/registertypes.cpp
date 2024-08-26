@@ -5,7 +5,6 @@ Taken directly from GDExtension tutorial:
   https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/gdextension_cpp_example.html
 
 */
-#include "godotrobot.h"
 #include "terrainsim.h"
 
 #include <gdextension_interface.h>

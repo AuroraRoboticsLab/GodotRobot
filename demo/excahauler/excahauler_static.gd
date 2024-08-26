@@ -73,4 +73,3 @@ func _physics_process(delta):
 		linear_velocity += Vector3(0, 5, 0) * delta
 		
 	
-

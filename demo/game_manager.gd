@@ -224,4 +224,3 @@ func get_static_data(body_name):
 		return get_static_bodies()[body_name]
 	else:
 		return null
-

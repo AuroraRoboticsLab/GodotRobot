@@ -25,5 +25,3 @@ vec3 lunar_surface_normal(vec2 uv)
 }
 
 #include "res://terrain/lunar_surface.gdshaderinc"
-
-

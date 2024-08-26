@@ -122,7 +122,7 @@ transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 
 [node name="LandingSite" type="Node3D" parent="."]
 
 [node name="DirtSpawner" parent="LandingSite" node_paths=PackedStringArray("terrain") instance=ExtResource("6_fqn40")]
-transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 17.6943, 2.06504, 16.7749)
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 8.9118, 2.06504, 10.2393)
 terrain = NodePath("../../Terrain")
 
 [node name="BrickMaker" parent="LandingSite" instance=ExtResource("4_vp1iq")]
