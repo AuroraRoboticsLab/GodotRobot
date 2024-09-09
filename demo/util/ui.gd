@@ -327,7 +327,8 @@ func _on_command_line_edit_text_submitted(new_text):
 					elif sim_rate <= 0.1:
 						print("Sim rate too low; limited to 0.1")
 						sim_rate = 0.1
-					Engine.set_time_scale(sim_rate)
+					Engine.time_scale = sim_rate
+					Engine.physics_ticks_per_second *= Engine.time_scale
 				else:
 					print("Error: 'simrate' command expects one argument!")
 			_:
