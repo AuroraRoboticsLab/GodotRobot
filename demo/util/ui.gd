@@ -324,11 +324,15 @@ func _on_command_line_edit_text_submitted(new_text):
 					if sim_rate > 1000.0:
 						print("Sim rate too high; capped to 1000.0")
 						sim_rate = 1000.0
-					elif sim_rate <= 0.1:
+					elif sim_rate < 0.1:
 						print("Sim rate too low; limited to 0.1")
 						sim_rate = 0.1
-					Engine.time_scale = sim_rate
-					Engine.physics_ticks_per_second *= Engine.time_scale
+					# Account for integer division (make sure time scale (float) and TPS (int) are scaled the same!)
+					var phys_tick_ratio: float = (Engine.physics_ticks_per_second*(sim_rate / Engine.time_scale))/Engine.physics_ticks_per_second
+					if sim_rate != phys_tick_ratio*Engine.time_scale:
+						print("Rate adjusted to ", phys_tick_ratio*Engine.time_scale, " due to integer division.")
+					Engine.physics_ticks_per_second *= phys_tick_ratio
+					Engine.time_scale *= phys_tick_ratio
 				else:
 					print("Error: 'simrate' command expects one argument!")
 			_:
