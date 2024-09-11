@@ -149,7 +149,7 @@ shape = SubResource("BoxShape3D_yvrwd")
 transform = Transform3D(-0.937032, 0, -0.349243, 0, 1, 0, 0.349243, 0, -0.937032, -19.2894, 1.39993, -13.6851)
 
 [node name="truss_garage_eight_bay_construction" parent="." instance=ExtResource("19_mpocg")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 16.339, -1.8, -74.704)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 16.339, -1.9, -74.704)
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]
