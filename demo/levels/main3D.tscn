@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=24 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
 [ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
+[ext_resource type="PackedScene" uid="uid://dyph6iwasdxot" path="res://objects/truss1m_18deg/truss_garage8_bay8_construction.tscn" id="19_mpocg"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_33ek2"]
 geometry_parsed_geometry_type = 1
@@ -146,6 +147,9 @@ shape = SubResource("BoxShape3D_yvrwd")
 
 [node name="HLS_large_ship" parent="LandingSite" instance=ExtResource("19_avsg1")]
 transform = Transform3D(-0.937032, 0, -0.349243, 0, 1, 0, 0.349243, 0, -0.937032, -19.2894, 1.39993, -13.6851)
+
+[node name="truss_garage_eight_bay_construction" parent="." instance=ExtResource("19_mpocg")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 16.339, -1.8, -74.704)
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dahs6naxkq613"]
+
+[ext_resource type="PackedScene" uid="uid://bj0kifc86wiom" path="res://objects/truss1m_18deg/truss1m_topbar.glb" id="1_pm6ch"]
+
+[node name="truss1m_topbar" type="Node3D"]
+
+[node name="truss1m_topbar" parent="." instance=ExtResource("1_pm6ch")]

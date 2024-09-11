@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://6q4utdsvakt8"]
+
+[ext_resource type="PackedScene" uid="uid://cquayugihxour" path="res://objects/truss1m_18deg/truss1m.tscn" id="1_cmi4f"]
+
+[node name="truss_line2" type="Node3D"]
+
+[node name="truss1" parent="." instance=ExtResource("1_cmi4f")]
+
+[node name="truss2" parent="." instance=ExtResource("1_cmi4f")]
+transform = Transform3D(-1, -7.64274e-15, -8.74228e-08, 0, -1, 8.74228e-08, -8.74228e-08, 8.74228e-08, 1, 1.963, -0.235, 0)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfgr0vcxab1ic"]
+
+[ext_resource type="PackedScene" uid="uid://dw4fyexwr6xu2" path="res://objects/truss1m_18deg/truss_garage8_bay2.tscn" id="1_t0rn2"]
+
+[node name="truss_garage_eight_bay" type="Node3D"]
+
+[node name="truss_garage_twobay" parent="." instance=ExtResource("1_t0rn2")]
+
+[node name="truss_garage_twobay2" parent="." instance=ExtResource("1_t0rn2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.92869)
+
+[node name="truss_garage_twobay3" parent="." instance=ExtResource("1_t0rn2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.85587)
+
+[node name="truss_garage_twobay4" parent="." instance=ExtResource("1_t0rn2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.78661)

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://dugirgt5f0n67"]
+
+[ext_resource type="PackedScene" uid="uid://dahs6naxkq613" path="res://objects/truss1m_18deg/truss1m_topbar.tscn" id="1_fe1pc"]
+
+[node name="truss1m_topbar_cross" type="Node3D"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -0.157399, 0.193943, 0)
+
+[node name="truss1m_topbar" parent="." instance=ExtResource("1_fe1pc")]
+transform = Transform3D(-0.695417, -0.0162016, 0.718424, 0.00558752, 0.999594, 0.0279504, -0.718585, 0.0234517, -0.695044, 0.909005, -0.00382937, 0.94046)
+
+[node name="truss1m_topbar2" parent="." instance=ExtResource("1_fe1pc")]
+transform = Transform3D(0.692543, -0.00786871, -0.721334, -0.00490946, -0.999969, 0.00619534, -0.72136, -0.000749693, -0.692559, 0.0111331, 0.0136862, 0.94365)

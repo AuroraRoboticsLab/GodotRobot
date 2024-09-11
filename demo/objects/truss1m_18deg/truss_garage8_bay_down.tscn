@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsjdjcn43c1th"]
+
+[ext_resource type="PackedScene" uid="uid://puuo5d0humdk" path="res://objects/truss1m_18deg/truss_arch8.tscn" id="1_qflkl"]
+[ext_resource type="PackedScene" uid="uid://cquayugihxour" path="res://objects/truss1m_18deg/truss1m.tscn" id="2_ks5u7"]
+[ext_resource type="PackedScene" uid="uid://dahs6naxkq613" path="res://objects/truss1m_18deg/truss1m_topbar.tscn" id="3_es7ct"]
+
+[node name="truss_garage8_bay_down" type="Node3D"]
+
+[node name="truss_arch8" parent="." instance=ExtResource("1_qflkl")]
+
+[node name="truss_ridge" parent="." instance=ExtResource("2_ks5u7")]
+transform = Transform3D(-4.37114e-08, 8.74228e-08, 1, 0, -1, 8.74228e-08, 1, 3.82137e-15, 4.37114e-08, 3.12383, 1.92296, -0.879199)
+
+[node name="truss1m_topbar3" parent="." instance=ExtResource("3_es7ct")]
+transform = Transform3D(-0.493173, 0.70152, -0.51444, 0.486231, 0.71265, 0.505679, 0.72136, -0.000748686, -0.692561, 6.39223, 0.193931, -0.73836)
+
+[node name="truss1m_topbar2" parent="." instance=ExtResource("3_es7ct")]
+transform = Transform3D(-0.495685, -0.718276, 0.488239, -0.487783, 0.695364, 0.527767, -0.718585, 0.0234517, -0.695044, 0.349828, 0.682532, -0.015393)

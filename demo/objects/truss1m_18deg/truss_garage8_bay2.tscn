@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw4fyexwr6xu2"]
+
+[ext_resource type="PackedScene" uid="uid://bsjdjcn43c1th" path="res://objects/truss1m_18deg/truss_garage8_bay_down.tscn" id="1_xtneq"]
+[ext_resource type="PackedScene" uid="uid://p0uk3mmh3br6" path="res://objects/truss1m_18deg/truss_garage8_bay_up.tscn" id="2_wy30k"]
+[ext_resource type="PackedScene" uid="uid://cww5w4sesi8bl" path="res://objects/truss1m_18deg/truss_garage8_supports.tscn" id="3_8xj6v"]
+
+[node name="truss_garage_twobay" type="Node3D"]
+
+[node name="truss_garage8_bay_down" parent="." instance=ExtResource("1_xtneq")]
+
+[node name="truss_garage8_bay_up" parent="." instance=ExtResource("2_wy30k")]
+
+[node name="truss_garage8_supports" parent="." instance=ExtResource("3_8xj6v")]
