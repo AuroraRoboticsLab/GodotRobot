@@ -5,9 +5,11 @@
 [node name="truss_garage_eight_bay" type="Node3D"]
 
 [node name="truss_garage_twobay" parent="." instance=ExtResource("1_t0rn2")]
+visible = false
 
 [node name="truss_garage_twobay2" parent="." instance=ExtResource("1_t0rn2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.92869)
+visible = false
 
 [node name="truss_garage_twobay3" parent="." instance=ExtResource("1_t0rn2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.85587)
