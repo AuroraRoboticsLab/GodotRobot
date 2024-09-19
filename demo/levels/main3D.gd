@@ -80,10 +80,10 @@ func _on_new_player_info(id, username, version, player_choice):
 		elif player_choice == GameManager.Character.ROBOT:
 			curr_player = robot_scene.instantiate()
 		elif player_choice == GameManager.Character.SPECTATOR:
-			player = freecam_scene.instantiate()
+			return # Spectators do not need to be updated at all!
 		curr_player.name = str(id)
+		add_child(curr_player, true)
 		curr_player.global_position = spawn_pos
-		add_child(curr_player)
 		curr_player.nametag_text = username
 
 @rpc("any_peer")
