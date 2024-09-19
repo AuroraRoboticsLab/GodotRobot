@@ -4,6 +4,8 @@ class_name ToolCoupler
 # Wrapper around connector component strictly for tool coupling logic.
 # Expects to be the child of a RigidBody3D
 
+signal add_joint(curr_joint: Generic6DOFJoint3D)
+
 @onready var current_attachment = null:
 	get:
 		return current_attachment
@@ -93,8 +95,9 @@ func _on_connector_component_just_connected(_area):
 	# Stick bodies together
 	curr_joint = Generic6DOFJoint3D.new()
 	curr_joint.global_transform = global_transform
-	var grandparent = get_parent().get_parent()
-	grandparent.add_child(curr_joint)
+	#var grandparent = get_parent().get_parent()
+	#grandparent.add_child(curr_joint)
+	add_joint.emit(curr_joint)
 	
 	current_attachment.global_transform = get_parent().global_transform
 	current_attachment.global_position = global_position

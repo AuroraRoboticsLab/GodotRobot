@@ -29,13 +29,13 @@ func _network_process(_delta):
 			value -= brick_mass
 			var new_brick = brick_t.instantiate()
 			new_brick.global_transform = $BrickSpawnpoint.global_transform
-			get_parent().get_parent().objects.add_child(new_brick, true)
+			GameManager.add_local_object.emit(new_brick, true)
 			GameManager.add_object(new_brick, brick_path, $BrickSpawnpoint.global_transform)
 		elif value >= brick_mass and not GameManager.using_multiplayer:
 			value -= brick_mass
 			var new_brick = brick_t.instantiate()
 			new_brick.global_transform = $BrickSpawnpoint.global_transform
-			get_parent().get_parent().objects.add_child(new_brick)
+			GameManager.add_local_object.emit(new_brick)
 		
 		var percent_string = str(round_to_dec(value/brick_mass, 2)*100) + "%"
 		$Label3D.text = str(round_to_dec(curr_mass, 2))+"/10 kg (" + percent_string + ")"

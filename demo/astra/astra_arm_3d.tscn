@@ -88,3 +88,5 @@ shape = SubResource("BoxShape3D_6ej40")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_lu4b4")
+
+[connection signal="add_joint" from="Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent" to="." method="_on_tool_coupler_component_add_joint"]

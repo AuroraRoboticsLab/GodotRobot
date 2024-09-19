@@ -24,7 +24,7 @@ signal just_disconnected(area)
 @export var charge_component: ChargeComponent = null
 
 # Body connected to this connector.
-@onready var parent = get_parent()
+@onready var parent: Node = get_parent()
 
 # We have been told to connect.
 func do_connect(connect_to=nearby_connector):

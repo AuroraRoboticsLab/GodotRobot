@@ -32,6 +32,7 @@ signal new_object(sender_id, body_path, body_name)
 signal self_disconnected
 signal toggle_inputs(in_bool)
 signal network_process(delta)
+signal add_local_object(object, deferred)
 
 var time: float = 0
 const network_process_interval = 0.05

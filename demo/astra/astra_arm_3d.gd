@@ -100,3 +100,6 @@ func _physics_process(delta):
 	# Tool attachment/detachment
 	if (Input.is_action_just_pressed("generic_action")) and can_input: 
 		tool_coupler_component.try_toggle_attach()
+
+func _on_tool_coupler_component_add_joint(curr_joint: Generic6DOFJoint3D) -> void:
+	$Arm3D/Bollard3D.add_child(curr_joint)

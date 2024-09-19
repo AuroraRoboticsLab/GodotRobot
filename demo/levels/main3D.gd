@@ -13,6 +13,7 @@ func _ready():
 	GameManager.network_process.connect(_network_process)
 	GameManager.new_player_info.connect(_on_new_player_info)
 	GameManager.new_object.connect(_on_new_object)
+	GameManager.add_local_object.connect(_add_local_object)
 	
 	if GameManager.using_multiplayer:
 		# Add all connected players to client
@@ -182,3 +183,6 @@ func _on_fallen_area_3d_body_entered(body):
 		body.angular_velocity = Vector3.ZERO
 	elif body is CharacterBody3D:
 		body.velocity = Vector3.ZERO
+
+func _add_local_object(body, deferred=false):
+	$Objects.add_child(body, deferred)

@@ -1,4 +1,5 @@
 extends Generic6DOFJoint3D
+class_name BetterHingeJoint3D
 
 enum Axis { X, Y, Z }
 @export var rotation_axis: Axis = Axis.X
