@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwyp3xvtl7b1g"]
+
+[ext_resource type="PackedScene" uid="uid://lqgjnuk5p8de" path="res://objects/L_truss3m_18deg/L_truss3m_rigidbody.tscn" id="1_1lktg"]
+
+[node name="LTruss3mStack" type="Node3D"]
+
+[node name="LTruss3mRigidbody" parent="." instance=ExtResource("1_1lktg")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="LTruss3mRigidbody2" parent="." instance=ExtResource("1_1lktg")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.0918288, 0.0382385)
+
+[node name="LTruss3mRigidbody4" parent="." instance=ExtResource("1_1lktg")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.184462, 0.0749978)
+
+[node name="LTruss3mRigidbody3" parent="." instance=ExtResource("1_1lktg")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.277094, 0.111757)

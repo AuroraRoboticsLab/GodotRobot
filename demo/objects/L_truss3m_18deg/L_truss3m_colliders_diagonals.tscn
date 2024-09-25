@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpymwi74do4uh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ppe2n"]
+size = Vector3(0.905, 0.02, 0.02)
+
+[node name="LTruss3mDiagonalColliders" type="Node3D"]
+
+[node name="DiagonalInside" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.794891, 0.606752, 0, -0.606752, 0.794891, 0, 0, 0, 1, 0.372702, -0.303412, 0)
+shape = SubResource("BoxShape3D_ppe2n")
+
+[node name="DiagonalOutside" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.794415, -0.607376, 0, 0.607376, 0.794415, 0, 0, 0, 1, 1.10231, -0.301799, -0.000109553)
+shape = SubResource("BoxShape3D_ppe2n")

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://chygfimdka5it"]
+
+[ext_resource type="PackedScene" uid="uid://bpymwi74do4uh" path="res://objects/L_truss3m_18deg/L_truss3m_colliders_diagonals.tscn" id="2_m5uf0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ppe2n"]
+size = Vector3(0.567, 0.02, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u4ewm"]
+size = Vector3(0.03, 0.09, 0.09)
+
+[node name="LTruss3mDiagonalColliders" type="Node3D"]
+
+[node name="Upright" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.156435, -0.987689, 0, 0.987689, 0.156435, 0, 0, 0, 1, 1.43777, -0.303412, 0)
+shape = SubResource("BoxShape3D_ppe2n")
+
+[node name="XY diagonals" parent="." instance=ExtResource("2_m5uf0")]
+
+[node name="XZ diagonals" parent="." instance=ExtResource("2_m5uf0")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="endplateTop" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.987688, 0.156434, 0, -0.156434, 0.987688, 0, 0, 0, 1, 1.48223, -0.0130345, 0)
+shape = SubResource("BoxShape3D_u4ewm")
+
+[node name="endplateBottom" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.987688, 0.156434, 0, -0.156434, 0.987688, 0, 0, 0, 1, 1.39138, -0.582659, 0.000819743)
+shape = SubResource("BoxShape3D_u4ewm")

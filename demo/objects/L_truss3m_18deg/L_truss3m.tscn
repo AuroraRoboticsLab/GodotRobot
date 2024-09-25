@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cadmqk6yhkui4"]
+
+[ext_resource type="PackedScene" uid="uid://cxlj5y61uqt60" path="res://objects/L_truss3m_18deg/L_truss3m.glb" id="1_j1gny"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6w0y7"]
+size = Vector3(2.991, 0.04, 0.04)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_26ett"]
+size = Vector3(2.801, 0.04, 0.04)
+
+[node name="LTruss3m" type="Node3D"]
+
+[node name="L_truss3m" parent="." instance=ExtResource("1_j1gny")]
+
+[node name="CollisionTopbar" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6w0y7")
+
+[node name="CollisionBotbar" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6, 0)
+shape = SubResource("BoxShape3D_26ett")

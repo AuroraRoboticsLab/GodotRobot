@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://byg1561vbfot4"]
+
+[ext_resource type="PackedScene" uid="uid://chygfimdka5it" path="res://objects/L_truss3m_18deg/L_truss3m_colliders_oneside.tscn" id="1_8i5j7"]
+[ext_resource type="PackedScene" uid="uid://cadmqk6yhkui4" path="res://objects/L_truss3m_18deg/L_truss3m.tscn" id="2_uklft"]
+
+[node name="LTruss3mColliders" type="Node3D"]
+
+[node name="LTruss3mXplus" parent="." instance=ExtResource("1_8i5j7")]
+
+[node name="LTruss3mXminus" parent="." instance=ExtResource("1_8i5j7")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+rotation_edit_mode = 2
+
+[node name="LTruss3m" parent="." instance=ExtResource("2_uklft")]

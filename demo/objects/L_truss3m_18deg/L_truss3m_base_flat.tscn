@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://fudrol8ht6ym"]
+
+[ext_resource type="PackedScene" uid="uid://be8omdbc0wc1y" path="res://objects/L_truss3m_18deg/L_truss3m_flat.tscn" id="1_ibrv0"]
+
+[node name="LTrussBaseFlat" type="Node3D"]
+
+[node name="LTruss3m" parent="." instance=ExtResource("1_ibrv0")]
+
+[node name="LTruss3m2" parent="." instance=ExtResource("1_ibrv0")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 2.906, -0.6, 0)
+
+[node name="LTruss3m3" parent="." instance=ExtResource("1_ibrv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.812, 0, 0)

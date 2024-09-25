@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsh3eoee6431l"]
+
+[ext_resource type="PackedScene" uid="uid://7iuuwgk8876c" path="res://objects/L_truss3m_18deg/L_truss3m_arch6.tscn" id="1_ux4i7"]
+[ext_resource type="PackedScene" uid="uid://db1lhyhqpw8l4" path="res://objects/L_truss3m_18deg/L_truss3m_arch6_flat.tscn" id="2_guh1o"]
+[ext_resource type="PackedScene" uid="uid://fudrol8ht6ym" path="res://objects/L_truss3m_18deg/L_truss3m_base_flat.tscn" id="3_o7pra"]
+
+[node name="LTruss3mGarage6" type="Node3D"]
+
+[node name="LTrussArchTilt" parent="." instance=ExtResource("1_ux4i7")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0.0326586, 0.6)
+
+[node name="LTrussArch6" parent="." instance=ExtResource("1_ux4i7")]
+
+[node name="LTrussArch7" parent="." instance=ExtResource("1_ux4i7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
+[node name="LTrussArch10" parent="." instance=ExtResource("1_ux4i7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2)
+
+[node name="LTrussArchBack" parent="." instance=ExtResource("2_guh1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
+[node name="LTrussBaseL" parent="." instance=ExtResource("3_o7pra")]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -6.67805, 0, 3.99478)
+
+[node name="LTrussBaseR" parent="." instance=ExtResource("3_o7pra")]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 6.68291, 0, 3.99478)
