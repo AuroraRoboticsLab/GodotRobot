@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b2ye1hlk50tx2"]
+
+[ext_resource type="Shader" path="res://terrain/terrain_object_shader.gdshader" id="1_w7wbi"]
+[ext_resource type="Texture2D" uid="uid://b7pm5b758opew" path="res://terrain_fixed/lunar_south_pole/textures/heightmap_lunar_normals.jpg" id="2_n23y7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_w7wbi")
+shader_parameter/normals_detail = ExtResource("2_n23y7")

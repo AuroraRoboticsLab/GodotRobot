@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=26 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
 [ext_resource type="PackedScene" uid="uid://dsh3eoee6431l" path="res://objects/L_truss3m_18deg/L_truss3m_garage6.tscn" id="19_t5eag"]
 [ext_resource type="PackedScene" uid="uid://dwyp3xvtl7b1g" path="res://objects/L_truss3m_18deg/L_truss3m_stack.tscn" id="20_k45ad"]
+[ext_resource type="PackedScene" uid="uid://dp8htxovff8dw" path="res://objects/L_truss3m_18deg/L_truss3m_garage6_demo.tscn" id="21_ujr8p"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_33ek2"]
 geometry_parsed_geometry_type = 1
@@ -154,6 +155,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1707, -1.84009, -48.2925)
 
 [node name="LTruss3mStack" parent="." instance=ExtResource("20_k45ad")]
 transform = Transform3D(0.802932, 0, -0.596071, 0, 1, 0, 0.596071, 0, 0.802932, 19.4935, -1.88235, -42.6318)
+
+[node name="LTruss3mGarage7" parent="." instance=ExtResource("21_ujr8p")]
+transform = Transform3D(0.853363, 0.055229, -0.518384, -0.0472024, 0.998474, 0.0286736, 0.519176, 0, 0.854667, 46.9966, -2.07396, -51.3076)
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]

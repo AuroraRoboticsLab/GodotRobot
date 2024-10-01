@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd80c4wyxm3sx"]
+
+[ext_resource type="PackedScene" uid="uid://btdwd0ujfci4e" path="res://objects/L_truss3m_18deg/L_truss3m_backfill.glb" id="1_cotql"]
+[ext_resource type="Material" uid="uid://b2ye1hlk50tx2" path="res://terrain/terrain_object_material.tres" id="2_qye1k"]
+
+[node name="L_truss3m_backfill_half" type="Node3D"]
+
+[node name="L_truss3m_backfill" parent="." instance=ExtResource("1_cotql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.25549, 0)
+
+[node name="backfill" parent="L_truss3m_backfill" index="0"]
+surface_material_override/0 = ExtResource("2_qye1k")
+
+[editable path="L_truss3m_backfill"]
