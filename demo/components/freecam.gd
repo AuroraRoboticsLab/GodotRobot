@@ -30,6 +30,10 @@ func _input(event):
 			camrot_v -= event.relative.y * v_sens * invert_mult
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	for child in get_children():
+		child.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	if GameManager.using_multiplayer and not is_freecam:
 		$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 		if $MultiplayerSynchronizer.is_multiplayer_authority():

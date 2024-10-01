@@ -33,6 +33,9 @@ var can_input: bool = true
 var lock_horiz: bool = false
 	
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	for child in get_children():
+		child.process_mode = Node.PROCESS_MODE_ALWAYS
 	clipped_cam.position.z = camera_distance
 	clipped_cam.clip_length = camera_distance
 	

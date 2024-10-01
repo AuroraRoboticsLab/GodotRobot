@@ -26,6 +26,10 @@ func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	for child in get_children():
+		child.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	if OS.get_name() == "Android":
 		left_joystick.show()
 		right_joystick.show()
@@ -52,6 +56,10 @@ func _process(_delta):
 	# Toggle UI visibility
 	if Input.is_action_just_pressed("f2"):
 		visible = !visible
+	
+	# Handle pausing logic
+	if Input.is_action_just_pressed("pause"):
+		get_tree().paused = !get_tree().paused
 	
 	if Input.is_action_just_pressed("escape") and freecamming:
 		freecamming = false
@@ -335,6 +343,9 @@ func _on_command_line_edit_text_submitted(new_text):
 					Engine.time_scale *= phys_tick_ratio
 				else:
 					print("Error: 'simrate' command expects one argument!")
+			"pause":
+				if Input.is_action_just_pressed("pause"):
+					get_tree().paused = !get_tree().paused
 			_:
 				print("Error: Unknown command: ", command)
 

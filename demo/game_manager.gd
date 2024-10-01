@@ -35,7 +35,7 @@ signal network_process(delta)
 signal add_local_object(object, deferred)
 
 var time: float = 0
-const network_process_interval = 0.05
+const network_process_interval = 0.05 # The update frequency for multiplayer
 var last_network_process = 0
 var network_process_delta = time - last_network_process
 
