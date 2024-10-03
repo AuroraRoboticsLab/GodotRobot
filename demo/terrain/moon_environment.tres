@@ -10,7 +10,7 @@ sky_material = SubResource("PanoramaSkyMaterial_pnyv7")
 
 [resource]
 background_mode = 2
-background_energy_multiplier = 2.0
+background_energy_multiplier = 0.58
 sky = SubResource("Sky_kjllf")
 ambient_light_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 reflected_light_source = 2
