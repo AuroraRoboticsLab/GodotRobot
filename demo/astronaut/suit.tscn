@@ -28,19 +28,19 @@ bones/19/rotation = Quaternion(0.34862, 0.332162, -0.209086, 0.851126)
 bones/20/rotation = Quaternion(0.147228, 0.96507, 0.0859618, -0.198935)
 
 [node name="PLSS" parent="metarig/Skeleton3D" index="0"]
-transform = Transform3D(0.999951, -0.00975821, 0.0014443, 0.00970529, 0.999409, 0.0329761, -0.00176523, -0.0329604, 0.999455, -0.00512725, 1.60945, -0.229679)
+transform = Transform3D(0.999951, -0.00975822, 0.00144431, 0.0097053, 0.999409, 0.0329756, -0.00176524, -0.0329599, 0.999455, -0.00512726, 1.60945, -0.229679)
 
 [node name="PLSS" parent="metarig/Skeleton3D/PLSS" index="0"]
 transform = Transform3D(1, 5.23869e-10, 0, 4.72937e-10, 1, -1.49012e-08, -2.32831e-10, -2.98023e-08, 1, 0, 0, 0)
 
 [node name="Visor" parent="metarig/Skeleton3D" index="1"]
-transform = Transform3D(0.999951, -0.00975821, 0.0014443, 0.00970529, 0.999409, 0.0329761, -0.00176523, -0.0329604, 0.999455, 0.00102667, 1.7425, 0.154078)
+transform = Transform3D(0.999951, -0.00975822, 0.00144431, 0.0097053, 0.999409, 0.0329756, -0.00176524, -0.0329599, 0.999455, 0.00102667, 1.74251, 0.154078)
 
 [node name="FootIK_SkeletonIK3D_R" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="3"]
 process_priority = 1
+influence = 0.903
 root_bone = &"thigh.R"
 tip_bone = &"foot.R"
-interpolation = 0.903
 use_magnet = true
 magnet = Vector3(-0.3, 0.6, 1)
 target_node = NodePath("../../RayCastR/FootIK_R")
@@ -48,9 +48,9 @@ script = ExtResource("2_jer7l")
 
 [node name="FootIK_SkeletonIK3D_L" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="4"]
 process_priority = 1
+influence = 0.903
 root_bone = &"thigh.L"
 tip_bone = &"foot.L"
-interpolation = 0.903
 use_magnet = true
 magnet = Vector3(0.3, 0.6, 1)
 target_node = NodePath("../../RayCastL/FootIK_L")
@@ -58,49 +58,30 @@ script = ExtResource("2_jer7l")
 
 [node name="HandIK_SkeletonIK3D_R" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="5"]
 process_priority = 1
-root_bone = &"forearm.R"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000635147, 0.00571668, 0.443645)
+influence = 0.903
+root_bone = &"upper_arm.R"
 tip_bone = &"hand.R"
-interpolation = 0.903
 use_magnet = true
-magnet = Vector3(0.3, 0.6, 1)
-target_node = NodePath("../../Body_IK/ShoudlerIK_R/HandIK_R")
+magnet = Vector3(-0.8, 0.9, -0.2)
+target_node = NodePath("../../HandIK_R")
 script = ExtResource("2_jer7l")
 
 [node name="HandIK_SkeletonIK3D_L" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="6"]
 process_priority = 1
-root_bone = &"forearm.L"
+influence = 0.903
+root_bone = &"upper_arm.L"
 tip_bone = &"hand.L"
-interpolation = 0.903
 use_magnet = true
-magnet = Vector3(0.3, 0.6, 1)
-target_node = NodePath("../../Body_IK/ShoudlerIK_L/HandIK_L")
+magnet = Vector3(0.8, 0.9, -0.2)
+target_node = NodePath("../../HandIK_L")
 script = ExtResource("2_jer7l")
 
-[node name="ShoulderIK_SkeletonIK3D_R" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="7"]
+[node name="BodyIK_SkeletonIK3D" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="7"]
 process_priority = 1
-root_bone = &"shoulder.R"
-tip_bone = &"upper_arm.R"
-interpolation = 0.903
-use_magnet = true
-magnet = Vector3(0.3, 0.6, 1)
-target_node = NodePath("../../Body_IK/ShoudlerIK_R")
-script = ExtResource("2_jer7l")
-
-[node name="ShoulderIK_SkeletonIK3D_L" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="8"]
-process_priority = 1
-root_bone = &"shoulder.L"
-tip_bone = &"upper_arm.L"
-interpolation = 0.903
-use_magnet = true
-magnet = Vector3(0.3, 0.6, 1)
-target_node = NodePath("../../Body_IK/ShoudlerIK_L")
-script = ExtResource("2_jer7l")
-
-[node name="BodyIK_SkeletonIK3D" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="9"]
-process_priority = 1
+influence = 0.903
 root_bone = &"spine"
 tip_bone = &"spine.001"
-interpolation = 0.903
 use_magnet = true
 magnet = Vector3(0.3, 0.6, 1)
 target_node = NodePath("../../Body_IK")
@@ -124,14 +105,8 @@ transform = Transform3D(0.999812, 0.0193953, -6.27032e-10, -1.47462e-09, 4.36865
 [node name="Body_IK" type="Marker3D" parent="metarig" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54032, 0.0476697)
 
-[node name="ShoudlerIK_R" type="Marker3D" parent="metarig/Body_IK" index="0"]
-transform = Transform3D(-0.714559, -0.694733, -0.0821706, 0.685999, -0.718869, 0.112402, -0.137159, 0.0239489, 0.99026, -0.282503, -0.000121474, -0.0347906)
+[node name="HandIK_R" type="Marker3D" parent="metarig" index="4"]
+transform = Transform3D(0.220955, -0.0946102, -0.970686, -0.58157, -0.811754, -0.0532617, -0.782919, 0.576289, -0.234383, -0.407704, 1.07504, 0.256393)
 
-[node name="HandIK_R" type="Marker3D" parent="metarig/Body_IK/ShoudlerIK_R" index="0"]
-transform = Transform3D(-0.628151, -0.748904, 0.211121, -0.406144, 0.547012, 0.732004, -0.663686, 0.374063, -0.647767, -0.225583, 0.529855, 0.0697726)
-
-[node name="ShoudlerIK_L" type="Marker3D" parent="metarig/Body_IK" index="1"]
-transform = Transform3D(-0.698307, 0.658143, -0.281452, -0.57086, -0.74927, -0.335729, -0.431841, -0.0737724, 0.898927, 0.282805, 0.057173, -0.0450272)
-
-[node name="HandIK_L" type="Marker3D" parent="metarig/Body_IK/ShoudlerIK_L" index="0"]
-transform = Transform3D(-0.905249, 0.386521, -0.176434, 0.0707452, 0.546575, 0.834417, 0.418954, 0.742873, -0.52213, 0.155924, 0.481561, 0.189153)
+[node name="HandIK_L" type="Marker3D" parent="metarig" index="5"]
+transform = Transform3D(0.264338, -0.0293621, 0.963983, 0.458991, -0.875252, -0.152521, 0.848207, 0.482777, -0.217885, 0.37032, 1.06478, 0.230222)
