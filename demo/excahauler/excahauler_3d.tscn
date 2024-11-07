@@ -1,0 +1,223 @@
+[gd_scene load_steps=17 format=3 uid="uid://dg3o22fxtpi62"]
+
+[ext_resource type="Script" path="res://excahauler/excahauler_3d.gd" id="1_8tq4y"]
+[ext_resource type="ArrayMesh" uid="uid://dnxo3042ate3c" path="res://excahauler/excahauler_parts/wheel.obj" id="2_jnd2h"]
+[ext_resource type="ArrayMesh" uid="uid://cpifffffo6q1q" path="res://excahauler/excahauler_parts/frame.obj" id="2_omc7u"]
+[ext_resource type="PackedScene" uid="uid://cdadlayx3kmpi" path="res://components/movable_camera_3d.tscn" id="3_i5vjg"]
+[ext_resource type="ArrayMesh" uid="uid://dosyxy8hd461p" path="res://excahauler/excahauler_parts/frameBox.obj" id="4_4anhx"]
+[ext_resource type="Script" path="res://excahauler/arm.gd" id="4_e6wri"]
+[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="5_l6p3u"]
+[ext_resource type="Script" path="res://excahauler/scoop.gd" id="5_wphus"]
+[ext_resource type="ArrayMesh" uid="uid://bk3lqhm87yjhd" path="res://excahauler/excahauler_parts/boom.obj" id="6_crbdq"]
+[ext_resource type="ArrayMesh" uid="uid://d1qolraduhcaf" path="res://excahauler/excahauler_parts/stick.obj" id="7_mc66y"]
+[ext_resource type="ArrayMesh" uid="uid://b8gilmw0lwapf" path="res://excahauler/excahauler_parts/tilt.obj" id="10_rdlc0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sgk6w"]
+size = Vector3(0.8, 0.024, 1.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_earty"]
+size = Vector3(0.52, 0.35, 0.32)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8siah"]
+size = Vector3(0.04, 0.510229, 0.04)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wnnja"]
+size = Vector3(0.508362, 0.0871429, 0.573303)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f60gd"]
+size = Vector3(0.21, 0.263169, 0.0250039)
+
+[node name="Excahauler3D" type="VehicleBody3D"]
+collision_layer = 4
+collision_mask = 5
+center_of_mass_mode = 1
+script = ExtResource("1_8tq4y")
+
+[node name="BackRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43, 0.263, 0.454)
+brake = 0.2
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="Wheel" type="MeshInstance3D" parent="BackRight"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_jnd2h")
+
+[node name="MiddleRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43, 0.263, -0.003)
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 100.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="Wheel" type="MeshInstance3D" parent="MiddleRight"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_jnd2h")
+
+[node name="FrontRight" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43, 0.263, -0.456)
+brake = 0.2
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="Wheel" type="MeshInstance3D" parent="FrontRight"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_jnd2h")
+skeleton = NodePath("../../MiddleRight")
+
+[node name="FrontLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43, 0.263, -0.456)
+brake = 0.2
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="Wheel" type="MeshInstance3D" parent="FrontLeft"]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 0)
+mesh = ExtResource("2_jnd2h")
+skeleton = NodePath("../../MiddleRight")
+
+[node name="MiddleLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43, 0.263, -0.001)
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 100.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="Wheel" type="MeshInstance3D" parent="MiddleLeft"]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 0)
+mesh = ExtResource("2_jnd2h")
+skeleton = NodePath("../../MiddleRight")
+
+[node name="BackLeft" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43, 0.263, 0.453)
+brake = 0.2
+use_as_traction = true
+wheel_radius = 0.18
+wheel_friction_slip = 0.6
+suspension_travel = 0.03
+suspension_stiffness = 50.0
+suspension_max_force = 100.0
+damping_compression = 0.9
+damping_relaxation = 0.95
+
+[node name="Wheel" type="MeshInstance3D" parent="BackLeft"]
+transform = Transform3D(1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, 0)
+mesh = ExtResource("2_jnd2h")
+skeleton = NodePath("../../MiddleRight")
+
+[node name="Frame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("2_omc7u")
+
+[node name="FrameCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215, -0.015)
+shape = SubResource("BoxShape3D_sgk6w")
+
+[node name="FrameBox" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = ExtResource("4_4anhx")
+
+[node name="BoxCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.377205, 0.424528)
+shape = SubResource("BoxShape3D_earty")
+
+[node name="Arm" type="Node3D" parent="."]
+script = ExtResource("4_e6wri")
+
+[node name="FrameToBoomJoint" parent="Arm" instance=ExtResource("5_l6p3u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215871, -0.603368)
+node_a = NodePath("../..")
+node_b = NodePath("../Boom3D")
+angular_limit_x/erp = 0.3
+max_upper_angle = 60.0
+max_lower_angle = -60.0
+
+[node name="Boom3D" type="RigidBody3D" parent="Arm"]
+collision_layer = 4
+collision_mask = 5
+
+[node name="Boom" type="MeshInstance3D" parent="Arm/Boom3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.214025, -0.596298)
+mesh = ExtResource("6_crbdq")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arm/Boom3D"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, -0.573576, 0, 0.573576, 0.819152, -0.309733, 0.743458, -0.433415)
+shape = SubResource("BoxShape3D_8siah")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Arm/Boom3D"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, -0.573576, 0, 0.573576, 0.819152, 0.31, 0.726711, -0.444406)
+shape = SubResource("BoxShape3D_8siah")
+
+[node name="BoomToStickJoint" parent="Arm/Boom3D" instance=ExtResource("5_l6p3u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.963025, -0.275793)
+node_a = NodePath("..")
+node_b = NodePath("../Stick3D")
+max_upper_angle = 50.0
+max_lower_angle = -70.0
+
+[node name="Stick3D" type="RigidBody3D" parent="Arm/Boom3D"]
+collision_layer = 4
+collision_mask = 5
+
+[node name="Stick" type="MeshInstance3D" parent="Arm/Boom3D/Stick3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.960635, -0.280838)
+mesh = ExtResource("7_mc66y")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arm/Boom3D/Stick3D"]
+transform = Transform3D(1, 0, 0, 0, 0.986677, -0.162689, 0, 0.162689, 0.986677, 0, 0.977378, -0.562)
+shape = SubResource("BoxShape3D_wnnja")
+
+[node name="StickToTiltJoint" parent="Arm/Boom3D/Stick3D" instance=ExtResource("5_l6p3u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.971773, -1.01658)
+node_a = NodePath("..")
+node_b = NodePath("../Tilt3D")
+max_upper_angle = 80.0
+max_lower_angle = -80.0
+
+[node name="Tilt3D" type="RigidBody3D" parent="Arm/Boom3D/Stick3D"]
+collision_layer = 4
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arm/Boom3D/Stick3D/Tilt3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.852529, -1.01754)
+shape = SubResource("BoxShape3D_f60gd")
+
+[node name="Tilt" type="MeshInstance3D" parent="Arm/Boom3D/Stick3D/Tilt3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.971105, -1.01743)
+mesh = ExtResource("10_rdlc0")
+skeleton = NodePath("../..")
+
+[node name="Scoop" type="Node3D" parent="."]
+script = ExtResource("5_wphus")
+
+[node name="MovableCamera3D" parent="." instance=ExtResource("3_i5vjg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.305038, 0)
+
+[node name="CenterOfMass" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.184633, -0.185059)

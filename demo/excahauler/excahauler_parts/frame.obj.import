@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cpifffffo6q1q"
+path="res://.godot/imported/frame.obj-6758b7196abb2b8e2740c737e82fddda.mesh"
+
+[deps]
+
+files=["res://.godot/imported/frame.obj-6758b7196abb2b8e2740c737e82fddda.mesh"]
+
+source_file="res://excahauler/excahauler_parts/frame.obj"
+dest_files=["res://.godot/imported/frame.obj-6758b7196abb2b8e2740c737e82fddda.mesh", "res://.godot/imported/frame.obj-6758b7196abb2b8e2740c737e82fddda.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

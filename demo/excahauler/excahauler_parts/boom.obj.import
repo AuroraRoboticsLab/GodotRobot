@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bk3lqhm87yjhd"
+path="res://.godot/imported/boom.obj-c15208d1b4065b3bb710b4f33a8d2b48.mesh"
+
+[deps]
+
+files=["res://.godot/imported/boom.obj-c15208d1b4065b3bb710b4f33a8d2b48.mesh"]
+
+source_file="res://excahauler/excahauler_parts/boom.obj"
+dest_files=["res://.godot/imported/boom.obj-c15208d1b4065b3bb710b4f33a8d2b48.mesh", "res://.godot/imported/boom.obj-c15208d1b4065b3bb710b4f33a8d2b48.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

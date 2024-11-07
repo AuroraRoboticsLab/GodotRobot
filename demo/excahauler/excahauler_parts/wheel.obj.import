@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dnxo3042ate3c"
+path="res://.godot/imported/wheel.obj-1e79b55c1b30bdd8802c2ad351e091ed.mesh"
+
+[deps]
+
+files=["res://.godot/imported/wheel.obj-1e79b55c1b30bdd8802c2ad351e091ed.mesh"]
+
+source_file="res://excahauler/excahauler_parts/wheel.obj"
+dest_files=["res://.godot/imported/wheel.obj-1e79b55c1b30bdd8802c2ad351e091ed.mesh", "res://.godot/imported/wheel.obj-1e79b55c1b30bdd8802c2ad351e091ed.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

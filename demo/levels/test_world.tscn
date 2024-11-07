@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjkgxgxvgdopt"]
+
+[ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="1_1najt"]
+[ext_resource type="PackedScene" uid="uid://dg3o22fxtpi62" path="res://excahauler/excahauler_3d.tscn" id="2_it24o"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5y8l7"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_62m5k"]
+sky_material = SubResource("ProceduralSkyMaterial_5y8l7")
+
+[sub_resource type="Environment" id="Environment_llcfq"]
+background_mode = 2
+sky = SubResource("Sky_62m5k")
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsd6d"]
+albedo_color = Color(0.403546, 0.000132071, 0.412657, 1)
+albedo_texture = ExtResource("1_1najt")
+uv1_scale = Vector3(1000, 1000, 1000)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1hsmj"]
+material = SubResource("StandardMaterial3D_wsd6d")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pco5w"]
+points = PackedVector3Array(-50, -0.5, -50, -50, 0.5, -50, 50, -0.5, -50, -50, -0.5, 50, -50, 0.5, 50, 50, 0.5, -50, 50, -0.5, 50, 50, 0.5, 50)
+
+[node name="TestWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_llcfq")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_1hsmj")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("ConvexPolygonShape3D_pco5w")
+
+[node name="Excahauler3D" parent="." instance=ExtResource("2_it24o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1494, 0)

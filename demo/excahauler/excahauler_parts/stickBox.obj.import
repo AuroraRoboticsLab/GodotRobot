@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dy26ed4srq771"
+path="res://.godot/imported/stickBox.obj-ab1b7cd75df1cac80dac85e5cf228020.mesh"
+
+[deps]
+
+files=["res://.godot/imported/stickBox.obj-ab1b7cd75df1cac80dac85e5cf228020.mesh"]
+
+source_file="res://excahauler/excahauler_parts/stickBox.obj"
+dest_files=["res://.godot/imported/stickBox.obj-ab1b7cd75df1cac80dac85e5cf228020.mesh", "res://.godot/imported/stickBox.obj-ab1b7cd75df1cac80dac85e5cf228020.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

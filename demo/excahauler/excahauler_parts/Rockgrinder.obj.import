@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cc1e6eluukhug"
+path="res://.godot/imported/Rockgrinder.obj-331f7ded62feb36e65f4e80847598479.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Rockgrinder.obj-331f7ded62feb36e65f4e80847598479.mesh"]
+
+source_file="res://excahauler/excahauler_parts/Rockgrinder.obj"
+dest_files=["res://.godot/imported/Rockgrinder.obj-331f7ded62feb36e65f4e80847598479.mesh", "res://.godot/imported/Rockgrinder.obj-331f7ded62feb36e65f4e80847598479.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
