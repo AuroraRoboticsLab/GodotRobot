@@ -46,6 +46,7 @@ shape = SubResource("BoxShape3D_nwear")
 
 [node name="VehicleWheel3D1" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, 0.453534)
+visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
@@ -62,6 +63,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D2" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, -0.00331038)
+visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
@@ -78,6 +80,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D3" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.531038, 0.262595, -0.455662)
+visible = false
 brake = 0.2
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -93,6 +96,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D4" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, -0.455662)
+visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18
@@ -109,6 +113,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D5" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, -0.00060299)
+visible = false
 brake = 0.2
 wheel_radius = 0.18
 wheel_friction_slip = 0.6
@@ -124,6 +129,7 @@ mesh = SubResource("SphereMesh_ktrtb")
 
 [node name="VehicleWheel3D6" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.520166, 0.262595, 0.452979)
+visible = false
 brake = 0.2
 use_as_traction = true
 wheel_radius = 0.18

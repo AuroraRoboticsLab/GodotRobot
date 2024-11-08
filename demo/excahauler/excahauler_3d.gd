@@ -14,6 +14,7 @@ func _ready() -> void:
 	center_of_mass = $CenterOfMass.position
 
 func _physics_process(delta: float) -> void:
+	
 	#if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
 	#	return
 	
