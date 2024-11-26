@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=28 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -16,11 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="7_5iltw"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
 [ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
+[ext_resource type="PackedScene" uid="uid://cadmqk6yhkui4" path="res://objects/L_truss3m_18deg/L_truss3m.tscn" id="12_1wf2c"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
 [ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
-[ext_resource type="PackedScene" uid="uid://dsh3eoee6431l" path="res://objects/L_truss3m_18deg/L_truss3m_garage6.tscn" id="19_t5eag"]
 [ext_resource type="PackedScene" uid="uid://dwyp3xvtl7b1g" path="res://objects/L_truss3m_18deg/L_truss3m_stack.tscn" id="20_k45ad"]
-[ext_resource type="PackedScene" uid="uid://dp8htxovff8dw" path="res://objects/L_truss3m_18deg/L_truss3m_garage6_demo.tscn" id="21_ujr8p"]
+[ext_resource type="PackedScene" uid="uid://d1j5s4nw8bdmn" path="res://objects/L_truss3m_18deg/L_truss3m_garage6_simplest.tscn" id="21_w3ssr"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_33ek2"]
 geometry_parsed_geometry_type = 1
@@ -39,6 +39,19 @@ size = Vector3(50, 10, 50)
 
 [sub_resource type="BoxMesh" id="BoxMesh_af3e6"]
 size = Vector3(50, 10, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2v2oq"]
+cull_mode = 2
+metallic = 0.65
+metallic_specular = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_h2e7m"]
+material = SubResource("StandardMaterial3D_2v2oq")
+top_radius = 1.5
+height = 1.0
+radial_segments = 4
+rings = 0
+cap_top = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvrwd"]
 size = Vector3(281.007, 20, 300)
@@ -125,8 +138,19 @@ transform = Transform3D(-0.393043, 0, -0.91952, 0, 1, 0, 0.91952, 0, -0.393043, 
 [node name="LandingSite" type="Node3D" parent="."]
 
 [node name="DirtSpawner" parent="LandingSite" node_paths=PackedStringArray("terrain") instance=ExtResource("6_fqn40")]
-transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 8.9118, 2.06504, 10.2393)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.38133, 1.62439, 11.8359)
 terrain = NodePath("../../Terrain")
+
+[node name="DirtHopper" type="MeshInstance3D" parent="LandingSite/DirtSpawner"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0.25, 0)
+mesh = SubResource("CylinderMesh_h2e7m")
+skeleton = NodePath("../..")
+
+[node name="LTruss3m3" parent="LandingSite/DirtSpawner" instance=ExtResource("12_1wf2c")]
+transform = Transform3D(4.37114e-08, -1, 3.82137e-15, -1, -4.37114e-08, -8.74228e-08, 8.74228e-08, 0, -1, -1.42055, -0.65816, -0.27981)
+
+[node name="LTruss3m2" parent="LandingSite/DirtSpawner/LTruss3m3" instance=ExtResource("12_1wf2c")]
+transform = Transform3D(1, -8.74227e-08, -3.82137e-15, -8.74228e-08, -1, -8.74228e-08, 3.82137e-15, 8.74227e-08, -1, 0, -0.597315, -0.597746)
 
 [node name="BrickMaker" parent="LandingSite" instance=ExtResource("4_vp1iq")]
 transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12.0871, 0.0188498, 20.9613)
@@ -150,14 +174,11 @@ shape = SubResource("BoxShape3D_yvrwd")
 [node name="HLS_large_ship" parent="LandingSite" instance=ExtResource("19_avsg1")]
 transform = Transform3D(-0.937032, 0, -0.349243, 0, 1, 0, 0.349243, 0, -0.937032, -19.2894, 1.39993, -13.6851)
 
-[node name="LTruss3mGarage6" parent="." instance=ExtResource("19_t5eag")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1707, -1.84009, -48.2925)
-
 [node name="LTruss3mStack" parent="." instance=ExtResource("20_k45ad")]
-transform = Transform3D(0.802932, 0, -0.596071, 0, 1, 0, 0.596071, 0, 0.802932, 19.4935, -1.88235, -42.6318)
+transform = Transform3D(0.640552, 0, -0.767915, 0, 1, 0, 0.767915, 0, 0.640552, 17.6578, -1.88235, -40.159)
 
-[node name="LTruss3mGarage7" parent="." instance=ExtResource("21_ujr8p")]
-transform = Transform3D(0.853363, 0.055229, -0.518384, -0.0472024, 0.998474, 0.0286736, 0.519176, 0, 0.854667, 46.9966, -2.07396, -51.3076)
+[node name="LTruss3mGarage6" parent="." instance=ExtResource("21_w3ssr")]
+transform = Transform3D(0.855138, 0.00410404, -0.518384, 0.012585, 0.99951, 0.0286736, 0.518247, -0.0310437, 0.854667, 22.5174, -2.10832, -38.8688)
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]

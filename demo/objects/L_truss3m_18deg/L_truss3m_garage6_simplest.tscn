@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1j5s4nw8bdmn"]
+
+[ext_resource type="PackedScene" uid="uid://7iuuwgk8876c" path="res://objects/L_truss3m_18deg/L_truss3m_arch6.tscn" id="1_8oonc"]
+[ext_resource type="PackedScene" uid="uid://db1lhyhqpw8l4" path="res://objects/L_truss3m_18deg/L_truss3m_arch6_flat.tscn" id="2_k541w"]
+[ext_resource type="PackedScene" uid="uid://bd80c4wyxm3sx" path="res://objects/L_truss3m_18deg/L_truss3m_backfill_half.tscn" id="3_iujqx"]
+
+[node name="LTruss3mGarage6" type="Node3D"]
+
+[node name="LTrussArch7" parent="." instance=ExtResource("1_8oonc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
+[node name="LTrussArch10" parent="." instance=ExtResource("1_8oonc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2)
+
+[node name="LTrussArchBack" parent="." instance=ExtResource("2_k541w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
+[node name="L_truss3m_backfill_half" parent="." instance=ExtResource("3_iujqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.723899, 0, 0, -0.557066)
+
+[node name="L_truss3m_backfill_half2" parent="." instance=ExtResource("3_iujqx")]
+transform = Transform3D(-1, 0, -6.32853e-08, 0, 1, 0, 8.74228e-08, 0, -0.723899, 0, 0, -1.86395)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -2.8373, 3.64035, -1.17071)
+light_energy = 8.0
+spot_range = 7.349
+spot_angle = 46.67
+spot_angle_attenuation = 0.0915055
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.837, 3.64, -1.17042)
+light_energy = 8.0
+spot_range = 7.349
+spot_angle = 46.67
+spot_angle_attenuation = 0.0915055
