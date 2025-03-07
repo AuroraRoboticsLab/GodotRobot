@@ -1,0 +1,16 @@
+# Exports
+*_export/
+android_sdk/
+local_export_presets.cfg
+rcedit/
+
+# Godot related
+*.so
+*.wasm
+*.dll
+*.TMP
+*.o
+*.os
+demo/.godot/
+*.dblite
+godot-cpp/
