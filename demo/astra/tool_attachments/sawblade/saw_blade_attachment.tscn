@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bdndtt86s6py8"]
 
 [ext_resource type="ArrayMesh" uid="uid://d05skolidq8ko" path="res://astra/tool_attachments/sawblade/SawBlade.obj" id="1_6qcj2"]
-[ext_resource type="Script" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.gd" id="1_j62vj"]
+[ext_resource type="Script" uid="uid://n2nrbu6csdh4" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.gd" id="1_j62vj"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="3_38q37"]
 [ext_resource type="ArrayMesh" uid="uid://bp31x6de3gatm" path="res://astra/tool_attachments/sawblade/SawBlade_attactchmanet.obj" id="4_oikk3"]
 
@@ -32,7 +32,7 @@ tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.1, 1, -0.558, 0, 0, 0.83)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_u1fkv"]
 _data = {
-"spin_blade": SubResource("Animation_lwg3w")
+&"spin_blade": SubResource("Animation_lwg3w")
 }
 
 [node name="SawBladeAttachment" type="RigidBody3D"]

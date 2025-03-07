@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://co1noklregyjs"]
 
-[ext_resource type="Script" path="res://static_objects/tool_spawner.gd" id="1_bw78t"]
+[ext_resource type="Script" uid="uid://c07vwuqws7abp" path="res://static_objects/tool_spawner.gd" id="1_bw78t"]
 [ext_resource type="PackedScene" uid="uid://cu05cfh5qhtv" path="res://static_objects/work_light_3d.tscn" id="1_ohysu"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_gc6uo"]
 

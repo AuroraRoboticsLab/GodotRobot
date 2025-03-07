@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://oxs3vn1kjlyu"]
 
-[ext_resource type="Script" path="res://components/better_hinge_joint_3d.gd" id="1_ml10x"]
+[ext_resource type="Script" uid="uid://bxte80s5kg5ka" path="res://components/better_hinge_joint_3d.gd" id="1_ml10x"]
 
 [node name="BetterHingeJoint3D" type="Generic6DOFJoint3D"]
 linear_limit_x/restitution = 1.5

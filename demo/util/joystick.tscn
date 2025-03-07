@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dah0pyxlluldj"]
 
-[ext_resource type="Script" path="res://util/joystick.gd" id="1_6xr4p"]
+[ext_resource type="Script" uid="uid://wcgn0jgsaxds" path="res://util/joystick.gd" id="1_6xr4p"]
 [ext_resource type="Texture2D" uid="uid://c71xdfqagil6" path="res://graphics/joyring.png" id="1_bbgsb"]
 [ext_resource type="Texture2D" uid="uid://bio2wd5rifnii" path="res://graphics/joyknobpng.png" id="2_w4i7l"]
-[ext_resource type="Script" path="res://util/Knob.gd" id="4_8seck"]
+[ext_resource type="Script" uid="uid://cbaet4jsx8ohe" path="res://util/Knob.gd" id="4_8seck"]
 
 [node name="Joystick" type="Control"]
 layout_mode = 3

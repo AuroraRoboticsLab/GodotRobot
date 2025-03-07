@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://crokc6blgqycp"]
 
-[ext_resource type="Script" path="res://components/freecam.gd" id="1_v3i3j"]
+[ext_resource type="Script" uid="uid://d1na0ag6vgd3v" path="res://components/freecam.gd" id="1_v3i3j"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0q5cx"]
 
