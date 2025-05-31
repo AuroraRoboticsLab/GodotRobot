@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://yj2povyyj7mr"]
 
-[ext_resource type="Script" path="res://terrain/dirtball.gd" id="1_t2swf"]
+[ext_resource type="Script" uid="uid://cfqdyie5af58y" path="res://terrain/dirtball.gd" id="1_t2swf"]
 [ext_resource type="PackedScene" uid="uid://dcdqjyqiy1tpg" path="res://terrain/rocks/rock_lump_1.tscn" id="2_y5onx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_663k3"]

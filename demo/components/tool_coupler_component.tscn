@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c26cseexjqmt4"]
 
-[ext_resource type="Script" path="res://components/ToolCouplerComponent.gd" id="1_7d8h8"]
+[ext_resource type="Script" uid="uid://mxogjir3wdgi" path="res://components/ToolCouplerComponent.gd" id="1_7d8h8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_fk588"]
 size = Vector3(0.2, 0.1, 0.1)

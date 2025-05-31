@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://bouvraymofos3"]
 
 [ext_resource type="ArrayMesh" uid="uid://srcfe5wuq87v" path="res://astra/tool_attachments/BetterBucket.obj" id="1_8hmwl"]
-[ext_resource type="Script" path="res://astra/tool_attachments/bucket_attachment.gd" id="1_tbghr"]
+[ext_resource type="Script" uid="uid://csoyli65huysi" path="res://astra/tool_attachments/bucket_attachment.gd" id="1_tbghr"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_8b603"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_mxbys"]
-[ext_resource type="Script" path="res://astra/tool_attachments/inside_bucket.gd" id="5_k25x5"]
+[ext_resource type="Script" uid="uid://dtwg7ngbe8c3v" path="res://astra/tool_attachments/inside_bucket.gd" id="5_k25x5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3v1of"]
 friction = 0.22

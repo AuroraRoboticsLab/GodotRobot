@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://4qerr3c2x2ii"]
 
-[ext_resource type="Script" path="res://astronaut/astronaut_character_3d.gd" id="1_kvu3g"]
+[ext_resource type="Script" uid="uid://cfmjbsjcb7cek" path="res://astronaut/astronaut_character_3d.gd" id="1_kvu3g"]
 [ext_resource type="PackedScene" uid="uid://cfna2d2x5v5v4" path="res://astronaut/suit.tscn" id="1_t3oyg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gplb5"]

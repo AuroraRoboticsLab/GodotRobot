@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://dx0u7xdpcdtrp"]
 
-[ext_resource type="Script" path="res://astra/astra_3d.gd" id="1_8yddr"]
+[ext_resource type="Script" uid="uid://18c3nhd4rybm" path="res://astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://astra/Chassie+hubs.obj" id="3_1d7t0"]
 [ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://astra/Wheel with substance.obj" id="3_bur5r"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="4_76ojc"]

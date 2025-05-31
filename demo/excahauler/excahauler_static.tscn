@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://v6k4sjvue810"]
 
-[ext_resource type="Script" path="res://excahauler/excahauler_static.gd" id="1_exou3"]
+[ext_resource type="Script" uid="uid://n1fkbs02iyws" path="res://excahauler/excahauler_static.gd" id="1_exou3"]
 [ext_resource type="PackedScene" uid="uid://bq3ug82yud4ox" path="res://excahauler/excahauler.glb" id="2_j1y1v"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="3_wjspi"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://brqo4uvi4vhmh"]
 
-[ext_resource type="Script" path="res://static_objects/static_solar_panel_3d.gd" id="1_gt3t6"]
+[ext_resource type="Script" uid="uid://dd2cpb1c1tp3k" path="res://static_objects/static_solar_panel_3d.gd" id="1_gt3t6"]
 [ext_resource type="Texture2D" uid="uid://eevqh0taooaa" path="res://graphics/solar_panel_texture.png" id="2_o4upw"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d5kvr"]

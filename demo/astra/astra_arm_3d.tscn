@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cydno5704j3dk"]
 
-[ext_resource type="Script" path="res://astra/astra_arm_3d.gd" id="1_2mulu"]
+[ext_resource type="Script" uid="uid://bes7qei2bhx8y" path="res://astra/astra_arm_3d.gd" id="1_2mulu"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://astra/arm_files/Arm1.obj" id="1_dvup2"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://astra/arm_files/Bollard.obj" id="2_p4gbc"]
 [ext_resource type="PackedScene" uid="uid://c26cseexjqmt4" path="res://components/tool_coupler_component.tscn" id="3_8fupj"]

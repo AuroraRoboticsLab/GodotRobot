@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cfna2d2x5v5v4"]
 
 [ext_resource type="PackedScene" uid="uid://cnlgfqnpu8v18" path="res://astronaut/suit_maxgrueter.glb" id="1_gkcnt"]
-[ext_resource type="Script" path="res://astronaut/start_IK.gd" id="2_jer7l"]
-[ext_resource type="Script" path="res://astronaut/suit.gd" id="2_tyjyr"]
+[ext_resource type="Script" uid="uid://dnw05x8uwxaqo" path="res://astronaut/start_IK.gd" id="2_jer7l"]
+[ext_resource type="Script" uid="uid://dchppq4r243wt" path="res://astronaut/suit.gd" id="2_tyjyr"]
 
 [node name="suit_maxgrueter" instance=ExtResource("1_gkcnt")]
 script = ExtResource("2_tyjyr")

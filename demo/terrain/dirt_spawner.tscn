@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxrrmjun8udju"]
 
-[ext_resource type="Script" path="res://terrain/dirt_spawner.gd" id="1_hapsc"]
+[ext_resource type="Script" uid="uid://dqcfg32lckqrs" path="res://terrain/dirt_spawner.gd" id="1_hapsc"]
 
 [node name="DirtSpawner" type="Marker3D"]
 script = ExtResource("1_hapsc")

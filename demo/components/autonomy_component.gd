@@ -1,6 +1,6 @@
 extends Node3D
 class_name AutonomyComponent
-# Base class for autonomous robot control
+# Base class for automating robot control
 # Expects to be the child of a RigidBody3D
 
 @onready var subject = get_parent()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bs7ecxqoqypo7"]
 
-[ext_resource type="Script" path="res://astra/tool_attachments/fork/forks.gd" id="1_0reat"]
+[ext_resource type="Script" uid="uid://dl7bdl5f8rtx3" path="res://astra/tool_attachments/fork/forks.gd" id="1_0reat"]
 [ext_resource type="ArrayMesh" uid="uid://buijme2swldor" path="res://astra/tool_attachments/fork/Forks v7.obj" id="1_t7yws"]
 [ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_g4wtu"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_tg68u"]

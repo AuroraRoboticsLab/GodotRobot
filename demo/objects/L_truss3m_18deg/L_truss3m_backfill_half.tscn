@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bd80c4wyxm3sx"]
 
-[ext_resource type="PackedScene" uid="uid://btdwd0ujfci4e" path="res://objects/L_truss3m_18deg/L_truss3m_backfill.glb" id="1_cotql"]
+[ext_resource type="PackedScene" uid="uid://n4evxu208evn" path="res://objects/L_truss3m_18deg/L_truss3m_backfill.glb" id="1_cotql"]
 [ext_resource type="Material" uid="uid://b2ye1hlk50tx2" path="res://terrain/terrain_object_material.tres" id="2_qye1k"]
 
 [node name="L_truss3m_backfill_half" type="Node3D"]
