@@ -12,12 +12,12 @@ var pushback_spread = 0.0 # spreads pushback over several physics frames
 func _ready():
 	center_of_mass = $CenterOfMass.position
 	if not terrain:
-		terrain = get_tree().root.get_node("main3D/Terrain/TerrainSim")
+		terrain = get_tree().root.get_node_or_null("main3D/Terrain/TerrainSim")
 
 # Excavate along cutting edge
 func _physics_process(_delta):
-	if not connector.connected:
-		return # Buckets shouldn't excavate if they are set down.
+	if not connector.connected or terrain == null:
+		return # Buckets shouldn't excavate if they are set down or have nothing to excavate.
 		
 	var xf = cutter.global_transform  # physics is mostly global coords
 	pushback_spread *= exp(-10.0*_delta) # damp away the pushback over time
