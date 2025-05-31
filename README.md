@@ -1,5 +1,5 @@
 # GodotRobot
-Simple early proof of concept C++ robot simulation using Godot 4.3's GDExtension interface.
+Simple early proof of concept C++ robot simulation using Godot 4.4's GDExtension interface.
 
 ## How to Host a Server
 
@@ -19,7 +19,7 @@ Here are the flags available for use:
 
 ## Build Process
 
-To build this, start by downloading the [Godot 4.3 engine](https://godotengine.org/download/) for your machine.
+To build this, start by downloading the [Godot 4.4 engine](https://godotengine.org/download/) for your machine.
 
 You also need [Blender 3](https://download.blender.org/release/Blender3.0/), at least version 3.0 (Blender 4+ does not seem to work).  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
 
@@ -40,9 +40,9 @@ Inside the MiningRobot/ folder, check out this repo:
 
 Now prep the correct version of the godot-cpp GDExtension interface library inside GodotRobot:
 
-    git clone -b 4.3 https://github.com/godotengine/godot-cpp
+    git clone -b 4.4 https://github.com/godotengine/godot-cpp
     cd godot-cpp
-    git checkout 4.3
+    git checkout 4.4
     cd ..
 
 Build godot-cpp (the GDExtension interface) and this extension by issuing this from inside GodotRobot/:
@@ -55,7 +55,7 @@ Building will take a few minutes the first time, as it builds the whole godot-cp
 
 Finally, you can try out the example project by running 
 
-    Godot-v4.3-stable.exe demo/project.godot
+    Godot-v4.4-stable.exe demo/project.godot
 
 The standard edit loop is:
  - Save in Godot Engine.
@@ -86,10 +86,10 @@ When you start the Godot engine, you'll get errors like this if your version of 
 
     ERROR: Attempt to get non-existent interface function: object_has_script_method.
 
-This is caused by godot-cpp being 4.3, but engine being 4.2.  Check out the right version and rebuild godot-cpp.
+This is caused by checking out the wrong godot-cpp version (e.g. 4.2 instead of 4.3).  Check out the right version and rebuild godot-cpp.
 
-    ERROR: Cannot load a GDExtension built for Godot 4.3.0 using an older version of Godot (4.2.2).
-This is caused by compiling for 4.3, but engine being 4.2.  Upgrade your engine.
+    ERROR: Cannot load a GDExtension built for Godot 4.X.0 using an older version of Godot (4.Y.0).
+This is caused by compiling for 4.X.0, but engine being 4.Y.0.  Upgrade your engine.
 
 
 

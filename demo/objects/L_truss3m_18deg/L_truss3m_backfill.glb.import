@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bj0kifc86wiom"
-path="res://.godot/imported/truss1m_topbar.glb-6caf3f71b681d6b2de8c31957c13efdf.scn"
+uid="uid://n4evxu208evn"
+path="res://.godot/imported/L_truss3m_backfill.glb-1d198e75f6b00a8e8b1c1fd7e67bd991.scn"
 
 [deps]
 
-source_file="res://objects/truss1m_18deg/truss1m_topbar.glb"
-dest_files=["res://.godot/imported/truss1m_topbar.glb-6caf3f71b681d6b2de8c31957c13efdf.scn"]
+source_file="res://objects/L_truss3m_18deg/L_truss3m_backfill.glb"
+dest_files=["res://.godot/imported/L_truss3m_backfill.glb-1d198e75f6b00a8e8b1c1fd7e67bd991.scn"]
 
 [params]
 
@@ -26,7 +26,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
-animation/import=false
+animation/import=true
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
