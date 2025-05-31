@@ -1,7 +1,7 @@
 extends VehicleBody3D
 # The movable excahauler
 
-const DRIVE_FORCE_MULT = 1200
+const DRIVE_FORCE_MULT = 2400
 
 @onready var left_front_wheel   = $FrontLeft
 @onready var left_middle_wheel  = $MiddleLeft
@@ -18,6 +18,9 @@ func _physics_process(delta: float) -> void:
 	#if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
 	#	return
 	
+	if Input.is_action_just_pressed("generic_action"): 
+		%ToolCouplerComponent.try_toggle_attach()
+	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float
 	var steering_force_multiplier: float
@@ -32,7 +35,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Turbo ultra racing mode
 	if Input.is_action_pressed("shift"):
-		engine_force_multiplier = 4.0*(abs(movement_speed) + 2)
+		engine_force_multiplier = 10000.0
 	
 	const max_turn_force = 30.0 # Starting (and max) turn force
 	const turn_amp = 3.0 # How quickly does turn force fall off with speed?
@@ -46,8 +49,8 @@ func _physics_process(delta: float) -> void:
 	var steer_input = Input.get_axis("right", "left")
 		
 	#if (can_input or GameManager.is_npc) and not charge_component.is_dead:
-	drive_force = drive_input * 2 * DRIVE_FORCE_MULT * delta * engine_force_multiplier
-	steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
+	drive_force = drive_input * DRIVE_FORCE_MULT * delta * engine_force_multiplier
+	steer_force = steer_input * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 	
 	var my_dir = -transform.basis.z.normalized()
 	var my_vel = linear_velocity.normalized()
@@ -64,4 +67,7 @@ func _physics_process(delta: float) -> void:
 	right_back_wheel.engine_force = drive_force - steer_force
 	
 	# This value should be revised; what is a better total force approximation?
-	var total_drive_force = abs(drive_force + steer_force/2)
+	#var total_drive_force = abs(drive_force + steer_force/2)
+
+func _on_tool_coupler_component_add_joint(curr_joint: Generic6DOFJoint3D) -> void:
+	$Arm/Boom3D/Stick3D.add_child(curr_joint)
