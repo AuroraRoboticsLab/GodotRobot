@@ -43,7 +43,7 @@ func _ready():
 		await get_tree().physics_frame
 		cam_scene.lock_horiz = true
 		cam_scene.position = $CameraPosition.position
-		global_transform = spawn_trans
+		global_transform = spawn_trans if spawn_trans != null else Transform3D.IDENTITY
 
 func toggle_inputs(in_bool = null):
 	if in_bool == null:
