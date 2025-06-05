@@ -37,8 +37,6 @@ var can_input: bool = true
 		$Nametag.text = value
 
 func _ready():
-	arm.auto_component = auto_component
-	
 	GameManager.network_process.connect(_network_process)
 	GameManager.toggle_inputs.connect(toggle_inputs)
 	
