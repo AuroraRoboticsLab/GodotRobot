@@ -63,9 +63,11 @@ Build godot-cpp (the GDExtension interface) and this extension by issuing this f
 
 Building will take a few minutes the first time, as it builds the whole godot-cpp interface, but it will be very fast after that.
 
-Finally, you can try out the example project by running 
+Finally, if you are on Linux, you can try out the example project by running 
 
     Godot-v4.4-stable.exe demo/project.godot
+
+On Windows, run your Godot executable you downloaded earlier, click 'Import', and navigate to `MiningRobot/GodotRobot/demo/project.godot`.
 
 The standard edit loop is:
  - Save in Godot Engine.
