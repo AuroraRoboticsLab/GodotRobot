@@ -19,6 +19,8 @@ Here are the flags available for use:
 
 ## Build Process
 
+If you are using MacOS, we have not yet set this up on your operating system! Feel free to reach out to us so we can work with you, or start a pull request with the progress you make so we can update our documentation.
+
 To build this, start by downloading the [Godot 4.4 engine](https://godotengine.org/download/) for your machine.
 
 If using windows, now is the time that you must install WSL, if you do not have it.
