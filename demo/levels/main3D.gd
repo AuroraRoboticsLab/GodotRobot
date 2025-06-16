@@ -63,7 +63,11 @@ func _ready():
 			if body is StaticBody3D:
 				GameManager.add_static_body(body)
 	else:
-		player = get_player_scene().instantiate()
+		var curr_player_scene = get_player_scene(GameManager.player_choice)
+		if not curr_player_scene:
+			print("WARN: Invalid player scene!")
+			return
+		player = curr_player_scene.instantiate()
 		var spawnpoint = $PlayerSpawnpoints.get_children()[0]
 		player.global_transform = spawnpoint.global_transform
 		player.spawn_trans = spawnpoint.global_transform

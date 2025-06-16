@@ -10,7 +10,7 @@ var tool_space_bodies = [null, null, null]
 func _on_tool_space_1_body_exited(body):
 	if tool_space_bodies[0] and body.name == tool_space_bodies[0].name:
 		tool_space_bodies[0] = null
-		$ToolSpace1/ToolTimer1.start()
+		$ToolSpace1/ToolTimer1.start.call_deferred()
 
 func _on_tool_timer_1_timeout():
 	if GameManager.using_multiplayer and multiplayer.is_server():
@@ -21,7 +21,7 @@ func _on_tool_timer_1_timeout():
 func _on_tool_space_2_body_exited(body):
 	if tool_space_bodies[1] and body.name == tool_space_bodies[1].name:
 		tool_space_bodies[1] = null
-		$ToolSpace2/ToolTimer2.start()
+		$ToolSpace2/ToolTimer2.start.call_deferred()
 
 func _on_tool_timer_2_timeout():
 	if GameManager.using_multiplayer and multiplayer.is_server():
@@ -32,7 +32,7 @@ func _on_tool_timer_2_timeout():
 func _on_tool_space_3_body_exited(body):
 	if tool_space_bodies[2] and body.name == tool_space_bodies[2].name:
 		tool_space_bodies[2] = null
-		$ToolSpace3/ToolTimer3.start()
+		$ToolSpace3/ToolTimer3.start.call_deferred()
 
 func _on_tool_timer_3_timeout():
 	if GameManager.using_multiplayer and multiplayer.is_server():
