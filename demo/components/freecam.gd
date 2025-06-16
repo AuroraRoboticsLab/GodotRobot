@@ -51,7 +51,7 @@ func _physics_process(delta):
 		return
 	
 	if Input.is_action_pressed("escape"):
-		if GameManager.player_choice != GameManager.Character.SPECTATOR:
+		if GameManager.player_choice != GameManager.Character.SPECT:
 			GameManager.toggle_inputs.emit(true)
 			queue_free()
 	

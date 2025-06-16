@@ -1,7 +1,5 @@
-extends VehicleBody3D
+extends RobotBase
 # The movable excahauler
-
-const DRIVE_FORCE_MULT = 2400
 
 @onready var left_front_wheel   = $FrontLeft
 @onready var left_middle_wheel  = $MiddleLeft
@@ -10,16 +8,15 @@ const DRIVE_FORCE_MULT = 2400
 @onready var right_middle_wheel = $MiddleRight
 @onready var right_back_wheel   = $BackRight
 
-func _ready() -> void:
-	center_of_mass = $CenterOfMass.position
+@onready var arm = $Arm
+@onready var tool_coupler_component = %ToolCouplerComponent
 
 func _physics_process(delta: float) -> void:
-	
-	#if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
-	#	return
+	if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
+		return
 	
 	if Input.is_action_just_pressed("generic_action"): 
-		%ToolCouplerComponent.try_toggle_attach()
+		tool_coupler_component.try_toggle_attach()
 	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float
@@ -49,8 +46,8 @@ func _physics_process(delta: float) -> void:
 	var steer_input = Input.get_axis("right", "left")
 		
 	#if (can_input or GameManager.is_npc) and not charge_component.is_dead:
-	drive_force = drive_input * DRIVE_FORCE_MULT * delta * engine_force_multiplier
-	steer_force = steer_input * DRIVE_FORCE_MULT * delta * steering_force_multiplier
+	drive_force = drive_input * drive_force_mult * delta * engine_force_multiplier
+	steer_force = steer_input * drive_force_mult * delta * steering_force_multiplier
 	
 	var my_dir = -transform.basis.z.normalized()
 	var my_vel = linear_velocity.normalized()

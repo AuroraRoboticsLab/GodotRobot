@@ -8,6 +8,8 @@ extends Node3D
 @onready var stick_joint = $Boom3D/BoomToStickJoint
 @onready var tilt_joint  = $Boom3D/Stick3D/StickToTiltJoint
 
+@onready var tool_coupler_component = %ToolCouplerComponent
+
 func _physics_process(_delta: float) -> void:
 	#print("Boom: ", rad_to_deg(boom_joint.get_angle()))
 	#print("Stick: ", rad_to_deg(stick_joint.get_angle()))

@@ -172,16 +172,22 @@ func show_menu(message: String):
 func hide_menu():
 	self.hide()
 
-func _on_host_button_pressed():
+func set_character_text():
 	$PanelContainer/VBoxContainer/HBoxContainer2/OptionButton.hide()
 	var character_text = ""
-	if GameManager.player_choice == GameManager.Character.ASTRO:
-		character_text = "Astronaut"
-	elif GameManager.player_choice == GameManager.Character.ROBOT:
-		character_text = "Robot"
-	elif GameManager.player_choice == GameManager.Character.SPECTATOR:
-		character_text = "Spectator"
+	match GameManager.player_choice:
+		GameManager.Character.ASTRO:
+			character_text = "Astronaut"
+		GameManager.Character.ASTRA:
+			character_text = "Astra"
+		GameManager.Character.EXCAH:
+			character_text = "Excahauler"
+		GameManager.Character.SPECT:
+			character_text = "Spectator"
 	$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = character_text
+
+func _on_host_button_pressed():
+	set_character_text()
 	
 	%AlertLabel.text = ""
 	GameManager.using_multiplayer = true
@@ -201,15 +207,7 @@ func _on_host_button_pressed():
 		%AlertLabel.text = "Cannot host: Host already exists."
 
 func _on_join_button_pressed():
-	$PanelContainer/VBoxContainer/HBoxContainer2/OptionButton.hide()
-	var character_text = ""
-	if GameManager.player_choice == GameManager.Character.ASTRO:
-		character_text = "Astronaut"
-	elif GameManager.player_choice == GameManager.Character.ROBOT:
-		character_text = "Robot"
-	elif GameManager.player_choice == GameManager.Character.SPECTATOR:
-		character_text = "Spectator"
-	$PanelContainer/VBoxContainer/HBoxContainer2/Label2.text = character_text
+	set_character_text()
 	
 	%AlertLabel.text = ""
 	GameManager.using_multiplayer = true

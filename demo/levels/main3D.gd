@@ -2,12 +2,27 @@ extends Node3D
 
 @onready var spawn = $LandingSite/DirtSpawner
 
-@onready var robot_scene:   PackedScene = load("res://astra/astra_3d.tscn")
+@onready var astra_scene:   PackedScene = load("res://astra/astra_3d.tscn")
+@onready var excah_scene:   PackedScene = load("res://excahauler/excahauler_3d.tscn")
 @onready var astro_scene:   PackedScene = load("res://astronaut/astronaut_character_3d.tscn")
 @onready var freecam_scene: PackedScene = load("res://components/freecam.tscn")
 
 var player = null
 @onready var objects = $Objects
+
+func get_player_scene(in_player_choice = null, in_pid = null):
+	var player_choice = GameManager.get_player_choice(in_pid) if in_player_choice == null else in_player_choice
+	if player_choice == GameManager.Character.ASTRO:
+		return astro_scene
+	elif player_choice == GameManager.Character.ASTRA:
+		return astra_scene
+	elif player_choice == GameManager.Character.EXCAH:
+		return excah_scene
+	elif player_choice == GameManager.Character.SPECT:
+		if (in_pid == null and not GameManager.is_using_multiplayer) or in_pid == multiplayer.get_unique_id():
+			return freecam_scene
+		else:
+			return null
 
 func _ready():
 	GameManager.network_process.connect(_network_process)
@@ -22,17 +37,10 @@ func _ready():
 		
 		var idx = 0
 		for pid in sorted_pids:
-			var player_choice = GameManager.get_player_choice(pid)
-			var curr_player = null
-			if player_choice == GameManager.Character.ASTRO:
-				curr_player = astro_scene.instantiate()
-			elif player_choice == GameManager.Character.ROBOT:
-				curr_player = robot_scene.instantiate()
-			elif player_choice == GameManager.Character.SPECTATOR:
-				if pid == multiplayer.get_unique_id():
-					curr_player = freecam_scene.instantiate()
-				else:
-					continue # Spectators are invisible to others!
+			var curr_player_scene = get_player_scene(null, pid)
+			if not curr_player_scene:
+				continue
+			var curr_player = curr_player_scene.instantiate()
 			
 			curr_player.name = str(pid)
 			curr_player.nametag_text = GameManager.get_player_username(pid)
@@ -55,12 +63,7 @@ func _ready():
 			if body is StaticBody3D:
 				GameManager.add_static_body(body)
 	else:
-		if GameManager.player_choice == GameManager.Character.ASTRO:
-			player = astro_scene.instantiate()
-		elif GameManager.player_choice == GameManager.Character.ROBOT:
-			player = robot_scene.instantiate()
-		elif GameManager.player_choice == GameManager.Character.SPECTATOR:
-			player = freecam_scene.instantiate()
+		player = get_player_scene().instantiate()
 		var spawnpoint = $PlayerSpawnpoints.get_children()[0]
 		player.global_transform = spawnpoint.global_transform
 		player.spawn_trans = spawnpoint.global_transform
@@ -74,13 +77,12 @@ func _on_new_player_info(id, username, version, player_choice):
 		var spawn_pos = $PlayerSpawnpoints.get_children()[0].global_position
 		GameManager.add_player(id, username, version, player_choice, spawn_pos)
 		print("New player joined: ", username)
-		var curr_player = null
-		if player_choice == GameManager.Character.ASTRO:
-			curr_player = astro_scene.instantiate()
-		elif player_choice == GameManager.Character.ROBOT:
-			curr_player = robot_scene.instantiate()
-		elif player_choice == GameManager.Character.SPECTATOR:
+		if player_choice == GameManager.Character.SPECT:
 			return # Spectators do not need to be updated at all!
+		var curr_player_scene = get_player_scene(player_choice)
+		if not curr_player_scene:
+			return
+		var curr_player = curr_player_scene.instantiate()
 		curr_player.name = str(id)
 		add_child(curr_player, true)
 		curr_player.global_position = spawn_pos
@@ -112,7 +114,9 @@ func _network_process(_delta):
 		# Sync objects according to host
 		var object_data = GameManager.get_objects()
 		for body_name in object_data:
-			var body = objects.get_node(body_name)
+			var body = objects.get_node_or_null(NodePath(body_name))
+			if not body:
+				continue
 			body.linear_velocity = object_data[body_name].linear_velocity
 			body.angular_velocity = object_data[body_name].angular_velocity
 			if body is ToolAttachment and body.connector.connected:
@@ -140,7 +144,7 @@ func _physics_process(_delta):
 	UI.player = player
 	UI.ball_count = $"Terrain/Dirtballs".get_child_count()
 	UI.fps = $Global/"FPS Counter".fps
-	if GameManager.player_choice == GameManager.Character.SPECTATOR:
+	if GameManager.player_choice == GameManager.Character.SPECT:
 		player.h_sens = UI.h_cam_sens
 		player.v_sens = UI.v_cam_sens
 		player.invert_cam = UI.invert_cam
@@ -152,26 +156,27 @@ func _physics_process(_delta):
 	
 	if GameManager.player_choice == GameManager.Character.ASTRO:
 		pass
-	elif GameManager.player_choice == GameManager.Character.ROBOT:
+	elif GameManager.player_choice == GameManager.Character.ASTRA or GameManager.player_choice == GameManager.Character.EXCAH:
 		spawn.spawn_rate = UI.spawn_rate
 		UI.charging = player.charge_component.charging
 		UI.charge_level = player.charge_component.charge_level
-		UI.stalling = player.stuck_stalling
 		UI.can_attach = player.arm.tool_coupler_component.can_attach
 		player.tp_height = UI.tp_height
-		player.arm.unsafe_mode = UI.unsafe_mode
 		if player.arm.tool_coupler_component.current_attachment:
 			if player.arm.tool_coupler_component.current_attachment is Bucket:
 				UI.dirtballs_in_bucket = player.arm.tool_coupler_component.current_attachment.in_bucket.num_dirtballs
 		else:
 			UI.dirtballs_in_bucket = 0
-		UI.dirtballs_in_hopper = player.hopper.inside_hopper.num_dirtballs
+		if GameManager.player_choice == GameManager.Character.ASTRA:
+			UI.stalling = player.stuck_stalling
+			UI.dirtballs_in_hopper = player.hopper.inside_hopper.num_dirtballs
+			player.arm.unsafe_mode = UI.unsafe_mode
 		
 	if OS.get_name() == "Android":
-		if not GameManager.player_choice == GameManager.Character.SPECTATOR:
+		if not GameManager.player_choice == GameManager.Character.SPECT:
 			player.cam_scene.cam_locked = UI.cam_locked
 		player.ext_input = UI.left_joystick.get_axis()
-		if GameManager.player_choice == GameManager.Character.ROBOT:
+		if GameManager.player_choice == GameManager.Character.ASTRA:
 			player.arm.ext_input = UI.right_joystick.get_axis()
 
 func _on_fallen_area_3d_body_entered(body):

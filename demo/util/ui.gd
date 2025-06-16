@@ -44,11 +44,11 @@ func _ready():
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control5.hide()
 		$ChatContainer.hide()
 
-	if GameManager.player_choice == GameManager.Character.ASTRO or GameManager.player_choice == GameManager.Character.SPECTATOR:
+	if GameManager.player_choice == GameManager.Character.ASTRO or GameManager.player_choice == GameManager.Character.SPECT:
 		%ToggleUnsafeMode.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/Control7.hide()
 		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3.hide()
-	elif GameManager.player_choice == GameManager.Character.ROBOT:
+	elif GameManager.player_choice == GameManager.Character.ASTRA:
 		$PanelContainer/VBoxContainer/GridContainer/ChargeLabel.show()
 		$PanelContainer/VBoxContainer/GridContainer/Charge.show()
 
@@ -77,7 +77,7 @@ func _process(_delta):
 	
 	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
 	$PanelContainer/VBoxContainer/GridContainer/BallCount.text = str(ball_count)
-	if GameManager.player_choice == GameManager.Character.ROBOT:
+	if GameManager.player_choice == GameManager.Character.ASTRA:
 		$CenterContainer/PressToAttach.visible = can_attach
 		$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
 		$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
@@ -99,7 +99,7 @@ func _process(_delta):
 
 func _physics_process(_delta):
 	if player:
-		if GameManager.player_choice == GameManager.Character.ROBOT:
+		if GameManager.player_choice == GameManager.Character.ASTRA or GameManager.player_choice == GameManager.Character.EXCAH:
 			$PanelContainer/VBoxContainer/GridContainer/Speed.text = str(round_to_dec(player.linear_velocity.length(), 2)) + " m/s"
 		elif GameManager.player_choice == GameManager.Character.ASTRO:
 			$PanelContainer/VBoxContainer/GridContainer/Speed.text = str(round_to_dec(player.velocity.length(), 2)) + " m/s"
@@ -145,7 +145,7 @@ func _on_respawn_button_pressed():
 		return
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	if GameManager.player_choice == GameManager.Character.ROBOT:
+	if GameManager.player_choice == GameManager.Character.ASTRA:
 		player.linear_velocity = Vector3.ZERO
 		player.angular_velocity = Vector3.ZERO
 	elif GameManager.player_choice == GameManager.Character.ASTRO:
@@ -227,7 +227,7 @@ func _on_command_line_edit_text_submitted(new_text):
 				if not player:
 					print("Error: No player to teleport!")
 					return
-				if GameManager.player_choice != GameManager.Character.ROBOT:
+				if GameManager.player_choice not in [GameManager.Character.ASTRA, GameManager.Character.EXCAH]:
 					print("Error: Only a robot can pathfind!")
 					return
 				if args.size() == 4:
@@ -311,7 +311,7 @@ func _on_command_line_edit_text_submitted(new_text):
 					print("Error: 'tp' command requires x, y, and z coordinates (or ~ for current location)")
 			"freecam":
 				if args.size() == 1:
-					if GameManager.player_choice != GameManager.Character.SPECTATOR and not freecamming:
+					if GameManager.player_choice != GameManager.Character.SPECT and not freecamming:
 						GameManager.toggle_inputs.emit(false)
 						$FreecamLabel.show()
 						freecamming = true
