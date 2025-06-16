@@ -15,9 +15,6 @@ func _physics_process(delta: float) -> void:
 	if GameManager.using_multiplayer and not $MultiplayerSynchronizer.is_multiplayer_authority():
 		return
 	
-	if Input.is_action_just_pressed("generic_action"): 
-		tool_coupler_component.try_toggle_attach()
-	
 	#*** DRIVING LOGIC ***#
 	var engine_force_multiplier: float
 	var steering_force_multiplier: float
@@ -65,6 +62,3 @@ func _physics_process(delta: float) -> void:
 	
 	# This value should be revised; what is a better total force approximation?
 	#var total_drive_force = abs(drive_force + steer_force/2)
-
-func _on_tool_coupler_component_add_joint(curr_joint: Generic6DOFJoint3D) -> void:
-	$Arm/Boom3D/Stick3D.add_child(curr_joint)
