@@ -19,10 +19,18 @@ Here are the flags available for use:
 
 ## Build Process
 
+If you are using MacOS, we have not yet set this up on your operating system! Feel free to reach out to us so we can work with you, or start a pull request with the progress you make so we can update our documentation.
+
 To build this, start by downloading the [Godot 4.4 engine](https://godotengine.org/download/) for your machine.
 
-You also need [Blender 3](https://download.blender.org/release/Blender3.0/), at least version 3.0 (Blender 4+ does not seem to work).  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
+If using windows, now is the time that you must install WSL, if you do not have it.
 
+1. Press the Windows button and type cmd, and hit enter. This will launch the windows terminal.
+2. Type `wsl` and hit enter. Then, hit enter again after asked to "press any key."
+3. Once that process is done, run `wsl --install Ubuntu`, and allow that to finish.
+4. Enter your username and password when prompted, and you will enter WSL.
+5. Run `sudo apt update`, entering the password you chose earlier.
+6. Once the last step finishes, run `sudo apt upgrade -y`. Then you can continue with the steps below.
 
 You'll also need build tools:
 
@@ -45,17 +53,23 @@ Now prep the correct version of the godot-cpp GDExtension interface library insi
     git checkout 4.4
     cd ..
 
+If building on Windows, you need to install mingw:
+
+    sudo apt install gcc-mingw-w64 mingw-w64 -y
+
 Build godot-cpp (the GDExtension interface) and this extension by issuing this from inside GodotRobot/:
 
-    scons
+    scons platform=<YOUR_PLATFORM>
 
-(Or you can specify a "platform=linux" or "platform=windows" string.)  
+(Specify "platform=linux" or "platform=windows"; the default is linux)  
 
 Building will take a few minutes the first time, as it builds the whole godot-cpp interface, but it will be very fast after that.
 
-Finally, you can try out the example project by running 
+Finally, if you are on Linux, you can try out the example project by running 
 
     Godot-v4.4-stable.exe demo/project.godot
+
+On Windows, run your Godot executable you downloaded earlier, click 'Import', and navigate to `MiningRobot/GodotRobot/demo/project.godot`.
 
 The standard edit loop is:
  - Save in Godot Engine.
@@ -63,6 +77,7 @@ The standard edit loop is:
  - Switch to GodotRobot/ terminal and `scons` build.
  - Switch to Godot Engine and Project -> Reload Current Project.
 
+You also need [Blender 3](https://download.blender.org/release/Blender3.0/), at least version 3.0 (Blender 4+ does not seem to work).  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
 
 ## Terrain Nodes
 
