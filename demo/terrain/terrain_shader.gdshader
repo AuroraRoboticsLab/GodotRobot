@@ -16,7 +16,7 @@ uniform sampler2D heights : repeat_disable; // height of terrain in meters along
 void vertex() {
 	// Loft the geometry to match the texture image
 	VERTEX.y = texture(heights,UV).r;
-	
+
 	// Adjust the surface normal to match neighboring pixels
 	vec2 pixel = 1.0 / vec2(textureSize(heights, 0));
 	float spacing = 0.1f * 2.0f; // space between two pixels

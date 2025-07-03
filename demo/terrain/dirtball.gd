@@ -3,7 +3,7 @@ extends RigidBody3D
 @export var bucket_count = 0  # number of buckets that we are currently inside (0 == free on terrain)
 @export var hopper_count = 0 # number of hoppers that we are currently inside
 
-@export var terrain: TerrainSim = null # Set by spawner upon creation
+#@export var terrain: TerrainSim = null # Set by spawner upon creation
 var despawned: bool = false
 
 func _ready():
@@ -23,8 +23,8 @@ func _process(delta):
 
 var waiting = false
 func _dirt_process(_delta): # We don't need to check dirt every frame!
-	if not terrain:
-		return
+	#if not terrain:
+	#	return
 	
 	if waiting:
 		return
@@ -58,15 +58,15 @@ func _can_despawn(): # Do we fit the criteria to merge?
 var despawn_attempts: int = 0
 func _on_timer_timeout():
 	if _can_despawn(): # If we fit merging criteria
-		if terrain.try_merge(self):
-			despawned = true
-			collision_mask = 0 # fall down through terrain
-			waiting = false
-		else: 
-			despawn_attempts += 1
-			# More than 25 attempts?? We are probably stuck.
-			if despawn_attempts >= 25:
-				queue_free()
+		#if terrain.try_merge(self):
+			#despawned = true
+			#collision_mask = 0 # fall down through terrain
+			#waiting = false
+		#else: 
+		despawn_attempts += 1
+		# More than 25 attempts?? We are probably stuck.
+		if despawn_attempts >= 25:
+			queue_free()
 	else:
 		despawn_attempts = 0
 	waiting = false

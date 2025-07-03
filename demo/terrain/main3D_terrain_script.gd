@@ -2,7 +2,7 @@
 extends NavigationRegion3D
 
 @onready var spawn = $Dirtballs
-@onready var terrain = $TerrainSim # Source of height data
+#@onready var terrain = $TerrainSim # Source of height data
 @export var shader : ShaderMaterial # renders the terrain
 @export var max_balls = 1500   # <- limited by physics framerate
 
@@ -10,9 +10,10 @@ extends NavigationRegion3D
 var ball: PackedScene = preload("res://terrain/dirtball.tscn")
 
 func _ready():
-	terrain.add_mesh(shader,true)
-	terrain.add_static_collider();
-	terrain.fill_heights(128,128,40);
+	pass
+	#terrain.add_mesh(shader,true)
+	#terrain.add_static_collider();
+	#terrain.fill_heights(128,128,40);
 
 # Create a random 3D velocity vector in this range
 #   (Surprising there isn't a builtin Godot utility function for this)
@@ -24,7 +25,7 @@ func spawn_dirtball(pos, vel):
 	if spawn.get_child_count() <= max_balls: # ignore requests over cap
 		var new_ball = ball.instantiate()
 		new_ball.top_level = true # dirt position independent of spawner position
-		new_ball.terrain = terrain
+		#new_ball.terrain = terrain
 		spawn.add_child(new_ball) 
 		new_ball.global_position = pos # override its global position
 		new_ball.linear_velocity = vel

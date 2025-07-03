@@ -1,16 +1,12 @@
-[gd_scene load_steps=28 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=24 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" uid="uid://b4ldbonvm61up" path="res://levels/main3D.gd" id="1_dv7pc"]
-[ext_resource type="Script" uid="uid://c37ilixf3uywf" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
 [ext_resource type="Script" uid="uid://35mpcrrt4o8s" path="res://terrain/main3D_terrain_script.gd" id="2_2x3be"]
 [ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://static_objects/charge_station.tscn" id="3_47s0a"]
-[ext_resource type="Material" uid="uid://d3d5c0ogesahh" path="res://terrain_fixed/lunar_south_pole/lunar_shader_shackridge.tres" id="3_67qty"]
-[ext_resource type="Script" uid="uid://cew0pan6ttr1q" path="res://terrain_fixed/lunar_south_pole/dem_shackzoom_loader.gd" id="4_q1g3g"]
 [ext_resource type="PackedScene" uid="uid://dlj1a0fxsprw1" path="res://static_objects/brick_maker.tscn" id="4_vp1iq"]
 [ext_resource type="Environment" uid="uid://cw6e84ra2jvqc" path="res://terrain/moon_environment.tres" id="4_wv3d2"]
 [ext_resource type="PackedScene" uid="uid://co1noklregyjs" path="res://static_objects/tool_spawner.tscn" id="5_1rppn"]
 [ext_resource type="Script" uid="uid://b7uiuoj8ktwue" path="res://util/fps_counter.gd" id="5_8fbcs"]
-[ext_resource type="Material" uid="uid://cy7t1bbj1qlam" path="res://terrain_fixed/lunar_south_pole/lunar_shader_shackzoom.tres" id="5_c86gy"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
 [ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="6_k4qam"]
 [ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="7_5iltw"]
@@ -61,21 +57,6 @@ script = ExtResource("1_dv7pc")
 
 [node name="Global" type="Node3D" parent="."]
 
-[node name="Terrain_Shackleton_Ridge" type="Node3D" parent="Global"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1535.33, -1673, 2017.36)
-
-[node name="Terrain200mFar" type="TerrainStatic256" parent="Global/Terrain_Shackleton_Ridge"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25600, 0, -25600)
-script = ExtResource("2_0uhdn")
-pixel_spacing = 200.0
-shader = ExtResource("3_67qty")
-
-[node name="Terrain40mNear" type="TerrainStatic256" parent="Global/Terrain_Shackleton_Ridge"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5120, 0, -5120)
-script = ExtResource("4_q1g3g")
-pixel_spacing = 40.0
-shader = ExtResource("5_c86gy")
-
 [node name="UI" parent="Global" instance=ExtResource("7_s8ac7")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Global"]
@@ -93,8 +74,6 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.63, 0, -12.63)
 navigation_mesh = SubResource("NavigationMesh_33ek2")
 script = ExtResource("2_2x3be")
-
-[node name="TerrainSim" type="TerrainSim" parent="Terrain"]
 
 [node name="Dirtballs" type="Marker3D" parent="Terrain"]
 
@@ -180,5 +159,4 @@ transform = Transform3D(0.640552, 0, -0.767915, 0, 1, 0, 0.767915, 0, 0.640552, 
 [node name="LTruss3mGarage6" parent="." instance=ExtResource("21_w3ssr")]
 transform = Transform3D(0.855138, 0.00410404, -0.518384, 0.012585, 0.99951, 0.0286736, 0.518247, -0.0310437, 0.854667, 22.5174, -2.10832, -38.8688)
 
-[connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]
