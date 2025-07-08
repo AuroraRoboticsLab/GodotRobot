@@ -16,8 +16,11 @@ Here are the flags available for use:
 * `--max-players=PlayerNumberHere` sets the maximum number of players.
 * `--disable-chat` disables the chat for all connected users.
 
+## Development
 
-## Build Process
+Visit the [Aurora Robotics Lab LUMINSim documentation wiki page](https://aurorarobotics.sssn.us/index.php/LUMINSim_Documentation) for in-depth information on the inner-workings of the simulator and many plans for future development.
+
+### Build Process
 
 If you are using MacOS, we have not yet set this up on your operating system! Feel free to reach out to us so we can work with you, or start a pull request with the progress you make so we can update our documentation.
 
