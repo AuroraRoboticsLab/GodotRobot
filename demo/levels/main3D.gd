@@ -19,7 +19,7 @@ func get_player_scene(in_player_choice = null, in_pid = null):
 	elif player_choice == GameManager.Character.EXCAH:
 		return excah_scene
 	elif player_choice == GameManager.Character.SPECT:
-		if (in_pid == null and not GameManager.is_using_multiplayer) or in_pid == multiplayer.get_unique_id():
+		if (in_pid == null and not GameManager.using_multiplayer) or in_pid == multiplayer.get_unique_id():
 			return freecam_scene
 		else:
 			return null

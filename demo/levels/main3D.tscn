@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=29 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" uid="uid://b4ldbonvm61up" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" uid="uid://c37ilixf3uywf" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
 [ext_resource type="PackedScene" uid="uid://dwyp3xvtl7b1g" path="res://objects/L_truss3m_18deg/L_truss3m_stack.tscn" id="20_k45ad"]
 [ext_resource type="PackedScene" uid="uid://d1j5s4nw8bdmn" path="res://objects/L_truss3m_18deg/L_truss3m_garage6_simplest.tscn" id="21_w3ssr"]
+[ext_resource type="PackedScene" uid="uid://yj2povyyj7mr" path="res://terrain/dirtball.tscn" id="22_eqqix"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_33ek2"]
 geometry_parsed_geometry_type = 1
@@ -156,7 +157,7 @@ transform = Transform3D(1, -8.74227e-08, -3.82137e-15, -8.74228e-08, -1, -8.7422
 transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12.0871, 0.0188498, 20.9613)
 
 [node name="ToolSpawner" parent="LandingSite" instance=ExtResource("5_1rppn")]
-transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.196277, 15.1276)
+transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.0200878, 15.1276)
 tool_1_scene = ExtResource("6_k4qam")
 tool_2_scene = ExtResource("7_5iltw")
 tool_3_scene = ExtResource("8_5pjry")
@@ -179,6 +180,10 @@ transform = Transform3D(0.640552, 0, -0.767915, 0, 1, 0, 0.767915, 0, 0.640552, 
 
 [node name="LTruss3mGarage6" parent="." instance=ExtResource("21_w3ssr")]
 transform = Transform3D(0.855138, 0.00410404, -0.518384, 0.012585, 0.99951, 0.0286736, 0.518247, -0.0310437, 0.854667, 22.5174, -2.10832, -38.8688)
+
+[node name="Ball" parent="." node_paths=PackedStringArray("terrain") instance=ExtResource("22_eqqix")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.863, 5.58671, 12.4312)
+terrain = NodePath("../Terrain/TerrainSim")
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]
