@@ -21,3 +21,6 @@ android.debug.x86_64 = "res://bin/libgodotrobot.android.template_debug.x86_64.so
 android.release.x86_64 = "res://bin/libgodotrobot.android.template_release.x86_64.so"
 android.debug.arm64 = "res://bin/libgodotrobot.android.template_debug.arm64.so"
 android.release.arm64 = "res://bin/libgodotrobot.android.template_release.arm64.so"
+wasm32.template_debug   = "res://bin/libgodotrobot.web.template_debug.wasm32.wasm"
+wasm32.template_release = "res://bin/libgodotrobot.web.template_release.wasm32.wasm"
+wasm32.nothreads.template_debug   = "res://bin/libgodotrobot.web.template_debug.wasm32.nothreads.wasm"

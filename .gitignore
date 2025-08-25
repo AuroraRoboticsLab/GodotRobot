@@ -1,5 +1,6 @@
 # Exports
 *_export/
+*_export.zip
 android_sdk/
 local_export_presets.cfg
 rcedit/
