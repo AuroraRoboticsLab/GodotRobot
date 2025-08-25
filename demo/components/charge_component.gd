@@ -4,6 +4,7 @@ class_name ChargeComponent
 var charge_level: float = 100.0 # Battery %
 var is_dead: bool = false # Vehicle is out of battery
 var charging: bool = false # Is vehicle charging?
+# Voltage should instead be a function of remaining_amp_hours/amp_hours
 var voltage: float = 12.0
 
 @export var amp_hours: float = 100.0
