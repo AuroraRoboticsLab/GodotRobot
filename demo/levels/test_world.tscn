@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="1_1najt"]
 [ext_resource type="Script" uid="uid://m3rh3w6f4jun" path="res://levels/test_world.gd" id="1_edsus"]
-[ext_resource type="PackedScene" uid="uid://dg3o22fxtpi62" path="res://excahauler/excahauler_3d.tscn" id="2_it24o"]
+[ext_resource type="PackedScene" uid="uid://dg3o22fxtpi62" path="res://playable_characters/robots/excahauler/excahauler_3d.tscn" id="2_it24o"]
 [ext_resource type="PackedScene" uid="uid://co1noklregyjs" path="res://static_objects/tool_spawner.tscn" id="3_c576j"]
-[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="4_37vfl"]
-[ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="5_edsus"]
-[ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="6_iophl"]
+[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://playable_characters/robots/tool_attachments/bucket/bucket_attachment_old.tscn" id="4_37vfl"]
+[ext_resource type="PackedScene" path="res://playable_characters/robots/tool_attachments/sawblade/saw_blade_attachment.tscn" id="5_edsus"]
+[ext_resource type="PackedScene" path="res://playable_characters/robots/tool_attachments/fork/forks_old.tscn" id="6_iophl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5y8l7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)

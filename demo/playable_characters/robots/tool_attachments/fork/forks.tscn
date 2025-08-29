@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0mqv04lkuxdu"]
+
+[ext_resource type="Script" uid="uid://dl7bdl5f8rtx3" path="res://playable_characters/robots/tool_attachments/fork/forks.gd" id="1_0reat"]
+[ext_resource type="PackedScene" uid="uid://bwncpsw8lnbla" path="res://playable_characters/robots/tool_attachments/tool_attachment.tscn" id="1_8qp26"]
+[ext_resource type="ArrayMesh" uid="uid://buijme2swldor" path="res://playable_characters/robots/tool_attachments/fork/Forks v7.obj" id="1_t7yws"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_tg68u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hyd3t"]
+size = Vector3(0.0714722, 0.00553893, 0.394592)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tmehl"]
+size = Vector3(0.071, 0.02, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bdtia"]
+size = Vector3(0.0762329, 0.35807, 0.0522823)
+
+[node name="Forks" instance=ExtResource("1_8qp26")]
+script = ExtResource("1_0reat")
+path = Object(Area3D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"disable_mode":0,"collision_layer":1,"collision_mask":1,"collision_priority":1.0,"input_ray_pickable":true,"input_capture_on_drag":false,"monitoring":true,"monitorable":true,"priority":0,"gravity_space_override":0,"gravity_point":false,"gravity_point_unit_distance":0.0,"gravity_point_center":Vector3(0, -1, 0),"gravity_direction":Vector3(0, -1, 0),"gravity":9.8,"linear_damp_space_override":0,"linear_damp":0.1,"angular_damp_space_override":0,"angular_damp":0.1,"wind_force_magnitude":0.0,"wind_attenuation_factor":0.0,"wind_source_path":NodePath(""),"audio_bus_override":false,"audio_bus_name":&"Master","reverb_bus_enabled":false,"reverb_bus_name":&"Master","reverb_bus_amount":0.0,"reverb_bus_uniformity":0.0,"script":Resource("res://components/connector_component.gd"),"enabled":true,"charge_component":null)
+
+mass_pos = ""
+
+[node name="ConnectorComponent" parent="." index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="CenterOfMass" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.171, -0.145)
+
+[node name="ForksV7_L" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, -0.2, 0, 0.9)
+mesh = ExtResource("1_t7yws")
+surface_material_override/0 = ExtResource("3_tg68u")
+
+[node name="ForksV7_R" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0.2, 0, 0.9)
+mesh = ExtResource("1_t7yws")
+surface_material_override/0 = ExtResource("3_tg68u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.155434, -0.2)
+shape = SubResource("BoxShape3D_hyd3t")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.162722, -0.153279)
+shape = SubResource("BoxShape3D_tmehl")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0, -0.031575)
+shape = SubResource("BoxShape3D_bdtia")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.199169, -0.155434, -0.2)
+shape = SubResource("BoxShape3D_hyd3t")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="." index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.199169, -0.162722, -0.153279)
+shape = SubResource("BoxShape3D_tmehl")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="." index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.199169, 0, -0.031575)
+shape = SubResource("BoxShape3D_bdtia")

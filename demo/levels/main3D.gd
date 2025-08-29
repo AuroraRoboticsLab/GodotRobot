@@ -2,9 +2,9 @@ extends Node3D
 
 @onready var spawn = $LandingSite/DirtSpawner
 
-@onready var astra_scene:   PackedScene = load("res://astra/astra_3d.tscn")
-@onready var excah_scene:   PackedScene = load("res://excahauler/excahauler_3d.tscn")
-@onready var astro_scene:   PackedScene = load("res://astronaut/astronaut_character_3d.tscn")
+@onready var astra_scene:   PackedScene = load("res://playable_characters/robots/astra/astra_3d.tscn")
+@onready var excah_scene:   PackedScene = load("res://playable_characters/robots/excahauler/excahauler_3d.tscn")
+@onready var astro_scene:   PackedScene = load("res://playable_characters/astronaut/astronaut_character_3d.tscn")
 @onready var freecam_scene: PackedScene = load("res://components/freecam.tscn")
 
 var player = null
@@ -141,8 +141,8 @@ func _physics_process(_delta):
 	if GameManager.using_multiplayer:
 		if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
 			return # We don't have a UI to update if we are a console host.
-		if not player:
-			return # We don't have a UI if we aren't in the game!
+	if not player or not player.cam_scene:
+		return # We don't have a UI if we aren't in the game/don't have a camera!
 	
 	var UI = $Global/UI
 	UI.player = player

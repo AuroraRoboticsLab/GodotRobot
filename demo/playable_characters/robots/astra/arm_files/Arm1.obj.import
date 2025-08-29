@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bd5goyol75q08"
+path="res://.godot/imported/Arm1.obj-05e58bac6488d92bc7c99e8c82590a5f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Arm1.obj-05e58bac6488d92bc7c99e8c82590a5f.mesh"]
+
+source_file="res://playable_characters/robots/astra/arm_files/Arm1.obj"
+dest_files=["res://.godot/imported/Arm1.obj-05e58bac6488d92bc7c99e8c82590a5f.mesh", "res://.godot/imported/Arm1.obj-05e58bac6488d92bc7c99e8c82590a5f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

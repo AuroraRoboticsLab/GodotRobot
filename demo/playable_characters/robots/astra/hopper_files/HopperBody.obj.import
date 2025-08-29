@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cmsblf280r5uc"
+path="res://.godot/imported/HopperBody.obj-1603c5bda44039441fc52bf6aa675afd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/HopperBody.obj-1603c5bda44039441fc52bf6aa675afd.mesh"]
+
+source_file="res://playable_characters/robots/astra/hopper_files/HopperBody.obj"
+dest_files=["res://.godot/imported/HopperBody.obj-1603c5bda44039441fc52bf6aa675afd.mesh", "res://.godot/imported/HopperBody.obj-1603c5bda44039441fc52bf6aa675afd.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

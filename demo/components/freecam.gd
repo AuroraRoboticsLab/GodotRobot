@@ -16,8 +16,6 @@ var invert_mult = 1
 		else:
 			invert_mult = 1
 		invert_cam = value
-@onready var ext_input = null
-var nametag_text: String = "unnamed spectator"
 
 @export var is_freecam: bool = false
 
@@ -52,7 +50,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("escape"):
 		if GameManager.player_choice != GameManager.Character.SPECT:
-			GameManager.toggle_inputs.emit(true)
+			InputManager.set_can_input(true)
 			queue_free()
 	
 	if Input.is_action_pressed("dpad_up"):
@@ -65,8 +63,6 @@ func _physics_process(delta):
 		camrot_h += h_sens * SENS_MULT
 	
 	var input = Input.get_vector("left", "right", "forward", "backward")
-	if ext_input:
-		input = ext_input
 	var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 	
 	# Camera movement logic

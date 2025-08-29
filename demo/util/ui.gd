@@ -137,7 +137,7 @@ func _on_leave_game_button_pressed():
 
 func _on_keybind_menu_button_pressed():	
 	if not $KeybindsMenu.visible:
-		GameManager.toggle_inputs.emit(false)
+		InputManager.set_can_input(false)
 		$KeybindsMenu.show()
 
 func _on_respawn_button_pressed():
@@ -199,10 +199,10 @@ func _on_send_message_timer_timeout():
 	enter_pressed = false
 
 func _on_chat_text_edit_focus_entered():
-	GameManager.toggle_inputs.emit(false)
+	InputManager.set_can_input(false)
 
 func _on_chat_text_edit_focus_exited():
-	GameManager.toggle_inputs.emit(true)
+	InputManager.set_can_input(true)
 
 func _on_click_control_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
@@ -312,7 +312,7 @@ func _on_command_line_edit_text_submitted(new_text):
 			"freecam":
 				if args.size() == 1:
 					if GameManager.player_choice != GameManager.Character.SPECT and not freecamming:
-						GameManager.toggle_inputs.emit(false)
+						InputManager.set_can_input(false)
 						$FreecamLabel.show()
 						freecamming = true
 						var freecam = freecam_scene.instantiate()
@@ -350,11 +350,11 @@ func _on_command_line_edit_text_submitted(new_text):
 				print("Error: Unknown command: ", command)
 
 func _on_command_line_edit_focus_entered():
-	GameManager.toggle_inputs.emit(false)
+	InputManager.set_can_input(false)
 
 func _on_command_line_edit_focus_exited():
 	if not freecamming:
-		GameManager.toggle_inputs.emit(true)
+		InputManager.set_can_input(true)
 
 func _on_toggle_unsafe_mode_pressed():
 	unsafe_mode = !unsafe_mode
