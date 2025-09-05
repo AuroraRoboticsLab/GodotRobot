@@ -304,3 +304,5 @@ disabled = true
 transform = Transform3D(1, 0, 0, 0, -0.620573, 0.784148, 0, -0.784148, -0.620573, 2.10553e-05, 0.206313, -0.657716)
 shape = SubResource("BoxShape3D_gp4fq")
 disabled = true
+
+[connection signal="add_joint" from="Arm/Boom3D/Stick3D/Tilt3D/ToolCouplerComponent" to="Arm" method="_on_tool_coupler_component_add_joint"]

@@ -123,7 +123,7 @@ func _network_process(_delta):
 				continue
 			body.linear_velocity = object_data[body_name].linear_velocity
 			body.angular_velocity = object_data[body_name].angular_velocity
-			if body is ToolAttachment and body.connector.connected:
+			if body is BaseTool and body.connector.connected:
 				continue
 			body.global_transform = body.global_transform.interpolate_with(object_data[body_name].global_transform, 0.2)
 		return
@@ -141,7 +141,7 @@ func _physics_process(_delta):
 	if GameManager.using_multiplayer:
 		if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
 			return # We don't have a UI to update if we are a console host.
-	if not player or not player.cam_scene:
+	if not player or not player.player_component.cam_scene:
 		return # We don't have a UI if we aren't in the game/don't have a camera!
 	
 	var UI = $Global/UI
@@ -153,10 +153,10 @@ func _physics_process(_delta):
 		player.v_sens = UI.v_cam_sens
 		player.invert_cam = UI.invert_cam
 	else:
-		player.cam_scene.h_sens = UI.h_cam_sens
-		player.cam_scene.v_sens = UI.v_cam_sens
-		player.cam_scene.zoom_sens = UI.cam_zoom_sens
-		player.cam_scene.invert_cam = UI.invert_cam
+		player.player_component.cam_scene.h_sens = UI.h_cam_sens
+		player.player_component.cam_scene.v_sens = UI.v_cam_sens
+		player.player_component.cam_scene.zoom_sens = UI.cam_zoom_sens
+		player.player_component.cam_scene.invert_cam = UI.invert_cam
 	
 	if GameManager.player_choice == GameManager.Character.ASTRO:
 		pass
@@ -165,7 +165,6 @@ func _physics_process(_delta):
 		UI.charging = player.charge_component.charging
 		UI.charge_level = player.charge_component.charge_level
 		UI.can_attach = player.arm.tool_coupler_component.can_attach
-		player.tp_height = UI.tp_height
 		if player.arm.tool_coupler_component.current_attachment:
 			if player.arm.tool_coupler_component.current_attachment is Bucket:
 				UI.dirtballs_in_bucket = player.arm.tool_coupler_component.current_attachment.in_bucket.num_dirtballs
@@ -178,7 +177,7 @@ func _physics_process(_delta):
 		
 	if OS.get_name() == "Android":
 		if not GameManager.player_choice == GameManager.Character.SPECT:
-			player.cam_scene.cam_locked = UI.cam_locked
+			player.player_component.cam_scene.cam_locked = UI.cam_locked
 		player.ext_input = UI.left_joystick.get_axis()
 		if GameManager.player_choice == GameManager.Character.ASTRA:
 			player.arm.ext_input = UI.right_joystick.get_axis()

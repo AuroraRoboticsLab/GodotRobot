@@ -1,7 +1,6 @@
 # Generic base class for tool attachments
-@tool
 extends RigidBody3D
-class_name ToolAttachment
+class_name BaseTool
 
 @onready var connector: Connector = $ConnectorComponent
 
@@ -9,9 +8,9 @@ class_name ToolAttachment
 @export var path: String = ""
 @export var mass_pos: Vector3 = Vector3.ZERO:
 	set(value):
-		$CenterOfMass.position = value
+		$CenterOfMassMarker.position = value
 		center_of_mass = value
 		mass_pos = value
 
-func _ready() -> void:
-	center_of_mass = mass_pos
+func get_speed_mod():
+	return 1.0 # To be overwritten by descendants

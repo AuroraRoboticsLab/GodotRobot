@@ -1,5 +1,5 @@
 @tool
-extends ToolAttachment
+extends BaseTool
 class_name Bucket
 
 @onready var cutter = $CuttingEdge
@@ -11,14 +11,15 @@ var rigid = self  # rigid body to grab velocity & forces
 var pushback_spread = 0.0 # spreads pushback over several physics frames
 
 func _ready():
-	super._ready()
 	if not terrain:
 		terrain = get_tree().root.get_node_or_null("main3D/Terrain/TerrainSim")
 
 # Excavate along cutting edge
 func _physics_process(_delta):
-
-	if not connector.connected or terrain == null:
+	if Engine.is_editor_hint():
+		return
+	
+	if not connector or not connector.connected or terrain == null:
 		return # Buckets shouldn't excavate if they are set down or have nothing to excavate.
 		
 	var xf = cutter.global_transform  # physics is mostly global coords

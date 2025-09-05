@@ -4,17 +4,14 @@ extends Area3D
 
 # This type equality comparison seems like it would be more performant than groups:
 # (from https://gamedev.stackexchange.com/questions/208718/checking-if-a-node-is-of-a-given-type-in-godot-4 )
-const dirtball_t = preload("res://terrain/dirtball.gd")
 var num_dirtballs: int = 0
 
-func _on_body_entered ( body ):
-	if body is dirtball_t:
-		#print("InsideBucket dirtball enters")
+func _on_body_entered(body) -> void:
+	if body is Dirtball:
 		num_dirtballs += 1
-		body.bucket_count += 1
+		body.inside_count += 1
 
-func _on_body_exited ( body ):
-	if body is dirtball_t:
-		#print("InsideBucket dirtball leaves")
-		body.bucket_count -= 1
+func _on_body_exited(body) -> void:
+	if body is Dirtball:
+		body.inside_count -= 1
 		num_dirtballs -= 1

@@ -28,13 +28,13 @@ bones/19/rotation = Quaternion(0.34862, 0.332162, -0.209086, 0.851126)
 bones/20/rotation = Quaternion(0.147228, 0.96507, 0.0859618, -0.198935)
 
 [node name="PLSS" parent="metarig/Skeleton3D" index="0"]
-transform = Transform3D(0.999951, -0.00975822, 0.00144431, 0.0097053, 0.999409, 0.0329756, -0.00176524, -0.0329599, 0.999455, -0.00512726, 1.60945, -0.229679)
+transform = Transform3D(1, -0.000930662, 6.23264e-05, 0.000908166, 0.986709, 0.162493, -0.000212724, -0.162492, 0.98671, -0.000380011, 1.57825, -0.274153)
 
 [node name="PLSS" parent="metarig/Skeleton3D/PLSS" index="0"]
 transform = Transform3D(1, 5.23869e-10, 0, 4.72937e-10, 1, -1.49012e-08, -2.32831e-10, -2.98023e-08, 1, 0, 0, 0)
 
 [node name="Visor" parent="metarig/Skeleton3D" index="1"]
-transform = Transform3D(0.999951, -0.00975822, 0.00144431, 0.0097053, 0.999409, 0.0329756, -0.00176524, -0.0329599, 0.999455, 0.00102667, 1.74251, 0.154078)
+transform = Transform3D(1, -0.000930662, 6.23264e-05, 0.000908166, 0.986709, 0.162493, -0.000212724, -0.162492, 0.98671, 0.00629978, 1.75996, 0.0890917)
 
 [node name="FootIK_SkeletonIK3D_R" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="3"]
 process_priority = 1

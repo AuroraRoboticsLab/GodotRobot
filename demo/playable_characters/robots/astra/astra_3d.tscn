@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=23 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" uid="uid://18c3nhd4rybm" path="res://playable_characters/robots/astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="PackedScene" uid="uid://be3c84w1whbk5" path="res://playable_characters/robots/base_robot.tscn" id="1_m24yr"]
@@ -15,6 +15,7 @@
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://playable_characters/robots/astra/hopper_files/HopperDoor.obj" id="13_feq4k"]
 [ext_resource type="Script" uid="uid://cp46bsqn0nw6o" path="res://playable_characters/robots/astra/InsideHopper.gd" id="14_m67ck"]
 [ext_resource type="PackedScene" uid="uid://b3nt4xe5afami" path="res://components/mountable_light_3d.tscn" id="15_stiv8"]
+[ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://playable_characters/robots/astra/hopper_files/HopperBody.obj" id="16_m67ck"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5l1n4"]
 size = Vector3(0.913705, 0.0486816, 0.272271)
@@ -37,6 +38,7 @@ size = Vector3(0.607239, 0.578091, 0.634567)
 [node name="Astra3D" instance=ExtResource("1_m24yr")]
 collision_layer = 4
 collision_mask = 23
+center_of_mass_mode = 1
 script = ExtResource("1_8yddr")
 
 [node name="PlayerComponent" parent="." index="0"]
@@ -136,42 +138,42 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0
 [node name="AstraArm3D" type="Node3D" parent="." index="13"]
 script = ExtResource("6_feq4k")
 
-[node name="FrameToArmJoint2" parent="AstraArm3D" index="0" instance=ExtResource("8_vbm0e")]
+[node name="FrameToArmJoint" parent="AstraArm3D" index="0" instance=ExtResource("8_vbm0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.088, -0.203)
 node_a = NodePath("../..")
-node_b = NodePath("../Arm3D2")
+node_b = NodePath("../Arm3D")
 angular_limit_x/erp = 0.3
 max_lower_angle = -90.0
 
-[node name="Arm3D2" type="RigidBody3D" parent="AstraArm3D" index="1"]
+[node name="Arm3D" type="RigidBody3D" parent="AstraArm3D" index="1"]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 21
 
-[node name="Arm1" type="MeshInstance3D" parent="AstraArm3D/Arm3D2" index="0"]
+[node name="Arm1" type="MeshInstance3D" parent="AstraArm3D/Arm3D" index="0"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("9_dlef3")
 skeleton = NodePath("../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraArm3D/Arm3D2" index="1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraArm3D/Arm3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.417, 0.089, -0.4)
 shape = SubResource("BoxShape3D_stiv8")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="AstraArm3D/Arm3D2" index="2"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AstraArm3D/Arm3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.417, 0.089, -0.4)
 shape = SubResource("BoxShape3D_stiv8")
 
-[node name="ArmToBollardJoint" parent="AstraArm3D/Arm3D2" index="3" instance=ExtResource("8_vbm0e")]
+[node name="ArmToBollardJoint" parent="AstraArm3D/Arm3D" index="3" instance=ExtResource("8_vbm0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.107, -0.82)
 node_a = NodePath("..")
 node_b = NodePath("../Bollard3D")
 max_upper_angle = 90.0
 max_lower_angle = -45.0
 
-[node name="Bollard3D" type="RigidBody3D" parent="AstraArm3D/Arm3D2" index="4"]
+[node name="Bollard3D" type="RigidBody3D" parent="AstraArm3D/Arm3D" index="4"]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 21
 
-[node name="BollardToCouplerJoint" parent="AstraArm3D/Arm3D2/Bollard3D" index="0" instance=ExtResource("8_vbm0e")]
+[node name="BollardToCouplerJoint" parent="AstraArm3D/Arm3D/Bollard3D" index="0" instance=ExtResource("8_vbm0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.049, -0.896)
 node_a = NodePath("..")
 node_b = NodePath("../ToolCoupler3D")
@@ -179,88 +181,98 @@ rotation_axis = 2
 max_upper_angle = 10.0
 max_lower_angle = -10.0
 
-[node name="Bollard" type="MeshInstance3D" parent="AstraArm3D/Arm3D2/Bollard3D" index="1"]
+[node name="Bollard" type="MeshInstance3D" parent="AstraArm3D/Arm3D/Bollard3D" index="1"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("10_ub3p5")
 skeleton = NodePath("../../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraArm3D/Arm3D2/Bollard3D" index="2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraArm3D/Arm3D/Bollard3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.872074)
 shape = SubResource("BoxShape3D_ml3bw")
 
-[node name="ToolCoupler3D" type="RigidBody3D" parent="AstraArm3D/Arm3D2/Bollard3D" index="3"]
+[node name="ToolCoupler3D" type="RigidBody3D" parent="AstraArm3D/Arm3D/Bollard3D" index="3"]
 collision_layer = 4
-collision_mask = 5
+collision_mask = 21
 
-[node name="ToolCouplerComponent" parent="AstraArm3D/Arm3D2/Bollard3D/ToolCoupler3D" index="0" instance=ExtResource("11_feq4k")]
+[node name="ToolCouplerComponent" parent="AstraArm3D/Arm3D/Bollard3D/ToolCoupler3D" index="0" instance=ExtResource("11_feq4k")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, -0.91)
 
-[node name="ToolCouplerMesh" type="MeshInstance3D" parent="AstraArm3D/Arm3D2/Bollard3D/ToolCoupler3D" index="1"]
+[node name="ToolCouplerMesh" type="MeshInstance3D" parent="AstraArm3D/Arm3D/Bollard3D/ToolCoupler3D" index="1"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("12_m67ck")
 skeleton = NodePath("../../../../../..")
 
-[node name="ToolCollider" type="CollisionShape3D" parent="AstraArm3D/Arm3D2/Bollard3D/ToolCoupler3D" index="2"]
+[node name="ToolCollider" type="CollisionShape3D" parent="AstraArm3D/Arm3D/Bollard3D/ToolCoupler3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_ml3bw")
 
 [node name="AstraHopper3D" type="Node3D" parent="." index="14"]
 script = ExtResource("12_stiv8")
 
-[node name="HopperDoor3" type="RigidBody3D" parent="AstraHopper3D" index="0"]
+[node name="HopperDoor" type="RigidBody3D" parent="AstraHopper3D" index="0"]
 collision_layer = 8
 collision_mask = 0
 mass = 0.01
 
-[node name="HopperDoorMesh" type="MeshInstance3D" parent="AstraHopper3D/HopperDoor3" index="0"]
+[node name="HopperDoor" type="MeshInstance3D" parent="AstraHopper3D/HopperDoor" index="0"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("13_feq4k")
 skeleton = NodePath("../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/HopperDoor3" index="1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/HopperDoor" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0849609, 0.0486908, -0.0148621)
 shape = SubResource("BoxShape3D_hltpf")
 
-[node name="HopperDoor4" type="RigidBody3D" parent="AstraHopper3D" index="1"]
+[node name="HopperDoor2" type="RigidBody3D" parent="AstraHopper3D" index="1"]
 collision_layer = 8
 collision_mask = 0
 mass = 0.01
 
-[node name="HopperDoor2" type="MeshInstance3D" parent="AstraHopper3D/HopperDoor4" index="0"]
+[node name="HopperDoor" type="MeshInstance3D" parent="AstraHopper3D/HopperDoor2" index="0"]
 transform = Transform3D(-0.01, -8.74228e-10, 3.82137e-17, 0, 4.37114e-10, 0.01, 8.74228e-10, -0.01, 4.37114e-10, 0, 0, 0)
 mesh = ExtResource("13_feq4k")
 skeleton = NodePath("../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/HopperDoor4" index="1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/HopperDoor2" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0895522, 0.0486908, -0.0148621)
 shape = SubResource("BoxShape3D_hltpf")
 
-[node name="BetterHingeJoint3D3" parent="AstraHopper3D" index="2" instance=ExtResource("8_vbm0e")]
+[node name="BetterHingeJoint3D" parent="AstraHopper3D" index="2" instance=ExtResource("8_vbm0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127, 0.064, 0)
+node_a = NodePath("../HopperDoor")
 node_b = NodePath("../..")
 rotation_axis = 2
 max_lower_angle = -90.0
 
-[node name="BetterHingeJoint3D4" parent="AstraHopper3D" index="3" instance=ExtResource("8_vbm0e")]
+[node name="BetterHingeJoint3D2" parent="AstraHopper3D" index="3" instance=ExtResource("8_vbm0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127, 0.064, 0)
+node_a = NodePath("../HopperDoor2")
 node_b = NodePath("../..")
 rotation_axis = 2
 max_upper_angle = 90.0
 
-[node name="InsideHopper2" type="Area3D" parent="AstraHopper3D" index="4"]
+[node name="InsideHopper" type="Area3D" parent="AstraHopper3D" index="4"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("14_m67ck")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/InsideHopper2" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/InsideHopper" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000762939, 0.16939, -0.0120773)
 shape = SubResource("BoxShape3D_ttjmc")
 
-[node name="MountableLight3D3" parent="AstraHopper3D" index="5" instance=ExtResource("15_stiv8")]
+[node name="MountableLight3D" parent="AstraHopper3D" index="5" instance=ExtResource("15_stiv8")]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0.3, 0.45, -0.325)
 
-[node name="MountableLight3D4" parent="AstraHopper3D" index="6" instance=ExtResource("15_stiv8")]
+[node name="MountableLight3D2" parent="AstraHopper3D" index="6" instance=ExtResource("15_stiv8")]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -0.3, 0.45, -0.325)
 
-[connection signal="body_entered" from="AstraHopper3D/InsideHopper2" to="AstraHopper3D/InsideHopper2" method="_on_body_entered"]
-[connection signal="body_exited" from="AstraHopper3D/InsideHopper2" to="AstraHopper3D/InsideHopper2" method="_on_body_exited"]
+[node name="HopperBody" type="MeshInstance3D" parent="AstraHopper3D" index="7"]
+transform = Transform3D(-0.01, 0, 0, 0, 4.37114e-10, 0.01, 0, -0.01, 4.37114e-10, 0, 0, 0)
+mesh = ExtResource("16_m67ck")
+skeleton = NodePath("../../AstraArm3D/Arm3D/Bollard3D")
+
+[connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
+[connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]
+[connection signal="add_joint" from="AstraArm3D/Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent" to="AstraArm3D" method="_on_tool_coupler_component_add_joint"]
+[connection signal="body_entered" from="AstraHopper3D/InsideHopper" to="AstraHopper3D/InsideHopper" method="_on_body_entered"]
+[connection signal="body_exited" from="AstraHopper3D/InsideHopper" to="AstraHopper3D/InsideHopper" method="_on_body_exited"]

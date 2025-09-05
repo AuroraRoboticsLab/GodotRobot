@@ -7,16 +7,20 @@ class_name BaseRobot
 
 # Helper variables from PlayerComponent
 @onready var charge_component: ChargeComponent = $PlayerComponent.charge_component
-var spawn_trans: Transform3D = $PlayerComponent.spawn_trans:
+@onready var spawn_trans: Transform3D = $PlayerComponent.spawn_trans:
 	set(value):
 		spawn_trans = value
 		$PlayerComponent.spawn_trans = value
 
+@onready var player_component: PlayerComponent = $PlayerComponent
+
 @export var nametag_text: String = "unnamed robot":
 	get:
-		return $Nametag.text
+		return nametag_text
 	set(value):
-		$Nametag.text = value
+		if is_inside_tree():
+			$Nametag.text = value
+		nametag_text = value
 
 func _ready() -> void:
 	center_of_mass = $CenterOfMass.position

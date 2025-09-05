@@ -12,12 +12,11 @@ extends Node3D
 
 func _ready() -> void:
 	GameManager.network_process.connect(_network_process)
-	tool_coupler_component.add_joint.connect(_on_tool_coupler_component_add_joint)
 
 func _network_process(_delta):
 	var curr_attach_path = null
 	var joint_data = null
-	if not $"../MultiplayerSynchronizer".is_multiplayer_authority():
+	if not get_parent().player_component.is_multiplayer_authority():
 		var player_data = GameManager.get_player_data(str(get_parent().name).to_int())
 		if not player_data:
 			return
@@ -40,7 +39,7 @@ func _network_process(_delta):
 	GameManager.add_new_player_data(new_player_data)
 
 func _physics_process(_delta: float) -> void:
-	if GameManager.using_multiplayer and not $"../MultiplayerSynchronizer".is_multiplayer_authority():
+	if GameManager.using_multiplayer and not get_parent().player_component.is_multiplayer_authority():
 		return
 	#print("Boom: ", rad_to_deg(boom_joint.get_angle()))
 	#print("Stick: ", rad_to_deg(stick_joint.get_angle()))

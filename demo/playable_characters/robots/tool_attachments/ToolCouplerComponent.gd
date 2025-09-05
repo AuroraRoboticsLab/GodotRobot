@@ -87,7 +87,7 @@ func _detach():
 # Invariant: area is a connector
 func _on_connector_component_can_connect(area):
 	var body = area.parent
-	if body is ToolAttachment: # Body is an attachment
+	if body is BaseTool: # Body is an attachment
 		current_attachment = body
 		can_attach = true
 		
@@ -95,8 +95,6 @@ func _on_connector_component_just_connected(_area):
 	# Stick bodies together
 	curr_joint = Generic6DOFJoint3D.new()
 	curr_joint.global_transform = global_transform
-	#var grandparent = get_parent().get_parent()
-	#grandparent.add_child(curr_joint)
 	add_joint.emit(curr_joint)
 	
 	current_attachment.global_transform = get_parent().global_transform

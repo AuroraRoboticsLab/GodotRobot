@@ -7,7 +7,7 @@ extends Node3D
 @onready var dump_joint = $Fork3D/ForkToDumpJoint
 
 func _physics_process(_delta: float) -> void:
-	if GameManager.using_multiplayer and not $"../MultiplayerSynchronizer".is_multiplayer_authority():
+	if GameManager.using_multiplayer and not get_parent().player_component.is_multiplayer_authority():
 		return
 	#print("fork: ", rad_to_deg(fork_joint.get_angle()))
 	#print("dump: ", rad_to_deg(dump_joint.get_angle()))

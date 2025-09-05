@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bjkgxgxvgdopt"]
+[gd_scene load_steps=17 format=3 uid="uid://bjkgxgxvgdopt"]
 
 [ext_resource type="Texture2D" uid="uid://bm8qkikgyd8rp" path="res://graphics/Settings Gear.png" id="1_1najt"]
 [ext_resource type="Script" uid="uid://m3rh3w6f4jun" path="res://levels/test_world.gd" id="1_edsus"]
-[ext_resource type="PackedScene" uid="uid://dg3o22fxtpi62" path="res://playable_characters/robots/excahauler/excahauler_3d.tscn" id="2_it24o"]
 [ext_resource type="PackedScene" uid="uid://co1noklregyjs" path="res://static_objects/tool_spawner.tscn" id="3_c576j"]
-[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://playable_characters/robots/tool_attachments/bucket/bucket_attachment_old.tscn" id="4_37vfl"]
-[ext_resource type="PackedScene" path="res://playable_characters/robots/tool_attachments/sawblade/saw_blade_attachment.tscn" id="5_edsus"]
-[ext_resource type="PackedScene" path="res://playable_characters/robots/tool_attachments/fork/forks_old.tscn" id="6_iophl"]
+[ext_resource type="PackedScene" uid="uid://cisb7q0edokjf" path="res://playable_characters/robots/tool_attachments/bucket/bucket.tscn" id="4_iophl"]
+[ext_resource type="PackedScene" uid="uid://do8fiu3gi7g0w" path="res://playable_characters/robots/tool_attachments/fork/forks.tscn" id="5_bi2y1"]
+[ext_resource type="PackedScene" uid="uid://j4d2t4yi6tx3" path="res://playable_characters/robots/tool_attachments/sawblade/saw_blade.tscn" id="6_6q451"]
+[ext_resource type="PackedScene" uid="uid://dmx2l7kepquv7" path="res://static_objects/charge_station.tscn" id="7_iophl"]
+[ext_resource type="PackedScene" uid="uid://4qerr3c2x2ii" path="res://playable_characters/astronaut/astronaut_character_3d.tscn" id="8_bi2y1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5y8l7"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,6 +33,13 @@ size = Vector3(100, 1, 100)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pco5w"]
 points = PackedVector3Array(-50, -0.5, -50, -50, 0.5, -50, 50, -0.5, -50, -50, -0.5, 50, -50, 0.5, 50, 50, 0.5, -50, 50, -0.5, 50, 50, 0.5, 50)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_37vfl"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edsus"]
+shading_mode = 0
+albedo_color = Color(0, 0.281516, 0, 1)
+
 [node name="TestWorld" type="Node3D"]
 script = ExtResource("1_edsus")
 
@@ -53,13 +61,30 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("ConvexPolygonShape3D_pco5w")
 
-[node name="Excahauler3D" parent="." instance=ExtResource("2_it24o")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1494, 0)
-
 [node name="ToolSpawner" parent="." instance=ExtResource("3_c576j")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0362799, -0.0176315, -4.14487)
-tool_1_scene = ExtResource("4_37vfl")
-tool_2_scene = ExtResource("5_edsus")
-tool_3_scene = ExtResource("6_iophl")
+tool_1_scene = ExtResource("4_iophl")
+tool_2_scene = ExtResource("5_bi2y1")
+tool_3_scene = ExtResource("6_6q451")
 
 [node name="Objects" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 27.571)
+mesh = SubResource("PlaneMesh_37vfl")
+surface_material_override/0 = SubResource("StandardMaterial3D_edsus")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.01, 27.571)
+mesh = SubResource("PlaneMesh_37vfl")
+surface_material_override/0 = SubResource("StandardMaterial3D_edsus")
+
+[node name="ChargeStation" parent="." instance=ExtResource("7_iophl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035, 0.045, 20.1)
+
+[node name="AstronautCharacter3D" parent="." instance=ExtResource("8_bi2y1")]
+transform = Transform3D(0.992546, 0, 0.121869, 0, 1, 0, -0.121869, 0, 0.992546, 1.405, -0.005, 20.05)
+nametag_text = ""
+
+[node name="AstronautCharacter3D2" parent="." instance=ExtResource("8_bi2y1")]
+transform = Transform3D(0.771625, 0, -0.636078, 0, 1, 0, 0.636078, 0, 0.771625, -1.105, -0.005, 20.05)

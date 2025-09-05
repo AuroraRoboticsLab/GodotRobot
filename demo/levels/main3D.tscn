@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=28 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" uid="uid://b4ldbonvm61up" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" uid="uid://c37ilixf3uywf" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -15,15 +15,12 @@
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
 [ext_resource type="PackedScene" uid="uid://cadmqk6yhkui4" path="res://objects/L_truss3m_18deg/L_truss3m.tscn" id="12_1wf2c"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
-[ext_resource type="Script" uid="uid://csoyli65huysi" path="res://playable_characters/robots/tool_attachments/bucket/bucket_attachment.gd" id="15_244r6"]
-[ext_resource type="ArrayMesh" uid="uid://srcfe5wuq87v" path="res://playable_characters/robots/tool_attachments/bucket/BetterBucket.obj" id="16_uaa6s"]
-[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="17_x811w"]
-[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="18_hju7l"]
+[ext_resource type="PackedScene" uid="uid://cisb7q0edokjf" path="res://playable_characters/robots/tool_attachments/bucket/bucket.tscn" id="15_uaet8"]
+[ext_resource type="PackedScene" uid="uid://do8fiu3gi7g0w" path="res://playable_characters/robots/tool_attachments/fork/forks.tscn" id="16_eqqix"]
+[ext_resource type="PackedScene" uid="uid://j4d2t4yi6tx3" path="res://playable_characters/robots/tool_attachments/sawblade/saw_blade.tscn" id="17_244r6"]
 [ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
-[ext_resource type="Script" uid="uid://dtwg7ngbe8c3v" path="res://playable_characters/robots/tool_attachments/bucket/inside_bucket.gd" id="19_ycts3"]
 [ext_resource type="PackedScene" uid="uid://dwyp3xvtl7b1g" path="res://objects/L_truss3m_18deg/L_truss3m_stack.tscn" id="20_k45ad"]
 [ext_resource type="PackedScene" uid="uid://d1j5s4nw8bdmn" path="res://objects/L_truss3m_18deg/L_truss3m_garage6_simplest.tscn" id="21_w3ssr"]
-[ext_resource type="PackedScene" uid="uid://hi6fmjvb22xb" path="res://playable_characters/robots/tool_attachments/bucket/bucket_attachment.tscn" id="24_uaa6s"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_33ek2"]
 geometry_parsed_geometry_type = 1
@@ -55,44 +52,6 @@ height = 1.0
 radial_segments = 4
 rings = 0
 cap_top = false
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3v1of"]
-friction = 0.22
-rough = true
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_6tyxi"]
-size = Vector3(0.798813, 0.261154, 0.0234375)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jmije"]
-size = Vector3(0.0194702, 0.289246, 0.327797)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_xs3pl"]
-size = Vector3(0.799, 0.404036, 0.0299326)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_wfa72"]
-size = Vector3(0.0108643, 0.173706, 0.169434)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ghptm"]
-size = Vector3(0.919689, 0.508891, 0.431961)
-
-[sub_resource type="PackedScene" id="PackedScene_bwgd7"]
-_bundled = {
-"conn_count": 2,
-"conns": PackedInt32Array(11, 11, 30, 29, 2, 0, 0, 11, 11, 32, 31, 2, 0, 0),
-"editable_instances": [],
-"names": PackedStringArray("BucketAttachment", "transform", "collision_layer", "collision_mask", "physics_material_override", "center_of_mass_mode", "script", "path", "RigidBody3D", "CenterOfMassOld", "Marker3D", "BetterBucket", "mesh", "skeleton", "surface_material_override/0", "MeshInstance3D", "BuckerCollider", "shape", "CollisionShape3D", "BuckerCollider3", "BuckerCollider4", "BuckerCollider2", "BuckerCollider5", "BuckerCollider6", "ConnectorComponentOld", "CuttingEdge", "Node3D", "InsideBucket", "Area3D", "_on_body_entered", "body_entered", "_on_body_exited", "body_exited"),
-"node_count": 13,
-"node_paths": [],
-"nodes": PackedInt32Array(-1, -1, 8, 0, -1, 7, 1, 0, 2, 1, 3, 2, 4, 3, 5, 4, 6, 5, 7, 6, 0, 0, 0, 10, 9, -1, 1, 1, 7, 0, 0, 0, 15, 11, -1, 4, 1, 8, 12, 9, 13, 10, 14, 11, 0, 0, 0, 18, 16, -1, 2, 1, 12, 17, 13, 0, 0, 0, 18, 19, -1, 2, 1, 14, 17, 15, 0, 0, 0, 18, 20, -1, 2, 1, 16, 17, 15, 0, 0, 0, 18, 21, -1, 2, 1, 17, 17, 18, 0, 0, 0, 18, 22, -1, 2, 1, 19, 17, 20, 0, 0, 0, 18, 23, -1, 2, 1, 21, 17, 20, 0, 0, 0, 2147483647, 24, 22, 1, 1, 23, 0, 0, 0, 26, 25, -1, 1, 1, 24, 0, 0, 0, 28, 27, -1, 3, 2, 25, 3, 25, 6, 26, 0, 11, 0, 18, 18, -1, 2, 1, 27, 17, 28, 0),
-"variants": [Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0), 20, 23, SubResource("PhysicsMaterial_3v1of"), 1, ExtResource("15_244r6"), "res://astra/tool_attachments/bucket_attachment.tscn", Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.80922e-09, -0.196049, -0.155777), Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, -0.05, 0.9), ExtResource("16_uaa6s"), NodePath("../../.."), ExtResource("17_x811w"), Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.10553e-05, -0.209021, -0.163842), SubResource("BoxShape3D_6tyxi"), Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.396564, -0.029964, -0.161604), SubResource("BoxShape3D_jmije"), Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.399182, -0.033252, -0.161762), Transform3D(1, 0, 0, 0, -0.999913, 0.0131593, 0, -0.0131593, -0.999913, 2.10553e-05, 0.00412088, -0.0266825), SubResource("BoxShape3D_xs3pl"), Transform3D(0.444072, -7.72379e-08, 0.895991, -0.895991, 6.76454e-08, 0.444072, -9.49089e-08, -1, -3.9165e-08, -0.328061, 0.167599, -0.0784125), SubResource("BoxShape3D_wfa72"), Transform3D(-0.463497, -6.39715e-08, -0.886098, -0.886098, -3.87326e-08, 0.463497, -6.39715e-08, 1, -3.87326e-08, 0.328543, 0.168705, -0.0784125), ExtResource("18_hju7l"), Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0), Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.4, -0.230319, -0.385997), 2, ExtResource("19_ycts3"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0025616, -0.0244718, -0.184456), SubResource("BoxShape3D_ghptm")],
-"version": 3
-}
-
-[sub_resource type="Resource" id="Resource_l0ikc"]
-metadata/__load_path__ = "res://playable_characters/robots/tool_attachments/fork/forks_old.tscn"
-
-[sub_resource type="Resource" id="Resource_phhos"]
-metadata/__load_path__ = "res://playable_characters/robots/tool_attachments/sawblade/saw_blade_attachment.tscn"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yvrwd"]
 size = Vector3(281.007, 20, 300)
@@ -198,12 +157,12 @@ transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12
 
 [node name="ToolSpawner" parent="LandingSite" instance=ExtResource("5_1rppn")]
 transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.0200878, 15.1276)
-tool_1_scene = SubResource("PackedScene_bwgd7")
-tool_2_scene = SubResource("Resource_l0ikc")
-tool_3_scene = SubResource("Resource_phhos")
+tool_1_scene = ExtResource("15_uaet8")
+tool_2_scene = ExtResource("16_eqqix")
+tool_3_scene = ExtResource("17_244r6")
 
 [node name="ChargeStation" parent="LandingSite" instance=ExtResource("3_47s0a")]
-transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.7088, 0.44, 22.2356)
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.709, -0.264365, 22.236)
 
 [node name="FallenArea3D" type="Area3D" parent="LandingSite"]
 collision_mask = 29
@@ -220,9 +179,6 @@ transform = Transform3D(0.640552, 0, -0.767915, 0, 1, 0, 0.767915, 0, 0.640552, 
 
 [node name="LTruss3mGarage6" parent="." instance=ExtResource("21_w3ssr")]
 transform = Transform3D(0.855138, 0.00410404, -0.518384, 0.012585, 0.99951, 0.0286736, 0.518247, -0.0310437, 0.854667, 22.5174, -2.10832, -38.8688)
-
-[node name="BucketAttachment" parent="." instance=ExtResource("24_uaa6s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.4501, 3.7783, 13.8758)
 
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]

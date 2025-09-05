@@ -2,17 +2,16 @@
 #  Uses a counter because there can be (can there be?) multiple hoppers, possibly overlapping.
 extends Area3D
 
-const dirtball_t = preload("res://terrain/dirtball.gd")
 @onready var num_dirtballs: int = 0
 
 func _on_body_entered ( body ):
-	if body is dirtball_t:
+	if body is Dirtball:
 		#print("InsideHopper dirtball enters")
-		body.hopper_count += 1
+		body.inside_count += 1
 		num_dirtballs += 1
 
 func _on_body_exited ( body ):
-	if body is dirtball_t:
+	if body is Dirtball:
 		#print("InsideHopper dirtball leaves")
-		body.hopper_count -= 1
+		body.inside_count -= 1
 		num_dirtballs -= 1

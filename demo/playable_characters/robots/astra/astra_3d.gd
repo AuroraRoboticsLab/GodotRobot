@@ -10,11 +10,14 @@ const DRIVE_FORCE_MULT = 1200
 @onready var arm    = $AstraArm3D
 @onready var hopper = $AstraHopper3D
 
-@onready var rear_connector =   $ConnectorComponent
+@onready var rear_connector = $ConnectorComponent
 
 @onready var stuck_stalling: bool = false
 @onready var stalling: bool = false
 @onready var start_stall: float = 0
+
+func _ready() -> void:
+	$ConnectorComponent.charge_component = player_component.charge_component
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $PlayerComponent.is_multiplayer_authority():
@@ -46,15 +49,8 @@ func _physics_process(delta):
 	var steer_force = 0
 	var drive_input = Input.get_axis("forward", "backward")
 	var steer_input = Input.get_axis("right", "left")
-	
-	if GameManager.is_npc:
-		# Let player have priority over controls
-		if drive_input == 0 or not InputManager.get_can_input():
-			drive_input = auto_component.get_drive()
-		if steer_input == 0 or not InputManager.get_can_input():
-			steer_input = auto_component.get_steer()
 		
-	if (InputManager.get_can_input() or GameManager.is_npc) and not charge_component.is_dead:
+	if InputManager.get_can_input() and not charge_component.is_dead:
 		drive_force = drive_input * 2 * DRIVE_FORCE_MULT * delta * engine_force_multiplier
 		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 	
@@ -97,7 +93,7 @@ func _physics_process(delta):
 	charge_component.change_charge(-power_spent * delta)
 	
 	# Flip over by holding space
-	if Input.is_action_pressed("jump") and InputManager.get_can_input() and not GameManager.is_npc:
+	if Input.is_action_pressed("jump") and InputManager.get_can_input():
 		angular_velocity += transform.basis * Vector3(0,0,10)*delta
 		linear_velocity.y += 1.62 * delta
 		#global_position += Vector3(0, tp_height, 0)

@@ -1,9 +1,6 @@
 @tool
-extends ToolAttachment
+extends BaseTool
 class_name SawBlade
-
-func _ready():
-	super._ready()
 
 func toggle_blade_spin():
 	if $AnimationPlayer.is_playing("spin_blade"):

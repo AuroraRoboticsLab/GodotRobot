@@ -4,12 +4,11 @@ extends Node3D
 @onready var hopper_1 = $BetterHingeJoint3D
 @onready var hopper_2 = $BetterHingeJoint3D2
 @onready var inside_hopper = $InsideHopper
-@onready var hopper = $Hopper
 
 @onready var is_dead: bool = false
 
 func _physics_process(_delta):
-	if GameManager.using_multiplayer and not $PlayerComponent.is_multiplayer_authority():
+	if GameManager.using_multiplayer and not get_parent().player_component.is_multiplayer_authority():
 		return
 	
 	const MOTOR_MULT = 0.8

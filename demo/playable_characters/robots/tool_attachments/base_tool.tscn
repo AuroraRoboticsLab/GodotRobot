@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://detkiym502ohf"]
+
+[ext_resource type="Script" uid="uid://durh1p261ybho" path="res://playable_characters/robots/tool_attachments/base_tool.gd" id="1_olyc7"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_h31tu"]
+
+[node name="BaseTool" type="RigidBody3D"]
+collision_layer = 16
+collision_mask = 31
+center_of_mass_mode = 1
+script = ExtResource("1_olyc7")
+path = "\"\""
+
+[node name="CenterOfMassMarker" type="Marker3D" parent="."]
+
+[node name="ConnectorComponent" parent="." instance=ExtResource("2_h31tu")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
