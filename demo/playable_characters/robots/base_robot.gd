@@ -18,8 +18,6 @@ class_name BaseRobot
 	get:
 		return nametag_text
 	set(value):
-		if is_inside_tree():
-			$Nametag.text = value
 		nametag_text = value
 
 func _ready() -> void:

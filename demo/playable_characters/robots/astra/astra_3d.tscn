@@ -6,16 +6,16 @@
 [ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://playable_characters/robots/astra/Wheel with substance.obj" id="3_bur5r"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="5_stiv8"]
 [ext_resource type="Script" uid="uid://bes7qei2bhx8y" path="res://playable_characters/robots/astra/astra_arm_3d.gd" id="6_feq4k"]
-[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="8_vbm0e"]
+[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d/better_hinge_joint_3d.tscn" id="8_vbm0e"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://playable_characters/robots/astra/arm_files/Arm1.obj" id="9_dlef3"]
 [ext_resource type="ArrayMesh" uid="uid://c06hgi0w1ckbu" path="res://playable_characters/robots/astra/arm_files/Bollard.obj" id="10_ub3p5"]
 [ext_resource type="PackedScene" uid="uid://c26cseexjqmt4" path="res://playable_characters/robots/tool_attachments/tool_coupler_component.tscn" id="11_feq4k"]
-[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="11_hg1mk"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component/connector_component.tscn" id="11_hg1mk"]
 [ext_resource type="ArrayMesh" uid="uid://lhfy2rerdh52" path="res://playable_characters/robots/astra/arm_files/ToolCoupler.obj" id="12_m67ck"]
 [ext_resource type="Script" uid="uid://bk6o8h4su0plp" path="res://playable_characters/robots/astra/astra_hopper_3d.gd" id="12_stiv8"]
 [ext_resource type="ArrayMesh" uid="uid://b7ucsqogn0vhl" path="res://playable_characters/robots/astra/hopper_files/HopperDoor.obj" id="13_feq4k"]
 [ext_resource type="Script" uid="uid://cp46bsqn0nw6o" path="res://playable_characters/robots/astra/InsideHopper.gd" id="14_m67ck"]
-[ext_resource type="PackedScene" uid="uid://b3nt4xe5afami" path="res://components/mountable_light_3d.tscn" id="15_stiv8"]
+[ext_resource type="PackedScene" uid="uid://b3nt4xe5afami" path="res://components/mountable_light/mountable_light_3d.tscn" id="15_stiv8"]
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://playable_characters/robots/astra/hopper_files/HopperBody.obj" id="16_m67ck"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5l1n4"]
@@ -81,6 +81,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="FrontRight" type="VehicleWheel3D" parent="." index="9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)

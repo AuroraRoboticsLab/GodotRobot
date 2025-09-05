@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b7ka25fx78tww" path="res://static_objects/charge_station.gd" id="1_r6tyg"]
 [ext_resource type="Shader" uid="uid://c56re48kr6ece" path="res://static_objects/charge_station.gdshader" id="2_dny1r"]
-[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_nyiml"]
-[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="3_qbbvx"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component/connector_component.tscn" id="2_nyiml"]
+[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component/charge_component.tscn" id="3_qbbvx"]
 [ext_resource type="PackedScene" uid="uid://brqo4uvi4vhmh" path="res://static_objects/static_solar_panel_3d.tscn" id="5_tohop"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hag8g"]

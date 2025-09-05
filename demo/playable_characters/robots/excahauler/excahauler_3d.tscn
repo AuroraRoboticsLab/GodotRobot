@@ -7,7 +7,7 @@
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="3_op3ku"]
 [ext_resource type="ArrayMesh" uid="uid://dosyxy8hd461p" path="res://playable_characters/robots/excahauler/excahauler_parts/frameBox.obj" id="4_4anhx"]
 [ext_resource type="Script" uid="uid://dux411jen868d" path="res://playable_characters/robots/excahauler/arm.gd" id="4_e6wri"]
-[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="5_l6p3u"]
+[ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d/better_hinge_joint_3d.tscn" id="5_l6p3u"]
 [ext_resource type="Script" uid="uid://d03olm8ivm3b5" path="res://playable_characters/robots/excahauler/scoop.gd" id="5_wphus"]
 [ext_resource type="ArrayMesh" uid="uid://bk3lqhm87yjhd" path="res://playable_characters/robots/excahauler/excahauler_parts/boom.obj" id="6_crbdq"]
 [ext_resource type="ArrayMesh" uid="uid://d1qolraduhcaf" path="res://playable_characters/robots/excahauler/excahauler_parts/stick.obj" id="7_mc66y"]

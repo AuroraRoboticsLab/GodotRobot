@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bp0u4re76enrq"]
 
-[ext_resource type="Script" uid="uid://df6um0d1gu0dr" path="res://objects/madsen_cinderblock.gd" id="1_gseqt"]
-[ext_resource type="ArrayMesh" uid="uid://dujivb230gk1k" path="res://objects/madsen_cinderblock_collision.obj" id="1_htjlh"]
+[ext_resource type="Script" uid="uid://df6um0d1gu0dr" path="res://objects/madsen_cinderblock/madsen_cinderblock.gd" id="1_gseqt"]
+[ext_resource type="ArrayMesh" uid="uid://dujivb230gk1k" path="res://objects/madsen_cinderblock/madsen_cinderblock_collision.obj" id="1_htjlh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l1u20"]
 

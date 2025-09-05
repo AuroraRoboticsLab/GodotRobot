@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://detkiym502ohf"]
 
 [ext_resource type="Script" uid="uid://durh1p261ybho" path="res://playable_characters/robots/tool_attachments/base_tool.gd" id="1_olyc7"]
-[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_h31tu"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component/connector_component.tscn" id="2_h31tu"]
 
 [node name="BaseTool" type="RigidBody3D"]
 collision_layer = 16

@@ -2,7 +2,7 @@
 extends Node3D
 class_name PlayerComponent
 
-var cam_load = preload("res://components/movable_camera_3d.tscn")
+var cam_load = preload("res://components/movable_camera_3d/movable_camera_3d.tscn")
 var cam_scene: MovableCamera = null
 @export var lock_cam_horiz: bool = false:
 	set(value):

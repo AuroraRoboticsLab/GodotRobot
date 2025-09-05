@@ -5,7 +5,7 @@ extends Node3D
 @onready var astra_scene:   PackedScene = load("res://playable_characters/robots/astra/astra_3d.tscn")
 @onready var excah_scene:   PackedScene = load("res://playable_characters/robots/excahauler/excahauler_3d.tscn")
 @onready var astro_scene:   PackedScene = load("res://playable_characters/astronaut/astronaut_character_3d.tscn")
-@onready var freecam_scene: PackedScene = load("res://components/freecam.tscn")
+@onready var freecam_scene: PackedScene = load("res://components/freecam/freecam.tscn")
 
 var player = null
 @onready var objects = $Objects

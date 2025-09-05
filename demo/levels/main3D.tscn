@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
 [ext_resource type="PackedScene" uid="uid://cadmqk6yhkui4" path="res://objects/L_truss3m_18deg/L_truss3m.tscn" id="12_1wf2c"]
-[ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
+[ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock/madsen_cinderblock.tscn" id="13_pv0wi"]
 [ext_resource type="PackedScene" uid="uid://cisb7q0edokjf" path="res://playable_characters/robots/tool_attachments/bucket/bucket.tscn" id="15_uaet8"]
 [ext_resource type="PackedScene" uid="uid://do8fiu3gi7g0w" path="res://playable_characters/robots/tool_attachments/fork/forks.tscn" id="16_eqqix"]
 [ext_resource type="PackedScene" uid="uid://j4d2t4yi6tx3" path="res://playable_characters/robots/tool_attachments/sawblade/saw_blade.tscn" id="17_244r6"]

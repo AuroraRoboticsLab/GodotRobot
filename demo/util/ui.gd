@@ -215,7 +215,7 @@ func _on_mobile_ui_slider_value_changed(value):
 	left_joystick.scale = Vector2(scale_val, scale_val)
 	right_joystick.scale = Vector2(scale_val, scale_val)
 
-@onready var freecam_scene = load("res://components/freecam.tscn")
+@onready var freecam_scene = load("res://components/freecam/freecam.tscn")
 var freecamming = false
 func _on_command_line_edit_text_submitted(new_text):
 	$CommandLineEdit.text = ""
