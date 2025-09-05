@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=24 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" uid="uid://18c3nhd4rybm" path="res://playable_characters/robots/astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="PackedScene" uid="uid://be3c84w1whbk5" path="res://playable_characters/robots/base_robot.tscn" id="1_m24yr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://playable_characters/robots/astra/Chassie+hubs.obj" id="3_1d7t0"]
 [ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://playable_characters/robots/astra/Wheel with substance.obj" id="3_bur5r"]
+[ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="5_stiv8"]
 [ext_resource type="Script" uid="uid://bes7qei2bhx8y" path="res://playable_characters/robots/astra/astra_arm_3d.gd" id="6_feq4k"]
 [ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d.tscn" id="8_vbm0e"]
 [ext_resource type="ArrayMesh" uid="uid://bd5goyol75q08" path="res://playable_characters/robots/astra/arm_files/Arm1.obj" id="9_dlef3"]
@@ -97,6 +98,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="BackLeft" type="VehicleWheel3D" parent="." index="10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
@@ -114,6 +116,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, -0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="BackRight" type="VehicleWheel3D" parent="." index="11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
@@ -131,6 +134,7 @@ damping_relaxation = 5.5
 transform = Transform3D(-4.37114e-10, 0, 0.01, 0, 0.01, 0, -0.01, 0, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="ConnectorComponent" parent="." index="12" instance=ExtResource("11_hg1mk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
