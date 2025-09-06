@@ -158,6 +158,7 @@ collision_mask = 21
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("9_dlef3")
 skeleton = NodePath("../../../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AstraArm3D/Arm3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.417, 0.089, -0.4)
@@ -190,6 +191,7 @@ max_lower_angle = -10.0
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("10_ub3p5")
 skeleton = NodePath("../../../../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AstraArm3D/Arm3D/Bollard3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.872074)
@@ -206,6 +208,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("12_m67ck")
 skeleton = NodePath("../../../../../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="ToolCollider" type="CollisionShape3D" parent="AstraArm3D/Arm3D/Bollard3D/ToolCoupler3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
@@ -223,6 +226,7 @@ mass = 0.01
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("13_feq4k")
 skeleton = NodePath("../../../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/HopperDoor" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0849609, 0.0486908, -0.0148621)
@@ -237,6 +241,7 @@ mass = 0.01
 transform = Transform3D(-0.01, -8.74228e-10, 3.82137e-17, 0, 4.37114e-10, 0.01, 8.74228e-10, -0.01, 4.37114e-10, 0, 0, 0)
 mesh = ExtResource("13_feq4k")
 skeleton = NodePath("../../../..")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AstraHopper3D/HopperDoor2" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0895522, 0.0486908, -0.0148621)
@@ -275,6 +280,7 @@ transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 
 transform = Transform3D(-0.01, 0, 0, 0, 4.37114e-10, 0.01, 0, -0.01, 4.37114e-10, 0, 0, 0)
 mesh = ExtResource("16_m67ck")
 skeleton = NodePath("../../AstraArm3D/Arm3D/Bollard3D")
+surface_material_override/0 = ExtResource("5_stiv8")
 
 [connection signal="can_connect" from="ConnectorComponent" to="." method="_on_connector_component_can_connect"]
 [connection signal="must_disconnect" from="ConnectorComponent" to="." method="_on_connector_component_must_disconnect"]
