@@ -178,9 +178,9 @@ func _physics_process(_delta):
 	if OS.get_name() == "Android":
 		if not GameManager.player_choice == GameManager.Character.SPECT:
 			player.player_component.cam_scene.cam_locked = UI.cam_locked
-		player.ext_input = UI.left_joystick.get_axis()
-		if GameManager.player_choice == GameManager.Character.ASTRA:
-			player.arm.ext_input = UI.right_joystick.get_axis()
+		#player.ext_input = UI.left_joystick.get_axis()
+		#if GameManager.player_choice == GameManager.Character.ASTRA:
+		#	player.arm.ext_input = UI.right_joystick.get_axis()
 
 func _on_fallen_area_3d_body_entered(body):
 	await get_tree().physics_frame
