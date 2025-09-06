@@ -39,8 +39,25 @@ func _ready() -> void:
 			setup_player_scene()
 	else:
 		setup_player_scene()
+	# NOTE: Even autonomous robots should be able to instantiate a camera since the plan
+	#       is to allow for Astronauts to connect to robots remotely and control
+	#       them (which means a MovableCamera3D is already necessary). This also
+	#       means that *anything that could be controlled by a player* should
+	#       have a PlayerComponent. We also need to consider how we handle
+	#       multiplayer log in/out. Does the Astronaut (dis)appear while the
+	#       robots remain and continue autonomously? Do all player-controllable
+	#       scenes *not need the muliplayer authority logic* because the server
+	#       handles who is controlling which scenes? We need to move toward 
+	#       sending *inputs* to the server for the server to handle properties (with
+	#       clients still sending inputs directly to player-controlled scene,
+	#       just with interpolation based on the server's handling of the inputs).
 
-func setup_player_scene():
+func teardown_player_scene() -> void:
+	if cam_scene != null:
+		cam_scene.queue_free()
+	$Nametag.visible = true
+
+func setup_player_scene() -> void:
 	cam_scene = cam_load.instantiate()
 	add_child(cam_scene)
 	cam_scene.position = cam_pos
