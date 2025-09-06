@@ -11,6 +11,9 @@ extends BaseRobot
 @onready var arm = $Arm
 @onready var tool_coupler_component = %ToolCouplerComponent
 
+func _ready() -> void:
+	super._ready()
+
 func _physics_process(delta: float) -> void:
 	if GameManager.using_multiplayer and not $PlayerComponent.is_multiplayer_authority():
 		return

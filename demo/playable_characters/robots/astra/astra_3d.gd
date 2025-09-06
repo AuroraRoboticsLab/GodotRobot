@@ -17,6 +17,7 @@ const DRIVE_FORCE_MULT = 1200
 @onready var start_stall: float = 0
 
 func _ready() -> void:
+	super._ready()
 	$ConnectorComponent.charge_component = player_component.charge_component
 
 func _physics_process(delta):
