@@ -19,7 +19,6 @@ var cam_scene: MovableCamera = null
 var spawn_trans: Transform3D = Transform3D.IDENTITY
 var tp_height: float = 1.0
 
-@onready var charge_component: ChargeComponent = $ChargeComponent
 @export var nametag_text: String = "unnamed player":
 	set(value):
 		$Nametag.text = value

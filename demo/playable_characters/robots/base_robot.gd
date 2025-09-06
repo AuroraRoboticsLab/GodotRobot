@@ -6,7 +6,7 @@ class_name BaseRobot
 @onready var auto_component: AutonomyComponent = $AutonomyComponent
 
 # Helper variables from PlayerComponent
-@onready var charge_component: ChargeComponent = $PlayerComponent.charge_component
+@onready var charge_component: ChargeComponent = $ChargeComponent
 @onready var spawn_trans: Transform3D = $PlayerComponent.spawn_trans:
 	set(value):
 		spawn_trans = value

@@ -45,27 +45,27 @@ script = ExtResource("1_8yddr")
 [node name="PlayerComponent" parent="." index="0"]
 nametag_pos = Vector3(0, 0.7, 0)
 
-[node name="Chassie+hubs" type="MeshInstance3D" parent="." index="3"]
+[node name="Chassie+hubs" type="MeshInstance3D" parent="." index="4"]
 transform = Transform3D(0.01, 0, 0, 0, -4.37114e-10, 0.01, 0, -0.01, -4.37114e-10, 0, 0, 0)
 mesh = ExtResource("3_1d7t0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000572219, 0.0237961, 0.466461)
 shape = SubResource("BoxShape3D_5l1n4")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="5"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000572219, 0.0237961, -0.472768)
 shape = SubResource("BoxShape3D_5l1n4")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="6"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="." index="7"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.358376, 0.0287629, -0.0115872)
 shape = SubResource("BoxShape3D_dmtlu")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="7"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="." index="8"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.353027, 0.0287629, -0.0115872)
 shape = SubResource("BoxShape3D_dmtlu")
 
-[node name="FrontLeft" type="VehicleWheel3D" parent="." index="8"]
+[node name="FrontLeft" type="VehicleWheel3D" parent="." index="9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, -0.495)
 brake = 0.8
 use_as_traction = true
@@ -83,7 +83,7 @@ mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("5_stiv8")
 
-[node name="FrontRight" type="VehicleWheel3D" parent="." index="9"]
+[node name="FrontRight" type="VehicleWheel3D" parent="." index="10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, -0.495)
 brake = 0.8
 use_as_traction = true
@@ -101,7 +101,7 @@ mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("5_stiv8")
 
-[node name="BackLeft" type="VehicleWheel3D" parent="." index="10"]
+[node name="BackLeft" type="VehicleWheel3D" parent="." index="11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.568, 0.139954, 0.47)
 brake = 0.8
 use_as_traction = true
@@ -119,7 +119,7 @@ mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("5_stiv8")
 
-[node name="BackRight" type="VehicleWheel3D" parent="." index="11"]
+[node name="BackRight" type="VehicleWheel3D" parent="." index="12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.568, 0.139954, 0.47)
 brake = 0.8
 use_as_traction = true
@@ -137,10 +137,11 @@ mesh = ExtResource("3_bur5r")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("5_stiv8")
 
-[node name="ConnectorComponent" parent="." index="12" instance=ExtResource("11_hg1mk")]
+[node name="ConnectorComponent" parent="." index="13" node_paths=PackedStringArray("charge_component") instance=ExtResource("11_hg1mk")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.05, 0.685)
+charge_component = NodePath("../ChargeComponent")
 
-[node name="AstraArm3D" type="Node3D" parent="." index="13"]
+[node name="AstraArm3D" type="Node3D" parent="." index="14"]
 script = ExtResource("6_feq4k")
 
 [node name="FrameToArmJoint" parent="AstraArm3D" index="0" instance=ExtResource("8_vbm0e")]
@@ -214,7 +215,7 @@ surface_material_override/0 = ExtResource("5_stiv8")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00338751, 0.0482707, -0.878391)
 shape = SubResource("BoxShape3D_ml3bw")
 
-[node name="AstraHopper3D" type="Node3D" parent="." index="14"]
+[node name="AstraHopper3D" type="Node3D" parent="." index="15"]
 script = ExtResource("12_stiv8")
 
 [node name="HopperDoor" type="RigidBody3D" parent="AstraHopper3D" index="0"]
