@@ -12,12 +12,12 @@
 [ext_resource type="Script" uid="uid://b7uiuoj8ktwue" path="res://util/fps_counter.gd" id="5_8fbcs"]
 [ext_resource type="Material" uid="uid://cy7t1bbj1qlam" path="res://terrain_fixed/lunar_south_pole/lunar_shader_shackzoom.tres" id="5_c86gy"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
-[ext_resource type="PackedScene" uid="uid://bouvraymofos3" path="res://astra/tool_attachments/bucket_attachment.tscn" id="6_k4qam"]
-[ext_resource type="PackedScene" uid="uid://bs7ecxqoqypo7" path="res://astra/tool_attachments/fork/forks.tscn" id="7_5iltw"]
 [ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
-[ext_resource type="PackedScene" uid="uid://bdndtt86s6py8" path="res://astra/tool_attachments/sawblade/saw_blade_attachment.tscn" id="8_5pjry"]
 [ext_resource type="PackedScene" uid="uid://cadmqk6yhkui4" path="res://objects/L_truss3m_18deg/L_truss3m.tscn" id="12_1wf2c"]
-[ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock.tscn" id="13_pv0wi"]
+[ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock/madsen_cinderblock.tscn" id="13_pv0wi"]
+[ext_resource type="PackedScene" uid="uid://cisb7q0edokjf" path="res://playable_characters/robots/tool_attachments/bucket/bucket.tscn" id="15_uaet8"]
+[ext_resource type="PackedScene" uid="uid://do8fiu3gi7g0w" path="res://playable_characters/robots/tool_attachments/fork/forks.tscn" id="16_eqqix"]
+[ext_resource type="PackedScene" uid="uid://j4d2t4yi6tx3" path="res://playable_characters/robots/tool_attachments/sawblade/saw_blade.tscn" id="17_244r6"]
 [ext_resource type="PackedScene" uid="uid://i53e0nqcunwg" path="res://landers/HLS_large/HLS_large_ship.glb" id="19_avsg1"]
 [ext_resource type="PackedScene" uid="uid://dwyp3xvtl7b1g" path="res://objects/L_truss3m_18deg/L_truss3m_stack.tscn" id="20_k45ad"]
 [ext_resource type="PackedScene" uid="uid://d1j5s4nw8bdmn" path="res://objects/L_truss3m_18deg/L_truss3m_garage6_simplest.tscn" id="21_w3ssr"]
@@ -157,12 +157,12 @@ transform = Transform3D(0.82384, 0, 0.566823, 0, 1, 0, -0.566823, 0, 0.82384, 12
 
 [node name="ToolSpawner" parent="LandingSite" instance=ExtResource("5_1rppn")]
 transform = Transform3D(-0.823839, 0, -0.566823, 0, 1, 0, 0.566823, 0, -0.823839, 20.3654, 0.0200878, 15.1276)
-tool_1_scene = ExtResource("6_k4qam")
-tool_2_scene = ExtResource("7_5iltw")
-tool_3_scene = ExtResource("8_5pjry")
+tool_1_scene = ExtResource("15_uaet8")
+tool_2_scene = ExtResource("16_eqqix")
+tool_3_scene = ExtResource("17_244r6")
 
 [node name="ChargeStation" parent="LandingSite" instance=ExtResource("3_47s0a")]
-transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.7088, 0.44, 22.2356)
+transform = Transform3D(-0.566823, 0, 0.823839, 0, 1, 0, -0.823839, 0, -0.566823, 18.709, -0.264365, 22.236)
 
 [node name="FallenArea3D" type="Area3D" parent="LandingSite"]
 collision_mask = 29

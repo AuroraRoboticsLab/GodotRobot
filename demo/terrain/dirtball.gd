@@ -1,7 +1,13 @@
 extends RigidBody3D
+class_name Dirtball
 
-@export var bucket_count = 0  # number of buckets that we are currently inside (0 == free on terrain)
-@export var hopper_count = 0 # number of hoppers that we are currently inside
+@export var inside_count = 0:  # number of buckets/hoppers that we are currently inside (0 == free on terrain)
+	set(value):
+		if value < 0:
+			print("WARN: Dirtball inside negative hoppers/buckets!")
+			inside_count = 0
+		else:
+			inside_count = value
 
 @export var terrain: TerrainSim = null # Set by spawner upon creation
 var despawned: bool = false
@@ -45,7 +51,7 @@ var prev_pos = null
 func _can_despawn(): # Do we fit the criteria to merge?
 	if not prev_pos:
 		prev_pos = global_position
-	if bucket_count <= 0 and hopper_count <= 0: # not inside a bucket or hopper
+	if inside_count <= 0: # not inside a bucket or hopper
 		if linear_velocity.length() < 0.2:  # low horizontal velocity (m/s)
 			if abs(linear_velocity.y) < 0.02:  # very low vertical velocity (m/s)
 				if angular_velocity.length() < 0.1: # not rotating much (rad/s)

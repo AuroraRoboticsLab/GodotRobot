@@ -1,7 +1,7 @@
 extends StaticBody3D
 
 const dirtball_t = preload("res://terrain/dirtball.gd")
-const brick_path = "res://objects/madsen_cinderblock.tscn"
+const brick_path = "res://objects/madsen_cinderblock/madsen_cinderblock.tscn"
 const brick_t = preload(brick_path)
 const brick_mass = 10.0
 

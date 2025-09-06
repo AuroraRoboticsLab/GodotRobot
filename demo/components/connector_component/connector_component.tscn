@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkd2fo3ki3km0"]
+
+[ext_resource type="Script" uid="uid://dqe83pn0rfkgr" path="res://components/connector_component/connector_component.gd" id="1_egbib"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qxdim"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e55xm"]
+size = Vector3(0.2, 0.1, 0.1)
+
+[node name="ConnectorComponent" type="Area3D"]
+script = ExtResource("1_egbib")
+
+[node name="ConnectorBody" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_qxdim")
+
+[node name="ConnectorCollider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_e55xm")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

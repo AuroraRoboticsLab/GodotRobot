@@ -18,6 +18,7 @@ config/icon="res://graphics/icon.svg"
 [autoload]
 
 GameManager="*res://game_manager.gd"
+InputManager="*res://input_manager.gd"
 
 [debug]
 

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://be3c84w1whbk5"]
+
+[ext_resource type="Script" uid="uid://57rntxafj63v" path="res://playable_characters/robots/base_robot.gd" id="1_0vy3u"]
+[ext_resource type="PackedScene" uid="uid://dtncegywd6q8r" path="res://playable_characters/player_component.tscn" id="2_57hfo"]
+[ext_resource type="PackedScene" uid="uid://cbhvaxh4k0aux" path="res://components/autonomy_component/autonomy_component.tscn" id="3_w67nb"]
+
+[node name="BaseRobot" type="VehicleBody3D"]
+script = ExtResource("1_0vy3u")
+
+[node name="PlayerComponent" parent="." instance=ExtResource("2_57hfo")]
+
+[node name="CenterOfMass" type="Marker3D" parent="."]
+
+[node name="AutonomyComponent" parent="." instance=ExtResource("3_w67nb")]

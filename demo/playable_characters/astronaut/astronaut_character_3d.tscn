@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://4qerr3c2x2ii"]
+
+[ext_resource type="Script" uid="uid://cfmjbsjcb7cek" path="res://playable_characters/astronaut/astronaut_character_3d.gd" id="1_kvu3g"]
+[ext_resource type="PackedScene" uid="uid://cfna2d2x5v5v4" path="res://playable_characters/astronaut/suit.tscn" id="1_t3oyg"]
+[ext_resource type="PackedScene" uid="uid://dtncegywd6q8r" path="res://playable_characters/player_component.tscn" id="2_4t4ua"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gplb5"]
+radius = 0.302122
+height = 1.83386
+
+[node name="AstronautCharacter3D" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_kvu3g")
+nametag_text = null
+
+[node name="PlayerComponent" parent="." instance=ExtResource("2_4t4ua")]
+lock_cam_horiz = true
+cam_pos = Vector3(0, 1.4, 0)
+nametag_pos = Vector3(0, 2, 0)
+
+[node name="suit_maxgrueter" parent="." instance=ExtResource("1_t3oyg")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.0947292, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.948384, 0)
+shape = SubResource("CapsuleShape3D_gplb5")

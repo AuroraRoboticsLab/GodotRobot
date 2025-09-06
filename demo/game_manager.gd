@@ -22,7 +22,6 @@ var game_in_progress: bool = false
 var is_console_host: bool = false
 var using_multiplayer: bool = false
 var using_chat: bool = true
-var is_npc: bool = false
 
 enum Character { ASTRO, ASTRA, EXCAH, SPECT }
 var player_choice: Character = Character.ASTRO
@@ -30,7 +29,6 @@ var player_choice: Character = Character.ASTRO
 signal new_player_info(id, username, version, player_choice)
 signal new_object(sender_id, body_path, body_name)
 signal self_disconnected
-signal toggle_inputs(in_bool)
 signal network_process(delta)
 signal add_local_object(object, deferred)
 

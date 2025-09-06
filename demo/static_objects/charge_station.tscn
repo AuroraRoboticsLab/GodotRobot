@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b7ka25fx78tww" path="res://static_objects/charge_station.gd" id="1_r6tyg"]
 [ext_resource type="Shader" uid="uid://c56re48kr6ece" path="res://static_objects/charge_station.gdshader" id="2_dny1r"]
-[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component.tscn" id="2_nyiml"]
-[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component.tscn" id="3_qbbvx"]
+[ext_resource type="PackedScene" uid="uid://bkd2fo3ki3km0" path="res://components/connector_component/connector_component.tscn" id="2_nyiml"]
+[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component/charge_component.tscn" id="3_qbbvx"]
 [ext_resource type="PackedScene" uid="uid://brqo4uvi4vhmh" path="res://static_objects/static_solar_panel_3d.tscn" id="5_tohop"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hag8g"]
@@ -19,42 +19,44 @@ height = 1.0
 height = 1.0
 
 [node name="ChargeStation" type="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_mask = 7
 script = ExtResource("1_r6tyg")
 
 [node name="ChargeStationMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("CylinderMesh_8u7h4")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_bmiad")
 
 [node name="ConnectorComponent1" parent="." node_paths=PackedStringArray("charge_component") instance=ExtResource("2_nyiml")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.170849, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0)
 charge_component = NodePath("../ChargeComponent")
 
 [node name="ConnectorComponent2" parent="." node_paths=PackedStringArray("charge_component") instance=ExtResource("2_nyiml")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.170849, 0.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.5, 0.5)
 charge_component = NodePath("../ChargeComponent")
 
 [node name="ConnectorComponent3" parent="." node_paths=PackedStringArray("charge_component") instance=ExtResource("2_nyiml")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.170849, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0)
 charge_component = NodePath("../ChargeComponent")
 
 [node name="ConnectorComponent4" parent="." node_paths=PackedStringArray("charge_component") instance=ExtResource("2_nyiml")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.170849, -0.5)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.5, -0.5)
 charge_component = NodePath("../ChargeComponent")
 
 [node name="ChargeComponent" parent="." instance=ExtResource("3_qbbvx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 amp_hours = 500.0
 remaining_amp_hours = 400.0
 
 [node name="StaticSolarPanel3D" parent="." node_paths=PackedStringArray("connected_charge_component") instance=ExtResource("5_tohop")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.498496, 0)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 1, 0)
 connected_charge_component = NodePath("../ChargeComponent")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.651174, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 billboard = 1
 text = "100%"
 
