@@ -5,7 +5,7 @@ const JUMP_VELOCITY = 1.25
 
 # Helper variables from PlayerComponent
 @onready var player_component: PlayerComponent = $PlayerComponent
-@onready var charge_component: ChargeComponent = $PlayerComponent.charge_component
+#@onready var charge_component: ChargeComponent = $ChargeComponent
 @onready var spawn_trans: Transform3D = $PlayerComponent.spawn_trans:
 	set(value):
 		spawn_trans = value

@@ -22,7 +22,6 @@ class_name BaseRobot
 
 func _ready() -> void:
 	center_of_mass = $CenterOfMass.position
-	
 	GameManager.network_process.connect(_network_process)
 
 func _network_process(_delta):

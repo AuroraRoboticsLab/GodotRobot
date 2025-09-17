@@ -111,12 +111,18 @@ func start_game():
 
 func player_connected(id):
 	print("Player Connected (ID ", id, ")")
+	if GameManager.get_player_username(id):
+		var msg: String = str(GameManager.get_player_username(id)) + " has connected."
+		%AlertLabel.text = msg
+		UIManager.sent_message.emit(msg)
 	update_num_players()
 	
 func player_disconnected(id):
 	print("Player Disconnected (ID ", id, ")")
 	if GameManager.get_player_username(id):
-		%AlertLabel.text = str(GameManager.get_player_username(id)) + " has disconnected."
+		var msg: String = str(GameManager.get_player_username(id)) + " has disconnected."
+		%AlertLabel.text = msg
+		UIManager.sent_message.emit(msg)
 	GameManager.remove_player(id)
 	var player_node = get_tree().root.get_node_or_null("main3D/" + str(id))
 	if player_node:

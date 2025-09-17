@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bun8tfid8p1fn"]
+[gd_scene load_steps=27 format=3 uid="uid://bun8tfid8p1fn"]
 
 [ext_resource type="Script" uid="uid://b4ldbonvm61up" path="res://levels/main3D.gd" id="1_dv7pc"]
 [ext_resource type="Script" uid="uid://c37ilixf3uywf" path="res://terrain_fixed/lunar_south_pole/dem_shackridge_loader.gd" id="2_0uhdn"]
@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://b7uiuoj8ktwue" path="res://util/fps_counter.gd" id="5_8fbcs"]
 [ext_resource type="Material" uid="uid://cy7t1bbj1qlam" path="res://terrain_fixed/lunar_south_pole/lunar_shader_shackzoom.tres" id="5_c86gy"]
 [ext_resource type="PackedScene" uid="uid://cxrrmjun8udju" path="res://terrain/dirt_spawner.tscn" id="6_fqn40"]
-[ext_resource type="PackedScene" uid="uid://c73kovjg5pcd3" path="res://util/ui.tscn" id="7_s8ac7"]
 [ext_resource type="PackedScene" uid="uid://cadmqk6yhkui4" path="res://objects/L_truss3m_18deg/L_truss3m.tscn" id="12_1wf2c"]
 [ext_resource type="PackedScene" uid="uid://bp0u4re76enrq" path="res://objects/madsen_cinderblock/madsen_cinderblock.tscn" id="13_pv0wi"]
 [ext_resource type="PackedScene" uid="uid://cisb7q0edokjf" path="res://playable_characters/robots/tool_attachments/bucket/bucket.tscn" id="15_uaet8"]
@@ -75,8 +74,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5120, 0, -5120)
 script = ExtResource("4_q1g3g")
 pixel_spacing = 40.0
 shader = ExtResource("5_c86gy")
-
-[node name="UI" parent="Global" instance=ExtResource("7_s8ac7")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Global"]
 environment = ExtResource("4_wv3d2")
@@ -180,5 +177,6 @@ transform = Transform3D(0.640552, 0, -0.767915, 0, 1, 0, 0.767915, 0, 0.640552, 
 [node name="LTruss3mGarage6" parent="." instance=ExtResource("21_w3ssr")]
 transform = Transform3D(0.855138, 0.00410404, -0.518384, 0.012585, 0.99951, 0.0286736, 0.518247, -0.0310437, 0.854667, 22.5174, -2.10832, -38.8688)
 
+[connection signal="new_fps" from="Global/FPS Counter" to="." method="_on_fps_counter_new_fps"]
 [connection signal="spawn_dirtball" from="Terrain/TerrainSim" to="Terrain" method="_on_terrain_sim_spawn_dirtball"]
 [connection signal="body_entered" from="LandingSite/FallenArea3D" to="." method="_on_fallen_area_3d_body_entered"]
