@@ -1,5 +1,5 @@
 # GodotRobot
-Simple early proof of concept C++ robot simulation using Godot 4.4's GDExtension interface.
+Simple early proof of concept C++ robot simulation using Godot 4.5's GDExtension interface.
 
 ## How to Host a Server
 
@@ -24,7 +24,7 @@ Visit the [Aurora Robotics Lab LUMINSim documentation wiki page](https://aurorar
 
 If you are using MacOS, we have not yet set this up on your operating system! Feel free to reach out to us so we can work with you, or start a pull request with the progress you make so we can update our documentation.
 
-To build this, start by downloading the [Godot 4.4 engine](https://godotengine.org/download/) for your machine.
+To build this, start by downloading the [Godot 4.5 engine](https://godotengine.org/download/) for your machine.
 
 If using windows, now is the time that you must install WSL, if you do not have it.
 
@@ -51,9 +51,9 @@ Inside the MiningRobot/ folder, check out this repo:
 
 Now prep the correct version of the godot-cpp GDExtension interface library inside GodotRobot:
 
-    git clone -b 4.4 https://github.com/godotengine/godot-cpp
+    git clone -b 4.5 https://github.com/godotengine/godot-cpp
     cd godot-cpp
-    git checkout 4.4
+    git checkout 4.5
     cd ..
 
 If building on Windows, you need to install mingw:
@@ -70,7 +70,7 @@ Building will take a few minutes the first time, as it builds the whole godot-cp
 
 Finally, if you are on Linux, you can try out the example project by running 
 
-    Godot-v4.4-stable.exe demo/project.godot
+    Godot-v4.5-stable.exe demo/project.godot
 
 On Windows, run your Godot executable you downloaded earlier, click 'Import', and navigate to `MiningRobot/GodotRobot/demo/project.godot`.
 
@@ -81,6 +81,20 @@ The standard edit loop is:
  - Switch to Godot Engine and Project -> Reload Current Project.
 
 You also need [Blender 3](https://download.blender.org/release/Blender3.0/), at least version 3.0 (Blender 4+ does not seem to work).  Attach the Blender install path to Godot in Godot Engine -> Editor -> Settings -> FileSystem -> Import -> Blender 3 Path.  I set mine to "/usr/bin", the default on Ubuntu.
+
+### Web Export
+
+To do a web export, you need Emscripten. In some distributions, simply `sudo apt install emscripten` will work. If that doesn't work for you, you'll have to clone the repository. From inside the godot-cpp cloned repo directory:
+```
+git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+./emsdk install latest
+./emsdk activate latest
+```
+
+Then you need to `source emsdk_env.sh`. Either run that command each time a web export is necessary, or add it to your .bashrc (not recommended).
+
+Once Emscripten is working (run `emcc --version` to check), run `scons platform=web target=template_debug threads=no` to compile for web.
 
 ## Terrain Nodes
 
