@@ -41,12 +41,13 @@ func _physics_process(delta):
 	# Charge opportunity split evenly between each body charging
 	var charge_per_body = charge_component.max_draw_rate / num_batteries_charging
 	
-	# Each body on the charger needs to be charged
-	for battery in batteries_charging:
-		if battery.charge_level < 100.0:
-			var charge_exchange = charge_per_body * delta
-			battery.change_charge(charge_exchange) # We give, and
-			charge_component.change_charge(-charge_exchange) # we take.
+	# Each body on the charger needs to be charged if we have power to charge them
+	if not charge_component.is_dead:
+		for battery in batteries_charging:
+			if battery.charge_level < 100.0:
+				var charge_exchange = charge_per_body * delta
+				battery.change_charge(charge_exchange) # We give, and
+				charge_component.change_charge(-charge_exchange) # we take.
 
 
 # Set the battery-like shader level based on charge.
@@ -60,7 +61,6 @@ func set_shader_percentage(new_charge: float) -> void:
 # Given a connector, start charging the attached body if possible.
 func init_connect(area):
 	if area is Connector and area.charge_component:
-		area.charge_component.charging = true
 		batteries_charging.append(area.charge_component)
 
 # Do connect logic for all connectors.
@@ -77,7 +77,6 @@ func _on_connector_component_4_just_connected(area):
 # and remove it from connected body list.
 func init_disconnect(area):
 	if area is Connector and area.charge_component:
-		area.charge_component.charging = false
 		batteries_charging.erase(area.charge_component)
 
 # Do disconnect logic for all connectors.

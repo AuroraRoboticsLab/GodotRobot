@@ -1,7 +1,7 @@
 # Keeps a set of dirtballs as children
 extends Marker3D
 
-@export var spawn_rate = 1  # dirtballs created per physics frame
+@export var spawn_rate: int = 1  # dirtballs created per physics frame
 @export var spawn = self
 @export var is_spawning = false
 @export var terrain : Node3D
@@ -11,6 +11,12 @@ extends Marker3D
 @rpc("any_peer","call_local")
 func toggle_spawning():
 	is_spawning = !is_spawning
+
+func _ready():
+	UIManager.new_spawn_rate.connect(_on_new_spawn_rate)
+
+func _on_new_spawn_rate(new_rate: int) -> void:
+	spawn_rate = new_rate
 
 func _physics_process(_delta):
 	if not is_spawning:

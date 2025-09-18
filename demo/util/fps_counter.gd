@@ -2,7 +2,9 @@ extends Node3D
 
 # From  https://www.reddit.com/r/godot/comments/8p3lm0/fps_counter_in_game/
 var time = 0.0
-@export var fps = 0
+@export var fps: float = 0
+
+signal new_fps(fps: float)
 
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
@@ -31,3 +33,4 @@ func _process(delta):
 			print(seconds_to_time_string(time), "    fps: ",fps,"    ",round_to_dec(1000.0/fps, 2),"  ms/frame")
 		else:
 			print("fps: ",fps,"    ",round_to_dec(1000.0/fps, 2),"  ms/frame")
+		new_fps.emit(fps)

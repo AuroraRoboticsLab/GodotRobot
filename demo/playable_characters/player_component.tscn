@@ -1,12 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtncegywd6q8r"]
+[gd_scene load_steps=2 format=3 uid="uid://dtncegywd6q8r"]
 
-[ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component/charge_component.tscn" id="1_51xu8"]
 [ext_resource type="Script" uid="uid://kmd0381j0cge" path="res://playable_characters/player_component.gd" id="1_ged1k"]
 
 [node name="PlayerComponent" type="Node3D"]
 script = ExtResource("1_ged1k")
-
-[node name="ChargeComponent" parent="." instance=ExtResource("1_51xu8")]
 
 [node name="Nametag" type="Label3D" parent="."]
 billboard = 1

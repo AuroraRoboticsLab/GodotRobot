@@ -18,7 +18,6 @@ const DRIVE_FORCE_MULT = 1200
 
 func _ready() -> void:
 	super._ready()
-	$ConnectorComponent.charge_component = player_component.charge_component
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $PlayerComponent.is_multiplayer_authority():

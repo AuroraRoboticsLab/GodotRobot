@@ -1,6 +1,6 @@
 extends CanvasLayer
+class_name UI
 
-@export var spawn_rate: int = 1
 @export var charge_level: float = 100.0
 @export var v_cam_sens: float = 0.1
 @export var h_cam_sens: float = 0.1
@@ -15,7 +15,6 @@ extends CanvasLayer
 @onready var fps = 60
 @onready var dirtballs_in_bucket: int = 0
 @onready var dirtballs_in_hopper: int = 0
-@onready var invert_cam: bool = false
 @onready var left_joystick = $LeftJoystick
 @onready var right_joystick = $RightJoystick
 @onready var cam_locked: bool = false
@@ -26,6 +25,10 @@ func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
 func _ready():
+	UIManager.new_fps.connect(_on_new_fps)
+	UIManager.new_ball_count.connect(_on_new_ball_count)
+	UIManager.sent_message.connect(_on_sent_message)
+	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for child in get_children():
 		child.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -52,6 +55,14 @@ func _ready():
 		$PanelContainer/VBoxContainer/GridContainer/ChargeLabel.show()
 		$PanelContainer/VBoxContainer/GridContainer/Charge.show()
 
+func _on_new_fps(in_fps: float) -> void:
+	fps = in_fps
+	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
+
+func _on_new_ball_count(in_ball_count: int) -> void:
+	ball_count = in_ball_count
+	$PanelContainer/VBoxContainer/GridContainer/BallCount.text = str(ball_count)
+
 func _process(_delta):
 	# Toggle UI visibility
 	if Input.is_action_just_pressed("f2"):
@@ -61,9 +72,11 @@ func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		get_tree().paused = !get_tree().paused
 	
-	if Input.is_action_just_pressed("escape") and freecamming:
-		freecamming = false
-		$FreecamLabel.hide()
+	if Input.is_action_just_pressed("escape"):
+		if freecamming:
+			freecamming = false
+			$FreecamLabel.hide()
+		$SettingsMenu.visible = !$SettingsMenu.visible
 	
 	# Lock the camera when using joysticks in mobile
 	if left_joystick.knob.pressing or right_joystick.knob.pressing:
@@ -75,8 +88,6 @@ func _process(_delta):
 	if Input.is_action_just_pressed("f1"):
 		$CommandLineEdit.visible = !$CommandLineEdit.visible
 	
-	$PanelContainer/VBoxContainer/GridContainer/FPS.text = str(fps)
-	$PanelContainer/VBoxContainer/GridContainer/BallCount.text = str(ball_count)
 	if GameManager.player_choice == GameManager.Character.ASTRA:
 		$CenterContainer/PressToAttach.visible = can_attach
 		$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
@@ -101,44 +112,66 @@ func _physics_process(_delta):
 	if player:
 		if GameManager.player_choice == GameManager.Character.ASTRA or GameManager.player_choice == GameManager.Character.EXCAH:
 			$PanelContainer/VBoxContainer/GridContainer/Speed.text = str(round_to_dec(player.linear_velocity.length(), 2)) + " m/s"
+			charging = player.charge_component.charging
+			charge_level = player.charge_component.charge_level
+			can_attach = player.arm.tool_coupler_component.can_attach
+			if player.arm.tool_coupler_component.current_attachment and player.arm.tool_coupler_component.current_attachment is Bucket:
+				dirtballs_in_bucket = player.arm.tool_coupler_component.current_attachment.in_bucket.num_dirtballs
+			else:
+				dirtballs_in_bucket = 0
+			if GameManager.player_choice == GameManager.Character.ASTRA:
+				stalling = player.stuck_stalling
+				dirtballs_in_hopper = player.hopper.inside_hopper.num_dirtballs
+				player.arm.unsafe_mode = unsafe_mode
 		elif GameManager.player_choice == GameManager.Character.ASTRO:
 			$PanelContainer/VBoxContainer/GridContainer/Speed.text = str(round_to_dec(player.velocity.length(), 2)) + " m/s"
+		
+		if OS.get_name() == "Android":
+			if not GameManager.player_choice == GameManager.Character.SPECT:
+				player.player_component.cam_scene.cam_locked = cam_locked
 
+# Dirtball spawn rate
 func _on_tick_button_value_changed(value):
-	spawn_rate = value
-	
+	UIManager.new_spawn_rate.emit(value)
+
 func _on_settings_button_pressed():
+	# Could add input manager call to turn off inputs
 	$SettingsMenu.visible = !$SettingsMenu.visible
 
 func _on_vert_sens_slider_value_changed(value):
 	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensValLabel.text = str(value)
 	v_cam_sens = value
+	UIManager.new_cam_sens.emit(Vector2(h_cam_sens, v_cam_sens))
 
 func _on_horiz_sens_slider_value_changed(value):
 	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer2/HorizSensValLabel.text = str(value)
 	h_cam_sens = value
+	UIManager.new_cam_sens.emit(Vector2(h_cam_sens, v_cam_sens))
 
 # Invert camera checkbox
 func _on_check_box_toggled(toggled_on):
-	invert_cam = toggled_on
+	UIManager.new_cam_inv.emit(toggled_on)
 	
 func _on_tp_height_tick_button_value_changed(value):
-	tp_height = value
+	UIManager.new_tp_h.emit(value)
 
 func _on_zoom_sens_slider_value_changed(value):
 	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer4/ZoomSensValLabel.text = str(value)
-	cam_zoom_sens = value
+	UIManager.new_zoom_sens.emit(value)
 
 func _on_leave_game_button_pressed():
 	if GameManager.using_multiplayer:
 		multiplayer.multiplayer_peer.close()
 	GameManager.self_disconnected.emit()
-	get_parent().queue_free()
+	GameManager.exit_main_scene.emit()
 
 func _on_keybind_menu_button_pressed():	
 	if not $KeybindsMenu.visible:
 		InputManager.set_can_input(false)
 		$KeybindsMenu.show()
+	else:
+		InputManager.set_can_input(true)
+		$KeybindsMenu.hide()
 
 func _on_respawn_button_pressed():
 	if not player:
@@ -168,23 +201,17 @@ func _on_chat_text_edit_text_submitted(new_text: String):
 	if %ChatTextEdit.text != "":
 		if multiplayer.is_server():
 			if GameManager.using_chat:
-				_send_chat_message.rpc(str(username)+": "+new_text)
+				UIManager.send_chat_message.rpc(str(username)+": "+new_text)
 		else: # All chat messages go through the server.
-			_try_send_chat_message.rpc_id(1, multiplayer.get_unique_id(), str(username)+": "+new_text)
+			UIManager.try_send_chat_message.rpc_id(1, multiplayer.get_unique_id(), str(username)+": "+new_text)
 		%ChatTextEdit.text = ""
 	enter_pressed = true
 	$ChatContainer/VBoxContainer/ChatTextEdit/SendMessageTimer.start()
 
-@rpc("any_peer")
-func _try_send_chat_message(sender_id, message):
-	if multiplayer.is_server():
-		if GameManager.using_chat:
-			_send_chat_message.rpc(message)
-		else:
-			_send_chat_message.rpc_id(sender_id, "Host has disabled chat!")
+func _on_send_message_timer_timeout():
+	enter_pressed = false
 
-@rpc("any_peer", "call_local")
-func _send_chat_message(message):
+func _on_sent_message(message: String) -> void:
 	if not GameManager.using_chat:
 		return # No messages for those who have disabled chat!
 	var new_message_label = Label.new()
@@ -194,9 +221,6 @@ func _send_chat_message(message):
 	await get_tree().process_frame
 	print(message) # Print the chat in the console
 	%ScrollContainer.ensure_control_visible(new_message_label)
-
-func _on_send_message_timer_timeout():
-	enter_pressed = false
 
 func _on_chat_text_edit_focus_entered():
 	InputManager.set_can_input(false)
@@ -231,12 +255,12 @@ func _on_command_line_edit_text_submitted(new_text):
 					print("Error: Only a robot can pathfind!")
 					return
 				if args.size() == 4:
-					var x = args[1].to_float()
-					var y = args[2].to_float()
-					var z = args[3].to_float()
-					print("Going to (", x, ", ", y, ", ", z, ")")
-					
-					player.auto_component.pathfind_to(Vector3(x, y, z))
+					#var x = args[1].to_float()
+					#var y = args[2].to_float()
+					#var z = args[3].to_float()
+					#print("Going to (", x, ", ", y, ", ", z, ")")
+					print("This feature is not yet implemented!")
+					#player.auto_component.pathfind_to(Vector3(x, y, z))
 				else:
 					print("Error: 'move' command requires x, y, and z coordinates.")
 			"respawn": # Teleport back to spawn
@@ -312,7 +336,7 @@ func _on_command_line_edit_text_submitted(new_text):
 			"freecam":
 				if args.size() == 1:
 					if GameManager.player_choice != GameManager.Character.SPECT and not freecamming:
-						InputManager.set_can_input(false)
+						InputManager.set_can_input(false) # Will this cause freecam command to not work? Can we override?
 						$FreecamLabel.show()
 						freecamming = true
 						var freecam = freecam_scene.instantiate()

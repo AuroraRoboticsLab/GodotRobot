@@ -12,13 +12,14 @@ config_version=5
 
 config/name="Demo_GodotRobot"
 run/main_scene="res://util/multiplayer_menu.tscn"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://graphics/icon.svg"
 
 [autoload]
 
 GameManager="*res://game_manager.gd"
 InputManager="*res://input_manager.gd"
+UIManager="*res://ui_manager.gd"
 
 [debug]
 
