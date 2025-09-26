@@ -196,7 +196,7 @@ func _update_labels() -> void:
 			controller_buttons[idx].text = "Unbound"
 		
 func _on_exit_button_pressed():
-	InputManager.set_can_input(true)
+	InputManager.activate_prev_mode()
 	save_binds()
 	hide()
 

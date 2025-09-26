@@ -88,6 +88,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("f1"):
 		$CommandLineEdit.visible = !$CommandLineEdit.visible
 	
+	if Input.is_action_just_pressed("f3"):
+		$DebugControl.visible = !$DebugControl.visible
+	
 	if GameManager.player_choice == GameManager.Character.ASTRA:
 		$CenterContainer/PressToAttach.visible = can_attach
 		$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
@@ -165,12 +168,12 @@ func _on_leave_game_button_pressed():
 	GameManager.self_disconnected.emit()
 	GameManager.exit_main_scene.emit()
 
-func _on_keybind_menu_button_pressed():	
+func _on_keybind_menu_button_pressed():
 	if not $KeybindsMenu.visible:
-		InputManager.set_can_input(false)
+		InputManager.disable_input_modes()
 		$KeybindsMenu.show()
 	else:
-		InputManager.set_can_input(true)
+		InputManager.activate_prev_mode()
 		$KeybindsMenu.hide()
 
 func _on_respawn_button_pressed():
@@ -223,10 +226,10 @@ func _on_sent_message(message: String) -> void:
 	%ScrollContainer.ensure_control_visible(new_message_label)
 
 func _on_chat_text_edit_focus_entered():
-	InputManager.set_can_input(false)
+	InputManager.disable_input_modes()
 
 func _on_chat_text_edit_focus_exited():
-	InputManager.set_can_input(true)
+	InputManager.activate_prev_mode()
 
 func _on_click_control_gui_input(event):
 	if event is InputEventMouseButton and event.pressed:
@@ -238,6 +241,9 @@ func _on_mobile_ui_slider_value_changed(value):
 	var scale_val = 0.08 * value
 	left_joystick.scale = Vector2(scale_val, scale_val)
 	right_joystick.scale = Vector2(scale_val, scale_val)
+
+@export var move_mode: GUIDEMappingContext
+@export var freecam_mode: GUIDEMappingContext
 
 @onready var freecam_scene = load("res://components/freecam/freecam.tscn")
 var freecamming = false
@@ -336,13 +342,14 @@ func _on_command_line_edit_text_submitted(new_text):
 			"freecam":
 				if args.size() == 1:
 					if GameManager.player_choice != GameManager.Character.SPECT and not freecamming:
-						InputManager.set_can_input(false) # Will this cause freecam command to not work? Can we override?
+						InputManager.activate_freecam_mode()
 						$FreecamLabel.show()
 						freecamming = true
 						var freecam = freecam_scene.instantiate()
 						freecam.is_freecam = true # Indicate we are freecamming, not spectating.
-						freecam.global_position = player.global_position
-						get_parent().add_child(freecam)
+						get_parent().add_child.call_deferred(freecam)
+						await get_tree().physics_frame
+						freecam.global_position = player.global_position + Vector3(0,2,0)
 					else:
 						print("Error: Already spectating!")
 				else:
@@ -374,11 +381,11 @@ func _on_command_line_edit_text_submitted(new_text):
 				print("Error: Unknown command: ", command)
 
 func _on_command_line_edit_focus_entered():
-	InputManager.set_can_input(false)
+	InputManager.disable_input_modes()
 
 func _on_command_line_edit_focus_exited():
 	if not freecamming:
-		InputManager.set_can_input(true)
+		InputManager.activate_prev_mode()
 
 func _on_toggle_unsafe_mode_pressed():
 	unsafe_mode = !unsafe_mode
@@ -392,3 +399,6 @@ func _on_mobile_button_1_button_down():
 
 func _on_mobile_button_1_button_up():
 	Input.action_release("generic_action")
+
+func _on_hide_version_check_box_toggled(toggled_on: bool) -> void:
+	$VersionLabel.visible = !toggled_on

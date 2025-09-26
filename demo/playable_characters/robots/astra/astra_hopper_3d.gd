@@ -7,16 +7,19 @@ extends Node3D
 
 @onready var is_dead: bool = false
 
+# Inputs
+@export var open_hopper: GUIDEAction
+
 func _physics_process(_delta):
 	if GameManager.using_multiplayer and not get_parent().player_component.is_multiplayer_authority():
 		return
 	
 	const MOTOR_MULT = 0.8
 	var hopper_force = 0
-	if InputManager.get_can_input() and not is_dead:
-		hopper_force = Input.get_axis("hopper_open", "hopper_close") * MOTOR_MULT
+	if not is_dead:
+		hopper_force = open_hopper.value_axis_2d.x * MOTOR_MULT
 	if hopper_force == 0: # Close hopper by default
-		hopper_force = MOTOR_MULT
+		hopper_force = -MOTOR_MULT
 	
 	hopper_1.move_motor(hopper_force) if abs(hopper_force) > 0 else hopper_1.stop_motor()
 	hopper_2.move_motor(-hopper_force) if abs(hopper_force) > 0 else hopper_2.stop_motor()

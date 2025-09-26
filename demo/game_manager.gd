@@ -111,6 +111,7 @@ func add_new_static_data(new_data):
 
 # Do everything on our side to show the game has ended
 func end_game():
+	InputManager.disable_input_modes()
 	game_in_progress = false
 	sync_data = {
 		"players":{},

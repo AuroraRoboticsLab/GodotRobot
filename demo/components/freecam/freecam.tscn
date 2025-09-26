@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://crokc6blgqycp"]
+[gd_scene load_steps=7 format=3 uid="uid://crokc6blgqycp"]
 
 [ext_resource type="Script" uid="uid://d1na0ag6vgd3v" path="res://components/freecam/freecam.gd" id="1_v3i3j"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0q5cx"]
+[ext_resource type="Resource" uid="uid://q2754q6ec20o" path="res://guide_actions/freecam_mode/exit.tres" id="2_10nfg"]
+[ext_resource type="Resource" uid="uid://dqsqxm3sk66w0" path="res://guide_actions/freecam_mode/move.tres" id="3_fjriw"]
+[ext_resource type="Resource" uid="uid://bx1x17s0t36jq" path="res://guide_actions/freecam_mode/rotate_camera.tres" id="4_fjriw"]
+[ext_resource type="Resource" uid="uid://itq36vshdfi5" path="res://guide_actions/freecam_mode/fast.tres" id="5_r65ux"]
+[ext_resource type="Resource" uid="uid://7w4un2n6sne8" path="res://guide_actions/freecam_mode/slow.tres" id="6_8cla0"]
 
 [node name="Freecam" type="Node3D"]
 script = ExtResource("1_v3i3j")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_0q5cx")
+exit = ExtResource("2_10nfg")
+move = ExtResource("3_fjriw")
+rotate_camera = ExtResource("4_fjriw")
+fast = ExtResource("5_r65ux")
+slow = ExtResource("6_8cla0")

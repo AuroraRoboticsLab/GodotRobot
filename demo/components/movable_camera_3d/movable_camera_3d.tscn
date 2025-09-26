@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdadlayx3kmpi"]
+[gd_scene load_steps=6 format=3 uid="uid://cdadlayx3kmpi"]
 
 [ext_resource type="PackedScene" uid="uid://rd8c2qdql2v" path="res://components/movable_camera_3d/clipped_camera.tscn" id="1_sy8fg"]
 [ext_resource type="Script" uid="uid://em15aubywa7f" path="res://components/movable_camera_3d/movable_camera_3d.gd" id="1_txhd5"]
+[ext_resource type="Resource" uid="uid://c288otspumhxx" path="res://guide_actions/move_mode/rotate_camera.tres" id="2_580j3"]
+[ext_resource type="Resource" uid="uid://78stxbpgnl2o" path="res://guide_actions/move_mode/zoom_camera.tres" id="3_hv5by"]
+[ext_resource type="Resource" uid="uid://5ehd0v1tj6xp" path="res://guide_actions/move_mode/activate_camera.tres" id="4_24ysr"]
 
 [node name="MovableCamera3D" type="Node3D"]
 script = ExtResource("1_txhd5")
+rotate_camera = ExtResource("2_580j3")
+zoom_camera = ExtResource("3_hv5by")
+activate_camera = ExtResource("4_24ysr")
 
 [node name="Horizontal" type="Node3D" parent="."]
 

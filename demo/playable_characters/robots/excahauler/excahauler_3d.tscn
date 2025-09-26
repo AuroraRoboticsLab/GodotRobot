@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dg3o22fxtpi62"]
+[gd_scene load_steps=28 format=3 uid="uid://dg3o22fxtpi62"]
 
 [ext_resource type="PackedScene" uid="uid://be3c84w1whbk5" path="res://playable_characters/robots/base_robot.tscn" id="1_6j0nx"]
 [ext_resource type="Script" uid="uid://bfrg1jwdh2pjt" path="res://playable_characters/robots/excahauler/excahauler_3d.gd" id="1_8tq4y"]
@@ -11,10 +11,13 @@
 [ext_resource type="Script" uid="uid://d03olm8ivm3b5" path="res://playable_characters/robots/excahauler/scoop.gd" id="5_wphus"]
 [ext_resource type="ArrayMesh" uid="uid://bk3lqhm87yjhd" path="res://playable_characters/robots/excahauler/excahauler_parts/boom.obj" id="6_crbdq"]
 [ext_resource type="ArrayMesh" uid="uid://d1qolraduhcaf" path="res://playable_characters/robots/excahauler/excahauler_parts/stick.obj" id="7_mc66y"]
+[ext_resource type="Resource" uid="uid://byiootjdt1mwu" path="res://guide_actions/move_mode/interact.tres" id="9_ejno6"]
+[ext_resource type="Resource" uid="uid://3yx7odv44q68" path="res://guide_actions/move_mode/move_arm.tres" id="10_nt15o"]
 [ext_resource type="ArrayMesh" uid="uid://b8gilmw0lwapf" path="res://playable_characters/robots/excahauler/excahauler_parts/tilt.obj" id="10_rdlc0"]
 [ext_resource type="PackedScene" uid="uid://c26cseexjqmt4" path="res://playable_characters/robots/tool_attachments/tool_coupler_component.tscn" id="11_3jphu"]
 [ext_resource type="ArrayMesh" uid="uid://c2y6tujsf7mbo" path="res://playable_characters/robots/excahauler/excahauler_parts/dump.obj" id="13_6j0nx"]
 [ext_resource type="ArrayMesh" uid="uid://xlyknqpebjwt" path="res://playable_characters/robots/excahauler/excahauler_parts/fork.obj" id="14_ttr15"]
+[ext_resource type="Resource" uid="uid://b6d0umcx6le8r" path="res://guide_actions/move_mode/move_extra.tres" id="16_nt15o"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ttr15"]
 size = Vector3(0.8, 0.024, 1.2)
@@ -176,6 +179,8 @@ shape = SubResource("BoxShape3D_pgocx")
 
 [node name="Arm" type="Node3D" parent="." index="13"]
 script = ExtResource("4_e6wri")
+move_arm = ExtResource("10_nt15o")
+interact = ExtResource("9_ejno6")
 
 [node name="FrameToBoomJoint" parent="Arm" index="0" instance=ExtResource("5_l6p3u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215871, -0.603368)
@@ -258,6 +263,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.9
 
 [node name="Scoop" type="Node3D" parent="." index="14"]
 script = ExtResource("5_wphus")
+move_scoop = ExtResource("16_nt15o")
 
 [node name="FrameToForkJoint" parent="Scoop" index="0" instance=ExtResource("5_l6p3u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.152669, -0.455419)

@@ -20,6 +20,11 @@ class_name BaseRobot
 	set(value):
 		nametag_text = value
 
+# Inputs
+@export var move: GUIDEAction
+@export var sprint: GUIDEAction
+@export var jump: GUIDEAction
+
 func _ready() -> void:
 	center_of_mass = $CenterOfMass.position
 	GameManager.network_process.connect(_network_process)

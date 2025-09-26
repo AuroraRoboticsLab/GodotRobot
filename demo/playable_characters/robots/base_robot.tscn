@@ -1,12 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://be3c84w1whbk5"]
+[gd_scene load_steps=8 format=3 uid="uid://be3c84w1whbk5"]
 
 [ext_resource type="Script" uid="uid://57rntxafj63v" path="res://playable_characters/robots/base_robot.gd" id="1_0vy3u"]
 [ext_resource type="PackedScene" uid="uid://dtncegywd6q8r" path="res://playable_characters/player_component.tscn" id="2_57hfo"]
+[ext_resource type="Resource" uid="uid://cdee101i2f54u" path="res://guide_actions/move_mode/move.tres" id="2_tlcfk"]
+[ext_resource type="Resource" uid="uid://dke5l3xyq5asb" path="res://guide_actions/move_mode/sprint.tres" id="3_5kyjc"]
 [ext_resource type="PackedScene" uid="uid://bq1jufbmii761" path="res://components/charge_component/charge_component.tscn" id="3_8hck5"]
 [ext_resource type="PackedScene" uid="uid://cbhvaxh4k0aux" path="res://components/autonomy_component/autonomy_component.tscn" id="3_w67nb"]
+[ext_resource type="Resource" uid="uid://b5vp1qv2vq2xn" path="res://guide_actions/move_mode/jump.tres" id="4_qhc2a"]
 
 [node name="BaseRobot" type="VehicleBody3D"]
 script = ExtResource("1_0vy3u")
+move = ExtResource("2_tlcfk")
+sprint = ExtResource("3_5kyjc")
+jump = ExtResource("4_qhc2a")
 
 [node name="PlayerComponent" parent="." instance=ExtResource("2_57hfo")]
 

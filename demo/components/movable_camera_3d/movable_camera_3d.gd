@@ -4,6 +4,11 @@ class_name MovableCamera
 # Using left click, move the camera around the origin
 # Using mouse wheel, zoom camera in and out.
 
+@export var rotate_camera: GUIDEAction
+@export var zoom_camera: GUIDEAction
+@export var activate_camera: GUIDEAction
+
+
 var camrot_h: float = 0.0
 var camrot_v: float = 0.0
 var cam_v_max = 75 # Max vertical camera angle (lower bound)
@@ -39,15 +44,15 @@ func _ready():
 	clipped_cam.position.z = camera_distance
 	clipped_cam.clip_length = camera_distance
 
-func _input(event):
-	if InputManager.get_can_input() and not cam_locked and event is InputEventMouseMotion:
-		if Input.is_action_pressed("right_click") or (OS.get_name() == "Android" and Input.is_action_pressed("left_click")):
-			camrot_h -= event.relative.x * h_sens
-			camrot_v -= event.relative.y * v_sens * invert_mult
+#func _input(event):
+#	if InputManager.get_can_input() and not cam_locked and event is InputEventMouseMotion:
+#		if Input.is_action_pressed("right_click") or (OS.get_name() == "Android" and Input.is_action_pressed("left_click")):
+#			camrot_h -= event.relative.x * h_sens
+#			camrot_v -= event.relative.y * v_sens * invert_mult
 
-const SENS_MULT = 5
+const SENS_MULT = 8
 var switch_pov = false
-func _physics_process(delta):
+func _process(delta):
 	if Input.is_action_just_pressed("switch_view"):
 		switch_pov = !switch_pov
 	
@@ -55,28 +60,30 @@ func _physics_process(delta):
 		rotation.y = PI
 	else:
 		rotation.y = 0
-	
-	if InputManager.get_can_input() and not cam_locked:
-		if Input.is_action_pressed("dpad_up"):
-			camrot_v -= v_sens * SENS_MULT * invert_mult
-		if Input.is_action_pressed("dpad_down"):
-			camrot_v += v_sens * SENS_MULT * invert_mult
-		if Input.is_action_pressed("dpad_left"):
-			camrot_h -= h_sens * SENS_MULT
-		if Input.is_action_pressed("dpad_right"):
-			camrot_h += h_sens * SENS_MULT
+	#if InputManager.get_can_input() and not cam_locked and 
+	#print(zoom_camera.value_axis_1d)
+	if activate_camera.is_triggered():
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		camrot_h += rotate_camera.value_axis_2d.x * SENS_MULT * h_sens
+		camrot_v += rotate_camera.value_axis_2d.y * invert_mult * SENS_MULT * v_sens
+		camera_distance = clamp(lerp(camera_distance, camera_distance-2*zoom_camera.value_axis_1d*zoom_sens, delta*h_accel), min_zoom, max_zoom)
+		clipped_cam.clip_length = camera_distance
+		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance
+		
+		#if Input.is_action_pressed("dpad_up"):
+		#	camrot_v -= v_sens * SENS_MULT * invert_mult
+		#if Input.is_action_pressed("dpad_down"):
+		#	camrot_v += v_sens * SENS_MULT * invert_mult
+		#if Input.is_action_pressed("dpad_left"):
+		#	camrot_h -= h_sens * SENS_MULT
+		#if Input.is_action_pressed("dpad_right"):
+		#	camrot_h += h_sens * SENS_MULT
+	elif InputManager.in_move_mode():
+		print(":D")
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	# Camera movement logic
 	camrot_v = clamp(camrot_v, cam_v_min, cam_v_max)
 	if not lock_horiz:
 		cam_h.rotation_degrees.y = lerp(cam_h.rotation_degrees.y, camrot_h, delta * h_accel)
 	cam_v.rotation_degrees.x = lerp(cam_v.rotation_degrees.x, camrot_v, delta * v_accel)
-	
-	if Input.is_action_just_pressed("scroll_up") and InputManager.get_can_input():
-		camera_distance = clamp(lerp(camera_distance, camera_distance-0.5*zoom_sens, delta*h_accel), min_zoom, max_zoom)
-		clipped_cam.clip_length = camera_distance
-		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance
-	elif Input.is_action_just_pressed("scroll_down") and InputManager.get_can_input():
-		camera_distance = clamp(lerp(camera_distance, camera_distance+0.5*zoom_sens, delta*h_accel), min_zoom, max_zoom)
-		clipped_cam.clip_length = camera_distance
-		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance
