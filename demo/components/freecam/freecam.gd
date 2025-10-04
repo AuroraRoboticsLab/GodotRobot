@@ -22,6 +22,7 @@ var invert_cam: bool:
 
 @export var is_freecam := false
 var spawn_trans = null
+var spawn_position: Vector3 = Vector3.ZERO
 
 @export var exit: GUIDEAction
 @export var move: GUIDEAction
@@ -30,6 +31,7 @@ var spawn_trans = null
 @export var slow: GUIDEAction
 
 func _ready():
+	global_position = spawn_position
 	exit.triggered.connect(_on_exit_triggered)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -70,7 +72,11 @@ func _process(delta):
 	rotation_degrees.y = camrot_h
 	rotation_degrees.x = camrot_v
 
-	var direction := (transform.basis * move.value_axis_3d).normalized()
+	var input_direction := move.value_axis_3d
+	var ortho_basis := global_transform.basis.orthonormalized() # keep movement aligned with camera-facing axes in world space
+	var direction := ortho_basis * input_direction
+	if direction.length_squared() > 0.0:
+		direction = direction.normalized()
 
 	var speed_mult := 1.0
 	if fast.is_triggered() and slow.is_triggered():

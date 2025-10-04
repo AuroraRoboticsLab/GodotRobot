@@ -76,7 +76,8 @@ func _process(_delta):
 		if freecamming:
 			freecamming = false
 			$FreecamLabel.hide()
-		$SettingsMenu.visible = !$SettingsMenu.visible
+		else:
+			_set_settings_menu_visible(!$SettingsMenu.visible)
 	
 	# Lock the camera when using joysticks in mobile
 	if left_joystick.knob.pressing or right_joystick.knob.pressing:
@@ -138,8 +139,17 @@ func _on_tick_button_value_changed(value):
 	UIManager.new_spawn_rate.emit(value)
 
 func _on_settings_button_pressed():
-	# Could add input manager call to turn off inputs
-	$SettingsMenu.visible = !$SettingsMenu.visible
+	_set_settings_menu_visible(!$SettingsMenu.visible)
+
+func _set_settings_menu_visible(is_visible: bool) -> void:
+	if $SettingsMenu.visible == is_visible:
+		return
+	$SettingsMenu.visible = is_visible
+	if is_visible:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		InputManager.disable_input_modes()
+	else:
+		InputManager.activate_prev_mode()
 
 func _on_vert_sens_slider_value_changed(value):
 	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/VertSensValLabel.text = str(value)
@@ -347,9 +357,9 @@ func _on_command_line_edit_text_submitted(new_text):
 						freecamming = true
 						var freecam = freecam_scene.instantiate()
 						freecam.is_freecam = true # Indicate we are freecamming, not spectating.
+						freecam.spawn_position = player.global_position + Vector3(0,2,0)
 						get_parent().add_child.call_deferred(freecam)
 						await get_tree().physics_frame
-						freecam.global_position = player.global_position + Vector3(0,2,0)
 					else:
 						print("Error: Already spectating!")
 				else:
@@ -379,13 +389,6 @@ func _on_command_line_edit_text_submitted(new_text):
 					get_tree().paused = !get_tree().paused
 			_:
 				print("Error: Unknown command: ", command)
-
-func _on_command_line_edit_focus_entered():
-	InputManager.disable_input_modes()
-
-func _on_command_line_edit_focus_exited():
-	if not freecamming:
-		InputManager.activate_prev_mode()
 
 func _on_toggle_unsafe_mode_pressed():
 	unsafe_mode = !unsafe_mode

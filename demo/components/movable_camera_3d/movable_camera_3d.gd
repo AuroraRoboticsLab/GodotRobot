@@ -79,7 +79,6 @@ func _process(delta):
 		#if Input.is_action_pressed("dpad_right"):
 		#	camrot_h += h_sens * SENS_MULT
 	elif InputManager.in_move_mode():
-		print(":D")
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
 	# Camera movement logic
