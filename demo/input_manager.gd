@@ -1,35 +1,64 @@
 # res://singletons/InputManager.gd
 extends Node
 
-enum InputSource { HUMAN, AI }
-var _input_source: InputSource = InputSource.HUMAN
+enum InputSource { KEY_MOUSE, CONTROLLER, TOUCH, AI }
+var _input_source: InputSource = InputSource.KEY_MOUSE
 
 enum InputMode { NONE, MOVE, FREECAM }
 var _input_mode: InputMode = InputMode.NONE
 
 @export var move_mode: GUIDEMappingContext = preload("res://guide_actions/move_mode/move_mode.tres")
 @export var freecam_mode: GUIDEMappingContext = preload("res://guide_actions/freecam_mode/freecam_mode.tres")
+@export var switch_input_source: GUIDEMappingContext = preload("res://guide_actions/switch_input_source.tres")
 
-var elapsed = 0.0
-var change = 0.5
+@export var controller_input: GUIDEAction = preload("res://guide_actions/global_controller.tres")
+@export var key_and_mouse_input: GUIDEAction = preload("res://guide_actions/global_keyboard_and_mouse.tres")
+@export var touch_input: GUIDEAction = preload("res://guide_actions/global_touch.tres")
+
+
+var debugging := false
+var elapsed := 0.0
+var change := 0.5
 func _process(delta: float) -> void:
-	elapsed += delta
-	if elapsed >= change:
-		elapsed = 0.0
-		print(_input_mode)
+	if debugging:
+		elapsed += delta
+		if elapsed >= change:
+			elapsed = 0.0
+			print(_input_mode)
 
-# -------- Input Modes --------
+func _ready() -> void:
+	controller_input.triggered.connect(_on_controller_triggered)
+	key_and_mouse_input.triggered.connect(_on_key_and_mouse_triggered)
+	touch_input.triggered.connect(_on_touch_triggered)
+	#GUIDE.enable_mapping_context.call_deferred(switch_input_source) # Enable when doing key mapping!
+
+func _on_controller_triggered() -> void:
+	if debugging:
+		print("Controller!")
+
+func _on_key_and_mouse_triggered() -> void:
+	if debugging:
+		print("Mouse!")
+
+func _on_touch_triggered() -> void:
+	if debugging:
+		print("Touch!")
+
+# -------- Game Modes --------
 func set_relevant_mode() -> void:
 	_clear_mapping_contexts()
 	match _input_mode:
 		InputMode.MOVE:
-			print("Moving!")
+			if debugging:
+				print("Moving!")
 			GUIDE.enable_mapping_context(move_mode)
 		InputMode.FREECAM:
-			print("Freecamming!")
+			if debugging:
+				print("Freecamming!")
 			GUIDE.enable_mapping_context(freecam_mode)
 		InputMode.NONE:
-			print("Nothing!")
+			if debugging:
+				print("Nothing!")
 
 func activate_freecam_mode() -> void:
 	if _input_mode == InputMode.FREECAM:
@@ -74,10 +103,16 @@ func activate_prev_mode() -> void:
 	set_relevant_mode()
 	_prev_mode = previous_mode
 
-# -------- AI / Autonomy --------
+# -------- Input Sources --------
 
-func set_source_human() -> void:
-	_input_source = InputSource.HUMAN
+func set_source_key_mouse() -> void:
+	_input_source = InputSource.KEY_MOUSE
+
+func set_source_controller() -> void:
+	_input_source = InputSource.CONTROLLER
+
+func set_source_touch() -> void:
+	_input_source = InputSource.TOUCH
 
 func set_source_ai() -> void:
 	_input_source = InputSource.AI
