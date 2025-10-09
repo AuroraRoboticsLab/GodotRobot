@@ -1,7 +1,7 @@
 # res://singletons/InputManager.gd
 extends Node
 
-enum InputSource { KEY_MOUSE, CONTROLLER, TOUCH, AI }
+enum InputSource { KEY_MOUSE, CONTROLLER, TOUCH }
 var _input_source: InputSource = InputSource.KEY_MOUSE
 
 enum InputMode { NONE, MOVE, FREECAM }
@@ -15,36 +15,32 @@ var _input_mode: InputMode = InputMode.NONE
 @export var key_and_mouse_input: GUIDEAction = preload("res://guide_actions/global_keyboard_and_mouse.tres")
 @export var touch_input: GUIDEAction = preload("res://guide_actions/global_touch.tres")
 
-
 var debugging := false
-var elapsed := 0.0
-var change := 0.5
+var input_mode_elapsed := 0.0
+var input_mode_change := 0.5
+var sim_move_elapsed := 0.0
+var sim_move_change := 2.0
 func _process(delta: float) -> void:
 	if debugging:
-		elapsed += delta
-		if elapsed >= change:
-			elapsed = 0.0
+		input_mode_elapsed += delta
+		sim_move_elapsed += delta
+		if input_mode_elapsed >= input_mode_change and false:
+			input_mode_elapsed = 0.0
 			print(_input_mode)
+		if sim_move_elapsed >= sim_move_change and false:
+			print("press!")
+			sim_move_elapsed = 0.0
+			simulate_key_press(KEY_W, 1.0)
+		
 
 func _ready() -> void:
 	controller_input.triggered.connect(_on_controller_triggered)
 	key_and_mouse_input.triggered.connect(_on_key_and_mouse_triggered)
 	touch_input.triggered.connect(_on_touch_triggered)
-	#GUIDE.enable_mapping_context.call_deferred(switch_input_source) # Enable when doing key mapping!
-
-func _on_controller_triggered() -> void:
-	if debugging:
-		print("Controller!")
-
-func _on_key_and_mouse_triggered() -> void:
-	if debugging:
-		print("Mouse!")
-
-func _on_touch_triggered() -> void:
-	if debugging:
-		print("Touch!")
+	GUIDE.enable_mapping_context.call_deferred(switch_input_source)
 
 # -------- Game Modes --------
+
 func set_relevant_mode() -> void:
 	_clear_mapping_contexts()
 	match _input_mode:
@@ -105,14 +101,65 @@ func activate_prev_mode() -> void:
 
 # -------- Input Sources --------
 
+signal new_input_source(input_source: InputSource)
+
+func _on_controller_triggered() -> void:
+	if _input_source != InputSource.CONTROLLER:
+		set_source_controller()
+		if debugging:
+			print("Controller!")
+func is_using_controller() -> bool:
+	return _input_source == InputSource.CONTROLLER
+
+func _on_key_and_mouse_triggered() -> void:
+	# AI uses keyboard & mouse
+	if _input_source != InputSource.KEY_MOUSE:
+		set_source_key_mouse()
+		if debugging:
+			print("Mouse!")
+func is_using_key_and_mouse() -> bool:
+	return _input_source == InputSource.KEY_MOUSE
+
+func _on_touch_triggered() -> void:
+	if _input_source != InputSource.TOUCH:
+		set_source_touch()
+		if debugging:
+			print("Touch!")
+func is_using_touch() -> bool:
+	return _input_source == InputSource.TOUCH
+
+func get_input_source_type() -> InputSource:
+	return _input_source
+
 func set_source_key_mouse() -> void:
 	_input_source = InputSource.KEY_MOUSE
+	new_input_source.emit(_input_source)
 
 func set_source_controller() -> void:
 	_input_source = InputSource.CONTROLLER
+	new_input_source.emit(_input_source)
 
 func set_source_touch() -> void:
 	_input_source = InputSource.TOUCH
+	new_input_source.emit(_input_source)
 
-func set_source_ai() -> void:
-	_input_source = InputSource.AI
+# -------- Simulated Inputs --------
+
+func simulate_key_press(key: Key, press_time: float = 0.25) -> void:
+	simulate_key_down(key) # press
+	await get_tree().create_timer(press_time).timeout # wait
+	simulate_key_up(key) # release
+
+func simulate_key_down(key: Key) -> void:
+	var ev := InputEventKey.new()
+	ev.keycode = key
+	ev.physical_keycode = key
+	ev.pressed = true
+	ev.device = -1
+	Input.parse_input_event(ev)
+
+func simulate_key_up(key: Key) -> void:
+	var ev_up := InputEventKey.new()
+	ev_up.physical_keycode = key
+	ev_up.pressed = false
+	Input.parse_input_event(ev_up)

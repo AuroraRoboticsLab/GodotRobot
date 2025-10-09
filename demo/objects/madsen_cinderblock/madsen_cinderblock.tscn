@@ -27,7 +27,7 @@ size = Vector3(0.15, 0.4, 0.15)
 size = Vector3(0.15, 0.38, 0.1)
 
 [node name="MadsenCinderblock" type="RigidBody3D"]
-collision_mask = 5
+collision_mask = 23
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_l1u20")
 center_of_mass_mode = 1

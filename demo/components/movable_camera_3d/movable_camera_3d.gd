@@ -62,10 +62,10 @@ func _process(delta):
 		rotation.y = 0
 	#if InputManager.get_can_input() and not cam_locked and 
 	#print(zoom_camera.value_axis_1d)
-	if activate_camera.is_triggered():
+	if activate_camera.is_triggered() or InputManager.is_using_controller():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		camrot_h += rotate_camera.value_axis_2d.x * SENS_MULT * h_sens
-		camrot_v += rotate_camera.value_axis_2d.y * invert_mult * SENS_MULT * v_sens
+		camrot_h += rotate_camera.value_axis_2d.x * SENS_MULT * h_sens * delta * 400
+		camrot_v += rotate_camera.value_axis_2d.y * invert_mult * SENS_MULT * v_sens * delta * 400
 		camera_distance = clamp(lerp(camera_distance, camera_distance-2*zoom_camera.value_axis_1d*zoom_sens, delta*h_accel), min_zoom, max_zoom)
 		clipped_cam.clip_length = camera_distance
 		$Horizontal/Vertical/ClippedCamera.position.z = camera_distance

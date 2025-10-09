@@ -14,13 +14,9 @@ extends Node3D
 
 @onready var unsafe_mode: bool = false
 
-# Inputs
-@export var move_arm: GUIDEAction
-@export var interact: GUIDEAction
 
 func _ready():
 	GameManager.network_process.connect(_network_process)
-	interact.triggered.connect(_on_interact_triggered)
 
 func _network_process(_delta):
 	var curr_attach_path = null
@@ -56,9 +52,10 @@ func _physics_process(delta):
 	var arm_force = 0
 	var bollard_force = 0
 	var tilt_force = 0
+	var move_arm_axis_3d: Vector3 = get_parent().get_move_arm_values()
 	if not is_dead:
-		var arm_input = move_arm.value_axis_3d.z
-		var bollard_input = move_arm.value_axis_3d.x
+		var arm_input = move_arm_axis_3d.z
+		var bollard_input = move_arm_axis_3d.x
 		
 		arm_force = arm_input * MOTOR_MULT * 1.5
 		bollard_force = bollard_input * MOTOR_MULT * 1.5
@@ -66,7 +63,7 @@ func _physics_process(delta):
 			bollard_force = clamp(bollard_force-arm_force, -MOTOR_MULT * 1.5, MOTOR_MULT * 1.5)
 			if bollard_force == 0: # We must be moving opposite the arm movement
 				bollard_force = bollard_input * MOTOR_MULT * 1.5
-		tilt_force = move_arm.value_axis_3d.y * MOTOR_MULT
+		tilt_force = move_arm_axis_3d.y * MOTOR_MULT
 	
 		# Some tools will want to move slower for more precision
 		var tool = tool_coupler_component.current_attachment
@@ -82,10 +79,6 @@ func _physics_process(delta):
 	
 	var power_spent = (arm_force + bollard_force + tilt_force) * 3
 	get_parent().charge_component.change_charge(-power_spent * delta)
-
-# Tool attachment/detachment
-func _on_interact_triggered() -> void:
-	tool_coupler_component.try_toggle_attach()
 
 func _on_tool_coupler_component_add_joint(curr_joint: Generic6DOFJoint3D) -> void:
 	$Arm3D/Bollard3D.add_child(curr_joint)

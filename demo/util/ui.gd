@@ -29,6 +29,11 @@ func _ready():
 	UIManager.new_ball_count.connect(_on_new_ball_count)
 	UIManager.sent_message.connect(_on_sent_message)
 	
+	InputManager.new_input_source.connect(_on_new_input_source)
+	
+	GameManager.autonomy_changed.connect(_on_using_ai_changed)
+	GameManager.can_attach.connect(_on_can_attach)
+	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for child in get_children():
 		child.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -93,7 +98,6 @@ func _process(_delta):
 		$DebugControl.visible = !$DebugControl.visible
 	
 	if GameManager.player_choice == GameManager.Character.ASTRA:
-		$CenterContainer/PressToAttach.visible = can_attach
 		$PanelContainer/VBoxContainer/GridContainer/Charge.text = str(round_to_dec(charge_level, 2)) + "%"
 		$PanelContainer/VBoxContainer/ChargingLabel.visible = charging
 		$PanelContainer/VBoxContainer/StallingLabel.visible = stalling
@@ -111,6 +115,28 @@ func _process(_delta):
 			%HopperDirtballs.text = str(dirtballs_in_hopper) + kg_string
 		else:
 			$PanelContainer/VBoxContainer/HopperDirtballsHBox.hide()
+
+# new_source is of type InputManager.InputSource
+func _on_new_input_source(new_source) -> void:
+	match new_source:
+		InputManager.InputSource.KEY_MOUSE:
+			if player.has_method("is_autonomous") and player.is_autonomous():
+				%PressToAttach.text = "Can attach"
+			else:
+				%PressToAttach.text = "Press E to attach"
+		InputManager.InputSource.CONTROLLER:
+			%PressToAttach.text = "Press A to attach"
+		InputManager.InputSource.TOUCH:
+			%PressToAttach.text = "Press button to attach"
+
+func _on_using_ai_changed(using_ai: bool) -> void:
+	if using_ai:
+		%PressToAttach.text = "Can attach"
+	else:
+		%PressToAttach.text = "Press E to attach"
+
+func _on_can_attach(can_attach: bool) -> void:
+	%PressToAttach.visible = can_attach
 
 func _physics_process(_delta):
 	if player:
@@ -252,7 +278,6 @@ func _on_mobile_ui_slider_value_changed(value):
 	left_joystick.scale = Vector2(scale_val, scale_val)
 	right_joystick.scale = Vector2(scale_val, scale_val)
 
-@export var move_mode: GUIDEMappingContext
 @export var freecam_mode: GUIDEMappingContext
 
 @onready var freecam_scene = load("res://components/freecam/freecam.tscn")
@@ -397,11 +422,11 @@ func _on_toggle_unsafe_mode_pressed():
 	else:
 		%ToggleUnsafeMode.text = "Enable Unsafe Mode"
 
+# This method is *not* confirmed to work for input simulation
 func _on_mobile_button_1_button_down():
-	Input.action_press("generic_action")
-
+	InputManager.simulate_key_down(KEY_E)
 func _on_mobile_button_1_button_up():
-	Input.action_release("generic_action")
+	InputManager.simulate_key_up(KEY_E)
 
 func _on_hide_version_check_box_toggled(toggled_on: bool) -> void:
 	$VersionLabel.visible = !toggled_on

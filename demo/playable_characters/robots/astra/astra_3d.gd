@@ -18,7 +18,6 @@ const DRIVE_FORCE_MULT = 1200
 
 func _ready() -> void:
 	super._ready()
-	jump.triggered.connect(_on_jump_triggered)
 
 func _physics_process(delta):
 	if GameManager.using_multiplayer and not $PlayerComponent.is_multiplayer_authority():
@@ -37,7 +36,7 @@ func _physics_process(delta):
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if sprint.is_triggered():
+	if is_sprinting():
 		engine_force_multiplier = 4.0*(sqrt(abs(movement_speed)) + 2)
 	
 	const max_turn_force = 30.0 # Starting (and max) turn force
@@ -48,8 +47,9 @@ func _physics_process(delta):
 	# Calculate drive and steer forces.
 	var drive_force = 0
 	var steer_force = 0
-	var drive_input = move.value_axis_3d.z
-	var steer_input = -move.value_axis_3d.x
+	var drive_steer_input = get_drive_values()
+	var drive_input = drive_steer_input.z
+	var steer_input = -drive_steer_input.x
 		
 	if not charge_component.is_dead:
 		drive_force = drive_input * 2 * DRIVE_FORCE_MULT * delta * engine_force_multiplier
@@ -92,11 +92,6 @@ func _physics_process(delta):
 	hopper.is_dead = charge_component.is_dead
 	
 	charge_component.change_charge(-power_spent * delta)
-
-# Flip over by holding space
-func _on_jump_triggered() -> void:
-	angular_velocity = lerp(angular_velocity, angular_velocity + transform.basis * Vector3(0,0,10), 0.5)
-	linear_velocity.y = lerpf(linear_velocity.y, linear_velocity.y+1.62, 0.5)
 
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):

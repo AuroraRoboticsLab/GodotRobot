@@ -33,6 +33,10 @@ signal network_process(delta)
 signal add_local_object(object, deferred)
 signal exit_main_scene
 
+# These signals are for the UI and won't work for autonomy
+signal can_attach(can: bool)
+signal autonomy_changed(is_autonomous: bool)
+
 var time: float = 0
 const network_process_interval = 0.05 # The update frequency for multiplayer
 var last_network_process = 0
