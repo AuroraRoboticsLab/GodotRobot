@@ -10,7 +10,7 @@ extends Node
 
 ## LUMINSim (Custom) Logic
 
-func get_dict_from_json_string(json_string: String):
+func get_dict_from_json_string(json_string: String) -> Variant:
 	var json = JSON.new()
 	var error = json.parse(json_string)
 	if error == OK:
@@ -19,17 +19,28 @@ func get_dict_from_json_string(json_string: String):
 			return data_received
 		else:
 			print("Unexpected incoming data (non-dictionary).")
-			return null
+			return {}
 	else:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
-		return null
+		return {}
 
 func _on_received_message(topic: String, message) -> void:
 	var topic_portions = topic.split('/')
-	var incoming_structure = get_dict_from_json_string(message)
+	var incoming_data: Dictionary = get_dict_from_json_string(message)
+	# Expected topic structure:
+	# luminsim/infrastructure
+	# OR
+	# luminsim/components/{type}/{id}/{outgoing||incoming}/{metric_category}
+	# * Type is robots, towers, satellites, etc.
+	# * ID is the Godot root node name
+	# * Can be incoming or outgoing; Godot should only really expect incoming
 	match len(topic_portions):
 		# Update to match expecting incoming topic lengths (from a standard)!
-		_:
+		2: # Must be infrastructure 
+			if topic_portions[1] != "infrastructure": # Sanity check
+				return
+			if incoming_d
+		6: # Must be component-related data
 			pass
 
 func _on_broker_connected(in_mqtt_host):
