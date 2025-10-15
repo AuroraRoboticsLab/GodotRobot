@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dgcktkvlefs46"]
 
-[ext_resource type="Script" uid="uid://bkhepcnl2ke1s" path="res://util/TickButton.gd" id="1_npk1i"]
+[ext_resource type="Script" uid="uid://bkhepcnl2ke1s" path="res://UI/TickButton.gd" id="1_npk1i"]
 
 [node name="TickButton" type="Control"]
 layout_mode = 3

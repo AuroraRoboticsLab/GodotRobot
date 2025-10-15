@@ -290,18 +290,20 @@ func _on_command_line_edit_text_submitted(new_text):
 		match command:
 			"goto": # Pathfind to a given location
 				if not player:
-					print("Error: No player to teleport!")
+					print("Error: No player to pathfind!")
 					return
-				if GameManager.player_choice not in [GameManager.Character.ASTRA, GameManager.Character.EXCAH]:
+				if player is not BaseRobot:
 					print("Error: Only a robot can pathfind!")
 					return
 				if args.size() == 4:
-					#var x = args[1].to_float()
-					#var y = args[2].to_float()
-					#var z = args[3].to_float()
-					#print("Going to (", x, ", ", y, ", ", z, ")")
-					print("This feature is not yet implemented!")
-					#player.auto_component.pathfind_to(Vector3(x, y, z))
+					if player.auto_component:
+						var x = args[1].to_float()
+						var y = args[2].to_float()
+						var z = args[3].to_float()
+						player.auto_component.pathfind_to(Vector3(x, y, z))
+						print("Going to (", x, ", ", y, ", ", z, ")")
+					else:
+						print("Error: P")
 				else:
 					print("Error: 'move' command requires x, y, and z coordinates.")
 			"respawn": # Teleport back to spawn

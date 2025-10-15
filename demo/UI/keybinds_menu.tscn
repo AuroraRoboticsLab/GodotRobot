@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://n5ok5lg8v2ph"]
 
-[ext_resource type="Script" uid="uid://cqywvfneitsa6" path="res://util/keybinds_menu.gd" id="1_we2yd"]
+[ext_resource type="Script" uid="uid://cqywvfneitsa6" path="res://UI/keybinds_menu.gd" id="1_we2yd"]
 
 [node name="KeybindsMenu" type="Control"]
 top_level = true

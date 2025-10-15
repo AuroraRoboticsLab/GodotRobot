@@ -8,8 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cbhvaxh4k0aux" path="res://components/autonomy_component/autonomy_component.tscn" id="3_w67nb"]
 [ext_resource type="Resource" uid="uid://b5vp1qv2vq2xn" path="res://guide_actions/move_mode/jump.tres" id="4_qhc2a"]
 
-[node name="BaseRobot" type="VehicleBody3D"]
+[node name="BaseRobot" type="VehicleBody3D" node_paths=PackedStringArray("auto_component", "charge_component", "player_component")]
 script = ExtResource("1_0vy3u")
+auto_component = NodePath("AutonomyComponent")
+charge_component = NodePath("ChargeComponent")
+player_component = NodePath("PlayerComponent")
 move = ExtResource("2_tlcfk")
 sprint = ExtResource("3_5kyjc")
 jump = ExtResource("4_qhc2a")
@@ -21,3 +24,4 @@ jump = ExtResource("4_qhc2a")
 [node name="CenterOfMass" type="Marker3D" parent="."]
 
 [node name="AutonomyComponent" parent="." instance=ExtResource("3_w67nb")]
+_autonomous = null

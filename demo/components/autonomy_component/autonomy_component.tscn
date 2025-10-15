@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cfvk4jeipujtx" path="res://components/autonomy_component/autonomy_component.gd" id="1_p14v6"]
 
-[node name="AutonomyComponent" type="Node3D"]
+[node name="AutonomyComponent" type="Node3D" node_paths=PackedStringArray("nav_agent")]
 script = ExtResource("1_p14v6")
+nav_agent = NodePath("NavigationAgent3D")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 5.0
 target_desired_distance = 5.0
 path_max_distance = 10.01
 debug_enabled = true
+debug_path_custom_color = Color(1, 0.12156863, 1, 1)

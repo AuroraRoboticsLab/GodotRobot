@@ -3,25 +3,16 @@ class_name BaseRobot
 
 @export var drive_force_mult = 1200
 
-signal autonomy_changed(is_autonomous)
-@export var autonomous: bool = false:
-	set(value):
-		autonomous = value
-		autonomy_changed.emit(value)
-
-func is_autonomous() -> bool:
-	return autonomous
-
-@onready var auto_component: AutonomyComponent = $AutonomyComponent
+@export var auto_component: AutonomyComponent
 
 # Helper variables from PlayerComponent
-@onready var charge_component: ChargeComponent = $ChargeComponent
+@export var charge_component: ChargeComponent
 @onready var spawn_trans: Transform3D = $PlayerComponent.spawn_trans:
 	set(value):
 		spawn_trans = value
 		$PlayerComponent.spawn_trans = value
 
-@onready var player_component: PlayerComponent = $PlayerComponent
+@export var player_component: PlayerComponent
 
 @export var nametag_text: String = "unnamed robot":
 	get:
@@ -82,19 +73,18 @@ func trigger_interact() -> void:
 # -------- Inputs (Get from Robot) --------
 
 func is_sprinting() -> bool:
-	if autonomous:
+	if auto_component and auto_component.is_autonomous():
 		# Maybe `return auto_component.is_sprinting()`?
 		return false # Placeholder
 	return sprint.is_triggered()
 
 func get_move_arm_values() -> Vector3:
-	if autonomous:
+	if auto_component and auto_component.is_autonomous():
 		# Maybe `return auto_component.get_move_arm_values()`?
 		return Vector3.ZERO # Placeholder
 	return move_arm.value_axis_3d
 
 func get_drive_values() -> Vector3:
-	if autonomous:
-		# Maybe `return auto_componente.get_drive_values()`?
-		return Vector3.ZERO # Placeholder
+	if auto_component and auto_component.is_autonomous():
+		return auto_component.get_drive_values()
 	return move.value_axis_3d

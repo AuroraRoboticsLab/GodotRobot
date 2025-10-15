@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Demo_GodotRobot"
-run/main_scene="res://util/multiplayer_menu.tscn"
+run/main_scene="res://UI/multiplayer_menu.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://graphics/icon.svg"
 
@@ -19,8 +19,9 @@ config/icon="res://graphics/icon.svg"
 
 GameManager="*res://game_manager.gd"
 InputManager="*res://input_manager.gd"
-UIManager="*res://ui_manager.gd"
+UIManager="*res://UI/ui_manager.gd"
 GUIDE="*res://addons/guide/guide.gd"
+MQTTHandler="*res://MQTT/mqtt_handler.gd"
 
 [debug]
 
@@ -46,7 +47,7 @@ enabled=PackedStringArray("res://addons/guide/plugin.cfg")
 
 [gui]
 
-theme/custom="res://util/theme.tres"
+theme/custom="res://UI/theme.tres"
 
 [input]
 

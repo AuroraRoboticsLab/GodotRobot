@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://br1qgvk1r7twe"]
 
-[ext_resource type="Script" uid="uid://cki73tre3w3ij" path="res://util/multiplayer_menu.gd" id="1_qumoq"]
+[ext_resource type="Script" uid="uid://cki73tre3w3ij" path="res://UI/multiplayer_menu.gd" id="1_qumoq"]
 [ext_resource type="Texture2D" uid="uid://wnkd7v8rtd1n" path="res://graphics/leave_game_icon.png" id="2_7f71v"]
 
 [node name="MultiplayerMenu" type="Control"]
