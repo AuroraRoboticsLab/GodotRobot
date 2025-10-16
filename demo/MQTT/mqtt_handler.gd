@@ -10,7 +10,7 @@ extends Node
 
 ## LUMINSim (Custom) Logic
 
-func get_dict_from_json_string(json_string: String) -> Variant:
+func get_dict_from_json_string(json_string: String) -> Dictionary:
 	var json = JSON.new()
 	var error = json.parse(json_string)
 	if error == OK:
@@ -24,24 +24,30 @@ func get_dict_from_json_string(json_string: String) -> Variant:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
 		return {}
 
+signal incoming_robot_data(id, category, )
+
+# robots structure: {id: {name: "Name", model: "Model"}, ...}
+var _robots: Dictionary = {}
+func get_robots() -> Dictionary:
+	return _robots
+
 func _on_received_message(topic: String, message) -> void:
 	var topic_portions = topic.split('/')
 	var incoming_data: Dictionary = get_dict_from_json_string(message)
 	# Expected topic structure:
-	# luminsim/infrastructure
-	# OR
 	# luminsim/components/{type}/{id}/{outgoing||incoming}/{metric_category}
 	# * Type is robots, towers, satellites, etc.
 	# * ID is the Godot root node name
-	# * Can be incoming or outgoing; Godot should only really expect incoming
+	# * Can be incoming or outgoing; Godot should only expect incoming
 	match len(topic_portions):
-		# Update to match expecting incoming topic lengths (from a standard)!
-		2: # Must be infrastructure 
-			if topic_portions[1] != "infrastructure": # Sanity check
-				return
-			if incoming_d
-		6: # Must be component-related data
-			pass
+		6: # Must be component-related data (should be incoming commands)
+			var in_type: String = topic_portions[2]
+			var in_id: String = topic_portions[3]
+			var is_incoming: bool = true if topic_portions[4] == "incoming" else false
+			var in_category: String = topic_portions[5]
+			if in_type == "robot" and is_incoming: # We only expect incoming data to be received
+				incoming_robot_data.emit(in_id, in_category, incoming_data)
+			# Add elif's for other types when applicable
 
 func _on_broker_connected(in_mqtt_host):
 	print("Connected to the MQTT broker: ", in_mqtt_host)
@@ -51,6 +57,9 @@ func _on_broker_connection_failed(in_mqtt_host):
 
 func is_connected_to_broker() -> bool:
 	return broker_connect_mode == BCM_CONNECTED
+
+func is_connecting_to_broker() -> bool:
+	return broker_connect_mode not in [BCM_CONNECTED, BCM_FAILED_CONNECTION, BCM_NOCONNECTION]
 
 func get_structure() -> Dictionary:
 	return {}
