@@ -45,7 +45,8 @@ func _ready():
 			var curr_player = curr_player_scene.instantiate()
 			
 			curr_player.name = str(pid)
-			curr_player.nametag_text = GameManager.get_player_username(pid)
+			if GameManager.get_player_choice(pid) != GameManager.Character.SPECT:
+				curr_player.nametag_text = GameManager.get_player_username(pid)
 			
 			var spawnpoint = get_node("PlayerSpawnpoints/"+str(idx%GameManager.num_spawns))
 			curr_player.global_transform = spawnpoint.global_transform
@@ -74,8 +75,18 @@ func _ready():
 		player.global_transform = spawnpoint.global_transform
 		player.spawn_trans = spawnpoint.global_transform
 		add_child(player)
+	
+	set_player_move_mode()
+
+# Setting relevant input mappings contexts for our player
+func set_player_move_mode() -> void:
+	if GameManager.player_choice == GameManager.Character.SPECT:
+		InputManager.activate_freecam_mode()
+	else:
+		InputManager.activate_move_mode()
 
 func _on_exit_main_scene() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	queue_free()
 
 func _on_new_spawn_rate(new_spawn_rate: float) -> void:
@@ -151,7 +162,7 @@ func _physics_process(_delta):
 	if GameManager.using_multiplayer:
 		if multiplayer.get_unique_id() == 1 and GameManager.is_console_host:
 			return # We don't have a UI to update if we are a console host.
-	if not player or not player.player_component.cam_scene:
+	if GameManager.player_choice != GameManager.Character.SPECT and (not player or not player.player_component.cam_scene):
 		return # We don't have a UI if we aren't in the game/don't have a camera!
 	
 	UIManager.new_ball_count.emit($"Terrain/Dirtballs".get_child_count())

@@ -1,9 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://dx0u7xdpcdtrp"]
+[gd_scene load_steps=27 format=3 uid="uid://dx0u7xdpcdtrp"]
 
 [ext_resource type="Script" uid="uid://18c3nhd4rybm" path="res://playable_characters/robots/astra/astra_3d.gd" id="1_8yddr"]
 [ext_resource type="PackedScene" uid="uid://be3c84w1whbk5" path="res://playable_characters/robots/base_robot.tscn" id="1_m24yr"]
 [ext_resource type="ArrayMesh" uid="uid://bmnygbs24jh2" path="res://playable_characters/robots/astra/Chassie+hubs.obj" id="3_1d7t0"]
 [ext_resource type="ArrayMesh" uid="uid://dekv5ig2n6iiq" path="res://playable_characters/robots/astra/Wheel with substance.obj" id="3_bur5r"]
+[ext_resource type="Resource" uid="uid://3yx7odv44q68" path="res://guide_actions/move_mode/move_arm.tres" id="3_ttjmc"]
+[ext_resource type="Resource" uid="uid://byiootjdt1mwu" path="res://guide_actions/move_mode/interact.tres" id="5_fs5p1"]
 [ext_resource type="Material" uid="uid://b8qplmj6c2yed" path="res://util/metal_material_3d.tres" id="5_stiv8"]
 [ext_resource type="Script" uid="uid://bes7qei2bhx8y" path="res://playable_characters/robots/astra/astra_arm_3d.gd" id="6_feq4k"]
 [ext_resource type="PackedScene" uid="uid://oxs3vn1kjlyu" path="res://components/better_hinge_joint_3d/better_hinge_joint_3d.tscn" id="8_vbm0e"]
@@ -17,6 +19,7 @@
 [ext_resource type="Script" uid="uid://cp46bsqn0nw6o" path="res://playable_characters/robots/astra/InsideHopper.gd" id="14_m67ck"]
 [ext_resource type="PackedScene" uid="uid://b3nt4xe5afami" path="res://components/mountable_light/mountable_light_3d.tscn" id="15_stiv8"]
 [ext_resource type="ArrayMesh" uid="uid://cmsblf280r5uc" path="res://playable_characters/robots/astra/hopper_files/HopperBody.obj" id="16_m67ck"]
+[ext_resource type="Resource" uid="uid://b6d0umcx6le8r" path="res://guide_actions/move_mode/move_extra.tres" id="16_ttjmc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5l1n4"]
 size = Vector3(0.913705, 0.0486816, 0.272271)
@@ -36,11 +39,16 @@ size = Vector3(0.160156, 0.0521545, 0.628235)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ttjmc"]
 size = Vector3(0.607239, 0.578091, 0.634567)
 
-[node name="Astra3D" instance=ExtResource("1_m24yr")]
+[node name="Astra3D" node_paths=PackedStringArray("tool_coupler") instance=ExtResource("1_m24yr")]
 collision_layer = 4
 collision_mask = 23
 center_of_mass_mode = 1
 script = ExtResource("1_8yddr")
+model = "astra"
+tool_coupler = NodePath("AstraArm3D/Arm3D/Bollard3D/ToolCoupler3D/ToolCouplerComponent")
+move_arm = ExtResource("3_ttjmc")
+move_extra = ExtResource("16_ttjmc")
+interact = ExtResource("5_fs5p1")
 
 [node name="PlayerComponent" parent="." index="0"]
 nametag_pos = Vector3(0, 0.7, 0)
@@ -217,6 +225,7 @@ shape = SubResource("BoxShape3D_ml3bw")
 
 [node name="AstraHopper3D" type="Node3D" parent="." index="15"]
 script = ExtResource("12_stiv8")
+open_hopper = ExtResource("16_ttjmc")
 
 [node name="HopperDoor" type="RigidBody3D" parent="AstraHopper3D" index="0"]
 collision_layer = 8
@@ -253,14 +262,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127, 0.064, 0)
 node_a = NodePath("../HopperDoor")
 node_b = NodePath("../..")
 rotation_axis = 2
-max_lower_angle = -90.0
+max_upper_angle = 90.0
 
 [node name="BetterHingeJoint3D2" parent="AstraHopper3D" index="3" instance=ExtResource("8_vbm0e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127, 0.064, 0)
 node_a = NodePath("../HopperDoor2")
 node_b = NodePath("../..")
 rotation_axis = 2
-max_upper_angle = 90.0
+max_lower_angle = -90.0
 
 [node name="InsideHopper" type="Area3D" parent="AstraHopper3D" index="4"]
 collision_layer = 2

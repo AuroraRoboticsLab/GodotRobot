@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://4qerr3c2x2ii"]
+[gd_scene load_steps=7 format=3 uid="uid://4qerr3c2x2ii"]
 
 [ext_resource type="Script" uid="uid://cfmjbsjcb7cek" path="res://playable_characters/astronaut/astronaut_character_3d.gd" id="1_kvu3g"]
 [ext_resource type="PackedScene" uid="uid://cfna2d2x5v5v4" path="res://playable_characters/astronaut/suit.tscn" id="1_t3oyg"]
 [ext_resource type="PackedScene" uid="uid://dtncegywd6q8r" path="res://playable_characters/player_component.tscn" id="2_4t4ua"]
+[ext_resource type="Resource" uid="uid://cdee101i2f54u" path="res://guide_actions/move_mode/move.tres" id="2_rsa22"]
+[ext_resource type="Resource" uid="uid://b5vp1qv2vq2xn" path="res://guide_actions/move_mode/jump.tres" id="3_j8asf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gplb5"]
 radius = 0.302122
@@ -12,7 +14,8 @@ height = 1.83386
 collision_layer = 4
 collision_mask = 5
 script = ExtResource("1_kvu3g")
-nametag_text = null
+move = ExtResource("2_rsa22")
+jump = ExtResource("3_j8asf")
 
 [node name="PlayerComponent" parent="." instance=ExtResource("2_4t4ua")]
 lock_cam_horiz = true

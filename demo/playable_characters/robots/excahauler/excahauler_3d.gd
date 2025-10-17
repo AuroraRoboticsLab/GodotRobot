@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if Input.is_action_pressed("shift"):
+	if sprint.is_triggered():
 		engine_force_multiplier = 10000.0
 	
 	const max_turn_force = 30.0 # Starting (and max) turn force
@@ -42,8 +42,8 @@ func _physics_process(delta: float) -> void:
 	# Calculate drive and steer forces.
 	var drive_force = 0
 	var steer_force = 0
-	var drive_input = Input.get_axis("forward", "backward")
-	var steer_input = Input.get_axis("right", "left")
+	var drive_input = move.value_axis_3d.z
+	var steer_input = -move.value_axis_3d.x
 		
 	#if (can_input or GameManager.is_npc) and not charge_component.is_dead:
 	drive_force = drive_input * drive_force_mult * delta * engine_force_multiplier

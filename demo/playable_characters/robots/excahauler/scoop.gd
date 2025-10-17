@@ -6,6 +6,8 @@ extends Node3D
 @onready var fork_joint  = $FrameToForkJoint
 @onready var dump_joint = $Fork3D/ForkToDumpJoint
 
+@export var move_scoop: GUIDEAction
+
 func _physics_process(_delta: float) -> void:
 	if GameManager.using_multiplayer and not get_parent().player_component.is_multiplayer_authority():
 		return
@@ -17,8 +19,8 @@ func _physics_process(_delta: float) -> void:
 	var fork_force =  0
 	var dump_force = 0
 	#if can_input and not is_dead:
-	var fork_input = Input.get_axis("hopper_open", "hopper_close")
-	var dump_input = Input.get_axis("twist_left", "twist_right")
+	var fork_input = move_scoop.value_axis_2d.x
+	var dump_input = move_scoop.value_axis_2d.y
 	
 	#if ext_input:
 	#	fork_input = -ext_input.y

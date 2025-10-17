@@ -16,13 +16,18 @@ const JUMP_VELOCITY = 1.25
 		nametag_text = value
 @onready var cam_scene = $PlayerComponent.cam_scene
 
+# Useful variables
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
 @onready var suit = $suit_maxgrueter
+
+# Inputs
+@export var move: GUIDEAction
+@export var jump: GUIDEAction
 
 func _ready():
 	GameManager.network_process.connect(_network_process)
+	jump.triggered.connect(_on_jump_triggered)
 
 func _network_process(_delta):
 	if not $PlayerComponent.is_multiplayer_authority():
@@ -66,32 +71,34 @@ func _physics_process(delta):
 		jumping = false
 
 	# Handle jump.
-	if InputManager.get_can_input() and Input.is_action_just_pressed("jump") and is_on_floor():
+	#if InputManager.get_can_input() and Input.is_action_just_pressed("jump") and is_on_floor():
 		#suit.animation_player.play("BounceTrack")
 		#suit.stop_feet()
-		jumping = true
-		velocity.y = JUMP_VELOCITY
+		#jumping = true
+		#velocity.y += JUMP_VELOCITY
 	
-	if InputManager.get_can_input():
-		rotation_degrees.y = cam_scene.camrot_h * delta * 150
+	rotation_degrees.y = cam_scene.camrot_h * delta * 150
 	
-	var new_input_dir = Input.get_axis("forward", "backward")
-	input_dir = Vector3(0, new_input_dir, 0)
-	if jumping or not InputManager.get_can_input():
+	#var new_input_dir = Input.get_axis("forward", "backward")
+	input_dir = move.value_axis_3d
+	if jumping:
 		input_dir = Vector3.ZERO
 	
 	# No input_dir.x; Astronauts don't seem to be able to strafe on the moon.
-	var direction = (transform.basis * Vector3(0, 0, input_dir.y)).normalized()
+	var direction = basis * input_dir
+	direction = direction.normalized()
 	if direction:
 		var speed_mult = 1
-		if not input_dir.y < 0:
+		if not input_dir.z < 0 or abs(input_dir.x)-0.01 > 0.0:
 			speed_mult = 0.65 # Move slower when not going straight forwards.
+		if abs(input_dir.z) <= 0.1:
+			direction = Vector3.ZERO
 		
 		velocity.x = lerp(velocity.x, direction.x * SPEED * speed_mult, 0.1)
 		velocity.z = lerp(velocity.z, direction.z * SPEED * speed_mult, 0.1)
 		
 		# Walk feet in direction of movement
-		suit.move_feet(Vector3(0, input_dir.y, 0))
+		suit.move_feet(Vector3(0, input_dir.z, 0))
 	elif not direction and not jumping:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -100,3 +107,10 @@ func _physics_process(delta):
 		suit.stop_feet()
 	
 	move_and_slide()
+
+func _on_jump_triggered() -> void:
+	if is_on_floor():
+		suit.animation_player.play("BounceTrack")
+		suit.stop_feet()
+		jumping = true
+		velocity.y += JUMP_VELOCITY

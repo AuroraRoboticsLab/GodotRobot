@@ -1,5 +1,5 @@
 extends Node
-const version="v1.3.1-alpha"
+const version="v1.3.2-alpha"
 
 var sync_data = {
 	"players":{},
@@ -32,6 +32,10 @@ signal self_disconnected
 signal network_process(delta)
 signal add_local_object(object, deferred)
 signal exit_main_scene
+
+# These signals are for the UI and won't work for autonomy
+signal can_attach(can: bool)
+signal autonomy_changed(is_autonomous: bool)
 
 var time: float = 0
 const network_process_interval = 0.05 # The update frequency for multiplayer
@@ -111,6 +115,7 @@ func add_new_static_data(new_data):
 
 # Do everything on our side to show the game has ended
 func end_game():
+	InputManager.disable_input_modes()
 	game_in_progress = false
 	sync_data = {
 		"players":{},

@@ -81,7 +81,7 @@ func _detach():
 	do_disconnect(current_attachment.connector)
 	
 	current_attachment = null
-	can_attach = false
+	_set_can_attach(false)
 
 # Another connector is nearby
 # Invariant: area is a connector
@@ -89,7 +89,7 @@ func _on_connector_component_can_connect(area):
 	var body = area.parent
 	if body is BaseTool: # Body is an attachment
 		current_attachment = body
-		can_attach = true
+		_set_can_attach(true)
 		
 func _on_connector_component_just_connected(_area):
 	# Stick bodies together
@@ -103,10 +103,14 @@ func _on_connector_component_just_connected(_area):
 	curr_joint.global_transform = global_transform
 	curr_joint.set_node_a(get_parent().get_path())
 	curr_joint.set_node_b(current_attachment.get_path())
-	can_attach = false
+	_set_can_attach(false)
 
 func _on_connector_component_must_disconnect(_area):
 	if not connected: # Because position changes during attach trigger function
 		nearby_connector = null
-		can_attach = false
+		_set_can_attach(false)
 		current_attachment = null
+
+func _set_can_attach(can: bool) -> void:
+	can_attach = can
+	GameManager.can_attach.emit(can_attach)

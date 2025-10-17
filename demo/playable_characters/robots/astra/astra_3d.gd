@@ -36,7 +36,7 @@ func _physics_process(delta):
 	engine_force_multiplier = 2.0/((move_amp*movement_speed**2) + (1.0/max_move_force))
 	
 	# Turbo ultra racing mode
-	if Input.is_action_pressed("shift") and InputManager.get_can_input():
+	if is_sprinting():
 		engine_force_multiplier = 4.0*(sqrt(abs(movement_speed)) + 2)
 	
 	const max_turn_force = 30.0 # Starting (and max) turn force
@@ -47,10 +47,11 @@ func _physics_process(delta):
 	# Calculate drive and steer forces.
 	var drive_force = 0
 	var steer_force = 0
-	var drive_input = Input.get_axis("forward", "backward")
-	var steer_input = Input.get_axis("right", "left")
+	var drive_steer_input = get_drive_values()
+	var drive_input = drive_steer_input.z
+	var steer_input = -drive_steer_input.x
 		
-	if InputManager.get_can_input() and not charge_component.is_dead:
+	if not charge_component.is_dead:
 		drive_force = drive_input * 2 * DRIVE_FORCE_MULT * delta * engine_force_multiplier
 		steer_force = steer_input * 2 * DRIVE_FORCE_MULT * delta * steering_force_multiplier
 	
@@ -91,12 +92,6 @@ func _physics_process(delta):
 	hopper.is_dead = charge_component.is_dead
 	
 	charge_component.change_charge(-power_spent * delta)
-	
-	# Flip over by holding space
-	if Input.is_action_pressed("jump") and InputManager.get_can_input():
-		angular_velocity += transform.basis * Vector3(0,0,10)*delta
-		linear_velocity.y += 1.62 * delta
-		#global_position += Vector3(0, tp_height, 0)
 
 # Rear connector sees another connector nearby. What happens?
 func _on_connector_component_can_connect(area):

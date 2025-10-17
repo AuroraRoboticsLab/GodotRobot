@@ -10,8 +10,16 @@ extends Node3D
 
 @onready var tool_coupler_component = %ToolCouplerComponent
 
+# Inputs
+@export var move_arm: GUIDEAction
+@export var interact: GUIDEAction
+
 func _ready() -> void:
 	GameManager.network_process.connect(_network_process)
+	interact.triggered.connect(_on_interact_triggered)
+
+func _on_interact_triggered() -> void:
+	tool_coupler_component.try_toggle_attach()
 
 func _network_process(_delta):
 	var curr_attach_path = null
@@ -45,18 +53,15 @@ func _physics_process(_delta: float) -> void:
 	#print("Stick: ", rad_to_deg(stick_joint.get_angle()))
 	#print("Tilt: ", rad_to_deg(tilt_joint.get_angle()))
 	
-	if (Input.is_action_just_pressed("generic_action")): 
-		tool_coupler_component.try_toggle_attach()
-	
 	const MOTOR_MULT = 1.2
 	
 	var boom_force =  0
 	var stick_force = 0
 	var tilt_force =  0
 	#if can_input and not is_dead:
-	var boom_input = Input.get_axis("arm_up", "arm_down")
-	var stick_input = Input.get_axis("bollard_curl", "bollard_dump")
-	var tilt_input = Input.get_axis("tilt_left", "tilt_right")
+	var boom_input = move_arm.value_axis_3d.z
+	var stick_input = move_arm.value_axis_3d.x
+	var tilt_input = move_arm.value_axis_3d.y
 	
 	#if ext_input:
 	#	boom_input = -ext_input.y
