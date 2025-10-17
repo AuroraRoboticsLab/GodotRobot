@@ -17,7 +17,7 @@ LUMINSim must publish available robots to the `luminsim/infrastructure` topic in
 
 ### Robots
 Each listed robot in the structure must be listed under the "robots" key, and must have at least the following attributes:
-- **id (string):** An identifier for this robot. Must be unique.
+- **id (string):** An identifier for this robot. Must be unique. Case sensitive.
 - **model (string):** The model, which should pertain to the robot's model (e.g., astra, excahauler, etc.).
 - **name (string):** The component’s display name. Uniqueness not required.
 
@@ -61,6 +61,8 @@ Each component must subscribe to incoming data under the following topic format:
 	luminsim/components/{type}/{id}/incoming/{metric_category}
 
 Incoming metric categories should be commands, including but not limited to drive values and arm position values.
+
+As previously stated, each component's `id` must be unique, and the topic published must reflect `id` exactly; the topic is case sensitive!
 
 ## **3.1. Example Topics**
 
