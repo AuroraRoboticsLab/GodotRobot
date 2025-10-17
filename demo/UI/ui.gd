@@ -34,6 +34,10 @@ func _ready():
 	GameManager.autonomy_changed.connect(_on_using_ai_changed)
 	GameManager.can_attach.connect(_on_can_attach)
 	
+	MQTTHandler.broker_connected.connect(_on_broker_connected)
+	MQTTHandler.broker_connection_failed.connect(_on_broker_connection_failed)
+	MQTTHandler.broker_disconnected.connect(_on_broker_disconnected)
+	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for child in get_children():
 		child.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -135,8 +139,8 @@ func _on_using_ai_changed(using_ai: bool) -> void:
 	else:
 		%PressToAttach.text = "Press E to attach"
 
-func _on_can_attach(can_attach: bool) -> void:
-	%PressToAttach.visible = can_attach
+func _on_can_attach(in_can_attach: bool) -> void:
+	%PressToAttach.visible = in_can_attach
 
 func _physics_process(_delta):
 	if player:
@@ -167,11 +171,11 @@ func _on_tick_button_value_changed(value):
 func _on_settings_button_pressed():
 	_set_settings_menu_visible(!$SettingsMenu.visible)
 
-func _set_settings_menu_visible(is_visible: bool) -> void:
-	if $SettingsMenu.visible == is_visible:
+func _set_settings_menu_visible(in_visible: bool) -> void:
+	if $SettingsMenu.visible == in_visible:
 		return
-	$SettingsMenu.visible = is_visible
-	if is_visible:
+	$SettingsMenu.visible = in_visible
+	if in_visible:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		InputManager.disable_input_modes()
 	else:
@@ -432,3 +436,36 @@ func _on_mobile_button_1_button_up():
 
 func _on_hide_version_check_box_toggled(toggled_on: bool) -> void:
 	$VersionLabel.visible = !toggled_on
+
+func _on_mqtt_connect_button_pressed() -> void:
+	var hostname: String = %MQTTHost.text
+	var username: String = %MQTTUser.text
+	var password: String = %MQTTPass.text
+	
+	if MQTTHandler.is_connected_to_broker():
+		MQTTHandler.disconnect_from_server()
+	
+	if MQTTHandler.is_connecting_to_broker():
+		%MQTTStatusLabel.add_theme_color_override("font_color", Color(0.975, 0.368, 0.0, 1.0)) 
+		%MQTTStatusLabel.text = "Wait! Still trying to connect to "+hostname+"!"
+		await get_tree().create_timer(2.0).timeout
+		%MQTTStatusLabel.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 1.0)) 
+		%MQTTStatusLabel.text = "Connecting to broker "+hostname+"..."
+		return
+	
+	MQTTHandler.set_user_pass(username, password)
+	%MQTTStatusLabel.text = "Connecting to broker "+hostname+"..."
+	%MQTTStatusLabel.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0, 1.0)) 
+	MQTTHandler.connect_to_broker(hostname)
+
+func _on_broker_disconnected(mqtt_host: String) -> void:
+	%MQTTStatusLabel.text = "Disconnected from broker "+mqtt_host+"!"
+	%MQTTStatusLabel.add_theme_color_override("font_color", Color(1.0, 0.198, 0.24, 1.0)) 
+
+func _on_broker_connection_failed(mqtt_host: String) -> void:
+	%MQTTStatusLabel.text = "Failed to connect to broker "+mqtt_host+"!"
+	%MQTTStatusLabel.add_theme_color_override("font_color", Color(1.0, 0.198, 0.24, 1.0)) 
+
+func _on_broker_connected(mqtt_host: String) -> void:
+	%MQTTStatusLabel.text = "Connected to broker "+mqtt_host+"!"
+	%MQTTStatusLabel.add_theme_color_override("font_color", Color(0.0, 0.713, 0.0, 1.0)) 

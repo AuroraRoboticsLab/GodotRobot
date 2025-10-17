@@ -24,4 +24,3 @@ jump = ExtResource("4_qhc2a")
 [node name="CenterOfMass" type="Marker3D" parent="."]
 
 [node name="AutonomyComponent" parent="." instance=ExtResource("3_w67nb")]
-_autonomous = null

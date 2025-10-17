@@ -27,23 +27,20 @@ The structure is contained within a dictionary so the standard may be extended t
 ## 2.2. Example Infratructure Payload (JSON):
 
 	{
-	  "robots": [
-	    {
-	      "id": "astra1",
-	      "model": "astra",
-	      "name": "Andrew's Astra",
-	    },
-	    {
-	      "id": "excahauler1",
-	      "model": "excahauler",
-	      "name": "Dr. Lawlor's Excahauler",
-	    },
-	    {
-	      "id": "astra2",
-	      "model": "astra",
-	      "name": "Elliott's Astra",
-	    }
-	  ]
+	  "robots": {
+      "Astra1": {
+        "model": "astra",
+		"name": "Andrew's Astra"
+      },
+	  "Excahauler1": {
+		"model": "excahauler",
+		"name": "Dr. Lawlor's Astra"
+      },
+      "Astra2": {
+        "model": "astra",
+		"name": "Elliott's Astra"
+      }
+    }
 	}
 
 

@@ -480,6 +480,61 @@ layout_mode = 2
 theme_type_variation = &"MediumLabel"
 text = "Hide Version Number?"
 
+[node name="MQTTHostContainer" type="GridContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTHostContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "MQTT Host: "
+
+[node name="MQTTHost" type="TextEdit" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTHostContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumTextEdit"
+text = "localhost:1883"
+
+[node name="Label2" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTHostContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Username: "
+
+[node name="MQTTUser" type="TextEdit" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTHostContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumTextEdit"
+placeholder_text = "None"
+
+[node name="Label3" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTHostContainer"]
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+text = "Password: "
+
+[node name="MQTTPass" type="TextEdit" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTHostContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"MediumTextEdit"
+placeholder_text = "None"
+
+[node name="MQTTConnectButton" type="Button" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"SmallButton"
+text = "Attempt to connect"
+
+[node name="MQTTStatusLabel" type="Label" parent="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_type_variation = &"MediumLabel"
+theme_override_font_sizes/font_size = 20
+text = "Broker not connected."
+autowrap_mode = 3
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="SettingsMenu/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -643,6 +698,7 @@ mouse_filter = 1
 [connection signal="value_changed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer3/TPHeightTickButton" to="." method="_on_tp_height_tick_button_value_changed"]
 [connection signal="toggled" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer5/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="toggled" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer7/HideVersionCheckBox" to="." method="_on_hide_version_check_box_toggled"]
+[connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MQTTConnectButton" to="." method="_on_mqtt_connect_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/KeybindMenuButton" to="." method="_on_keybind_menu_button_pressed"]
 [connection signal="pressed" from="SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer2/ToggleChatButton" to="." method="_on_toggle_chat_button_pressed"]

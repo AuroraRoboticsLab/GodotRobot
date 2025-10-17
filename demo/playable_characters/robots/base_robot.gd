@@ -19,6 +19,7 @@ class_name BaseRobot
 		return nametag_text
 	set(value):
 		nametag_text = value
+@export var model: String = ""
 
 @export var tool_coupler: ToolCoupler
 
@@ -35,6 +36,11 @@ func _ready() -> void:
 	GameManager.network_process.connect(_network_process)
 	jump.triggered.connect(trigger_jump)
 	interact.triggered.connect(trigger_interact)
+	
+	if model == "":
+		print("WARN: Cannot use robot autonomously due to no valid model string!")
+	else:
+		MQTTHandler.add_robot(name, model, nametag_text)
 
 func _network_process(_delta):
 	# This client is a player we do not control
@@ -74,14 +80,12 @@ func trigger_interact() -> void:
 
 func is_sprinting() -> bool:
 	if auto_component and auto_component.is_autonomous():
-		# Maybe `return auto_component.is_sprinting()`?
-		return false # Placeholder
+		return auto_component.is_sprinting()
 	return sprint.is_triggered()
 
-func get_move_arm_values() -> Vector3:
+func get_arm_values() -> Vector3:
 	if auto_component and auto_component.is_autonomous():
-		# Maybe `return auto_component.get_move_arm_values()`?
-		return Vector3.ZERO # Placeholder
+		return auto_component.get_arm_values()
 	return move_arm.value_axis_3d
 
 func get_drive_values() -> Vector3:

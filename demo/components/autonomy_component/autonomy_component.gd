@@ -7,12 +7,17 @@ signal autonomy_changed(is_autonomous: bool)
 @export var _autonomous: bool = false
 func is_autonomous() -> bool:
 	return _autonomous
-func set_autonomous(is_autonomous: bool) -> void:
-	if is_autonomous == _autonomous:
+func set_autonomous(in_autonomous: bool) -> void:
+	if in_autonomous == _autonomous:
 		return
-	_autonomous = is_autonomous
+	_autonomous = in_autonomous
 	autonomy_changed.emit(_autonomous)
 	_auto_state = AutoState.STANDBY
+	_curr_drive_values = Vector3.ZERO
+	_curr_arm_values = Vector3.ZERO
+	_sprinting = false
+	_jumping = false
+	_is_attaching = false
 
 # There will be exported vars for different sensor components that we can directly access
 @export var nav_agent: NavigationAgent3D
@@ -23,11 +28,44 @@ func create_random_Vector3(vrange):
 enum AutoState { STANDBY, PATHFINDING  }
 var _auto_state: AutoState = AutoState.STANDBY
 var goto_pos: Vector3
- 
+
+func _ready() -> void:
+	MQTTHandler.incoming_robot_data.connect(_on_incoming_robot_data)
+	
+	MQTTHandler.broker_connected.connect(_on_broker_connected)
+	MQTTHandler.broker_connection_failed.connect(_on_broker_connection_failed)
+	MQTTHandler.broker_disconnected.connect(_on_broker_disconnected)
+
+func _on_broker_connected(_mqtt_host: String) -> void:
+	# Subscribe to all of our incoming autonomy values
+	var sub_topic: String = "luminsim/components/robots/"+get_parent().name+"/incoming/#"
+	MQTTHandler.subscribe(sub_topic, 1)
+
+func _on_broker_connection_failed(_mqtt_host: String) -> void:
+	set_autonomous(false)
+
+func _on_broker_disconnected(_mqtt_host: String) -> void:
+	set_autonomous(false)
+
 var debugging: bool = true
+var _sprinting: bool = false
+var _jumping: bool = false
+var _jump_interval: float = 0.2
+var _jump_elapsed: float = 0.2
 func _physics_process(delta):
-	if _auto_state == AutoState.STANDBY:
+	if not _autonomous:
 		return
+	if _auto_state == AutoState.PATHFINDING:
+		return
+	_last_drive_value_elapsed += delta
+	_jump_elapsed += delta
+	
+	if _jumping and _jump_elapsed >= _jump_interval:
+		_jump_elapsed = 0.0
+		get_parent().trigger_jump()
+
+func is_sprinting() -> bool:
+	return _sprinting
 
 func pathfind_to(pos: Vector3):
 	if not is_autonomous():
@@ -37,18 +75,15 @@ func pathfind_to(pos: Vector3):
 	goto_pos = pos if pos != Vector3.ZERO else Vector3(0.01, 0, 0)
 	nav_agent.set_target_position(goto_pos)
 
-# Float up and toward target
-func try_get_unstuck(delta, local_dest):
-	get_parent().linear_velocity += Vector3(0, 1.8*delta, 0)
-	get_parent().linear_velocity += local_dest*delta*1.5
-
 func _target_reached():
 	print("Target reached!")
 	_auto_state = AutoState.STANDBY
 	set_autonomous(false)
 
+var _prev_yaw_err := 0.0
+var _steer_cmd := 0.0
 func _internal_pathfind_values() -> Vector3:
-	if not _autonomous or _auto_state != AutoState.STANDBY:
+	if not _autonomous:
 		return Vector3.ZERO
 	
 	var drive_force := 0.0
@@ -120,20 +155,58 @@ func _internal_pathfind_values() -> Vector3:
 	_prev_yaw_err = yaw_err
 	return Vector3(steer_force, 0.0, -drive_force)
 
-var _prev_yaw_err := 0.0
-var _steer_cmd := 0.0
+func _on_incoming_robot_data(in_id: String, in_category: String, in_data: Dictionary) -> void:
+	if in_id != get_parent().name: # Not for us!
+		return
+	match in_category:
+		"drive-values":
+			var in_drive_values: Vector3 = Vector3(in_data["x"], in_data["y"], in_data["z"])
+			set_drive_values(in_drive_values)
+			if in_data.has("sprint"):
+				_sprinting = in_data["sprint"]
+			if in_data.has("jump"):
+				_jumping = in_data["jump"]
+		"arm-values":
+			var in_arm_values: Vector3 = Vector3(in_data["x"], in_data["y"], in_data["z"])
+			if in_data.has("interact"):
+				_is_attaching = in_data["interact"]
+			set_arm_values(in_arm_values)
+		"status":
+			set_autonomous(in_data["autonomous"])
+
+var _curr_drive_values: Vector3 = Vector3.ZERO
+var _last_drive_value_elapsed: float = 0.0
+var _max_last_drive_value: float = 3.0
+func set_drive_values(drive_values: Vector3) -> void:
+	_curr_drive_values = drive_values
+	_last_drive_value_elapsed = 0.0
+
 func get_drive_values() -> Vector3:
-	if _auto_state != AutoState.PATHFINDING:
+	if not _autonomous:
 		return Vector3.ZERO
-	
+	if _auto_state == AutoState.PATHFINDING:
+		return _internal_pathfind_values()
+	# Stop driving if we haven't received a command for too long
+	if _last_drive_value_elapsed >= _max_last_drive_value:
+		return Vector3.ZERO
+	return _curr_drive_values
 
 # Called when seeking input for tool attachment toggling, true or false
+var _is_attaching: bool = false
 func get_toggle_attach():
-	return false
+	return _is_attaching
 
-# Get [Arm, Bollard, Tilt] inputs, from -1 to 1
-# Call subject.arm.arm_joint.get_angle() for current arm angle, in degrees.
-# Call subject.arm.bollard_joint.get_angle() for current bollard angle, in degrees.
-# Call subject.arm.tilt_joint.get_angle() for current tilt angle, in degrees.
-func get_arm_inputs():
-	return [0,0,0]
+var _curr_arm_values: Vector3 = Vector3.ZERO
+var _last_arm_value_elapsed: float = 0.0
+var _max_last_arm_value: float = 3.0
+func set_arm_values(arm_values: Vector3):
+	_curr_arm_values = arm_values
+	_last_arm_value_elapsed = 0.0
+
+func get_arm_values() -> Vector3:
+	if not _autonomous:
+		return Vector3.ZERO
+	# Stop arm moving if we haven't received a command for too long
+	if _last_arm_value_elapsed >= _max_last_arm_value:
+		return Vector3.ZERO
+	return _curr_arm_values

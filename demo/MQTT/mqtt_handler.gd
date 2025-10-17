@@ -24,12 +24,33 @@ func get_dict_from_json_string(json_string: String) -> Dictionary:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
 		return {}
 
-signal incoming_robot_data(id, category, )
+signal incoming_robot_data(in_id: String, in_category: String, message: Dictionary)
 
 # robots structure: {id: {name: "Name", model: "Model"}, ...}
-var _robots: Dictionary = {}
+var _robots: Dictionary = {}:
+	set(value):
+		_robots = value
+		publish_infrastructure()
 func get_robots() -> Dictionary:
 	return _robots
+
+func add_robot(in_id: String, in_model: String, in_name: String) -> void:
+	var new_robot: Dictionary = {
+		in_id: { "name": in_name, "model": in_model }
+	}
+	
+	_robots.merge(new_robot, true)
+
+func publish_infrastructure() -> void:
+	if not is_connected_to_broker():
+		return
+	
+	var message: Dictionary = {
+		"robots": _robots
+		# Add more infrastructure categories here!
+	}
+	print("Publishing!")
+	publish("luminsim/infrastructure", JSON.stringify(message), true, 1)
 
 func _on_received_message(topic: String, message) -> void:
 	var topic_portions = topic.split('/')
@@ -45,12 +66,13 @@ func _on_received_message(topic: String, message) -> void:
 			var in_id: String = topic_portions[3]
 			var is_incoming: bool = true if topic_portions[4] == "incoming" else false
 			var in_category: String = topic_portions[5]
-			if in_type == "robot" and is_incoming: # We only expect incoming data to be received
+			if in_type == "robots" and is_incoming: # We only expect incoming data to be received
 				incoming_robot_data.emit(in_id, in_category, incoming_data)
 			# Add elif's for other types when applicable
 
 func _on_broker_connected(in_mqtt_host):
 	print("Connected to the MQTT broker: ", in_mqtt_host)
+	publish_infrastructure()
 
 func _on_broker_connection_failed(in_mqtt_host):
 	print("Failed to connect to the MQTT broker: ", in_mqtt_host)
@@ -186,14 +208,14 @@ func receive_into_buffer():
 var ping_ticks_next_0 = 0
 
 var buffered_messages := {}
-func queue_message(topic: String, payload: String):
+func queue_message(topic: String, payload: Dictionary):
 	buffered_messages[topic] = payload
 
 func publish_buffered_messages():
 	if buffered_messages == {}:
 		return # Nothing to process!
 	for topic in buffered_messages.keys():
-		publish(topic, buffered_messages[topic])
+		publish(topic, buffered_messages[topic], false, 1)
 	
 	published_messages.emit(buffered_messages)
 	
@@ -439,13 +461,11 @@ func connect_to_broker(brokerurl):
 	mqtt_host = brokerurl
 	return true
 
-
 func disconnect_from_server():
 	if broker_connect_mode == BCM_CONNECTED:
 		send_data(PackedByteArray([0xE0, 0x00]))
 		emit_signal("broker_disconnected", mqtt_host)
 	cleanup_sockets()
-	
 
 func publish(stopic, smsg, retain=false, qos=0):
 	var msg = smsg.to_ascii_buffer() if not binary_messages else smsg
@@ -566,7 +586,7 @@ func wait_msg():
 		var apid = (received_buffer[i]<<8) + received_buffer[i+1]
 		if verbose_level >= 2:
 			print("PUBACK[%d]" % apid)
-		emit_signal("publish_acknowledgewait_msg", apid)
+		#emit_signal("publish_acknowledgewait_msg", apid)
 
 	elif op == CP_SUBACK:
 		assert (sz == 3)

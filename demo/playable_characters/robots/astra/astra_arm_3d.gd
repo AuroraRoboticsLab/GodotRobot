@@ -52,7 +52,7 @@ func _physics_process(delta):
 	var arm_force = 0
 	var bollard_force = 0
 	var tilt_force = 0
-	var move_arm_axis_3d: Vector3 = get_parent().get_move_arm_values()
+	var move_arm_axis_3d: Vector3 = get_parent().get_arm_values()
 	if not is_dead:
 		var arm_input = move_arm_axis_3d.z
 		var bollard_input = move_arm_axis_3d.x
