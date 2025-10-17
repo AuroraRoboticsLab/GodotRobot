@@ -49,7 +49,6 @@ func publish_infrastructure() -> void:
 		"robots": _robots
 		# Add more infrastructure categories here!
 	}
-	print("Publishing!")
 	publish("luminsim/infrastructure", JSON.stringify(message), true, 1)
 
 func _on_received_message(topic: String, message) -> void:
