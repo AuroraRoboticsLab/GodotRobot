@@ -150,14 +150,15 @@ func simulate_key_down(key: Key) -> void:
 	Input.parse_input_event(ev)
 
 func simulate_joystick(in_axis: Vector2, left_stick: bool) -> void:
-	var ev_x := InputEventJoypadMotion.new()
-	var ev_y := InputEventJoypadMotion.new()
-	ev_x.axis_value = in_axis.x
-	ev_y.axis_value = in_axis.y
-	ev_x.axis = JOY_AXIS_LEFT_X if left_stick else JOY_AXIS_RIGHT_X
-	ev_y.axis = JOY_AXIS_LEFT_Y if left_stick else JOY_AXIS_RIGHT_Y
-	Input.parse_input_event(ev_x)
-	Input.parse_input_event(ev_y)
+	pass
+	#var ev_x := InputEventJoypadMotion.new()
+	#var ev_y := InputEventJoypadMotion.new()
+	#ev_x.axis_value = in_axis.x
+	#ev_y.axis_value = in_axis.y
+	#ev_x.axis = JOY_AXIS_LEFT_X if left_stick else JOY_AXIS_RIGHT_X
+	#ev_y.axis = JOY_AXIS_LEFT_Y if left_stick else JOY_AXIS_RIGHT_Y
+	#Input.parse_input_event(ev_x)
+	#Input.parse_input_event(ev_y)
 
 func simulate_key_up(key: Key) -> void:
 	var ev_up := InputEventKey.new()
