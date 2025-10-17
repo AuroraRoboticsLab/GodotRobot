@@ -1,7 +1,7 @@
 # res://singletons/InputManager.gd
 extends Node
 
-enum InputSource { KEY_MOUSE, CONTROLLER, TOUCH }
+enum InputSource { KEY_MOUSE, CONTROLLER }
 var _input_source: InputSource = InputSource.KEY_MOUSE
 
 enum InputMode { NONE, MOVE, FREECAM }
@@ -112,7 +112,6 @@ func is_using_controller() -> bool:
 	return _input_source == InputSource.CONTROLLER
 
 func _on_key_and_mouse_triggered() -> void:
-	# AI uses keyboard & mouse
 	if _input_source != InputSource.KEY_MOUSE:
 		set_source_key_mouse()
 		if debugging:
@@ -120,13 +119,9 @@ func _on_key_and_mouse_triggered() -> void:
 func is_using_key_and_mouse() -> bool:
 	return _input_source == InputSource.KEY_MOUSE
 
+signal touch_detected
 func _on_touch_triggered() -> void:
-	if _input_source != InputSource.TOUCH:
-		set_source_touch()
-		if debugging:
-			print("Touch!")
-func is_using_touch() -> bool:
-	return _input_source == InputSource.TOUCH
+	touch_detected.emit()
 
 func get_input_source_type() -> InputSource:
 	return _input_source
@@ -137,10 +132,6 @@ func set_source_key_mouse() -> void:
 
 func set_source_controller() -> void:
 	_input_source = InputSource.CONTROLLER
-	new_input_source.emit(_input_source)
-
-func set_source_touch() -> void:
-	_input_source = InputSource.TOUCH
 	new_input_source.emit(_input_source)
 
 # -------- Simulated Inputs --------
@@ -157,6 +148,16 @@ func simulate_key_down(key: Key) -> void:
 	ev.pressed = true
 	ev.device = -1
 	Input.parse_input_event(ev)
+
+func simulate_joystick(in_axis: Vector2, left_stick: bool) -> void:
+	var ev_x := InputEventJoypadMotion.new()
+	var ev_y := InputEventJoypadMotion.new()
+	ev_x.axis_value = in_axis.x
+	ev_y.axis_value = in_axis.y
+	ev_x.axis = JOY_AXIS_LEFT_X if left_stick else JOY_AXIS_RIGHT_X
+	ev_y.axis = JOY_AXIS_LEFT_Y if left_stick else JOY_AXIS_RIGHT_Y
+	Input.parse_input_event(ev_x)
+	Input.parse_input_event(ev_y)
 
 func simulate_key_up(key: Key) -> void:
 	var ev_up := InputEventKey.new()

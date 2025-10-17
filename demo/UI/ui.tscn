@@ -176,7 +176,7 @@ offset_right = -31.16
 offset_bottom = -19.4401
 scale = Vector2(2.60714, 2.43011)
 mouse_filter = 1
-text = "E"
+text = "A"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 1
@@ -682,6 +682,8 @@ mouse_filter = 1
 [connection signal="focus_entered" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_entered"]
 [connection signal="focus_exited" from="CommandLineEdit" to="." method="_on_command_line_edit_focus_exited"]
 [connection signal="text_submitted" from="CommandLineEdit" to="." method="_on_command_line_edit_text_submitted"]
+[connection signal="axis_changed" from="RightJoystick" to="." method="_on_right_joystick_axis_changed"]
+[connection signal="axis_changed" from="LeftJoystick" to="." method="_on_left_joystick_axis_changed"]
 [connection signal="button_down" from="MobileButton1" to="." method="_on_mobile_button_1_button_down"]
 [connection signal="button_up" from="MobileButton1" to="." method="_on_mobile_button_1_button_up"]
 [connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

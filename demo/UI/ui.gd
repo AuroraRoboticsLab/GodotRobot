@@ -30,6 +30,7 @@ func _ready():
 	UIManager.sent_message.connect(_on_sent_message)
 	
 	InputManager.new_input_source.connect(_on_new_input_source)
+	InputManager.touch_detected.connect(_on_touch_detected)
 	
 	GameManager.autonomy_changed.connect(_on_using_ai_changed)
 	GameManager.can_attach.connect(_on_can_attach)
@@ -43,11 +44,7 @@ func _ready():
 		child.process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	if OS.get_name() == "Android":
-		left_joystick.show()
-		right_joystick.show()
-		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MobileJoystickSizeLabel.show()
-		$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6.show()
-		$MobileButton1.show()
+		show_touch_controls()
 	
 	$VersionLabel.text = str(GameManager.version)
 	
@@ -63,6 +60,20 @@ func _ready():
 	elif GameManager.player_choice == GameManager.Character.ASTRA:
 		$PanelContainer/VBoxContainer/GridContainer/ChargeLabel.show()
 		$PanelContainer/VBoxContainer/GridContainer/Charge.show()
+
+func show_touch_controls():
+	left_joystick.show()
+	right_joystick.show()
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MobileJoystickSizeLabel.show()
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6.show()
+	$MobileButton1.show()
+
+func hide_touch_controls():
+	left_joystick.hide()
+	right_joystick.hide()
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/MobileJoystickSizeLabel.hide()
+	$SettingsMenu/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer6.hide()
+	$MobileButton1.hide()
 
 func _on_new_fps(in_fps: float) -> void:
 	fps = in_fps
@@ -122,6 +133,9 @@ func _process(_delta):
 
 # new_source is of type InputManager.InputSource
 func _on_new_input_source(new_source) -> void:
+	if new_source == InputManager.InputSource.KEY_MOUSE:
+		hide_touch_controls()
+	
 	match new_source:
 		InputManager.InputSource.KEY_MOUSE:
 			if player.has_method("is_autonomous") and player.is_autonomous():
@@ -130,8 +144,9 @@ func _on_new_input_source(new_source) -> void:
 				%PressToAttach.text = "Press E to attach"
 		InputManager.InputSource.CONTROLLER:
 			%PressToAttach.text = "Press A to attach"
-		InputManager.InputSource.TOUCH:
-			%PressToAttach.text = "Press button to attach"
+
+func _on_touch_detected() -> void:
+	show_touch_controls()
 
 func _on_using_ai_changed(using_ai: bool) -> void:
 	if using_ai:
@@ -469,3 +484,9 @@ func _on_broker_connection_failed(mqtt_host: String) -> void:
 func _on_broker_connected(mqtt_host: String) -> void:
 	%MQTTStatusLabel.text = "Connected to broker "+mqtt_host+"!"
 	%MQTTStatusLabel.add_theme_color_override("font_color", Color(0.0, 0.713, 0.0, 1.0)) 
+
+func _on_left_joystick_axis_changed(new_vector: Vector2) -> void:
+	InputManager.simulate_joystick(new_vector, true)
+
+func _on_right_joystick_axis_changed(new_vector: Vector2) -> void:
+	InputManager.simulate_joystick(new_vector, false)
