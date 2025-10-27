@@ -28,19 +28,19 @@ The structure is contained within a dictionary so the standard may be extended t
 
 	{
 	  "robots": {
-      "Astra1": {
-        "model": "astra",
-		"name": "Andrew's Astra"
-      },
-	  "Excahauler1": {
-		"model": "excahauler",
-		"name": "Dr. Lawlor's Astra"
-      },
-      "Astra2": {
-        "model": "astra",
-		"name": "Elliott's Astra"
-      }
-    }
+        "Astra1": {
+          "model": "astra",
+          "name": "Andrew's Astra"
+        },
+	    "Excahauler1": {
+          "model": "excahauler",
+          "name": "Dr. Lawlor's Astra"
+        },
+        "Astra2": {
+          "model": "astra",
+		  "name": "Elliott's Astra"
+        }
+	  }
 	}
 
 
@@ -123,6 +123,18 @@ The following are known standard metric categories for LUMINSim's existing compo
 - `status`
   - Various incoming statuses.
   - **Required format:** Dictionary with String key `autonomous` with boolean value (`true` means active autonomy; `false` means no active autonomy).
+- `update-interval`
+  - The interval, in seconds, that outgoing MQTT data is to be sent.
+  - **Required format:** Dictionary with String key `interval` with float value.
 
 **Common Outgoing Metric Categories:**
-Not yet decided.
+- The following are "cheat" metrics, as they represent the true state of the robot in the simulator, bypassing all sensors.
+  - `position`
+    - The robot's global position (i.e., position in the world).
+    - **Required format:** Dictionary with String keys `x`, `y`, and `z`, each with float values.
+  - `quaternion`
+    - The robot's global rotation quaternion.
+    - **Required format:** Dictionary with String keys `w`, `x`, `y`, and `z`, each with float values.
+  - `velocity`
+    - The robot's global velocity.
+    - **Required format:** Dictionary with String keys `x`, `y`, and `z`, each with float values.
